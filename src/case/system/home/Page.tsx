@@ -7,8 +7,8 @@ import { RouteComponentProps } from "react-router-dom";
 import CaseCommon from "src/caseCommon/CaseCommon";
 import * as GlobalRedux from "src/globalRedux/GlobalRedux";
 import { Const } from "./Const";
-import { LineChart1 } from './inner/LineChart1';
-import { LineChart2 } from './inner/LineChart2';
+// import { LineChart1 } from './inner/LineChart1';
+// import { LineChart2 } from './inner/LineChart2';
 import { Me } from "./inner/Me";
 import { MyData } from "./inner/MyData";
 import { MyStatistics } from "./inner/MyStatistics";
@@ -43,8 +43,8 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
                     <MyStatistics />
                 </Col>
             </Row>
-            <div> <LineChart1 /></div>
-            <div> <LineChart2 /></div>
+            {/* <div> <LineChart1 /></div> */}
+            {/* <div> <LineChart2 /></div> */}
             </div>
         );
     }

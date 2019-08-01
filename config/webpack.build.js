@@ -32,7 +32,7 @@ module.exports = merge(common, {
         new webpack.HashedModuleIdsPlugin(),
         // 依赖Dll
         new webpack.DllReferencePlugin({
-            manifest: require("../../dll/build/vendor.manifest.json")
+            manifest: require("../dll/build/vendor.manifest.json")
         }),
         // 复制资源文件
         new CopyPlugin([{ from: path.resolve("dll/build"), to: "" }, { from: path.resolve("public"), to: "" }]),

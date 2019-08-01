@@ -27,11 +27,10 @@ export class SiderMenu extends React.Component<ISiderMenuProps> {
         defaultSelectedKeys={defaultSelectedKeys}
       >
         <Menu.Item key={"Home"}>
-          <Icon type="home" />
-
-          <span className="layout-main-menu-item">
-            <Link to={"/"}>首页</Link>
-          </span>
+          <Link to={"/"}>
+            <Icon type="home" />
+            <span className="layout-main-menu-item">首页</span>
+          </Link>
         </Menu.Item>
         {getTopMenuItems(this.props.mainRegs.getTopRegs())}
       </Menu>

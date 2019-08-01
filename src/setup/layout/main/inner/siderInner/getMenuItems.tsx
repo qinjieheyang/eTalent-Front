@@ -21,10 +21,10 @@ export function getTopMenuItem(topReg: Framework.Case.Reg) {
   if (topReg.getChildren().length === 0) {
     return (
       <Menu.Item key={topReg.routePath}>
-        <Icon type={topReg.icon} />
-        <span className="layout-main-menu-item">
-          <Link to={topReg.routePath}>{topReg.title}</Link>
-        </span>
+        <Link to={topReg.routePath}>
+          <Icon type={topReg.icon} />
+          <span className="layout-main-menu-item">{topReg.title}</span>
+        </Link>
       </Menu.Item>
     );
   }
