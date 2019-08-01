@@ -1,0 +1,15 @@
+.layout-main-menu-item a:link {
+  color: #ff0000;
+} /* 未被访问的链接 */
+
+.layout-main-menu-item a:visited {
+  color: #00ff00;
+} /* 已被访问的链接 */
+
+.layout-main-menu-item a:hover {
+  color: #ff00ff;
+} /* 鼠标指针移动到链接上 */
+
+.layout-main-menu-item a:active {
+  color: #0000ff;
+} /* 正在被点击的链接 */

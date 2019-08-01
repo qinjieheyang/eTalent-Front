@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+  <head>
+    <meta name="renderer" content="webkit" />
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
+    />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="http://at.alicdn.com/t/font_1223516_vk8neoyzfs.css"
+    />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    <title>绩效系统</title>
+
+    <script type="text/javascript">
+      /** 检测浏览器，使用旧的语法 */
+      function checkBrowser() {
+        var userAgent = navigator.userAgent; // 取得浏览器的 userAgent 字符串
+        var result = "";
+
+        if (
+          -1 < userAgent.indexOf("compatible") &&
+          -1 < userAgent.indexOf("MSIE")
+        ) {
+          result = "ie"; // IE10 以下
+        } else if (
+          -1 < userAgent.indexOf("Trident") &&
+          -1 < userAgent.indexOf("rv:11.0")
+        ) {
+          result = "ie"; // IE11
+        }
+
+        if ("ie" === result) {
+          alert(
+            "您的浏览器或内核太旧，推荐使用360、谷歌、搜狗等浏览器的最新版"
+          );
+        }
+      }
+
+      checkBrowser();
+    </script>
+
+    <script type="text/javascript" src="/vendor.js"></script>
+  </head>
+
+  <body style="height:100%">
+    <noscript> 你的旧浏览器不支持JavaScript，请更换新浏览器。 </noscript>
+    <div id="app" style="height:100%"></div>
+  </body>
+</html>

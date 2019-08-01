@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    "allowJs": true, // 	允许编译javascript文件。
+    "allowUnreachableCode": true, // 不报告执行不到的代码错误。
+    "allowUnusedLabels": true, // 	不报告未使用的标签错误。
+    "sourceRoot": "src", //指定TypeScript源文件的路径，以便调试器定位。当TypeScript文件的位置是在运行时指定时使用此标记。路径信息会被加到 sourceMap里。
+    "baseUrl": ".", //解析非相对模块名的基准目录
+    "paths": {
+      "src/*": ["src/*"] // 此处映射是相对于"baseUrl"
+    },
+
+    "rootDirs": ["src"],
+    "checkJs": false,
+    "outDir": "build/dist",
+    "module": "esnext",
+    "target": "es5",
+    "lib": ["es6", "dom"],
+    "sourceMap": true,
+    "jsx": "react",
+    "moduleResolution": "node",
+
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "importHelpers": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true,
+
+    "strict": false,
+    "esModuleInterop": true
+  },
+  "include": ["src/**/*"],
+  "exclude": [
+    "node_modules",
+    "build",
+    "scripts",
+    "acceptance-tests",
+    "webpack",
+    "jest",
+    "src/setupTests.ts"
+  ]
+}
