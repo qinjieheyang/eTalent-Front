@@ -1,5 +1,7 @@
-import { Layout, Spin } from "antd";
+import { Layout } from "antd";
 import * as React from "react";
+import PageLoader from "./PageLoader";
+import PageWrapper from "./PageWrapper";
 
 
 interface IContentProps {
@@ -17,22 +19,20 @@ export default class Content extends React.Component<IContentProps> {
     // if (CF.isCurrentUserLogin() === false) {
     //   return <Redirect to={{ pathname: "/page/login" }} />;
     // }
-
+    let {isWaitHttpRequest} = this.props;
+    // isWaitHttpRequest = true;
     return (
       <Layout.Content
         id="Layout.Content"
         style={{
-          margin: "24px 16px",
-          height: "100%",
-          minHeight: 280
+          height: "calc(100vh - 134px)",
+          minHeight: 280,
+          overflow: "hidden"
         }}
       >
-        <Spin spinning={this.props.isWaitHttpRequest}>
-
-
-        
-          {this.props.children}
-        </Spin>
+        {
+          isWaitHttpRequest?<PageLoader />:<PageWrapper page={this.props.children} />
+        }
       </Layout.Content>
     );
   }

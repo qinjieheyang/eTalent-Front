@@ -30,10 +30,10 @@ export default class Help extends React.Component<IHelpProps> {
     return (
       <Menu>
         <Menu.Item>
-          <a onClick={this.handleClick}>???</a>
+          <a onClick={this.handleClick}> item </a>
         </Menu.Item>
         <Menu.Item>
-          <a onClick={this.handleClick}> ????</a>
+          <a onClick={this.handleClick}> item </a>
         </Menu.Item>
       </Menu>
     );

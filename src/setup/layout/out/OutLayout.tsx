@@ -17,7 +17,7 @@ export class PageLayout extends React.Component {
         return (
             <div id="PageLayout" style={{ height: "100%" }}>
                 <PagesHeader {...rest} />
-                OutLayout
+                {/* OutLayout */}
                 <div id="PageLayout2" style={{ height: "100%" }}>
                     <Switch>
                         {routes}

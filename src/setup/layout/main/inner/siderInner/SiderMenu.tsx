@@ -18,7 +18,7 @@ export class SiderMenu extends React.Component<ISiderMenuProps> {
     }
     const defaultOpenKeys = this.getOpenTopMenuKey(this.props.urlPath);
     const defaultSelectedKeys = this.getActionChildMenuKey(this.props.urlPath);
-
+    // console.log(defaultOpenKeys,defaultSelectedKeys,this.props.urlPath)
     return (
       <Menu
         theme="dark"
@@ -26,7 +26,7 @@ export class SiderMenu extends React.Component<ISiderMenuProps> {
         defaultOpenKeys={defaultOpenKeys}
         defaultSelectedKeys={defaultSelectedKeys}
       >
-        <Menu.Item key={"Home"}>
+        <Menu.Item key={"/"}>
           <Link to={"/"}>
             <Icon type="home" />
             <span className="layout-main-menu-item">首页</span>
@@ -59,6 +59,6 @@ export class SiderMenu extends React.Component<ISiderMenuProps> {
       Framework.Utils.UtilLog.warn("getChildMenuKey", childReg);
       return [childReg.routePath];
     }
-    return [];
+    return ['/'];
   }
 }

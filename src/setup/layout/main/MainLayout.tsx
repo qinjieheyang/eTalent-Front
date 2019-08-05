@@ -58,8 +58,8 @@ class MainLayout extends CaseCommon.PageBase<IMainLayoutprops, IState, IService>
                                 {mainRoutes}
                                 <Route component={NoMatch} />
                             </Switch>
-                            <Footer />
                         </Content>
+                        <Footer />
                     </Layout>
                 </Layout>
             </LocaleProvider>
