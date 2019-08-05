@@ -12,7 +12,7 @@ export class Me extends React.Component<IProps> {
 
     public render() {
         return (
-            <Card title={"HI !" + this.props.userName} bordered={false}>
+            <Card title={"HI !" + this.props.userName} bordered={false} style={{margin:5}}>
                 {new Date().toTimeString()}
             </Card>
         );

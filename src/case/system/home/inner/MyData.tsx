@@ -13,7 +13,7 @@ export class MyData extends React.Component<IProps> {
 
     public render() {
         return (
-            <Card title="我的整体数据" bordered={false}>
+            <Card title="我的整体数据" bordered={false} style={{margin:5}}>
                 <Row>
                     <Col span={12}>
                         <h3>本月</h3>
