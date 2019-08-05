@@ -22,12 +22,12 @@ export class Sider extends React.Component<ISiderProps, ISiderState> {
   };
 
   public render() {
-    const height = document.documentElement.clientHeight;
+    // const height = document.documentElement.clientHeight;
     const pathname: string = this.props.routeLocation.pathname;
 
     return (
       <Layout.Sider
-        style={{ overflow: "auto", height }}
+        style={{ overflow: "hidden", height: "100vh" }}
         trigger={null}
         collapsible={true}
         collapsed={this.state.collapsed}
