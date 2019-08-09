@@ -18,7 +18,6 @@ export function getTopMenuItems(topRegs: Framework.Case.Reg[]) {
 }
 
 export function getTopMenuItem(topReg: Framework.Case.Reg) {
-  console.log(topReg,22)
   if (topReg.getChildren().length === 0) {
     return (
       <Menu.Item key={topReg.routePath}>

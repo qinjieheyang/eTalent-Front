@@ -12,6 +12,6 @@ export default class Page extends React.Component<any, any> {
  
 
   public render() {
-    return <div></div>;
+    return <div>我的简历</div>;
   }
 }

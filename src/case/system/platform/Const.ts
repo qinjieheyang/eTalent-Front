@@ -2,7 +2,7 @@
 import * as Framework from "src/framework/Framework";
 
 const Const: Framework.Case.IConst = {
-    title: "组织平台",
+    title: "组织中台",
     icon: Framework.Com.Icons.emptyIcon,
     routePath: "/platform",
     isTest: true,

@@ -16,6 +16,7 @@ const topRegs = mainRegs.getTopRegs();
 interface IMainContentProps {
   routePath: string;
   isWaitHttpRequest: boolean;
+  localChanged: boolean;
   routeLocation: any;
 }
 
@@ -24,9 +25,15 @@ export default class MainContent extends React.Component<IMainContentProps> {
     super(props);
   }
 
+  // shouldComponentUpdate(){
+  //   // console.log(this.props.localChanged)
+  //   return this.props.localChanged;
+  // }
+
   public render() {
     //获取sideregs,将Reg封装到RegCollection中
     const sideRegs = mainRegs.getSideRegsByRoutePath(this.props.routePath);
+    const topReg = mainRegs.getTopRegByRoutePath(this.props.routePath);
     return (
 
       <Layout>
@@ -38,7 +45,7 @@ export default class MainContent extends React.Component<IMainContentProps> {
                   <Switch>
                       {/* 路由 */}
                       {sideRegs.getRoutes()}
-                      {this.getHomeRoute()}
+                      {topReg ? topReg.getRoute() : this.getHomeRoute()}
                       <Route component={NoMatch} />
                   </Switch>
               </Content>

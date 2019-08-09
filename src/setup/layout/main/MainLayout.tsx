@@ -29,6 +29,7 @@ interface IMainWrapperprops
 // CaseCommon.PageBase<IPageProps, IState ,IService>
 class MainLayout extends CaseCommon.PageBase<IMainWrapperprops, IState, IService> {
     // public state = initState;
+    private oldLocalPath: string;
     constructor(props: IMainWrapperprops) {
         super(props, Const, ServiceMock, Service);
         this.state = initState;
@@ -46,6 +47,12 @@ class MainLayout extends CaseCommon.PageBase<IMainWrapperprops, IState, IService
             return <Redirect to={{ pathname: "/out/login" }} />;
         }
         const {location} = this.props;
+        let localChanged: boolean = false;
+        // console.log(this.oldLocalPath,location.pathname)
+        if(this.oldLocalPath != location.pathname){
+            localChanged = true;
+            this.oldLocalPath = location.pathname;
+        }
         return (
             <LocaleProvider locale={zh_CN}>
                 <Layout>
@@ -57,8 +64,9 @@ class MainLayout extends CaseCommon.PageBase<IMainWrapperprops, IState, IService
                         topUrl={this.state.topUrl}
                     />
                     {
-                        this.state.topUrl === ''? null : (
+                        (this.state.topUrl === '')? null : (
                         <MainContent 
+                            localChanged = {localChanged}
                             routePath={this.state.topUrl} 
                             routeLocation={location}
                             isWaitHttpRequest={this.props.globalState.isWaitHttpRequest}/>
@@ -75,13 +83,6 @@ class MainLayout extends CaseCommon.PageBase<IMainWrapperprops, IState, IService
         this.forceUpdate();
     };
 
-    // private getTopRoutePath = (): string =>{
-    //     // const {location} = this.props;
-    //     // console.log(location.pathname,22)
-    //     // console.log(mainRegs.getParentRegByRoutePath(location.pathname),33)
-    //     let topPath = '';
-    //     return topPath;
-    // }
     private handleTopMenuChange = (routePath: string) => {
         this.setState({ topUrl: routePath });
     }

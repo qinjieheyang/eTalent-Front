@@ -33,10 +33,7 @@ export default class TopMenu extends React.Component<ITopMenuProps> {
   private getTopMenuItem = (topReg: any) =>{
     return (
       <Menu.Item key={topReg.routePath}>
-        {
-          topReg.isHomePage() ? 
-          (<Link to={topReg.routePath}>{topReg.title}</Link>): topReg.title
-        }
+        <Link to={topReg.routePath}>{topReg.title}</Link>
       </Menu.Item>
     )
   }
