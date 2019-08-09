@@ -1,11 +1,11 @@
 import { Layout } from "antd";
 import * as React from "react";
 import * as Framework from "src/framework/Framework";
-import { Logo } from "./Logo";
+import { Collapes } from "./Collapes";
 import { SiderMenu } from "./siderInner/SiderMenu";
 
 interface ISiderProps {
-  mainRegs: Framework.Case.RegCollection;
+  sideRegs: Framework.Case.RegCollection;
 
   routeLocation: any;
 }
@@ -18,7 +18,7 @@ interface ISiderState {
 export class Sider extends React.Component<ISiderProps, ISiderState> {
   public state = {
     // 是否折叠菜单
-    collapsed: true
+    collapsed: false
   };
 
   public render() {
@@ -32,14 +32,14 @@ export class Sider extends React.Component<ISiderProps, ISiderState> {
         collapsible={true}
         collapsed={this.state.collapsed}
       >
-        <Logo
+        <Collapes
           collapsed={this.state.collapsed}
           onClickToggle={this.handleClickToggle}
         />
 
         <SiderMenu
           collapsed={this.state.collapsed}
-          mainRegs={this.props.mainRegs}
+          sideRegs={this.props.sideRegs}
           urlPath={pathname}
         />
       </Layout.Sider>

@@ -27,7 +27,8 @@ export default class Content extends React.Component<IContentProps> {
         style={{
           height: "calc(100vh - 134px)",
           minHeight: 280,
-          overflow: "hidden"
+          overflow: "hidden",
+          flex: "none"
         }}
       >
         {

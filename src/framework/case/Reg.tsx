@@ -13,8 +13,9 @@ export class Reg {
     return new Reg(
       Const.title,
       Const.routePath,
+      Const.topPath,
       Const.icon,
-      false,
+      true,
       importContainer
     );
   }
@@ -31,6 +32,8 @@ export class Reg {
   public isRouteExact: boolean;
   /** 路由路径 */
   public readonly routePath: string;
+  /** 顶级路由路径 */
+  public readonly topPath: string;
   /** 显示标题(主) */
   public readonly title: string;
   /** 系统用例模块组件容器（入口） */
@@ -48,6 +51,7 @@ export class Reg {
   public constructor(
     title: string,
     routePath: string,
+    topPath: string,
     icon: string = Framework.Com.Icons.Case.report,
     isRouteExact: boolean = false,
     importContainer: any = null
@@ -56,6 +60,7 @@ export class Reg {
       throw Error("routePath 不能为空");
     }
     this.routePath = routePath.toLowerCase();
+    this.topPath = topPath.toLowerCase();
     this.title = title;
     this.icon = icon;
     this.isRouteExact = isRouteExact;

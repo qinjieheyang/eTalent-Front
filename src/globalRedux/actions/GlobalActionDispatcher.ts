@@ -11,6 +11,7 @@ export class GlobalActionDispatcher extends ActionDispatcherBase {
 
     public globalSetUserInfo = async (user: any) => {
         window.console.warn("call  GlobalActionDispatcher.globalInit()");
+        console.log("user:"+ JSON.stringify(user))
         this.service.getInit();
     };
 }

@@ -6,8 +6,10 @@ export interface IMessageRow {
 
 export interface IState {
     msgRows: IMessageRow[];
+    topUrl: string;
 }
 
 export const initState: IState = {
-    msgRows: []
+    msgRows: [],
+    topUrl: ''
 };

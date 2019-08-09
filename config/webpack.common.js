@@ -78,7 +78,12 @@ module.exports = {
       { test: /\.tsx?$/, loader: "awesome-typescript-loader" } //typescript解析
     ]
   },
-
+  // resolve: {
+  //   extensions: [".ts", ".tsx", "js", ".json",  ".css"],
+  //   alias: {
+  //     '@': path.resolve(__dirname, 'src'),
+  //   }
+  // },
   plugins: [
     //动态创建html
     new HtmlWebpackPlugin({

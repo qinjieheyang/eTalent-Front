@@ -1,14 +1,13 @@
 // Case常量定义
-
 import * as Framework from "src/framework/Framework";
 
 const Const: Framework.Case.IConst = {
-    title: "登录页面",
+    title: "组织平台",
     icon: Framework.Com.Icons.emptyIcon,
-    routePath: "/out/login",
+    routePath: "/platform",
     isTest: true,
-    case: "Login",
-    topPath:"/out"
+    case: "PlatformPage",
+    topPath: "/platform"
 };
 
 export { Const };

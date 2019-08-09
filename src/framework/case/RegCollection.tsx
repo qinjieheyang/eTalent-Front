@@ -2,20 +2,28 @@
 import { Reg } from "./Reg";
 
 export class RegCollection {
+
   private topRegs = new Map<string, Reg>();
   private allRegs = new Map<string, Reg>();
 
+
   public add(caseFlowReg: Reg): void {
     // 处理Top层
- 
 
     this.topRegs.set(caseFlowReg.routePath, caseFlowReg);
     this.allRegs.set(caseFlowReg.routePath, caseFlowReg);
+
     // 处理2层
     caseFlowReg.getChildren().forEach((reg2: Reg) => {
  
-
       this.allRegs.set(reg2.routePath, reg2);
+      
+      // 处理3层
+      reg2.getChildren().forEach((reg3: Reg) => {
+  
+        this.allRegs.set(reg3.routePath, reg3);
+
+      });
     });
   }
 
@@ -75,4 +83,17 @@ export class RegCollection {
     });
     return ls;
   };
+
+  //需要通过topReg拿到sideRegs
+  getSideRegsByRoutePath(routePath: string): RegCollection {
+    // console.log(routePath,11)
+    let topReg = this.getTopRegByRoutePath(routePath);
+    const sideRegs = new RegCollection();
+    if(topReg){
+      topReg.getChildren().forEach(reg =>{
+        sideRegs.add(reg);
+      })
+    }
+    return sideRegs;
+  }
 }

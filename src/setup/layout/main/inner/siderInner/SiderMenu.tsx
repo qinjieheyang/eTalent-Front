@@ -1,11 +1,10 @@
-import { Icon, Menu } from "antd";
+import {  Menu } from "antd";
 import * as React from "react";
-import { Link } from "react-router-dom";
 import * as Framework from "src/framework/Framework";
 import { getTopMenuItems } from "./getMenuItems";
 
 interface ISiderMenuProps {
-  mainRegs: Framework.Case.RegCollection;
+  sideRegs: Framework.Case.RegCollection;
   urlPath: string;
   collapsed: boolean;
 }
@@ -13,7 +12,7 @@ interface ISiderMenuProps {
 /** 功能菜单 */
 export class SiderMenu extends React.Component<ISiderMenuProps> {
   public render() {
-    if (this.props.mainRegs == null) {
+    if (this.props.sideRegs == null) {
       return <div />;
     }
     const defaultOpenKeys = this.getOpenTopMenuKey(this.props.urlPath);
@@ -24,15 +23,9 @@ export class SiderMenu extends React.Component<ISiderMenuProps> {
         theme="dark"
         mode="inline"
         defaultOpenKeys={defaultOpenKeys}
-        defaultSelectedKeys={defaultSelectedKeys}
+        selectedKeys={defaultSelectedKeys}
       >
-        <Menu.Item key={"/"}>
-          <Link to={"/"}>
-            <Icon type="home" />
-            <span className="layout-main-menu-item">首页</span>
-          </Link>
-        </Menu.Item>
-        {getTopMenuItems(this.props.mainRegs.getTopRegs())}
+        {getTopMenuItems(this.props.sideRegs.getTopRegs())}
       </Menu>
     );
   }
@@ -44,7 +37,7 @@ export class SiderMenu extends React.Component<ISiderMenuProps> {
       return [];
     }
     // 2层菜单被选中
-    const topReg = this.props.mainRegs.getParentRegByRoutePath(pathname);
+    const topReg = this.props.sideRegs.getParentRegByRoutePath(pathname);
     if (!topReg) {
       return [];
     }
@@ -54,7 +47,7 @@ export class SiderMenu extends React.Component<ISiderMenuProps> {
 
   // 通过当前路由URL获取当前激活 2级菜单
   private getActionChildMenuKey(pathname: string): string[] {
-    const childReg = this.props.mainRegs.getRegByRoutePath(pathname);
+    const childReg = this.props.sideRegs.getRegByRoutePath(pathname);
     if (childReg) {
       Framework.Utils.UtilLog.warn("getChildMenuKey", childReg);
       return [childReg.routePath];

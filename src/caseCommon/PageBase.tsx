@@ -3,10 +3,7 @@ import * as Framework from 'src/framework/Framework';
 // import { ICodeTables } from "src/pas/setup/CodeTables";
 
 /** 功能模块.入口页面基类 */
-export abstract class PageBase<TProps, TState,TCaseService > extends React.Component<
-  TProps,
-  TState
-> {
+export abstract class PageBase<TProps, TState,TCaseService > extends React.Component<TProps,TState> {
 
   protected service: TCaseService;
   constructor(props: TProps , Const :Framework.Case.IConst ,ServiceMockType :new ()=>TCaseService ,ServiceType:new ()=>TCaseService) {

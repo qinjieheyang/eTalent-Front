@@ -7,4 +7,5 @@ export interface IConst {
   isTest: boolean;
   icon: any;
   case: string;
+  topPath: string;
 }

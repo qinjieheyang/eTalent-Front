@@ -1,12 +1,12 @@
 import * as Framework from "src/framework/Framework";
 
 const Const: Framework.Case.IConst = {
-  title: "报表",
+  title: "用户",
   icon: Framework.Com.Icons.Case.user,
-  routePath: "/report",
+  routePath: "/platform/manage",
   isTest: false,
-  case: "ViewReport",
-  topPath: "/report"
+  case: "User",
+  topPath: "/platform"
 };
 
 export { Const };

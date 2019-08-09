@@ -5,7 +5,8 @@ const Const: Framework.Case.IConst = {
     icon: "...MainLayout",
     routePath: "...MainLayout",
     isTest: true,
-    case: "MainLayout"
+    case: "MainLayout",
+    topPath: "/"
 };
 
 export { Const };

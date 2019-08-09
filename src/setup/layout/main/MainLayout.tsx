@@ -5,13 +5,10 @@ import zh_CN from "antd/lib/locale-provider/zh_CN";
 import moment from "moment";
 import "moment/locale/zh-cn";
 import * as React from "react";
-import { Route, RouteComponentProps, Switch, Redirect } from "react-router-dom";
+import { RouteComponentProps, Redirect } from "react-router-dom";
 import { mainRegs } from "../../../case/mainRegs";
-import NoMatch from "../../NoMatch";
-import Content from "./inner/Content";
-import Footer from "./inner/Footer";
 import Header from "./inner/Header";
-import { Sider } from "./inner/Sider";
+import MainContent from "./MainContent";
 moment.locale("zh-cn");
 
 import CaseCommon from "src/caseCommon/CaseCommon";
@@ -21,56 +18,82 @@ import { Const } from "./Const";
 import { Service } from "./Service";
 import { IService, ServiceMock } from "./ServiceMock";
 import { initState, IState } from "./State";
-const mainRoutes = mainRegs.getRoutes();
 
-interface IMainLayoutprops
+const topRegs = mainRegs.getTopRegs();
+
+interface IMainWrapperprops
     extends GlobalRedux.States.IGlobalStateProps,
         GlobalRedux.Actions.IGlobalActionDispatcher,
         RouteComponentProps {}
 
 // CaseCommon.PageBase<IPageProps, IState ,IService>
-class MainLayout extends CaseCommon.PageBase<IMainLayoutprops, IState, IService> {
-    public state = initState;
-    constructor(props: IMainLayoutprops) {
+class MainLayout extends CaseCommon.PageBase<IMainWrapperprops, IState, IService> {
+    // public state = initState;
+    constructor(props: IMainWrapperprops) {
         super(props, Const, ServiceMock, Service);
+        this.state = initState;
     }
 
     public async init() {
         const initData = await this.service.getInit();
-        this.setState({ msgRows: initData.msgRows });
+        this.setState({ msgRows: initData.msgRows, topUrl: initState.topUrl });
         this.props.globalSetUserInfo(initData.currentUser);
+        this.initRoutePage();
     }
 
     public render() {
         if (Framework.CurrentUser.isLogin === false) {
             return <Redirect to={{ pathname: "/out/login" }} />;
         }
+        const {location} = this.props;
         return (
             <LocaleProvider locale={zh_CN}>
                 <Layout>
-                    <Sider mainRegs={mainRegs} routeLocation={this.props.location} />
-                    <Layout>
-                        <Header onLoginOff={this.handleLoginOff} messages={this.state.msgRows} />
-                        {/* this.props.globalState.isWaitHttpRequest */}
-                        <Content isWaitHttpRequest={this.props.globalState.isWaitHttpRequest}>
-                            <Switch>
-                                {/* 路由 */}
-                                {mainRoutes}
-                                <Route component={NoMatch} />
-                            </Switch>
-                        </Content>
-                        <Footer />
-                    </Layout>
+                    <Header 
+                        onLoginOff={this.handleLoginOff}
+                        onMenuChange={this.handleTopMenuChange}
+                        messages={this.state.msgRows}
+                        topRegs={topRegs}
+                        topUrl={this.state.topUrl}
+                    />
+                    {
+                        this.state.topUrl === ''? null : (
+                        <MainContent 
+                            routePath={this.state.topUrl} 
+                            routeLocation={location}
+                            isWaitHttpRequest={this.props.globalState.isWaitHttpRequest}/>
+                        )
+                    }
                 </Layout>
             </LocaleProvider>
         );
     }
 
     private handleLoginOff = () => {
-        debugger;
+        // debugger;
         Framework.CurrentUser.off();
         this.forceUpdate();
     };
+
+    // private getTopRoutePath = (): string =>{
+    //     // const {location} = this.props;
+    //     // console.log(location.pathname,22)
+    //     // console.log(mainRegs.getParentRegByRoutePath(location.pathname),33)
+    //     let topPath = '';
+    //     return topPath;
+    // }
+    private handleTopMenuChange = (routePath: string) => {
+        this.setState({ topUrl: routePath });
+    }
+
+    private initRoutePage(){
+        const localPath = this.props.location.pathname;
+        mainRegs.getAllRegs().forEach(reg => {
+            if(reg.routePath == localPath){
+                this.setState({topUrl: reg.topPath});
+            }
+        })
+    }
 }
 
 export default GlobalRedux.ConnectPage.ConnectGlobal(MainLayout);

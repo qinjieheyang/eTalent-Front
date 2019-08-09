@@ -3,11 +3,12 @@
 import * as Framework from "src/framework/Framework";
 
 const Const: Framework.Case.IConst = {
-    title: "首页",
+    title: "门户",
     icon: Framework.Com.Icons.emptyIcon,
     routePath: "/",
     isTest: true,
-    case: "HomePage"
+    case: "HomePage",
+    topPath:"/"
 };
 
 export { Const };
