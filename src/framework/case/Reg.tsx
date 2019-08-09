@@ -13,8 +13,8 @@ export class Reg {
     return new Reg(
       Const.title,
       Const.routePath,
-      Const.topPath,
       Const.icon,
+      Const.topPath,
       true,
       importContainer
     );
@@ -51,8 +51,8 @@ export class Reg {
   public constructor(
     title: string,
     routePath: string,
-    topPath: string,
-    icon: string = Framework.Com.Icons.Case.report,
+    icon: string = Framework.Com.Icons.Case.setting,
+    topPath: string = '/',
     isRouteExact: boolean = false,
     importContainer: any = null
   ) {

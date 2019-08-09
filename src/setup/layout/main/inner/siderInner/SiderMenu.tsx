@@ -16,14 +16,14 @@ export class SiderMenu extends React.Component<ISiderMenuProps> {
       return <div />;
     }
     const defaultOpenKeys = this.getOpenTopMenuKey(this.props.urlPath);
-    const defaultSelectedKeys = this.getActionChildMenuKey(this.props.urlPath);
-    // console.log(defaultOpenKeys,defaultSelectedKeys,this.props.urlPath)
+    const selectedKeys = this.getActionChildMenuKey(this.props.urlPath);
+    // console.log(defaultOpenKeys,selectedKeys,this.props.urlPath)
     return (
       <Menu
         theme="dark"
         mode="inline"
         defaultOpenKeys={defaultOpenKeys}
-        selectedKeys={defaultSelectedKeys}
+        selectedKeys={selectedKeys}
       >
         {getTopMenuItems(this.props.sideRegs.getTopRegs())}
       </Menu>

@@ -6,5 +6,7 @@ export const Case = {
   role: "role",
   user: "user",
   setting:"setting",
-  system:"setting"
+  system:"setting",
+  folder:"folder",
+  file:"file"
 };

@@ -5,7 +5,7 @@ import departReg  from "./depart/Reg";
 
 const organizationRegs = Framework.Case.Reg.CreatePathReg(
   "机构管理",
-  Framework.Com.Icons.Case.system,
+  Framework.Com.Icons.Case.folder,
   "/platform/org"
 );
 
