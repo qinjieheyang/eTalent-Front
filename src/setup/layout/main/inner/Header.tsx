@@ -27,7 +27,7 @@ export default class Header extends React.Component<IHeaderProps> {
         return (
             <Layout.Header style={{ background: "#fff", padding: 0 }}>
                 <div style={{float:"left",background:"#001529"}}>
-                    <Link to={"/"}>
+                    <Link to={"/"} onClick={() => this.props.onMenuChange('/')}>
                         <img src="/img/logo.png" style={{width:200,height:64}}/>
                     </Link>
                 </div>
