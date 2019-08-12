@@ -17,6 +17,7 @@
         "antd": "3.19.2",
         "axios": "0.18.0",
         "bizcharts": "3.5.2",
+        "cos-js-sdk-v5": "^0.5.17",
         "lodash": "^4.17.11",
         "react": "16.8.6",
         "react-dom": "16.8.6",

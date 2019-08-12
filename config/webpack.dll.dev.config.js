@@ -21,7 +21,8 @@ module.exports = {
             "react-router-dom",
             "recharts",
             "redux",
-            "lodash"
+            "lodash",
+            "cos-js-sdk-v5"
         ]
     },
     // 输出文件
