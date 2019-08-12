@@ -2,13 +2,17 @@
 import * as Framework from "src/framework/Framework";
 
 import departReg  from "./depart/Reg";
+import historyReg  from "./history/Reg";
+import virtualReg  from "./virtual/Reg";
 
 const organizationRegs = Framework.Case.Reg.CreatePathReg(
-  "机构管理",
+  "组织机构",
   Framework.Com.Icons.Case.folder,
   "/platform/org"
 );
 
 organizationRegs.addChild(departReg);
+organizationRegs.addChild(historyReg);
+organizationRegs.addChild(virtualReg);
 
 export { organizationRegs };

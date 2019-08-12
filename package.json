@@ -16,6 +16,7 @@
         "@antv/data-set": "0.10.2",
         "antd": "3.19.2",
         "axios": "0.18.0",
+        "better-scroll": "^1.15.2",
         "bizcharts": "3.5.2",
         "cos-js-sdk-v5": "^0.5.17",
         "lodash": "^4.17.11",
