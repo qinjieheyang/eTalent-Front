@@ -3,7 +3,7 @@ import * as React from "react";
 import * as Framework from "src/framework/Framework";
 import { Collapes } from "./Collapes";
 import { SiderMenu } from "./siderInner/SiderMenu";
-
+import "./Sider.less";
 interface ISiderProps {
   sideRegs: Framework.Case.RegCollection;
 
@@ -27,7 +27,8 @@ export class Sider extends React.Component<ISiderProps, ISiderState> {
 
     return (
       <Layout.Sider
-        style={{ overflow: "hidden", height: "100vh" }}
+        className="qj-sidebar"
+        style={{  }}
         trigger={null}
         collapsible={true}
         collapsed={this.state.collapsed}
