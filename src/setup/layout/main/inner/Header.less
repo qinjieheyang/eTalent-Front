@@ -1,0 +1,43 @@
+@left-width: 200px;
+@right-width: 300px;
+@collapse-width: 80px;
+
+.qj-header {
+    background: #fff;
+    padding: 0;
+}
+
+.qj-logo {
+    float: left;
+    background: #001529;
+    width: @left-width;
+    transition: all 0.2s;
+    overflow: hidden;
+}
+.qj-logo-img {
+    width: 200px;
+    height: 50px;
+    margin: 7px 0;
+}
+
+.qj-header-center {
+    margin-left: @left-width;
+    margin-right: @right-width;
+    padding: 5px 25px 5px 5px;
+}
+
+.qj-header-right {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 5px 25px 5px 5px;
+}
+.qj-header-collapsed {
+    > .qj-logo {
+        width: @collapse-width;
+        padding-left: 10px;
+    }
+    > .qj-header-center {
+        margin-left: @collapse-width;
+    }
+}

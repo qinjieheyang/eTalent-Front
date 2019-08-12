@@ -6,19 +6,22 @@ import { SiderMenu } from "./siderInner/SiderMenu";
 import "./Sider.less";
 interface ISiderProps {
   sideRegs: Framework.Case.RegCollection;
-
+  onChangeMenuMode: (isCollapsed: boolean) => void;
   routeLocation: any;
 }
 interface ISiderState {
   /** 是否折叠 */
   collapsed: boolean;
+  /** 是否是按钮触发折叠,用于保留状态 */
+  expansionMode: boolean;
 }
 
 /** 菜单边框 */
 export class Sider extends React.Component<ISiderProps, ISiderState> {
   public state = {
     // 是否折叠菜单
-    collapsed: false
+    collapsed: false,
+    expansionMode: true
   };
 
   public render() {
@@ -28,7 +31,6 @@ export class Sider extends React.Component<ISiderProps, ISiderState> {
     return (
       <Layout.Sider
         className="qj-sidebar"
-        style={{  }}
         trigger={null}
         collapsible={true}
         collapsed={this.state.collapsed}
@@ -37,19 +39,44 @@ export class Sider extends React.Component<ISiderProps, ISiderState> {
           collapsed={this.state.collapsed}
           onClickToggle={this.handleClickToggle}
         />
-
-        <SiderMenu
-          collapsed={this.state.collapsed}
-          sideRegs={this.props.sideRegs}
-          urlPath={pathname}
-        />
+        <div
+          onMouseEnter={this.handleMouserEnter}
+          onMouseLeave={this.handleMouserLeave}
+        >
+          <SiderMenu
+            collapsed={this.state.collapsed}
+            sideRegs={this.props.sideRegs}
+            urlPath={pathname}
+          />
+        </div>
       </Layout.Sider>
     );
   }
 
   private handleClickToggle = () => {
+    
     this.setState({
-      collapsed: !this.state.collapsed
+      collapsed: !this.state.collapsed,
+      expansionMode: this.state.collapsed
     });
+    
+    this.props.onChangeMenuMode(!this.state.collapsed);
   };
+
+  private handleMouserEnter = () =>{
+    //是按钮触发的展开，直接返回
+    if(this.state.expansionMode) return;
+    this.setState({
+      collapsed: false
+    });
+    this.props.onChangeMenuMode(false);
+  }
+
+  private handleMouserLeave = () =>{
+    if(this.state.expansionMode) return;
+    this.setState({
+      collapsed: true
+    });
+    this.props.onChangeMenuMode(true);
+  }
 }

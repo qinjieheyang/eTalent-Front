@@ -62,6 +62,7 @@ class MainLayout extends CaseCommon.PageBase<IMainWrapperprops, IState, IService
                         messages={this.state.msgRows}
                         topRegs={topRegs}
                         topUrl={this.state.topUrl}
+                        logoCollapsed={this.state.sideCollapsed}
                     />
                     {
                         (this.state.topUrl === '')? null : (
@@ -69,6 +70,7 @@ class MainLayout extends CaseCommon.PageBase<IMainWrapperprops, IState, IService
                             localChanged = {localChanged}
                             routePath={this.state.topUrl} 
                             routeLocation={location}
+                            onChangeMenuMode={this.handleSideModeChange}
                             isWaitHttpRequest={this.props.globalState.isWaitHttpRequest}/>
                         )
                     }
@@ -85,6 +87,10 @@ class MainLayout extends CaseCommon.PageBase<IMainWrapperprops, IState, IService
 
     private handleTopMenuChange = (routePath: string) => {
         this.setState({ topUrl: routePath });
+    }
+
+    private handleSideModeChange = (isCollapsed: boolean) => {
+        this.setState({sideCollapsed: isCollapsed});
     }
 
     private initRoutePage(){

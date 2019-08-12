@@ -18,6 +18,7 @@ interface IMainContentProps {
   isWaitHttpRequest: boolean;
   localChanged: boolean;
   routeLocation: any;
+  onChangeMenuMode: (isCollapsed: boolean) => void;
 }
 
 export default class MainContent extends React.Component<IMainContentProps> {
@@ -37,7 +38,7 @@ export default class MainContent extends React.Component<IMainContentProps> {
     return (
 
       <Layout>
-          <Sider sideRegs={sideRegs} routeLocation={this.props.routeLocation} />
+          <Sider sideRegs={sideRegs} routeLocation={this.props.routeLocation} onChangeMenuMode={this.props.onChangeMenuMode}/>
           
           {/* this.props.globalState.isWaitHttpRequest */}
           <Layout>

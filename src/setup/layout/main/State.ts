@@ -7,9 +7,11 @@ export interface IMessageRow {
 export interface IState {
     msgRows: IMessageRow[];
     topUrl: string;
+    sideCollapsed: boolean;
 }
 
 export const initState: IState = {
     msgRows: [],
-    topUrl: ''
+    topUrl: '',
+    sideCollapsed: false
 };
