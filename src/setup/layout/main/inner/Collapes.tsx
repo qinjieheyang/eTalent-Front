@@ -11,15 +11,7 @@ interface ICollapesProps {
 export class Collapes extends React.Component<ICollapesProps> {
   public render() {
     return (
-      <div
-        id="logo"
-        style={{
-          height: "40px",
-          background: "rgba(255, 255, 255, 0.2)",
-          margin: "1px ",
-          textAlign: "center"
-        }}
-      >
+      <div className="qj-collapes">
         <Icon
           style={{
             fontSize: "18px",

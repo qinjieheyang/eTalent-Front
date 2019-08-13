@@ -132,17 +132,21 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
     const treeData = this.state.treeData;
 
     return (
-      <Layout>
+      <Layout style={{height:'100%'}}>
         <Layout.Sider style={{ background: '#fff' }}>
-          <div>
+          <div style={{paddingLeft:10,lineHeight: "40px"}}>
             <span>显示封存：</span>
             <Switch checked={this.showAll} onChange={this.onShowChange} />
           </div>
-          <DepartTree treeData={treeData} showAll={this.showAll}/>
+          {
+            treeData.length?<DepartTree treeData={treeData} showAll={this.showAll}/>:null
+          }
         </Layout.Sider>
-        <Layout.Content>
-          <Table columns={columns} dataSource={data} bordered rowSelection={rowSelection} onChange={this.onChange} />
-        </Layout.Content>
+        <Layout>
+          <Layout.Content>
+            <Table columns={columns} dataSource={data} bordered rowSelection={rowSelection} onChange={this.onChange} />
+          </Layout.Content>
+        </Layout>
       </Layout>
     );
   }

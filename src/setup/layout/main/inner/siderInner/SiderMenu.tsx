@@ -20,7 +20,7 @@ export class SiderMenu extends React.Component<ISiderMenuProps> {
     // console.log(defaultOpenKeys,selectedKeys,this.props.urlPath)
     return (
       <Menu
-        theme="dark"
+        className="qj-side-menu"
         mode="inline"
         defaultOpenKeys={defaultOpenKeys}
         selectedKeys={selectedKeys}

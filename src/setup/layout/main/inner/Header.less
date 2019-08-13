@@ -2,14 +2,15 @@
 @right-width: 300px;
 @collapse-width: 80px;
 
-.qj-header {
-    background: #fff;
+.qj-header.ant-layout-header {
+    background: #1890ff;
     padding: 0;
+    color: #fff;
 }
 
 .qj-logo {
     float: left;
-    background: #001529;
+    background: #1890ff;
     width: @left-width;
     transition: all 0.2s;
     overflow: hidden;
@@ -23,14 +24,13 @@
 .qj-header-center {
     margin-left: @left-width;
     margin-right: @right-width;
-    padding: 5px 25px 5px 5px;
+    padding-top: 5px;
 }
 
 .qj-header-right {
     position: absolute;
     right: 0;
     top: 0;
-    padding: 5px 25px 5px 5px;
 }
 .qj-header-collapsed {
     > .qj-logo {
@@ -39,5 +39,30 @@
     }
     > .qj-header-center {
         margin-left: @collapse-width;
+    }
+}
+
+
+.qj-header-menu.ant-menu-horizontal{
+    background: #1890ff;
+    line-height: 54px;
+    > .ant-menu-item {
+        margin: 0 15px;
+        padding: 0 5px;
+        > a{
+            color: #fff;
+            font-size: 16px;
+            &:hover{
+                font-weight: bold;
+            }
+        }
+        &:hover {
+            color: #fff;
+            border-bottom: 2px solid #fff;
+        }
+    }
+    > .ant-menu-item-selected {
+        color: #fff;
+        border-bottom: 2px solid #fff;
     }
 }

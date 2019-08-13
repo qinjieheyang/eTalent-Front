@@ -19,22 +19,17 @@ export default class DepartTree extends React.Component<IDepartTreeProps> {
   public render() {
     
     return (
-      
-      <div>
-        <Tree
-            showLine
-            // onExpand={this.onExpand}
-            // expandedKeys={this.state.expandedKeys}
-            // autoExpandParent={this.state.autoExpandParent}
-            // onCheck={this.onCheck}
-            // checkedKeys={this.state.checkedKeys}
-            // onSelect={this.onSelect}
-            // selectedKeys={this.state.selectedKeys}
-          >
-            {this.renderTreeNodes(this.props.treeData)}
-        </Tree>
-      </div>
-
+      <Tree
+          // onExpand={this.onExpand}
+          defaultExpandedKeys={['0-0-0', '0-0-1']}
+          // autoExpandParent={this.state.autoExpandParent}
+          // onCheck={this.onCheck}
+          // checkedKeys={this.state.checkedKeys}
+          // onSelect={this.onSelect}
+          // selectedKeys={this.state.selectedKeys}
+        >
+          {this.renderTreeNodes(this.props.treeData)}
+      </Tree>
     );
   }
 

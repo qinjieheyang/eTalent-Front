@@ -20,7 +20,7 @@ export default class TopMenu extends React.Component<ITopMenuProps> {
     const selectedKeys = this.getActionMenuKey(this.props.topUrl);
     
     return (
-      <Menu onClick={this.handleClick} selectedKeys={selectedKeys} mode="horizontal">
+      <Menu onClick={this.handleClick} selectedKeys={selectedKeys} mode="horizontal" className="qj-header-menu">
         {this.getMenuItems(this.props.topRegs)}
       </Menu>
     );
