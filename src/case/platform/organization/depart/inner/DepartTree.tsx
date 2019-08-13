@@ -17,8 +17,7 @@ export default class DepartTree extends React.Component<IDepartTreeProps> {
   }
   
   public render() {
-    const treeData = this.props.treeData;
-    console.log(treeData,33)
+    
     return (
       
       <div>
@@ -32,14 +31,14 @@ export default class DepartTree extends React.Component<IDepartTreeProps> {
             // onSelect={this.onSelect}
             // selectedKeys={this.state.selectedKeys}
           >
-            {this.renderTreeNodes(treeData)}
+            {this.renderTreeNodes(this.props.treeData)}
         </Tree>
       </div>
 
     );
   }
 
-  private renderTreeNodes = (data: any) =>{
+  private renderTreeNodes = (data: Array<any>) => {
     return data.map((item: any) => {
       if (item.children) {
         return (

@@ -6,7 +6,7 @@ export class ServiceMock {
     public constructor() {}
 
     // 数据初始化
-    public getInit = async (): Promise<ITreeBase> => {
+    public getInit = async (): Promise<ITreeBase[]> => {
         const  treeData: ITreeBase = {
             id: '0-0',
             name: '中国雄安投资集团',
@@ -35,7 +35,7 @@ export class ServiceMock {
                 },
             ],
         } ;
-        return treeData;
+        return [treeData];
     };
 }
 

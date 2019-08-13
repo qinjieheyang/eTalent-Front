@@ -6,7 +6,7 @@ import { ITreeBase } from "./State";
 
 export class Service extends Framework.Case.ServiceBase implements IService {
     // 数据初始化
-    public getInit = async (): Promise<ITreeBase> => {
+    public getInit = async (): Promise<ITreeBase[]> => {
         const data = await this.http.get("/api/org/departTree");
         return data;
     };

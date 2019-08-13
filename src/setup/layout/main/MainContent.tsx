@@ -7,7 +7,7 @@ import { mainRegs} from "../../../case/mainRegs";
 import NoMatch from "../../NoMatch";
 import { Sider } from "./inner/Sider";
 import Content from "./inner/Content";
-import Footer from "./inner/Footer";
+// import Footer from "./inner/Footer";
 // import reg from 'src/case/report/viewReport/Reg';
 
 // import { mainRegs } from "../../../case/mainRegs";

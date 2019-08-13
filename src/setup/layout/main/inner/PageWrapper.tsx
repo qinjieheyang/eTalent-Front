@@ -12,11 +12,9 @@ export default class PageWrapper extends React.Component<IPageWrapper> {
   public render() {
     return (
       <div style={{overflowY:'auto',overflowX:'hidden', height:'100%'}}>
-          <div style={{padding: "24px 16px"}}>
-          {
-            this.props.page
-          }
-          </div>
+        {
+          this.props.page
+        }
       </div>
     );
   }

@@ -125,13 +125,12 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
 
   public async init(){
     const treeData = await this.service.getInit();
-    console.log(treeData,0)
     this.setState({treeData});
   }
   
   public render() {
     const treeData = this.state.treeData;
-    console.log(treeData,111)
+
     return (
       <Layout>
         <Layout.Sider style={{ background: '#fff' }}>

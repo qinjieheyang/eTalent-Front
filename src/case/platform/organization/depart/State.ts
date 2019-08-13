@@ -15,5 +15,5 @@ export interface IState {
 }
 
 export const initState= { 
-    treeData:{}
+    treeData:[]
 };
