@@ -17,9 +17,10 @@ export default class DepartTree extends React.Component<IDepartTreeProps> {
   }
   
   public render() {
-    const treeData = [this.props.treeData];
+    const treeData = this.props.treeData;
     console.log(treeData,33)
     return (
+      
       <div>
         <Tree
             showLine
