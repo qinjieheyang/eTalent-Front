@@ -50,7 +50,7 @@ export default class MainContent extends React.Component<IMainContentProps> {
                       <Route component={NoMatch} />
                   </Switch>
               </Content>
-              <Footer />
+              {/* <Footer /> */}
           </Layout>
       </Layout>
     );

@@ -2,14 +2,12 @@
 
 import Framework from "src/framework/Framework";
 import { IService } from "./ServiceMock";
-import { IState } from "./State";
+import { ITreeBase } from "./State";
 
 export class Service extends Framework.Case.ServiceBase implements IService {
     // 数据初始化
-    public getInit = async (): Promise<{
-        initData: IState;
-    }> => {
-        const data = await this.http.get("/api/home/getInit");
+    public getInit = async (): Promise<ITreeBase> => {
+        const data = await this.http.get("/api/org/departTree");
         return data;
     };
 }

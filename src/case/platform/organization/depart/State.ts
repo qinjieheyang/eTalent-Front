@@ -1,19 +1,19 @@
-import * as Framework from 'src/framework/Framework';
- 
-interface Row{
-    id:string ;
-    name:string;
-    departmentId:string ;
-}
- 
-class  State implements  Framework.Case.Model.IModelTablePageCurd {
-    rows: Row[] =[];    
-    rowTotal: number=0;
-    creatingRow?: object | undefined;
-    editingRow?: object | undefined;
-    isDisplaySearchForm: boolean;
-    searchDto: Framework.Case.Model.IPaging|any;
+// import * as Framework from 'src/framework/Framework';
+
+export interface ITreeBase {
+    id: string; //key
+    name: string; //title
+    icon?: string;
+    disabled?: boolean;
+    selectable?: boolean;
+    isLeaf?: boolean;
+    children?: ITreeBase[];
 }
 
-export const initState= {...new State()};
-export interface IState extends State{};
+export interface IState {
+    treeData: ITreeBase| any;
+}
+
+export const initState= { 
+    treeData:{}
+};

@@ -21,16 +21,17 @@ import { initState, IState } from "./State";
 
 const topRegs = mainRegs.getTopRegs();
 
-interface IMainWrapperprops
+interface IMainWrapperProps
     extends GlobalRedux.States.IGlobalStateProps,
         GlobalRedux.Actions.IGlobalActionDispatcher,
         RouteComponentProps {}
 
 // CaseCommon.PageBase<IPageProps, IState ,IService>
-class MainLayout extends CaseCommon.PageBase<IMainWrapperprops, IState, IService> {
+
+class MainLayout extends CaseCommon.PageBase<IMainWrapperProps, IState, IService> {
     // public state = initState;
     private oldLocalPath: string;
-    constructor(props: IMainWrapperprops) {
+    constructor(props: IMainWrapperProps) {
         super(props, Const, ServiceMock, Service);
         this.state = initState;
     }
