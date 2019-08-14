@@ -3,93 +3,86 @@ import * as React from "react";
 
 const { TabPane } = Tabs;
 
-const columns: any  = [
+const columns: any = [
   {
-    title: 'Name',
+    title: 'Full Name',
+    width: 100,
     dataIndex: 'name',
-    filters: [
-      {
-        text: 'Joe',
-        value: 'Joe',
-      },
-      {
-        text: 'Jim',
-        value: 'Jim',
-      },
-      {
-        text: 'Submenu',
-        value: 'Submenu',
-        children: [
-          {
-            text: 'Green',
-            value: 'Green',
-          },
-          {
-            text: 'Black',
-            value: 'Black',
-          },
-        ],
-      },
-    ],
-    // specify the condition of filtering result
-    // here is that finding the name started with `value`
-    onFilter: (value: any, record: any) => record.name.indexOf(value) === 0,
-    sorter: (a: any, b: any) => a.name.length - b.name.length,
-    sortDirections: ['descend'],
+    key: 'name',
+    fixed: 'left',
   },
   {
     title: 'Age',
+    width: 100,
     dataIndex: 'age',
-    defaultSortOrder: 'descend',
-    sorter: (a: any, b: any) => a.age - b.age,
+    key: 'age',
+    fixed: 'left',
   },
   {
-    title: 'Address',
+    title: 'Column 1',
     dataIndex: 'address',
-    filters: [
-      {
-        text: 'London',
-        value: 'London',
-      },
-      {
-        text: 'New York',
-        value: 'New York',
-      },
-    ],
-    filterMultiple: false,
-    onFilter: (value: any, record: any)  => record.address.indexOf(value) === 0,
-    sorter: (a: any, b: any) => a.address.length - b.address.length,
-    sortDirections: ['descend', 'ascend'],
-  },
-];
-
-const data = [
-  {
     key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
+    width: 150,
   },
   {
+    title: 'Column 2',
+    dataIndex: 'address',
     key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
+    width: 150,
   },
   {
+    title: 'Column 3',
+    dataIndex: 'address',
     key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
+    width: 150,
   },
   {
+    title: 'Column 4',
+    dataIndex: 'address',
     key: '4',
-    name: 'Jim Red',
-    age: 32,
-    address: 'London No. 2 Lake Park',
+    width: 150,
+  },
+  {
+    title: 'Column 5',
+    dataIndex: 'address',
+    key: '5',
+    width: 150,
+  },
+  {
+    title: 'Column 6',
+    dataIndex: 'address',
+    key: '6',
+    width: 150,
+  },
+  {
+    title: 'Column 7',
+    dataIndex: 'address',
+    key: '7',
+    width: 150,
+  },
+  { title: 'Column 8', dataIndex: 'address', key: '8' },
+  {
+    title: 'Action',
+    key: 'operation',
+    fixed: 'right',
+    width: 100,
+    render: () => <a href="javascript:;">action</a>,
   },
 ];
 
+
+const getData = (): any =>{
+  const data: Array<any> = [];
+  for (let i = 0; i < 100; i++) {
+    data.push({
+      key: i,
+      name: `Edrward ${i}`,
+      age: 32,
+      address: `London Park no. ${i}`,
+    });
+  }
+  return data;
+}
 
 const rowSelection = {
   onChange: (selectedRowKeys: any, selectedRows: any) => {
@@ -111,18 +104,48 @@ const menu = (
   </Menu>
 );
 
+const getViewportOffset = ():any => {
+  if(window.innerWidth){
+      return{
+          w:window.innerWidth,
+          h:window.innerHeight
+      }
+  }else{
+      if(document.compatMode==='BackCompat'){
+          return{
+              w:document.body.clientWidth,
+              h:document.body.clientHeight
+          }
+      }else{
+          return{
+              w:document.documentElement.clientWidth,
+              h:document.documentElement.clientHeight
+          }
+      }
+  }
+}
+
+const computerHeight = (): number =>{
+  const viewport = getViewportOffset();
+  if(viewport && viewport.h && viewport.h>318){
+    return viewport.h - 318;
+  }
+  return 0;
+}
+
+
 interface IContentProps {
  
 }
 
-// interface IContentState {
-//   scroll: any | undefined
-// }
-
 export default class Content extends React.Component<IContentProps> {
   public state: any ={
-    scroll: undefined
+    scroll: { 
+      x: '130%',
+      y: undefined
+    }
   }
+
 
   constructor(props: IContentProps) {
     super(props);
@@ -132,19 +155,21 @@ export default class Content extends React.Component<IContentProps> {
   }
 
   componentDidMount(){
-    // console.log(this.refs['departTable'])
-    // console.log(this.refs["departTableWrapper"], 4444)
-    // React.ReactInstance
-    // const {clientWidth, clientHeight} = this.refs["departTableWrapper"];
+    window.addEventListener("resize", this.reloadLayout)
+    this.reloadLayout();
 
-    this.reloadLayout(this.refs["departTableWrapper"]);
+  }
+
+  componentWillUnmount(){
+
+    window.removeEventListener("resize", this.reloadLayout);
 
   }
 
   public render() {
-
+    
     return (
-      <Layout.Content ref="departContent" className="qj-depart-content" style={{margin:"16px 16px 0 16px",background:"#fff"}}>
+      <Layout.Content className="qj-depart-content" style={{margin:"16px 16px 0 16px",background:"#fff"}}>
         <Tabs size="large" animated={false}>
           <TabPane tab="机构表" key="1" className="qj-depart-tab-pane">
             <div style={{marginBottom:16}}>
@@ -154,18 +179,16 @@ export default class Content extends React.Component<IContentProps> {
                 <Button type="link"><Icon type="more" />更多</Button>
               </Dropdown>
             </div>
-            <div ref="departTableWrapper" className="qj-depart-table-wrapper">
-              <Table
-                ref="departTable"
-                className="qj-depart-table"
-                columns={columns}
-                dataSource={data} 
-                rowSelection={rowSelection} 
-                onChange={this.onChange}
-                pagination={false}
-                scroll={this.state.scroll}
-              />
-            </div>
+            <Table
+              ref="departTable"
+              className="qj-depart-table"
+              columns={columns}
+              dataSource={getData()} 
+              rowSelection={rowSelection} 
+              // onChange={this.onChange}
+              pagination={false}
+              scroll={this.state.scroll}
+            />
             <Pagination 
               showQuickJumper 
               showSizeChanger 
@@ -187,13 +210,11 @@ export default class Content extends React.Component<IContentProps> {
     );
   }
 
-  private onChange = (pagination: any, filters: any, sorter: any) => {
-    console.log('params', pagination, filters, sorter);
-  }
-
-  private reloadLayout = (dom: any|undefined) => {
-    if(dom){
-      // this.setState({scroll:{y: dom.clientHeight-64}});
+  private reloadLayout = () => {
+    let height:number|undefined = computerHeight();
+    if(height > getData().length*54) {
+      height = undefined;
     }
+    this.setState({scroll:{ x:"130%",y: height }});
   }
 }

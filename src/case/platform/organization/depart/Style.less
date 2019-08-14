@@ -45,27 +45,22 @@
         border-top: 1px solid #e8e8e8;
         background: #fff;
     }
-    .qj-depart-table-wrapper{
-        height: calc(100vh - 264px);
-        margin-bottom: 64px;
-        // overflow: auto;
-        .ant-table-tbody{
-            height: calc(100vh - 317px);
-            overflow: auto;
-        }
-    }
     .qj-depart-table {
-        
-        .ant-table-tbody{
-            height: calc(100vh - 317px);
-            overflow: auto;
-        }
+        height: calc(100vh - 264px);
+        overflow: hidden;
+        // .ant-table-tbody{
+        //     height: calc(100vh - 417px);
+        //     overflow-y: auto;
+        // }
         // margin-bottom: 64px;
         // .ant-table{
         //     // height: calc(100vh - 264px);
         // }
-        // .ant-table-header{
-        //     overflow-y:hidden;
-        // }
+    }
+    .ant-table-thead > tr > th{
+        white-space:nowrap;
+    }
+    .ant-table-row td{
+        white-space:nowrap;
     }
 }

@@ -29,7 +29,6 @@
         "redux": "^4.0.4"
     },
     "devDependencies": {
-        "@types/antd": "1.0.0",
         "@types/jest": "24.0.11",
         "@types/lodash": "^4.14.134",
         "@types/node": "11.13.8",
@@ -58,7 +57,7 @@
         "tslint": "5.16.0",
         "tslint-config-prettier": "1.18.0",
         "tslint-react": "4.0.0",
-        "typescript": "3.4.5",
+        "typescript": "^3.5.3",
         "webpack": "4.28.2",
         "webpack-cli": "3.3.1",
         "webpack-dev-server": "3.3.1",
