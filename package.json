@@ -14,7 +14,7 @@
     "license": "ISC",
     "dependencies": {
         "@antv/data-set": "0.10.2",
-        "antd": "3.19.2",
+        "antd": "^3.21.4",
         "axios": "0.18.0",
         "better-scroll": "^1.15.2",
         "bizcharts": "3.5.2",
