@@ -1,5 +1,5 @@
 .qj-sidebar.ant-layout-sider {
-  height: 100vh;
+  height: calc(100vh - 64px);
   overflow-x: hidden;
   overflow-y: auto;
   &::-webkit-scrollbar {
@@ -16,19 +16,10 @@
   text-align: center;
 }
 
-.qj-side-menu{
+.qj-side-menu.ant-menu-inline{
   background: #eff3f6;
+  border: none;
   .ant-menu-submenu > .ant-menu{
     background: #eff3f6;
-  }
-  > .ant-menu-item {
-      &:hover {
-          color: #fff;
-          border-bottom: 2px solid #fff;
-      }
-  }
-  > .ant-menu-item-selected {
-      color: #fff;
-      border-bottom: 2px solid #fff;
   }
 }
