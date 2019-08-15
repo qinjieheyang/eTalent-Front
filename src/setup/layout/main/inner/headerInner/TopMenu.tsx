@@ -27,7 +27,9 @@ export default class TopMenu extends React.Component<ITopMenuProps> {
   }
 
   private handleClick = (item:any) => {
-    this.props.onMenuChange(item.key);
+    if(this.props.topUrl !== item.key){
+      this.props.onMenuChange(item.key);
+    }
   };
 
   private getTopMenuItem = (topReg: any) =>{

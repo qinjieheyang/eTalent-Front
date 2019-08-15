@@ -1,6 +1,6 @@
 import { Layout } from "antd";
 import * as React from "react";
-import PageLoader from "./PageLoader";
+// import PageLoader from "./PageLoader";
 import PageWrapper from "./PageWrapper";
 
 
@@ -13,14 +13,15 @@ export default class Content extends React.Component<IContentProps> {
     super(props);
   }
 
-  public ini(): void {}
+  public init(): void {}
 
   public render() {
     // if (CF.isCurrentUserLogin() === false) {
     //   return <Redirect to={{ pathname: "/page/login" }} />;
     // }
-    let {isWaitHttpRequest} = this.props;
+    // let {isWaitHttpRequest} = this.props;
     // isWaitHttpRequest = true;
+    console.log(this.props.children,222)
     return (
       <Layout.Content
         id="Layout.Content"
@@ -32,8 +33,9 @@ export default class Content extends React.Component<IContentProps> {
           flex: "none"
         }}
       >
+        <PageWrapper page={this.props.children} />
         {
-          isWaitHttpRequest?<PageLoader />:<PageWrapper page={this.props.children} />
+          // isWaitHttpRequest?<PageLoader />:<PageWrapper page={this.props.children} />
         }
       </Layout.Content>
     );

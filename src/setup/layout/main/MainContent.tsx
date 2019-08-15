@@ -16,14 +16,13 @@ const topRegs = mainRegs.getTopRegs();
 interface IMainContentProps {
   routePath: string;
   isWaitHttpRequest: boolean;
-  localChanged: boolean;
   routeLocation: any;
-  onChangeMenuMode: (isCollapsed: boolean) => void;
 }
 
 export default class MainContent extends React.Component<IMainContentProps> {
   constructor(props: any) {
     super(props);
+    console.log(888)
   }
 
   // shouldComponentUpdate(){
@@ -35,10 +34,11 @@ export default class MainContent extends React.Component<IMainContentProps> {
     //获取sideregs,将Reg封装到RegCollection中
     const sideRegs = mainRegs.getSideRegsByRoutePath(this.props.routePath);
     const topReg = mainRegs.getTopRegByRoutePath(this.props.routePath);
+    // console.log(22222)
     return (
 
       <Layout>
-          <Sider sideRegs={sideRegs} routeLocation={this.props.routeLocation} onChangeMenuMode={this.props.onChangeMenuMode}/>
+          <Sider sideRegs={sideRegs} routeLocation={this.props.routeLocation} />
           
           {/* this.props.globalState.isWaitHttpRequest */}
           <Layout>

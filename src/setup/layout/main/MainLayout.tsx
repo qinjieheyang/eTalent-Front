@@ -30,18 +30,19 @@ interface IMainWrapperProps
 
 class MainLayout extends CaseCommon.PageBase<IMainWrapperProps, IState, IService> {
     // public state = initState;
-    private oldLocalPath: string;
+    public topUrl: string ="/";
+    // public sideCollapsed: boolean;
+
     constructor(props: IMainWrapperProps) {
         super(props, Const, ServiceMock, Service);
         this.state = initState;
+        this.initRoutePage();
     }
 
     public async init() {
         const initData = await this.service.getInit();
         this.setState({ msgRows: initData.msgRows, topUrl: initState.topUrl });
         this.props.globalSetUserInfo(initData.currentUser);
-        this.initRoutePage();
-        console.log("initRoutePage")
     }
 
     public render() {
@@ -49,12 +50,7 @@ class MainLayout extends CaseCommon.PageBase<IMainWrapperProps, IState, IService
             return <Redirect to={{ pathname: "/out/login" }} />;
         }
         const {location} = this.props;
-        let localChanged: boolean = false;
-        // console.log(this.oldLocalPath,location.pathname)
-        if(this.oldLocalPath != location.pathname){
-            localChanged = true;
-            this.oldLocalPath = location.pathname;
-        }
+
         return (
             <LocaleProvider locale={zh_CN}>
                 <Layout>
@@ -63,19 +59,12 @@ class MainLayout extends CaseCommon.PageBase<IMainWrapperProps, IState, IService
                         onMenuChange={this.handleTopMenuChange}
                         messages={this.state.msgRows}
                         topRegs={topRegs}
-                        topUrl={this.state.topUrl}
-                        logoCollapsed={this.state.sideCollapsed}
+                        topUrl={this.topUrl}
                     />
-                    {
-                        (this.state.topUrl === '')? null : (
-                        <MainContent 
-                            localChanged = {localChanged}
-                            routePath={this.state.topUrl} 
-                            routeLocation={location}
-                            onChangeMenuMode={this.handleSideModeChange}
-                            isWaitHttpRequest={this.props.globalState.isWaitHttpRequest}/>
-                        )
-                    }
+                    <MainContent 
+                        routePath={this.topUrl} 
+                        routeLocation={location}
+                        isWaitHttpRequest={this.props.globalState.isWaitHttpRequest}/>
                 </Layout>
             </LocaleProvider>
         );
@@ -88,18 +77,18 @@ class MainLayout extends CaseCommon.PageBase<IMainWrapperProps, IState, IService
     };
 
     private handleTopMenuChange = (routePath: string) => {
-        this.setState({ topUrl: routePath });
+        this.topUrl = routePath;
     }
 
-    private handleSideModeChange = (isCollapsed: boolean) => {
-        this.setState({sideCollapsed: isCollapsed});
-    }
+    // private handleSideModeChange = (isCollapsed: boolean) => {
+    //     this.sideCollapsed = isCollapsed;
+    // }
 
     private initRoutePage(){
         const localPath = this.props.location.pathname;
         mainRegs.getAllRegs().forEach(reg => {
             if(reg.routePath == localPath){
-                this.setState({topUrl: reg.topPath});
+                this.topUrl = reg.topPath;
             }
         })
     }

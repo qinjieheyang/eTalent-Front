@@ -23,11 +23,19 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
 
   constructor(props: IPageProps) {
     super(props, Const, ServiceMock, Service);
+    console.log(props)
+  }
+
+  componentWillReceiveProps(nextProps: any) {
+    console.log(333)
+    console.log(nextProps)
   }
 
   public async init(){
-    // const treeData = await this.service.getInit();
-    // this.setState({treeData});
+    // console.log(111)
+    const treeData = await this.service.getInit();
+    this.setState({treeData});
+    // console.log(222)
   }
   
   public render() {

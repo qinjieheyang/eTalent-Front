@@ -6,7 +6,7 @@ import { SiderMenu } from "./siderInner/SiderMenu";
 import "./Sider.less";
 interface ISiderProps {
   sideRegs: Framework.Case.RegCollection;
-  onChangeMenuMode: (isCollapsed: boolean) => void;
+  // onChangeMenuMode: (isCollapsed: boolean) => void;
   routeLocation: any;
 }
 interface ISiderState {
@@ -61,7 +61,19 @@ export class Sider extends React.Component<ISiderProps, ISiderState> {
       expansionMode: this.state.collapsed
     });
     
-    this.props.onChangeMenuMode(!this.state.collapsed);
+    // this.props.onChangeMenuMode(!this.state.collapsed);
+
+    const head = document.getElementById("topHeader");
+    const logo = document.getElementById("logo-img");
+
+    if(head){
+      this.state.collapsed ? head.classList.remove("qj-header-collapsed") : head.classList.add("qj-header-collapsed");
+    }
+    
+    if(logo){
+      logo.setAttribute("src", this.state.collapsed ? "/img/logo.png" : "/img/logo-collapsed.png")
+    }
+
   };
 
   // private handleMouserEnter = () =>{

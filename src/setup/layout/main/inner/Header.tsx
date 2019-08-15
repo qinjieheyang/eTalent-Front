@@ -18,7 +18,6 @@ interface IHeaderProps {
     messages: IMessageRow[];
     topRegs: Framework.Case.Reg[];
     topUrl: string;
-    logoCollapsed: boolean;
 }
 
 export default class Header extends React.Component<IHeaderProps> {
@@ -27,11 +26,12 @@ export default class Header extends React.Component<IHeaderProps> {
     }
 
     public render() {
+        // console.log(111)
         return (
-            <Layout.Header className={["qj-header",this.props.logoCollapsed?"qj-header-collapsed":""].join(' ')}>
+            <Layout.Header id="topHeader" className="qj-header">
                 <div className="qj-logo">
                     <Link to={"/"} onClick={() => this.props.onMenuChange('/')}>
-                        <img src={this.props.logoCollapsed?"/img/logo-collapsed.png":"/img/logo.png"} className="qj-logo-img" />
+                        <img src="/img/logo.png" className="qj-logo-img" id="logo-img"/>
                     </Link>
                 </div>
                 <div className="qj-header-center">
