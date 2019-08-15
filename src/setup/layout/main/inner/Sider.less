@@ -1,10 +1,36 @@
-@txt-color: #ff8c58;
-@bg-color: #666c7b;
-@menu-highlight-color: #ff8c58;
+@txt-color: #FFF;
+@bg-color: #666C7B;
 
-@menu-prefix-cls: ~'ant-menu';
+.ant-menu {
+    
+    &-vertical &-submenu-selected,
+    &-vertical-left &-submenu-selected,
+    &-vertical-right &-submenu-selected {
+        a:hover {
+            color: @txt-color;
+        }
+    }
+
+    &-item-selected {
+        color: @txt-color;
+        > a,
+        > a:hover {
+          color: @txt-color;
+        }
+    }
+    &-item&-item-active{
+        >a {
+            color: @txt-color;
+        }
+    }
+
+    &-submenu-arrow {
+        right: 24px;
+    }
+}
 
 .qj-sidebar.ant-layout-sider {
+
     font-size: 16px;
     height: calc(100vh - 64px);
     overflow-x: hidden;
@@ -13,50 +39,13 @@
         display: none;
     }
     background: @bg-color;
-    border-right: 1px solid #e8e8e8;
 
-    .ant-menu {
-
-      //submenu折叠后，鼠标经过效果
-      .ant-menu-vertical .ant-menu-submenu-selected,
-      .ant-menu-vertical-left .ant-menu-submenu-selected,
-      .ant-menu-vertical-right .ant-menu-submenu-selected {
-        color: @menu-highlight-color;
-        > a {
-          color: @menu-highlight-color;
-        }
-      }
-      
-      &-item:hover,
-      &-item-active,
-      &:not(&-inline) &-submenu-open,
-      &-submenu-active,
-      &-submenu-title:hover {
-        color: @menu-highlight-color;
-      }
-      //
-
-    }
-
-    .ant-menu-item:hover,
-    .ant-menu-item-active,
-    .ant-menu:not(.ant-menu-inline) .ant-menu-submenu-open,
-    .ant-menu-submenu-active,
-    .ant-menu-submenu-title:hover {
-        color: @txt-color;
-    }
-    
-    .ant-menu-vertical .ant-menu-submenu-selected > a,
-    .ant-menu-vertical-left .ant-menu-submenu-selected > a,
-    .ant-menu-vertical-right .ant-menu-submenu-selected > a {
-        color: @txt-color;
-    }
 }
 .qj-collapes {
     height: 48px;
     line-height: 1.5;
-    background: #5d6474;
-    color: #fff;
+    background: @bg-color;
+    color: @txt-color;
     padding: 12px 24px;
     cursor: pointer;
     position: relative;
@@ -79,53 +68,3 @@
     }
 }
 
-.qj-side-menu.ant-menu-inline {
-    background: @bg-color;
-    border: none;
-    .ant-menu-submenu > .ant-menu {
-        background: @bg-color;
-    }
-    .ant-menu-item > a,
-    .ant-menu-submenu {
-        color: #d3d3d5;
-    }
-    .ant-menu-item-selected > a,
-    .ant-menu-item-selected > a:hover,
-    .ant-menu-item-active > a,
-    .ant-menu-item-active > a:hover {
-        color: #fff;
-    }
-    .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
-        background: #ff8c58;
-    }
-    .ant-menu-item::after {
-        border: none;
-    }
-
-    .ant-menu-submenu-arrow {
-        right: 24px;
-    }
-    .ant-menu-submenu-arrow::before,
-    .ant-menu-submenu-arrow::after {
-        background: #d3d3d5;
-    }
-
-    .ant-menu-submenu-active {
-        color: #fff;
-        .ant-menu-submenu-arrow::before,
-        .ant-menu-submenu-arrow::after {
-            background: #fff;
-        }
-    }
-    .ant-menu-submenu-selected,
-    .ant-menu-submenu-title:hover {
-        color: #fff;
-        .ant-menu-submenu-arrow::before {
-            color: #fff !important;
-        }
-    }
-    .ant-menu-item .anticon,
-    .ant-menu-submenu-title .anticon {
-        font-size: 16px;
-    }
-}

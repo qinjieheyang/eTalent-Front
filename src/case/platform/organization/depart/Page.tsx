@@ -26,8 +26,8 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
   }
 
   public async init(){
-    const treeData = await this.service.getInit();
-    this.setState({treeData});
+    // const treeData = await this.service.getInit();
+    // this.setState({treeData});
   }
   
   public render() {
