@@ -1,24 +1,26 @@
-@left-width: 200px;
+@left-width: 240px;
+@height: 64px;
 @right-width: 300px;
 @collapse-width: 80px;
-
+@bg-color: #495062;
 .qj-header.ant-layout-header {
-    background: #1890ff;
+    background: @bg-color;
     padding: 0;
     color: #fff;
+    box-shadow:0px 0px 3px 1px  rgb(37, 37, 37);
 }
 
 .qj-logo {
     float: left;
-    background: #1890ff;
-    width: @left-width;
+    width: 238px;
+    height: @height;
     transition: all 0.2s;
-    overflow: hidden;
+    box-shadow:0px -2px 3px 0px rgb(37, 37, 37);
 }
 .qj-logo-img {
     width: 200px;
     height: 50px;
-    margin: 7px 0;
+    margin: 7px 20px;
 }
 
 .qj-header-center {
@@ -34,8 +36,10 @@
 }
 .qj-header-collapsed {
     > .qj-logo {
-        width: @collapse-width;
-        padding-left: 10px;
+        width: 78px;
+    }
+    .qj-logo-img{
+        margin-left: 8px;
     }
     > .qj-header-center {
         margin-left: @collapse-width;
@@ -44,7 +48,7 @@
 
 
 .qj-header-menu.ant-menu-horizontal{
-    background: #1890ff;
+    background:  @bg-color;
     line-height: 54px;
     > .ant-menu-item {
         margin: 0 15px;

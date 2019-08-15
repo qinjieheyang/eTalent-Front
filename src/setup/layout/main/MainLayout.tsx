@@ -41,6 +41,7 @@ class MainLayout extends CaseCommon.PageBase<IMainWrapperProps, IState, IService
         this.setState({ msgRows: initData.msgRows, topUrl: initState.topUrl });
         this.props.globalSetUserInfo(initData.currentUser);
         this.initRoutePage();
+        console.log("initRoutePage")
     }
 
     public render() {

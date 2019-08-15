@@ -957,7 +957,7 @@ ansi-styles@^3.2.0, ansi-styles@^3.2.1:
 
 antd@^3.21.4:
   version "3.21.4"
-  resolved "https://registry.npm.taobao.org/antd/download/antd-3.21.4.tgz#6e5e8c6edde25ddce0aa1c666f0d6ef8d04e821e"
+  resolved "https://registry.npm.taobao.org/antd/download/antd-3.21.4.tgz?cache=0&sync_timestamp=1565683221404&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fantd%2Fdownload%2Fantd-3.21.4.tgz#6e5e8c6edde25ddce0aa1c666f0d6ef8d04e821e"
   integrity sha1-bl6Mbt3iXdzgqhxmbw1u+NBOgh4=
   dependencies:
     "@ant-design/create-react-context" "^0.2.4"

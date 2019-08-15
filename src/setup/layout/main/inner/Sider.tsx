@@ -31,6 +31,7 @@ export class Sider extends React.Component<ISiderProps, ISiderState> {
     return (
       <Layout.Sider
         className="qj-sidebar"
+        width={240}
         trigger={null}
         collapsible={true}
         collapsed={this.state.collapsed}
@@ -39,16 +40,16 @@ export class Sider extends React.Component<ISiderProps, ISiderState> {
           collapsed={this.state.collapsed}
           onClickToggle={this.handleClickToggle}
         />
-        <div
+        {/* <div
           onMouseEnter={this.handleMouserEnter}
           onMouseLeave={this.handleMouserLeave}
-        >
+        > */}
           <SiderMenu
             collapsed={this.state.collapsed}
             sideRegs={this.props.sideRegs}
             urlPath={pathname}
           />
-        </div>
+        {/* </div> */}
       </Layout.Sider>
     );
   }
@@ -63,20 +64,20 @@ export class Sider extends React.Component<ISiderProps, ISiderState> {
     this.props.onChangeMenuMode(!this.state.collapsed);
   };
 
-  private handleMouserEnter = () =>{
-    //是按钮触发的展开，直接返回
-    if(this.state.expansionMode) return;
-    this.setState({
-      collapsed: false
-    });
-    this.props.onChangeMenuMode(false);
-  }
+  // private handleMouserEnter = () =>{
+  //   //是按钮触发的展开，直接返回
+  //   if(this.state.expansionMode) return;
+  //   this.setState({
+  //     collapsed: false
+  //   });
+  //   this.props.onChangeMenuMode(false);
+  // }
 
-  private handleMouserLeave = () =>{
-    if(this.state.expansionMode) return;
-    this.setState({
-      collapsed: true
-    });
-    this.props.onChangeMenuMode(true);
-  }
+  // private handleMouserLeave = () =>{
+  //   if(this.state.expansionMode) return;
+  //   this.setState({
+  //     collapsed: true
+  //   });
+  //   this.props.onChangeMenuMode(true);
+  // }
 }

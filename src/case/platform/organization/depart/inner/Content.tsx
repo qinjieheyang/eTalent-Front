@@ -1,4 +1,4 @@
-import { Layout, Table, Tabs, Button, Icon, Dropdown, Menu, Pagination } from "antd";
+import { Layout, Table, Tabs, Button, Dropdown, Menu, Pagination } from "antd";
 import * as React from "react";
 
 const { TabPane } = Tabs;
@@ -172,11 +172,11 @@ export default class Content extends React.Component<IContentProps> {
       <Layout.Content className="qj-depart-content" style={{margin:"16px 16px 0 16px",background:"#fff"}}>
         <Tabs size="large" animated={false}>
           <TabPane tab="机构表" key="1" className="qj-depart-tab-pane">
-            <div style={{marginBottom:16}}>
-              <Button type="link"><Icon type="plus" />新增</Button>
-              <Button type="link"><Icon type="delete" />删除</Button>
+            <div className="qj-depart-btns" style={{marginBottom:16}}>
+              <Button size="small">新增</Button>
+              <Button size="small">删除</Button>
               <Dropdown overlay={menu}>
-                <Button type="link"><Icon type="more" />更多</Button>
+                <Button size="small">更多</Button>
               </Dropdown>
             </div>
             <Table

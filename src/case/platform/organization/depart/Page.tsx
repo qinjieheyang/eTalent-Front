@@ -28,16 +28,10 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
   public async init(){
     const treeData = await this.service.getInit();
     this.setState({treeData});
-    
   }
   
-  componentDidUpdate(){
-    console.log(this.refs['departContent'])
-  }
-
   public render() {
     const treeData = this.state.treeData;
-
     return (
       <Layout className="qj-depart-wrapper">
         <Sider showAll={this.showAll} treeData={treeData} onShowChange={this.onShowChange} />
@@ -54,8 +48,4 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
     
   }
 
-  // private reloadLayout = () => {
-    
-  // }
-  
 }

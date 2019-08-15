@@ -11,19 +11,29 @@ interface ISiderMenuProps {
 
 /** 功能菜单 */
 export class SiderMenu extends React.Component<ISiderMenuProps> {
+
+  public defaultOpenKeys: Array<string>;
+  public defaultSelectedKeys: Array<string>;
+
+  constructor(props: ISiderMenuProps) {
+    super(props);
+    this.defaultOpenKeys = this.getOpenTopMenuKey(this.props.urlPath);
+    this.defaultSelectedKeys = this.getActionChildMenuKey(this.props.urlPath);
+  }
+
   public render() {
     if (this.props.sideRegs == null) {
       return <div />;
     }
-    const defaultOpenKeys = this.getOpenTopMenuKey(this.props.urlPath);
-    const selectedKeys = this.getActionChildMenuKey(this.props.urlPath);
-    // console.log(defaultOpenKeys,selectedKeys,this.props.urlPath)
+    // const defaultOpenKeys = this.getOpenTopMenuKey(this.props.urlPath);
+    // const defaultSelectedKeys = this.getActionChildMenuKey(this.props.urlPath);
+    // console.log(defaultOpenKeys,defaultSelectedKeys,this.props.urlPath)
     return (
       <Menu
         className="qj-side-menu"
         mode="inline"
-        defaultOpenKeys={defaultOpenKeys}
-        selectedKeys={selectedKeys}
+        defaultOpenKeys={this.defaultOpenKeys}
+        defaultSelectedKeys={this.defaultSelectedKeys}
       >
         {getTopMenuItems(this.props.sideRegs.getTopRegs())}
       </Menu>
@@ -47,10 +57,13 @@ export class SiderMenu extends React.Component<ISiderMenuProps> {
 
   // 通过当前路由URL获取当前激活 2级菜单
   private getActionChildMenuKey(pathname: string): string[] {
-    const childReg = this.props.sideRegs.getRegByRoutePath(pathname);
-    if (childReg) {
-      Framework.Utils.UtilLog.warn("getChildMenuKey", childReg);
-      return [childReg.routePath];
+    // const childReg = this.props.sideRegs.getRegByRoutePath(pathname);
+    // if (childReg) {
+    //   // Framework.Utils.UtilLog.warn("getChildMenuKey", childReg);
+    //   return [childReg.routePath];
+    // }
+    if(pathname){
+      return [pathname];
     }
     return ['/'];
   }

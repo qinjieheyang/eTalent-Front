@@ -35,10 +35,12 @@ export function getTopMenuItem(topReg: Framework.Case.Reg) {
     <Menu.SubMenu
       key={topReg.routePath}
       title={
-        <span>
-          <Icon type={topReg.icon} />
-          <span>{topReg.title}</span>
-        </span>
+        <div>
+          <span>
+            <Icon type={topReg.icon} style={{paddingRight:14}}/>
+            <span>{topReg.title}</span>
+          </span>
+        </div>
       }
     >
       {getSubMenus(topReg)}
@@ -50,8 +52,8 @@ function getSubMenus(topReg: Framework.Case.Reg): JSX.Element[] {
   const topMenus: JSX.Element[] = Array<JSX.Element>();
   topReg.getChildren().forEach(childReg => {
     const menu = (
-      <Menu.Item key={childReg.routePath}>
-        <Link to={childReg.routePath}>{childReg.title}</Link>
+      <Menu.Item key={childReg.routePath} >
+        <Link style={{paddingLeft:30}} to={childReg.routePath}>{childReg.title}</Link>
       </Menu.Item>
     );
     topMenus.push(menu);
