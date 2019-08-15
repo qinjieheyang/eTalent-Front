@@ -11,7 +11,7 @@ interface ICollapesProps {
 export class Collapes extends React.Component<ICollapesProps> {
   public render() {
     return (
-      <div className="qj-collapes">
+      <div className="qj-collapes" onClick={this.props.onClickToggle}>
         <Icon
           style={{
             fontSize: "18px",
@@ -22,7 +22,6 @@ export class Collapes extends React.Component<ICollapesProps> {
             color: "#fff"
           }}
           type={this.props.collapsed ? "more" : "menu"}
-          onClick={this.props.onClickToggle}
         />
       </div>
     );
