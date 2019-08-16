@@ -14,4 +14,6 @@ export class GlobalActionDispatcher extends ActionDispatcherBase {
         console.log("user:"+ JSON.stringify(user))
         this.service.getInit();
     };
+
+    // public globalSetIsWait = async ()
 }

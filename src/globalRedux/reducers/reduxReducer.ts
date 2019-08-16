@@ -16,6 +16,9 @@ export function reduxReducer(oldState: IGlobalState, action: any) {
         menuRegCollection: oldState.menuRegCollection
     };
 
+    
+    isWait(oldState, action);
+
     logEnd(oldState, newState);
     return newState;
 }
@@ -23,9 +26,20 @@ export function reduxReducer(oldState: IGlobalState, action: any) {
 function logBegin(action: IAction) {
     Framework.Utils.UtilLog.info("====================================");
     Framework.Utils.UtilLog.group("==>动作  :", action.type);
+    // console.log(action,888)
 }
 
 function logEnd(oldState: IGlobalState, newState: any) {
     Framework.Utils.UtilLog.info("--新state  :", newState);
     Framework.Utils.UtilLog.groupEnd();
+}
+
+function isWait(oldState: IGlobalState, action: any) {
+    const newState: IGlobalState = {
+        codeTables: codeTables(oldState.codeTables, action),
+        isWaitHttpRequest: isWaitHttpRequest(oldState.isWaitHttpRequest, action),
+        currentUser: oldState.currentUser,
+        menuRegCollection: oldState.menuRegCollection
+    };
+    return newState;
 }

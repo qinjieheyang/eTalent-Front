@@ -15,6 +15,7 @@ import "./Header.less";
 interface IHeaderProps {
     onLoginOff: () => void;
     onMenuChange:(routePath:string) => void;
+    onThemeChange: () => void;
     messages: IMessageRow[];
     topRegs: Framework.Case.Reg[];
     topUrl: string;
@@ -39,7 +40,7 @@ export default class Header extends React.Component<IHeaderProps> {
                 <div className="qj-header-right" style={{ position: "absolute", right:0, top:0, padding: "5px 25px 5px 5px" }}>
                     <Message msgRows={this.props.messages} />
                     <Help />
-                    <Setting />
+                    <Setting onThemeChange={this.props.onThemeChange}/>
                     <LoginUser onLoginOff={this.props.onLoginOff} />
                 </div>
             </Layout.Header>

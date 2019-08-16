@@ -23,7 +23,7 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
 
   constructor(props: IPageProps) {
     super(props, Const, ServiceMock, Service);
-    console.log(props)
+    // console.log(props)
   }
 
   public async init(){

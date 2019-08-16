@@ -1,4 +1,4 @@
-import { Layout, LocaleProvider } from "antd";
+import { Layout, LocaleProvider, Spin } from "antd";
 // import "antd/dist/antd.css";
 import zh_CN from "antd/lib/locale-provider/zh_CN";
 //antd
@@ -41,8 +41,9 @@ class MainLayout extends CaseCommon.PageBase<IMainWrapperProps, IState, IService
 
     public async init() {
         const initData = await this.service.getInit();
-        this.setState({ msgRows: initData.msgRows, topUrl: initState.topUrl });
+        this.setState({ msgRows: initData.msgRows, topUrl: initState.topUrl, topLoading: false });
         this.props.globalSetUserInfo(initData.currentUser);
+        console.log(this.props,33)
     }
 
     public render() {
@@ -50,22 +51,25 @@ class MainLayout extends CaseCommon.PageBase<IMainWrapperProps, IState, IService
             return <Redirect to={{ pathname: "/out/login" }} />;
         }
         const {location} = this.props;
-
+        console.log(this.props.globalState.isWaitHttpRequest)
         return (
             <LocaleProvider locale={zh_CN}>
-                <Layout>
-                    <Header 
-                        onLoginOff={this.handleLoginOff}
-                        onMenuChange={this.handleTopMenuChange}
-                        messages={this.state.msgRows}
-                        topRegs={topRegs}
-                        topUrl={this.topUrl}
-                    />
-                    <MainContent 
-                        routePath={this.topUrl} 
-                        routeLocation={location}
-                        isWaitHttpRequest={this.props.globalState.isWaitHttpRequest}/>
-                </Layout>
+                <Spin spinning={this.state.topLoading}>
+                    <Layout>
+                        <Header 
+                            onLoginOff={this.handleLoginOff}
+                            onMenuChange={this.handleTopMenuChange}
+                            onThemeChange = {this.handleIsWait}
+                            messages={this.state.msgRows}
+                            topRegs={topRegs}
+                            topUrl={this.topUrl}
+                        />
+                        <MainContent 
+                            routePath={this.topUrl} 
+                            routeLocation={location}
+                            isWaitHttpRequest={this.props.globalState.isWaitHttpRequest}/>
+                    </Layout>
+                </Spin>
             </LocaleProvider>
         );
     }
@@ -92,6 +96,13 @@ class MainLayout extends CaseCommon.PageBase<IMainWrapperProps, IState, IService
             }
         })
     }
+
+    private handleIsWait = () =>{
+        // const action:any = GlobalRedux.Actions.GlobalAction.BrowserRefresh();
+        GlobalRedux.globalStore.dispatch(GlobalRedux.Actions.GlobalAction.BrowserRefresh());
+
+    }
+
 }
 
 export default GlobalRedux.ConnectPage.ConnectGlobal(MainLayout);

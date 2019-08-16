@@ -86,11 +86,6 @@ module.exports = {
   //   }
   // },
   plugins: [
-    //动态创建html
-    new HtmlWebpackPlugin({
-      title: "工资系统",
-      template: "src/index.html"
-    }),
     new AntDesignThemePlugin({
       indexFileName: 'src/index.html',
       antDir: path.resolve(__dirname, '../node_modules/antd'),
@@ -106,8 +101,14 @@ module.exports = {
         '@menu-item-color',
         '@menu-highlight-color',
         '@menu-item-active-bg',
-        '@menu-item-active-color'
+        '@menu-item-active-color',
+        '@logo-bg-color'
       ],
+    }),
+    //动态创建html
+    new HtmlWebpackPlugin({
+      title: "工资系统",
+      template: "src/index.html"
     })
   ]
 };

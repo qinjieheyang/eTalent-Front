@@ -32,7 +32,7 @@ class GlobalActionClass {
         return { type: ActionType.HttpRequested };
     }
 
-    public BrowserRefresh(data: any) {
+    public BrowserRefresh(data?: any) {
         return { type: ActionType.BrowserRefresh, data };
     }
 
