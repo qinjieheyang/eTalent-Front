@@ -98,7 +98,15 @@ module.exports = {
       varFile: path.resolve(__dirname, '../src/styles/_var.less'),
       mainLessFile: path.resolve(__dirname, '../src/styles/global.less'),
       themeVariables: [
-          '@primary-color'
+        '@primary-color',
+        '@menu-color',
+        '@menu-item-font-size',
+        '@menu-icon-size',
+        '@menu-bg',
+        '@menu-item-color',
+        '@menu-highlight-color',
+        '@menu-item-active-bg',
+        '@menu-item-active-color'
       ],
     })
   ]
