@@ -39,5 +39,15 @@ export default class Setting extends React.Component<ISetProps> {
     );
   };
 
-  private handleClick = () => {};
+  private handleClick = () => {
+    // console.log(window["less"])
+      window["less"].modifyVars(//更换主题颜色要这么写
+          {
+              '@primary-color': '#e64e14',
+              '@btn-primary-bg': '#5d72cc',
+          }
+      )
+      .then(() => {console.log('success')});
+  
+  };
 }
