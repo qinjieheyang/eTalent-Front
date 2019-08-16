@@ -15,5 +15,7 @@ export class GlobalActionDispatcher extends ActionDispatcherBase {
         this.service.getInit();
     };
 
-    // public globalSetIsWait = async ()
+    // public globalSetIsWait = async () => {
+
+    // }
 }

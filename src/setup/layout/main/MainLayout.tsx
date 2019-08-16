@@ -51,10 +51,10 @@ class MainLayout extends CaseCommon.PageBase<IMainWrapperProps, IState, IService
             return <Redirect to={{ pathname: "/out/login" }} />;
         }
         const {location} = this.props;
-        console.log(this.props.globalState.isWaitHttpRequest)
+        // console.log(this.props.globalState.isWaitHttpRequest)
         return (
             <LocaleProvider locale={zh_CN}>
-                <Spin spinning={this.state.topLoading}>
+                <Spin spinning={this.props.globalState.isWaitHttpRequest}>
                     <Layout>
                         <Header 
                             onLoginOff={this.handleLoginOff}
@@ -99,8 +99,10 @@ class MainLayout extends CaseCommon.PageBase<IMainWrapperProps, IState, IService
 
     private handleIsWait = () =>{
         // const action:any = GlobalRedux.Actions.GlobalAction.BrowserRefresh();
-        GlobalRedux.globalStore.dispatch(GlobalRedux.Actions.GlobalAction.BrowserRefresh());
-
+        GlobalRedux.globalStore.dispatch(GlobalRedux.Actions.GlobalAction.BrowserRefresh(true));
+        setTimeout(() =>{
+            GlobalRedux.globalStore.dispatch(GlobalRedux.Actions.GlobalAction.BrowserRefresh(false));
+        }, 1000)
     }
 
 }
