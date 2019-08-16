@@ -26,7 +26,6 @@ export default class Header extends React.Component<IHeaderProps> {
     }
 
     public render() {
-        // console.log(111)
         return (
             <Layout.Header id="topHeader" className="qj-header">
                 <div className="qj-logo">

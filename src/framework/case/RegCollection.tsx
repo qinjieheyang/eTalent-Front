@@ -86,7 +86,6 @@ export class RegCollection {
 
   //需要通过topReg拿到sideRegs
   getSideRegsByRoutePath(routePath: string): RegCollection {
-    // console.log(routePath,11)
     let topReg = this.getTopRegByRoutePath(routePath);
     const sideRegs = new RegCollection();
     if(topReg){

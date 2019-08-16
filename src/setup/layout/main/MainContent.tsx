@@ -22,19 +22,13 @@ interface IMainContentProps {
 export default class MainContent extends React.Component<IMainContentProps> {
   constructor(props: any) {
     super(props);
-    console.log(888)
   }
 
-  // shouldComponentUpdate(){
-  //   // console.log(this.props.localChanged)
-  //   return this.props.localChanged;
-  // }
 
   public render() {
     //获取sideregs,将Reg封装到RegCollection中
     const sideRegs = mainRegs.getSideRegsByRoutePath(this.props.routePath);
     const topReg = mainRegs.getTopRegByRoutePath(this.props.routePath);
-    // console.log(22222)
     return (
 
       <Layout>

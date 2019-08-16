@@ -21,7 +21,6 @@ export default class Content extends React.Component<IContentProps> {
     // }
     // let {isWaitHttpRequest} = this.props;
     // isWaitHttpRequest = true;
-    console.log(this.props.children,222)
     return (
       <Layout.Content
         id="Layout.Content"

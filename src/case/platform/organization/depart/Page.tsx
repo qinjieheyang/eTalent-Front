@@ -26,11 +26,6 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
     console.log(props)
   }
 
-  componentWillReceiveProps(nextProps: any) {
-    console.log(333)
-    console.log(nextProps)
-  }
-
   public async init(){
     // console.log(111)
     const treeData = await this.service.getInit();
