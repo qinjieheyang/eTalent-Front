@@ -30,10 +30,10 @@ export default class Setting extends React.Component<ISetProps> {
     return (
       <Menu>
         <Menu.Item>
-          <a onClick={this.handleClick}> item </a>
+          <a onClick={this.handleClick}> 主题一 </a>
         </Menu.Item>
         <Menu.Item>
-          <a onClick={this.handleClick}> item </a>
+          <a onClick={this.handleClick}> 主题二 </a>
         </Menu.Item>
       </Menu>
     );

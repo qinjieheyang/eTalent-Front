@@ -1,10 +1,11 @@
 const path = require("path");
-const webpack = require("webpack");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
+// const webpack = require("webpack");
+// const CleanWebpackPlugin = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CopyPlugin = require("copy-webpack-plugin");
+const AntDesignThemePlugin = require('antd-theme-webpack-plugin');
+// const CopyPlugin = require("copy-webpack-plugin");
 // 引入 DllReferencePlugin
-const DllReferencePlugin = webpack.DllReferencePlugin;
+// const DllReferencePlugin = webpack.DllReferencePlugin;
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 console.warn("================================ ");
 console.warn("__dirname : ", __dirname);
@@ -89,6 +90,16 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: "工资系统",
       template: "src/index.html"
+    }),
+    new AntDesignThemePlugin({
+      indexFileName: 'src/index.html',
+      antDir: path.resolve(__dirname, '../node_modules/antd'),
+      stylesDir: path.resolve(__dirname, '../src/styles'),
+      varFile: path.resolve(__dirname, '../src/styles/_var.less'),
+      mainLessFile: path.resolve(__dirname, '../src/styles/global.less'),
+      themeVariables: [
+          '@primary-color'
+      ],
     })
   ]
 };
