@@ -68,7 +68,7 @@ module.exports = merge(common, {
             manifest: require("../dll/dev/vendor.manifest.json")
         }),
         //复制
-        new CopyPlugin([{ from: path.resolve("dll/dev"), to: "" }, { from: path.resolve("assets"), to: "" }]),
+        new CopyPlugin([{ from: path.resolve("dll/dev"), to: "" }, { from: path.resolve("public"), to: "" }]),
         //css独立打包
         new MiniCssExtractPlugin({
             filename: "[name].css",
