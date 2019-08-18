@@ -33,6 +33,7 @@ export function getTopMenuItem(topReg: Framework.Case.Reg) {
 
   return (
     <Menu.SubMenu
+      className="qj-side-menu-submenu"
       key={topReg.routePath}
       title={
         <div>

@@ -43,7 +43,6 @@ class MainLayout extends CaseCommon.PageBase<IMainWrapperProps, IState, IService
         const initData = await this.service.getInit();
         this.setState({ msgRows: initData.msgRows, topUrl: initState.topUrl, topLoading: false });
         this.props.globalSetUserInfo(initData.currentUser);
-        console.log(this.props,33)
     }
 
     public render() {

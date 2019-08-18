@@ -2,13 +2,10 @@
 @height: 64px;
 @right-width: 300px;
 @collapse-width: 80px;
-@bg-color: #495062;
-@txt-color: #fff;
+
 .qj-header.ant-layout-header {
-    background: @bg-color;
     padding: 0;
-    color: @txt-color;
-    box-shadow:0px 0px 3px 1px  rgb(37, 37, 37);
+    box-shadow: 0px 0px 3px 1px rgb(37, 37, 37);
 }
 
 .qj-logo {
@@ -16,7 +13,7 @@
     width: 239px;
     height: @height;
     transition: all 0.2s;
-    box-shadow:0px -2px 3px rgb(37, 37, 37);
+    box-shadow: 0px -2px 3px rgb(37, 37, 37);
 }
 .qj-logo-img {
     width: 200px;
@@ -27,20 +24,21 @@
 .qj-header-center {
     margin-left: @left-width;
     margin-right: @right-width;
-    padding-top: 5px;
-    padding-left: 25px;
+    
 }
 
 .qj-header-right {
     position: absolute;
     right: 0;
     top: 0;
+    padding: 5px 25px 5px 5px;
 }
+
 .qj-header-collapsed {
     > .qj-logo {
         width: 79px;
     }
-    .qj-logo-img{
+    .qj-logo-img {
         margin-left: 8px;
     }
     > .qj-header-center {
@@ -48,33 +46,15 @@
     }
 }
 
-
-.qj-header-menu.ant-menu-horizontal{
-    background:  @bg-color;
+.qj-header-menu.ant-menu-horizontal {
     line-height: 54px;
-
+    padding-top: 5px;
+    padding-left: 25px;
     > .ant-menu-item {
         margin: 0 16px;
         padding: 0 4px;
-        &:hover,
-        &-active,
-        &-selected {
-            color: @txt-color;
-            border-bottom: 2px solid @txt-color;
-        }
-
         > a {
             font-size: 16px;
-            &:hover {
-                color: @txt-color;
-            }
-            
-        }
-        &-selected > a {
-            color: @txt-color;
         }
     }
-    
 }
-
-

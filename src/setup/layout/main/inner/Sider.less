@@ -1,61 +1,38 @@
-@txt-color: #FFF;
-@bg-color: #666C7B;
-
-.ant-menu {
-    
-    &-vertical &-submenu-selected,
-    &-vertical-left &-submenu-selected,
-    &-vertical-right &-submenu-selected {
-        a:hover {
-            color: @txt-color;
-        }
-    }
-
-    &-item-selected {
-        color: @txt-color;
-        > a,
-        > a:hover {
-          color: @txt-color;
-        }
-    }
-    &-item&-item-active{
-        >a {
-            color: @txt-color;
-        }
-    }
-
-    &-submenu-arrow {
-        right: 24px;
-    }
-}
-
 .qj-sidebar.ant-layout-sider {
-
-    font-size: 16px;
+    // font-size: 16px;
     height: calc(100vh - 64px);
     overflow-x: hidden;
     overflow-y: auto;
     &::-webkit-scrollbar {
         display: none;
     }
-    background: @bg-color;
-    
-    .ant-menu-inline, .ant-menu-vertical, .ant-menu-vertical-left{
-        border: none;
+
+    .ant-menu {
+        &-submenu-arrow {
+            right: 24px;
+        }
+        &-inline,
+        &-vertical,
+        &-vertical-left {
+            .ant-menu-item{
+                &::after{
+                    border: none;
+                }
+            }
+        }
     }
 }
 .qj-collapes {
     height: 48px;
     line-height: 1.5;
-    background:rgba(73,80,98,0.27);
-    color: @txt-color;
     padding: 12px 24px;
     cursor: pointer;
     position: relative;
+    transition: background 0.3s;
     .qj-collapes-icon {
         position: absolute;
         padding: 4px 0;
-        right: 16px;
+        right: 21px;
         font-size: 18px;
     }
 }
@@ -66,8 +43,7 @@
             display: none;
         }
         .qj-collapes-icon {
-            position: unset;
+            position: static;
         }
     }
 }
-

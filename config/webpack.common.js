@@ -79,12 +79,6 @@ module.exports = {
       { test: /\.tsx?$/, loader: "awesome-typescript-loader" } //typescript解析
     ]
   },
-  // resolve: {
-  //   extensions: [".ts", ".tsx", "js", ".json",  ".css"],
-  //   alias: {
-  //     '@': path.resolve(__dirname, 'src'),
-  //   }
-  // },
   plugins: [
     new AntDesignThemePlugin({
       indexFileName: 'src/index.html',
@@ -94,20 +88,18 @@ module.exports = {
       mainLessFile: path.resolve(__dirname, '../src/styles/global.less'),
       themeVariables: [
         '@primary-color',
-        '@menu-color',
-        '@menu-item-font-size',
-        '@menu-icon-size',
-        '@menu-bg',
         '@menu-item-color',
-        '@menu-highlight-color',
         '@menu-item-active-bg',
-        '@menu-item-active-color',
-        '@logo-bg-color'
+        '@header-bg-color',
+        '@sider-bg-color',
+        '@collapes-bg-color',
+        '@logo-bg-color',
+        '@menu-item-active-color'
       ],
     }),
     //动态创建html
     new HtmlWebpackPlugin({
-      title: "工资系统",
+      title: "勤杰eHR系统",
       template: "src/index.html"
     })
   ]

@@ -1,70 +1,92 @@
 @import "_var.less";
 
+.qj-header {
+    background: @header-bg-color;
+    color: @menu-item-color;
+
+    .ant-menu {
+        background: @header-bg-color;
+
+        &-item:hover,
+        &-item-active,
+        &-item-selected {
+            color: @menu-item-active-color;
+            border-bottom: 2px solid @menu-item-active-color;
+            > a,
+            > a:hover {
+                color: @menu-item-active-color;
+            }
+        }
+
+        > &-item {
+            color: @menu-item-color;
+            > a {
+                color: @menu-item-color;
+            }
+        }
+    }
+}
+
+.qj-sidebar {
+    background: @sider-bg-color;
+    color: @menu-item-color;
+
+    .ant-menu {
+        background: @sider-bg-color;
+
+        &-submenu-vertical,
+        &-submenu-vertical-left,
+        &-submenu-vertical-right,
+        &-submenu-inline {
+
+            > .ant-menu-submenu-title .ant-menu-submenu-arrow {
+                &::after,
+                &::before {
+                    transition: transform 0.3s @ease-in-out, top 0.3s @ease-in-out !important;
+                    background: @menu-item-color ;
+                }
+            }
+            > .ant-menu-submenu-title:hover .ant-menu-submenu-arrow {
+                &::after,
+                &::before {
+                    background: @primary-color ;
+                }
+            }
+        }
+
+        &-item-active,
+        &-item-selected {
+            color: @menu-item-active-color;
+            > a,
+            > a:hover {
+                color: @menu-item-active-color;
+            }
+        }
+
+       
+    }
+}
+
+//二级菜单以弹出框形式展开，菜单不再qj-sidebar中
+.qj-side-menu-submenu{
+    > .ant-menu-sub{
+        background-color: @sider-bg-color;
+        .ant-menu-item-active,
+        .ant-menu-item-selected {
+            color: @menu-item-active-color;
+            > a,
+            > a:hover {
+                color: @menu-item-active-color;
+            }
+        }
+    }
+}
+
+.qj-collapes {
+    background: @collapes-bg-color;
+    color: @menu-item-color;
+}
 
 .qj-logo {
-  background: @logo-bg-color
+    background: @logo-bg-color;
 }
-
-@txt-color: #FFF;
-@bg-color: #666C7B;
-
-.ant-menu {
-    
-    &-vertical &-submenu-selected,
-    &-vertical-left &-submenu-selected,
-    &-vertical-right &-submenu-selected {
-        a:hover {
-            color: @txt-color;
-        }
-    }
-
-    &-item-selected {
-        color: @txt-color;
-        > a,
-        > a:hover {
-          color: @txt-color;
-        }
-    }
-    &-item&-item-active{
-        >a {
-            color: @txt-color;
-        }
-    }
-
-    &-submenu-arrow {
-        right: 24px;
-    }
-}
-
-.qj-sidebar.ant-layout-sider {
-
-    font-size: 16px;
-    height: calc(100vh - 64px);
-    overflow-x: hidden;
-    overflow-y: auto;
-    &::-webkit-scrollbar {
-        display: none;
-    }
-    background: @bg-color;
-    
-    .ant-menu-inline, .ant-menu-vertical, .ant-menu-vertical-left{
-        border: none;
-    }
-}
-.qj-collapes {
-    height: 48px;
-    line-height: 1.5;
-    background:rgba(73,80,98,0.27);
-    color: @txt-color;
-    padding: 12px 24px;
-    cursor: pointer;
-    position: relative;
-    .qj-collapes-icon {
-        position: absolute;
-        padding: 4px 0;
-        right: 16px;
-        font-size: 18px;
-    }
-}
-
-

@@ -34,6 +34,7 @@ export class SiderMenu extends React.Component<ISiderMenuProps> {
         mode="inline"
         defaultOpenKeys={this.defaultOpenKeys}
         defaultSelectedKeys={this.defaultSelectedKeys}
+        
       >
         {getTopMenuItems(this.props.sideRegs.getTopRegs())}
       </Menu>

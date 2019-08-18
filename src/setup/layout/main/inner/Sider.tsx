@@ -1,7 +1,7 @@
 import { Layout } from "antd";
 import * as React from "react";
 import * as Framework from "src/framework/Framework";
-import { Collapes } from "./Collapes";
+import { Collapes } from "./siderInner/Collapes";
 import { SiderMenu } from "./siderInner/SiderMenu";
 import "./Sider.less";
 interface ISiderProps {

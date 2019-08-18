@@ -3,6 +3,7 @@ import * as React from "react";
 import * as Framework from "src/framework/Framework";
 
 import { IMessageRow } from "../State";
+// import Logo from "./headerInner/Logo";
 import TopMenu from "./headerInner/TopMenu";
 import Help from "./headerInner/Help";
 import LoginUser from "./headerInner/LoginUser";
@@ -29,6 +30,7 @@ export default class Header extends React.Component<IHeaderProps> {
     public render() {
         return (
             <Layout.Header id="topHeader" className="qj-header">
+                {/* <Logo onClick={() => this.props.onMenuChange('/')}/> */}
                 <div className="qj-logo">
                     <Link to={"/"} onClick={() => this.props.onMenuChange('/')}>
                         <img src="/img/logo.png" className="qj-logo-img" id="logo-img"/>
@@ -37,7 +39,7 @@ export default class Header extends React.Component<IHeaderProps> {
                 <div className="qj-header-center">
                     <TopMenu topRegs={this.props.topRegs} topUrl={this.props.topUrl} onMenuChange={this.props.onMenuChange}/>
                 </div>
-                <div className="qj-header-right" style={{ position: "absolute", right:0, top:0, padding: "5px 25px 5px 5px" }}>
+                <div className="qj-header-right">
                     <Message msgRows={this.props.messages} />
                     <Help />
                     <Setting onThemeChange={this.props.onThemeChange}/>

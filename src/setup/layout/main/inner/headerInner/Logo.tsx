@@ -1,27 +1,18 @@
-// import * as React from "react";
-// import { Link } from 'react-router-dom';
-// // tslint:disable-next-line:no-empty-interface
+import React from "react";
+import { Link } from 'react-router-dom';
 
-// export interface ILogoProps {
-//   onMenuChange:(routePath:string) => void;
-// }
+interface ILogoProps {
+  onClick:(routePath:string) => void;
+}
 
-// export default class Logo extends React.Component<ILogoProps> {
-//   constructor(props: ITopMenuProps) {
-//     super(props);
-//   }
-  
-//   public render() {
-//     return (
-//       <Link to={"/"} onClick={this.handleClick()}>
-//           <img src="/img/logo.png" style={{width:200,height:64}}/>
-//       </Link>
-//     );
-//   }
+const Logo: React.FC<ILogoProps> = ( props ) => {
+  return (
+    <div className="qj-logo" onClick={() => props.onClick('/')}>
+      <Link to={"/"}>
+          <img src="/img/logo.png" className="qj-logo-img" id="logo-img"/>
+      </Link>
+    </div>
+  )
+}
 
-//   private handleClick = () => {
-//     this.props.onMenuChange("/");
-//   };
-// }
-
-
+export default Logo;
