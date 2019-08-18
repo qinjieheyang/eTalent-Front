@@ -18,7 +18,7 @@ export default class Sider extends React.Component<ISiderProps> {
   public render() {
     const {showAll, onShowChange, treeData} = this.props;
     return (
-      <Layout.Sider className="qj-depart-side" style={{ background: '#fff' }}>
+      <Layout.Sider className="qj-depart-side" style={{ background: '#fff' }} width={216}>
         <div className="qj-depart-side-box">
           <div className="qj-depart-side-title">
             <span>显示封存：</span>

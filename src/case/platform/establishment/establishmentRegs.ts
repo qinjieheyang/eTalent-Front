@@ -7,7 +7,7 @@ import reportReg  from "./report/Reg";
 
 const establishmentRegs = Framework.Case.Reg.CreatePathReg(
   "编制管理",
-  Framework.Com.Icons.Case.folder,
+  Framework.Com.Icons.App.establishment,
   "/platform/establishment"
 );
 

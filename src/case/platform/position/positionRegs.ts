@@ -5,7 +5,7 @@ import postReg  from "./post/Reg";
 
 const positionRegs = Framework.Case.Reg.CreatePathReg(
   "职位管理",
-  Framework.Com.Icons.Case.folder,
+  Framework.Com.Icons.App.position,
   "/platform/position"
 );
 

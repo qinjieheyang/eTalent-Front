@@ -6,7 +6,7 @@ import descriptionReg  from "./description/Reg";
 
 const pointRegs = Framework.Case.Reg.CreatePathReg(
   "岗位管理",
-  Framework.Com.Icons.Case.folder,
+  Framework.Com.Icons.App.point,
   "/platform/point"
 );
 

@@ -7,7 +7,7 @@ import virtualReg  from "./virtual/Reg";
 
 const organizationRegs = Framework.Case.Reg.CreatePathReg(
   "组织机构",
-  Framework.Com.Icons.Case.folder,
+  Framework.Com.Icons.App.org,
   "/platform/org"
 );
 

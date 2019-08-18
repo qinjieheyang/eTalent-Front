@@ -1,8 +1,10 @@
+import React from "react";
 import { Icon, Menu } from "antd";
-import * as React from "react";
 import { Link } from "react-router-dom";
 import * as Framework from "src/framework/Framework";
 import "./MenuItem.css";
+
+const IconFont = Framework.Com.Icons.Icon;
 
 /** 功能菜单 */
 export function getTopMenuItems(topRegs: Framework.Case.Reg[]) {
@@ -38,7 +40,7 @@ export function getTopMenuItem(topReg: Framework.Case.Reg) {
       title={
         <div>
           <span>
-            <Icon type={topReg.icon} style={{paddingRight:14}}/>
+            <IconFont type={topReg.icon} style={{paddingRight:14}}/>
             <span>{topReg.title}</span>
           </span>
         </div>

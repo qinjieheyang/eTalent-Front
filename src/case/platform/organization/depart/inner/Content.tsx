@@ -1,7 +1,9 @@
-import { Layout, Table, Tabs, Button, Dropdown, Menu, Pagination } from "antd";
-import * as React from "react";
+import React from "react";
+import { Layout, Table, Tabs, Button, Dropdown, Menu, Pagination, Icon  } from "antd";
+import * as Framework from "src/framework/Framework";
 
 const { TabPane } = Tabs;
+const IconFont = Framework.Com.Icons.Icon;
 
 const columns: any = [
   {
@@ -171,7 +173,13 @@ export default class Content extends React.Component<IContentProps> {
     return (
       <Layout.Content className="qj-depart-content" style={{margin:"16px 16px 0 16px",background:"#fff"}}>
         <Tabs size="large" animated={false}>
-          <TabPane tab="机构表" key="1" className="qj-depart-tab-pane">
+          <TabPane key="1" className="qj-depart-tab-pane"
+            tab={
+              <span>
+                <IconFont type="qj-form" size={16}/>
+                机构表
+              </span>
+            } >
             <div className="qj-depart-btns" style={{marginBottom:16}}>
               <Button size="small">新增</Button>
               <Button size="small">删除</Button>
@@ -202,7 +210,15 @@ export default class Content extends React.Component<IContentProps> {
               }
             />
           </TabPane>
-          <TabPane tab="机构图" key="2" className="qj-depart-tab-pane">
+          <TabPane key="2" className="qj-depart-tab-pane"
+            tab={
+              <span>
+                
+                <Icon type="apartment" />
+                机构图
+              </span>
+            } 
+          >
             Content of Tab Pane 2
           </TabPane>
         </Tabs>
