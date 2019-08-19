@@ -1,6 +1,8 @@
 import { Dispatch } from "redux";
 import { IGlobalService } from "../services/GlobalServiceMock";
 import { ActionDispatcherBase } from "./ActionDispatcherBase";
+import { GlobalAction } from "./GlobalAction";
+import { globalStore } from "../GlobalRedux";
 
 export class GlobalActionDispatcher extends ActionDispatcherBase {
     private service: IGlobalService;
@@ -15,7 +17,11 @@ export class GlobalActionDispatcher extends ActionDispatcherBase {
         this.service.getInit();
     };
 
-    // public globalSetIsWait = async () => {
+    public globalSetStartLoading = async () => {
+        globalStore.dispatch(GlobalAction.startLoading());
+    }
 
-    // }
+    public globalSetEndLoading = async () => {
+        globalStore.dispatch(GlobalAction.endLoading());
+    }
 }

@@ -5,7 +5,8 @@ enum ActionType {
     HttpRequesting = "Http/Requesting",
     HttpRequested = "Http/Requested",
     CodeTablesReset = "CodeTables/Reset",
-    SetUserInfo = "App/SetUserInfo"
+    SetUserInfo = "App/SetUserInfo",
+    Loading = "App/Loading"
 }
 
 /** 全局动作 */
@@ -38,6 +39,14 @@ class GlobalActionClass {
 
     public CodeTablesReset(data: any) {
         return { type: ActionType.CodeTablesReset, data };
+    }
+
+    public startLoading(){
+        return {type: ActionType.Loading, data:true};
+    }
+
+    public endLoading(){
+        return {type: ActionType.Loading, data:false};
     }
 }
 

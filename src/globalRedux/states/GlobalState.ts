@@ -7,7 +7,8 @@ const globalIniState: IGlobalState = {
     codeTables: new CodeTableCollection(),
     currentUser: { userName: "empty", loginName: "empty", authorization: "empty" },
     isWaitHttpRequest: false,
-    menuRegCollection: new Framework.Case.RegCollection()
+    menuRegCollection: new Framework.Case.RegCollection(),
+    loading: false
 };
 
 export { globalIniState };

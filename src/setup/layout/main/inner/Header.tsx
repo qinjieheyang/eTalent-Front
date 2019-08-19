@@ -1,5 +1,5 @@
+import React from "react";
 import { Layout } from "antd";
-import * as React from "react";
 import * as Framework from "src/framework/Framework";
 
 import { IMessageRow } from "../State";
@@ -16,36 +16,36 @@ import "./Header.less";
 interface IHeaderProps {
     onLoginOff: () => void;
     onMenuChange:(routePath:string) => void;
-    onThemeChange: () => void;
+    beforeThemeChange: () => void;
+    afterThemeChange: () => void;
     messages: IMessageRow[];
     topRegs: Framework.Case.Reg[];
     topUrl: string;
 }
 
-export default class Header extends React.Component<IHeaderProps> {
-    constructor(props: IHeaderProps) {
-        super(props);
-    }
+const Header = (props: IHeaderProps) => {
 
-    public render() {
-        return (
-            <Layout.Header id="topHeader" className="qj-header">
+    const {onMenuChange, topRegs, topUrl, messages, beforeThemeChange, afterThemeChange, onLoginOff} = props;
+
+    return (
+        <Layout.Header id="topHeader" className="qj-header">
                 {/* <Logo onClick={() => this.props.onMenuChange('/')}/> */}
                 <div className="qj-logo">
-                    <Link to={"/"} onClick={() => this.props.onMenuChange('/')}>
+                    <Link to={"/"} onClick={() => onMenuChange('/')}>
                         <img src="/img/logo.png" className="qj-logo-img" id="logo-img"/>
                     </Link>
                 </div>
                 <div className="qj-header-center">
-                    <TopMenu topRegs={this.props.topRegs} topUrl={this.props.topUrl} onMenuChange={this.props.onMenuChange}/>
+                    <TopMenu topRegs={topRegs} topUrl={topUrl} onMenuChange={onMenuChange}/>
                 </div>
                 <div className="qj-header-right">
-                    <Message msgRows={this.props.messages} />
+                    <Message msgRows={messages} />
                     <Help />
-                    <Setting onThemeChange={this.props.onThemeChange}/>
-                    <LoginUser onLoginOff={this.props.onLoginOff} />
+                    <Setting beforeThemeChange={beforeThemeChange} afterThemeChange={afterThemeChange} />
+                    <LoginUser onLoginOff={onLoginOff} />
                 </div>
             </Layout.Header>
-        );
-    }
+    )
 }
+
+export default Header;

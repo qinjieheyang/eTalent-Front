@@ -12,7 +12,7 @@ const ThemeVariablesArray: Array<any> = [{
   '@sider-bg-color': '#666C7B',
   '@collapes-bg-color': '#5D6474',
   '@logo-bg-color': '#495060'
-},{
+}, {
   '@primary-color': '#48B9C4',
   '@menu-item-color': '#d3d3d3',
   '@menu-item-active-bg': '#48B9C4',
@@ -24,7 +24,8 @@ const ThemeVariablesArray: Array<any> = [{
 }]
 
 export interface ISetProps {
-  onThemeChange: () => void;
+  beforeThemeChange: () => void;
+  afterThemeChange: () => void;
 }
 
 export default class Setting extends React.Component<ISetProps> {
@@ -32,7 +33,7 @@ export default class Setting extends React.Component<ISetProps> {
     super(props);
   }
 
-  public ini(): void {
+  public init(): void {
     //
   }
 
@@ -53,26 +54,30 @@ export default class Setting extends React.Component<ISetProps> {
     return (
       <Menu>
         <Menu.Item>
-          <a onClick={()=>{this.handleClick(0)}} style={{background:"#ff8c58",color:"#fff"}}> 主题一 </a>
+          <a onClick={() => { this.handleClick(0) }} style={{ background: "#ff8c58", color: "#fff" }}> 主题一 </a>
         </Menu.Item>
         <Menu.Item>
-          <a onClick={()=>{this.handleClick(1)}} style={{background:"#48B9C4",color:"#fff"}}> 主题二 </a>
+          <a onClick={() => { this.handleClick(1) }} style={{ background: "#48B9C4", color: "#fff" }}> 主题二 </a>
         </Menu.Item>
       </Menu>
     );
   };
 
-  private handleClick = (theme:number) => {
+  private handleClick = (theme: number) => {
 
-    //更换主题颜色
+    this.props.beforeThemeChange();
+    setTimeout(() => {
       window["less"].modifyVars(
         ThemeVariablesArray[theme]
       )
-      .then(() => {console.log('success')})
-      .catch((error:any) => {
+        .then(() => {
+          this.props.afterThemeChange();
+        })
+        .catch((error: any) => {
           console.log(error);
-      });
-      
-      this.props.onThemeChange();
+          this.props.afterThemeChange();
+        });
+    }, 1000);
+
   };
 }

@@ -7,4 +7,6 @@ export class GlobalService implements IGlobalService {
   }> => {
     return { name: "dfsdfdsf" };
   };
+
+  
 }

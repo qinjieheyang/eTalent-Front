@@ -26,8 +26,6 @@ interface IMainWrapperProps
         GlobalRedux.Actions.IGlobalActionDispatcher,
         RouteComponentProps {}
 
-// CaseCommon.PageBase<IPageProps, IState ,IService>
-
 class MainLayout extends CaseCommon.PageBase<IMainWrapperProps, IState, IService> {
     // public state = initState;
     public topUrl: string ="/";
@@ -43,6 +41,7 @@ class MainLayout extends CaseCommon.PageBase<IMainWrapperProps, IState, IService
         const initData = await this.service.getInit();
         this.setState({ msgRows: initData.msgRows, topUrl: initState.topUrl, topLoading: false });
         this.props.globalSetUserInfo(initData.currentUser);
+        // console.log(this.props)
     }
 
     public render() {
@@ -50,15 +49,16 @@ class MainLayout extends CaseCommon.PageBase<IMainWrapperProps, IState, IService
             return <Redirect to={{ pathname: "/out/login" }} />;
         }
         const {location} = this.props;
-        // console.log(this.props.globalState.isWaitHttpRequest)
+        console.log(this.props.globalState.loading,111)
         return (
             <LocaleProvider locale={zh_CN}>
-                <Spin spinning={this.props.globalState.isWaitHttpRequest}>
+                <Spin spinning={this.props.globalState.loading}>
                     <Layout>
                         <Header 
                             onLoginOff={this.handleLoginOff}
                             onMenuChange={this.handleTopMenuChange}
-                            onThemeChange = {this.handleIsWait}
+                            beforeThemeChange = {this.props.globalSetStartLoading}
+                            afterThemeChange = {this.props.globalSetEndLoading}
                             messages={this.state.msgRows}
                             topRegs={topRegs}
                             topUrl={this.topUrl}
@@ -83,10 +83,6 @@ class MainLayout extends CaseCommon.PageBase<IMainWrapperProps, IState, IService
         this.topUrl = routePath;
     }
 
-    // private handleSideModeChange = (isCollapsed: boolean) => {
-    //     this.sideCollapsed = isCollapsed;
-    // }
-
     private initRoutePage(){
         const localPath = this.props.location.pathname;
         mainRegs.getAllRegs().forEach(reg => {
@@ -96,13 +92,6 @@ class MainLayout extends CaseCommon.PageBase<IMainWrapperProps, IState, IService
         })
     }
 
-    private handleIsWait = () =>{
-        // const action:any = GlobalRedux.Actions.GlobalAction.BrowserRefresh();
-        GlobalRedux.globalStore.dispatch(GlobalRedux.Actions.GlobalAction.BrowserRefresh(true));
-        setTimeout(() =>{
-            GlobalRedux.globalStore.dispatch(GlobalRedux.Actions.GlobalAction.BrowserRefresh(false));
-        }, 1000)
-    }
 
 }
 
