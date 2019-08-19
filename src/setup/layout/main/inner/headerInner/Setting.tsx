@@ -74,7 +74,7 @@ export default class Setting extends React.Component<ISetProps> {
           this.props.afterThemeChange();
         })
         .catch((error: any) => {
-          console.log(error);
+          console.error(error);
           this.props.afterThemeChange();
         });
     }, 1000);

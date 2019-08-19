@@ -49,7 +49,6 @@ class MainLayout extends CaseCommon.PageBase<IMainWrapperProps, IState, IService
             return <Redirect to={{ pathname: "/out/login" }} />;
         }
         const {location} = this.props;
-        console.log(this.props.globalState.loading,111)
         return (
             <LocaleProvider locale={zh_CN}>
                 <Spin spinning={this.props.globalState.loading}>
