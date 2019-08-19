@@ -5,7 +5,6 @@
 .qj-depart-tree {
     height: calc(100% - 40px);
     overflow: auto;
-    // padding-bottom: 40px;
     padding: 8px 10px;
     &::-webkit-scrollbar {
         width: 15px;
@@ -37,7 +36,7 @@
     height: calc(100vh - 152px);
     overflow: hidden;
 
-    .ant-pagination{
+    .ant-pagination {
         padding: 16px;
         text-align: right;
         position: absolute;
@@ -50,21 +49,13 @@
     .qj-depart-table {
         height: calc(100vh - 264px);
         overflow: hidden;
-        // .ant-table-tbody{
-        //     height: calc(100vh - 417px);
-        //     overflow-y: auto;
-        // }
-        // margin-bottom: 64px;
-        // .ant-table{
-        //     // height: calc(100vh - 264px);
-        // }
-        .ant-table-thead > tr > th{
-            white-space:nowrap;
+        .ant-table-thead > tr > th {
+            white-space: nowrap;
             text-overflow: ellipsis;
             word-wrap: normal;
         }
-        .ant-table-row td{
-            white-space:nowrap;
+        .ant-table-row td {
+            white-space: nowrap;
             text-overflow: ellipsis;
             word-wrap: normal;
         }
@@ -72,7 +63,13 @@
 }
 
 .qj-depart-btns {
+    padding: 0 8px;
     > button {
         margin: 0 8px;
     }
+}
+
+.qj-depart-content{
+    margin: 16px 16px 0 16px;
+    background: #fff;
 }

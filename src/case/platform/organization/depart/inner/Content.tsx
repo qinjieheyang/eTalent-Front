@@ -1,79 +1,9 @@
 import React from "react";
-import { Layout, Table, Tabs, Button, Dropdown, Menu, Pagination, Icon  } from "antd";
-import * as Framework from "src/framework/Framework";
-
+import { Layout, Tabs, Button, Dropdown, Menu, Icon } from "antd";
+import DepartTable from "./contentInner/DepartTable";
 const { TabPane } = Tabs;
-const IconFont = Framework.Com.Icons.Icon;
 
-const columns: any = [
-  {
-    title: 'Full Name',
-    width: 100,
-    dataIndex: 'name',
-    key: 'name',
-    fixed: 'left',
-  },
-  {
-    title: 'Age',
-    width: 100,
-    dataIndex: 'age',
-    key: 'age',
-    fixed: 'left',
-  },
-  {
-    title: 'Column 1',
-    dataIndex: 'address',
-    key: '1',
-    width: 150,
-  },
-  {
-    title: 'Column 2',
-    dataIndex: 'address',
-    key: '2',
-    width: 150,
-  },
-  {
-    title: 'Column 3',
-    dataIndex: 'address',
-    key: '3',
-    width: 150,
-  },
-  {
-    title: 'Column 4',
-    dataIndex: 'address',
-    key: '4',
-    width: 150,
-  },
-  {
-    title: 'Column 5',
-    dataIndex: 'address',
-    key: '5',
-    width: 150,
-  },
-  {
-    title: 'Column 6',
-    dataIndex: 'address',
-    key: '6',
-    width: 150,
-  },
-  {
-    title: 'Column 7',
-    dataIndex: 'address',
-    key: '7',
-    width: 150,
-  },
-  { title: 'Column 8', dataIndex: 'address', key: '8' },
-  {
-    title: 'Action',
-    key: 'operation',
-    fixed: 'right',
-    width: 100,
-    render: () => <a href="javascript:;">action</a>,
-  },
-];
-
-
-const getData = (): any =>{
+const getData = (): Array<any> => {
   const data: Array<any> = [];
   for (let i = 0; i < 100; i++) {
     data.push({
@@ -86,151 +16,43 @@ const getData = (): any =>{
   return data;
 }
 
-const rowSelection = {
-  onChange: (selectedRowKeys: any, selectedRows: any) => {
-    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-  },
-  onSelect: (record: any, selected: any, selectedRows: any) => {
-    console.log(record, selected, selectedRows);
-  },
-  onSelectAll: (selected: any, selectedRows: any, changeRows: any) => {
-    console.log(selected, selectedRows, changeRows);
-  },
-};
-
 const menu = (
   <Menu>
     {
-      ["封存","解封","合并","划转","排序","模板","导入","导出"].map((item, index) => <Menu.Item key={index}>{item}</Menu.Item>)
+      ["封存", "解封", "合并", "划转", "排序", "模板", "导入", "导出"].map((item, index) => <Menu.Item key={index}>{item}</Menu.Item>)
     }
   </Menu>
 );
 
-const getViewportOffset = ():any => {
-  if(window.innerWidth){
-      return{
-          w:window.innerWidth,
-          h:window.innerHeight
-      }
-  }else{
-      if(document.compatMode==='BackCompat'){
-          return{
-              w:document.body.clientWidth,
-              h:document.body.clientHeight
-          }
-      }else{
-          return{
-              w:document.documentElement.clientWidth,
-              h:document.documentElement.clientHeight
-          }
-      }
-  }
-}
-
-const computerHeight = (): number =>{
-  const viewport = getViewportOffset();
-  if(viewport && viewport.h && viewport.h>318){
-    return viewport.h - 318;
-  }
-  return 0;
-}
-
-
-interface IContentProps {
- 
-}
-
+interface IContentProps {}
 export default class Content extends React.Component<IContentProps> {
-  public state: any ={
-    scroll: { 
-      x: '130%',
-      y: undefined
-    }
-  }
-
 
   constructor(props: IContentProps) {
     super(props);
-    // this.state = {
-    //   scroll: undefined
-    // }
-  }
-
-  componentDidMount(){
-    window.addEventListener("resize", this.reloadLayout)
-    this.reloadLayout();
-
-  }
-
-  componentWillUnmount(){
-
-    window.removeEventListener("resize", this.reloadLayout);
-
   }
 
   public render() {
-    
+
     return (
-      <Layout.Content className="qj-depart-content" style={{margin:"16px 16px 0 16px",background:"#fff"}}>
+      <Layout.Content className="qj-depart-content">
         <Tabs size="large" animated={false}>
           <TabPane key="1" className="qj-depart-tab-pane"
-            tab={
-              <span>
-                <IconFont type="qj-form" size={16}/>
-                机构表
-              </span>
-            } >
-            <div className="qj-depart-btns" style={{marginBottom:16}}>
-              <Button size="small">新增</Button>
-              <Button size="small">删除</Button>
+            tab={ <span><Icon type="table" />机构表</span> }>
+            <div className="qj-depart-btns" style={{ marginBottom: 16 }}>
+              <Button size="small" type="primary">新增</Button>
+              <Button size="small" type="primary" ghost>删除</Button>
               <Dropdown overlay={menu}>
-                <Button size="small">更多</Button>
+                <Button size="small" type="primary" ghost>更多</Button>
               </Dropdown>
             </div>
-            <Table
-              ref="departTable"
-              className="qj-depart-table"
-              columns={columns}
-              dataSource={getData()} 
-              rowSelection={rowSelection} 
-              // onChange={this.onChange}
-              pagination={false}
-              scroll={this.state.scroll}
-            />
-            <Pagination 
-              showQuickJumper 
-              showSizeChanger 
-              defaultCurrent={1} 
-              total={500} 
-              style={{
-                paddingRight:16
-              }}
-              showTotal={
-                (total, range) => `显示${range[0]}-${range[1]}，每页显示 ${total} 条`
-              }
-            />
+            <DepartTable dataSource={getData()} />
           </TabPane>
           <TabPane key="2" className="qj-depart-tab-pane"
-            tab={
-              <span>
-                
-                <Icon type="apartment" />
-                机构图
-              </span>
-            } 
-          >
+            tab={ <span><Icon type="apartment" />机构图</span> }>
             Content of Tab Pane 2
           </TabPane>
         </Tabs>
       </Layout.Content>
     );
-  }
-
-  private reloadLayout = () => {
-    let height:number|undefined = computerHeight();
-    if(height > getData().length*54) {
-      height = undefined;
-    }
-    this.setState({scroll:{ x:"130%",y: height }});
   }
 }
