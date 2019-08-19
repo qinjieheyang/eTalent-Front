@@ -41,7 +41,7 @@ class MainLayout extends CaseCommon.PageBase<IMainWrapperProps, IState, IService
         const initData = await this.service.getInit();
         this.setState({ msgRows: initData.msgRows, topUrl: initState.topUrl, topLoading: false });
         this.props.globalSetUserInfo(initData.currentUser);
-        // console.log(this.props)
+        // console.log(this.props.dispatch)
     }
 
     public render() {
@@ -63,7 +63,7 @@ class MainLayout extends CaseCommon.PageBase<IMainWrapperProps, IState, IService
                             topUrl={this.topUrl}
                         />
                         <MainContent 
-                            routePath={this.topUrl} 
+                            topPath={this.topUrl} 
                             routeLocation={location}
                             isWaitHttpRequest={this.props.globalState.isWaitHttpRequest}/>
                     </Layout>

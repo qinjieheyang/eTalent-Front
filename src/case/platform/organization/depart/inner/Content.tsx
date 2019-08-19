@@ -23,16 +23,25 @@ const menu = (
     }
   </Menu>
 );
-
+interface IContentState{
+  dataSource: Array<any>;
+}
 interface IContentProps {}
-export default class Content extends React.Component<IContentProps> {
+export default class Content extends React.Component<IContentProps, IContentState> {
 
   constructor(props: IContentProps) {
     super(props);
+    this.state ={
+      dataSource: getData()
+    }
   }
 
-  public render() {
+  // componentDidMount(){
+  //     this.setState({ dataSource: getData()})
+  // }
 
+  public render() {
+    console.log(222)
     return (
       <Layout.Content className="qj-depart-content">
         <Tabs size="large" animated={false}>
@@ -45,7 +54,7 @@ export default class Content extends React.Component<IContentProps> {
                 <Button size="small" type="primary" ghost>更多</Button>
               </Dropdown>
             </div>
-            <DepartTable dataSource={getData()} />
+            <DepartTable dataSource={this.state.dataSource} />
           </TabPane>
           <TabPane key="2" className="qj-depart-tab-pane"
             tab={ <span><Icon type="apartment" />机构图</span> }>

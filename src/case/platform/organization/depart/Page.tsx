@@ -23,14 +23,11 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
 
   constructor(props: IPageProps) {
     super(props, Const, ServiceMock, Service);
-    // console.log(props)
   }
 
   public async init(){
-    // console.log(111)
     const treeData = await this.service.getInit();
     this.setState({treeData});
-    // console.log(222)
   }
   
   public render() {
@@ -39,7 +36,7 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
       <Layout className="qj-depart-wrapper">
         <Sider showAll={this.showAll} treeData={treeData} onShowChange={this.onShowChange} />
         <Layout>
-          <Content ref="departContent"></Content>
+          <Content />
         </Layout>
       </Layout>
     );

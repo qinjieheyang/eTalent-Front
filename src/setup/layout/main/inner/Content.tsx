@@ -1,7 +1,7 @@
 import { Layout } from "antd";
 import * as React from "react";
 // import PageLoader from "./PageLoader";
-import PageWrapper from "./PageWrapper";
+// import PageWrapper from "./PageWrapper";
 
 
 interface IContentProps {
@@ -19,8 +19,6 @@ export default class Content extends React.Component<IContentProps> {
     // if (CF.isCurrentUserLogin() === false) {
     //   return <Redirect to={{ pathname: "/page/login" }} />;
     // }
-    // let {isWaitHttpRequest} = this.props;
-    // isWaitHttpRequest = true;
     return (
       <Layout.Content
         id="Layout.Content"
@@ -32,10 +30,7 @@ export default class Content extends React.Component<IContentProps> {
           flex: "none"
         }}
       >
-        <PageWrapper page={this.props.children} />
-        {
-          // isWaitHttpRequest?<PageLoader />:<PageWrapper page={this.props.children} />
-        }
+        {this.props.children}
       </Layout.Content>
     );
   }
