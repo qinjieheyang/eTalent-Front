@@ -62,7 +62,7 @@ interface IDepartTableProps {
 const DepartTable = (props: IDepartTableProps) => {
   const {dataSource} = props;
 
-  const [scroll, setScroll] = useState<{x:string,y:number|undefined}>({ x: '130%', y: computerTableHeightByViewport(dataSource) });
+  const [scroll, setScroll] = useState<{x:string| undefined ,y:number|undefined}>({ x: undefined, y: computerTableHeightByViewport(dataSource) });
   
   useEffect(()=>{
     const reloadLayout = () => {
@@ -84,7 +84,6 @@ const DepartTable = (props: IDepartTableProps) => {
         columns={DepartTableColumns}
         rowSelection={rowSelection}
         dataSource={props.dataSource}
-        // onChange={this.onChange}
         pagination={{
           showQuickJumper : true,
           showSizeChanger: true,
