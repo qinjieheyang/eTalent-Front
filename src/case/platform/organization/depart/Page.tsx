@@ -31,10 +31,11 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
   }
   
   public render() {
-    const treeData = this.state.treeData;
+    // const treeData = this.state.treeData;
+    
     return (
       <Layout className="qj-depart-wrapper">
-        <Sider showAll={this.showAll} treeData={treeData} onShowChange={this.onShowChange} />
+        <Sider showAll={this.showAll} treeData={this.state.treeData} onShowChange={this.onShowChange} />
         <Layout>
           <Content />
         </Layout>

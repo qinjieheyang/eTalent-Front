@@ -1,6 +1,7 @@
 import { PageBase } from "./PageBase";
+import PageLoading from './PageLoading';
 
-export { PageBase };
+export { PageBase, PageLoading };
 
-const CaseCommon = { PageBase };
+const CaseCommon = { PageBase, PageLoading };
 export default CaseCommon;

@@ -21,6 +21,7 @@ export abstract class PageBase<TProps, TState,TCaseService > extends React.Compo
   }
 
   public componentDidMount() {
+    console.log(444)
     this.init();
   }
 

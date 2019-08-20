@@ -97,7 +97,7 @@ export class Reg {
     const loadContainer = Loadable({
       loader: this.importContainer,
       loading: LoadingComponent,
-      timeout: 500
+      timeout: 1000
     });
 
     const route = (

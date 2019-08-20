@@ -17,12 +17,12 @@ export default class DepartTree extends React.Component<IDepartTreeProps> {
   }
   
   public render() {
-    
     return (
       <Tree
           className="qj-depart-tree"
           // onExpand={this.onExpand}
-          defaultExpandedKeys={['0-0-0', '0-0-1']}
+          // defaultExpandedKeys={['0-0-0', '0-0-1']}
+          defaultExpandAll
           // autoExpandParent={this.state.autoExpandParent}
           // onCheck={this.onCheck}
           // checkedKeys={this.state.checkedKeys}
