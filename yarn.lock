@@ -3429,6 +3429,11 @@ globby@^7.1.1:
     pify "^3.0.0"
     slash "^1.0.0"
 
+gojs@^2.0.15:
+  version "2.0.15"
+  resolved "https://registry.npm.taobao.org/gojs/download/gojs-2.0.15.tgz#8efe4c4d8b8724b335c5bc7ec8a7ee87c2ad9700"
+  integrity sha1-jv5MTYuHJLM1xbx+yKfuh8KtlwA=
+
 graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2:
   version "4.2.0"
   resolved "https://registry.npm.taobao.org/graceful-fs/download/graceful-fs-4.2.0.tgz#8d8fdc73977cb04104721cb53666c1ca64cd328b"
