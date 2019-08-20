@@ -6,18 +6,18 @@
     height: calc(100% - 40px);
     overflow: auto;
     padding: 8px 10px;
-    &::-webkit-scrollbar {
-        width: 15px;
-        height: 15px;
-        background-color: transparent;
-        border-radius: 12px;
-    }
-    &::-webkit-scrollbar-thumb {
-        background: #999;
-        border-radius: 9px;
-        background-clip: content-box;
-        border: 5px solid transparent;
-    }
+    // &::-webkit-scrollbar {
+    //     width: 15px;
+    //     height: 15px;
+    //     background-color: transparent;
+    //     border-radius: 12px;
+    // }
+    // &::-webkit-scrollbar-thumb {
+    //     background: #999;
+    //     border-radius: 9px;
+    //     background-clip: content-box;
+    //     border: 5px solid transparent;
+    // }
 }
 .qj-depart-side {
     height: 100%;
@@ -35,20 +35,11 @@
 .qj-depart-tab-pane {
     height: calc(100vh - 152px);
     overflow: hidden;
-
-    .ant-pagination {
-        padding: 16px;
-        text-align: right;
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        left: 0;
-        border-top: 1px solid #e8e8e8;
-        background: #fff;
-    }
+    position: relative;
+    
     .qj-depart-table {
-        height: calc(100vh - 264px);
-        overflow: hidden;
+        height: calc(100vh - 192px);
+        // overflow: hidden;
         .ant-table-thead > tr > th {
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -58,6 +49,31 @@
             white-space: nowrap;
             text-overflow: ellipsis;
             word-wrap: normal;
+        }
+        .ant-table-scroll {
+            .ant-table-body {
+                height: calc(100vh - 257px);
+                // height: calc(100vh - 192px);
+            }
+        }
+        .ant-table-fixed-right{
+            .ant-table-header{
+                .ant-table-fixed{
+                    width: 100%;
+                }
+            }
+        }
+
+        .ant-pagination {
+            padding: 16px;
+            text-align: right;
+            position: absolute;
+            margin: 0;
+            bottom: -64px;
+            right: 0;
+            left: 0;
+            border-top: 1px solid #e8e8e8;
+            background: #fff;
         }
     }
 }
@@ -69,7 +85,7 @@
     }
 }
 
-.qj-depart-content{
+.qj-depart-content {
     margin: 16px 16px 0 16px;
     background: #fff;
 }

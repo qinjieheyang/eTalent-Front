@@ -58,3 +58,17 @@
 // @menu-highlight-color: #ff8c58;
 // @menu-item-active-bg: #ff8c58;
 // @menu-item-active-color: #fff;
+
+//全局覆盖滚动条样式
+::-webkit-scrollbar {
+  width: 15px;
+  height: 15px;
+  background-color: transparent;
+  border-radius: 12px;
+}
+::-webkit-scrollbar-thumb {
+  background: #999;
+  border-radius: 9px;
+  background-clip: content-box;
+  border: 5px solid transparent;
+}

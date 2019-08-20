@@ -1,5 +1,5 @@
 import React,{ Fragment, useState, useEffect  } from "react";
-import {  Table, Pagination  } from "antd";
+import {  Table  } from "antd";
 
 import DepartTableColumns from './DepartTableColumns';
 
@@ -41,8 +41,8 @@ const getViewportOffset = (): {w:number,h:number} => {
 const computerTableHeightByViewport = (dataSource: Array<any>): number|undefined =>{
   const viewport = getViewportOffset();
   let height: number|undefined = undefined;
-  if(viewport && viewport.h && viewport.h>318){
-    height =  viewport.h - 318;
+  if(viewport && viewport.h && viewport.h> 258){
+    height =  viewport.h - 258;
   }
 
   if(height && height > dataSource.length*54){
@@ -85,20 +85,14 @@ const DepartTable = (props: IDepartTableProps) => {
         rowSelection={rowSelection}
         dataSource={props.dataSource}
         // onChange={this.onChange}
-        pagination={false}
-        scroll={scroll}
-      />
-      <Pagination 
-        showQuickJumper 
-        showSizeChanger 
-        defaultCurrent={1} 
-        total={500} 
-        style={{
-          paddingRight:16
+        pagination={{
+          showQuickJumper : true,
+          showSizeChanger: true,
+          defaultCurrent: 1,
+          total: 500,
+          showTotal: (total, range) => `显示${range[0]}-${range[1]}，每页显示 ${total} 条`
         }}
-        showTotal={
-          (total, range) => `显示${range[0]}-${range[1]}，每页显示 ${total} 条`
-        }
+        scroll={scroll}
       />
     </Fragment>
   )
