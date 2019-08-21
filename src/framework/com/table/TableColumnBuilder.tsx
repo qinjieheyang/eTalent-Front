@@ -1,4 +1,4 @@
-import { Divider, Popconfirm, Switch, Tooltip, Checkbox } from "antd";
+import { Divider, Popconfirm, Switch, Tooltip, Checkbox, Icon, Input, Button } from "antd";
 import * as React from "react";
 
 import { DataTable } from "../../data/dataTable/DataTable";
@@ -11,11 +11,6 @@ export type IColumnRender = (cellValue: any, row: object, index: number) => Reac
 
 export type IOptColumnRender = (row: any) => React.ReactNode;
 
-
-interface IColumnSortDefine extends IColumnDefine {
-    sorter?: any;
-}
-
 interface FilterDropdownProps {
     setSelectedKeys: (target: string[]) => void;
     selectedKeys: string[];
@@ -23,7 +18,12 @@ interface FilterDropdownProps {
     clearFilters: ()=> void;
 }
 
-export type IFilterDropdown = (props: FilterDropdownProps)  => React.ReactElement<any>;
+interface IColumnSortDefine extends IColumnDefine {
+    sorter?: any;
+    filterDropdown?:  (props: FilterDropdownProps)  => React.ReactElement<any>;
+    filterIcon?: (filtered: string|undefined) => React.ReactNode;
+    onFilterDropdownVisibleChange?: (visible: boolean) => void;
+}
 
 export class TableColumnBuilder {
     private optGroups: OptGroup[] = [];
@@ -37,6 +37,8 @@ export class TableColumnBuilder {
 
     private mapSelectTable = new Map<string, DataTable>();
 
+    private allSearchFilter: object = {};
+
     constructor() {
         this.columnDefines = [];
         this.optColumnRenders = [];
@@ -46,7 +48,6 @@ export class TableColumnBuilder {
         const columns: IColumnSortDefine[] = [];
         for (const c of this.columnDefines) {
             columns.push(c);
-
             if (c.canAutoOrder) {
                 c.sorter = (row1: object, row2: object) => rowSorter(row1, row2, c.dataIndex);
             }
@@ -54,12 +55,22 @@ export class TableColumnBuilder {
         if (this.optColumnRenders.length === 0) {
             return columns;
         }
-        
 
-        const optColumn: IColumnSortDefine = {
+        columns.push(this.AddOperation(columns, onColumnsChange));
+
+        return columns;
+    };
+
+
+    
+    // -----------------------------------------------------------------------------------------------------------------
+
+    /** 私有化操作列，有操作时自动加入到columns */
+    private AddOperation = (columns: IColumnSortDefine[], onColumnsChange?: (newColumns: IColumnSortDefine[]) => void) : IColumnDefine => {
+        const col: IColumnSortDefine = {
             canAutoOrder: false,
-            dataIndex: "操作",
-            key: "operationColumn",
+            dataIndex: "__operationColumn",
+            key: "__operationColumn",
             width: this.optColumnWidth,
             title: "操作",
             render: (cellValue: any, row: any, index: number): React.ReactElement<any> => {
@@ -67,7 +78,6 @@ export class TableColumnBuilder {
                     <span>
                         {this.optColumnRenders.map((createButtonFunc, i, array) => {
                             if (i < array.length - 1) {
-                                // not the last element
                                 return (
                                     <span key={i}>
                                         {createButtonFunc(row)} <Divider type="vertical" />
@@ -84,7 +94,6 @@ export class TableColumnBuilder {
                 );
             },
             filterDropdown: (props: FilterDropdownProps): React.ReactElement<any> => {
-                // const { setSelectedKeys, selectedKeys, confirm, clearFilters } = props;
                 const filterColumns: IColumnSortDefine[] =  columns.slice(0, -1); //去除操作项
                 const defaultValues: string[] = [];
                 const plainOptions: any[] = filterColumns.map((column: any, index: number) =>{
@@ -97,7 +106,7 @@ export class TableColumnBuilder {
                 const onChangeFunc = (checkedColumnValues: string[])  =>{
                     const newColumns: IColumnSortDefine[] = [];
                     for (const col of columns) {
-                        if(checkedColumnValues.includes(col.key) || col.key === "operationColumn"){
+                        if(checkedColumnValues.includes(col.key) || col.key === "__operationColumn"){
                             newColumns.push(col)
                         }
                     }
@@ -107,6 +116,7 @@ export class TableColumnBuilder {
                 return (
                     <div className="custom-filter-dropdown">
                         <Checkbox.Group 
+                            className="qj-table-filter-column"
                             options={plainOptions} 
                             defaultValue={defaultValues} 
                             onChange={(checkedValues: string[]) => {
@@ -115,17 +125,13 @@ export class TableColumnBuilder {
                         />
                     </div>
                 )
-            }
+            },
+            filterIcon: (filtered: string|undefined) => (
+                <Icon type="setting" style={{ color: filtered ? '#1890ff' : undefined }} />
+            )
         };
-
-        columns.push(optColumn);
-
-        return columns;
-    };
-
-
-   
-    // -----------------------------------------------------------------------------------------------------------------
+        return col;
+    }
 
     /** 排序号 */
     public AddSortNum = (title: string, width = 20): IColumnDefine => {
@@ -152,6 +158,18 @@ export class TableColumnBuilder {
             textDisplayLength = 20;
         }
 
+        const handleSearch = (dataIndex:string, selectedKeys: string[], confirm: ()=> void) =>{
+            this.allSearchFilter[dataIndex] = selectedKeys;
+            confirm();
+            
+        }
+
+        const handleReset = (dataIndex:string, clearFilters: ()=> void) =>{
+            this.allSearchFilter[dataIndex] = [];
+            delete this.allSearchFilter[dataIndex];
+            clearFilters();
+        }
+
         const col: IColumnSortDefine = {
             canAutoOrder: false,
             dataIndex: fieldName,
@@ -176,7 +194,36 @@ export class TableColumnBuilder {
                 return <Tooltip title={cellValue}>{col.prefixText ? col.prefixText + cellValue : newCellText}</Tooltip>;
             },
             title,
-            width
+            width,
+            filterDropdown: (props: FilterDropdownProps): React.ReactElement<any> => {
+                return (
+                    <div style={{ padding: 8 }}>
+                    <Input
+                      placeholder={`Search ${col.dataIndex}`}
+                      value={props.selectedKeys[0]}
+                      onChange={e => props.setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                      onPressEnter={() => handleSearch(col.dataIndex, props.selectedKeys, props.confirm)}
+                      style={{ width: 188, marginBottom: 8, display: 'block' }}
+                    />
+                    <Button
+                      type="primary"
+                      onClick={() => handleSearch(col.dataIndex, props.selectedKeys, props.confirm)}
+                      icon="search"
+                      size="small"
+                      style={{ width: 90, marginRight: 8 }}
+                    >
+                      Search
+                    </Button>
+                    <Button onClick={() => handleReset(col.dataIndex, props.clearFilters)} size="small" style={{ width: 90 }}>
+                      Reset
+                    </Button>
+                  </div>         
+
+                )
+            },
+            filterIcon: (filtered: string|undefined) => (
+                <Icon type="search" style={{ color: filtered ? '#1890ff' : undefined }} />
+            )
         };
         this.columnDefines.push(col);
         return col;

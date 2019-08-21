@@ -40,7 +40,7 @@ export default class Page extends React.Component<any, any> {
     this.bulider = new TableColumnBuilder();
     this.initColumns();
     this.state = {columns: this.columns};
-    
+
   }
 
   public initColumns(){
@@ -55,6 +55,8 @@ export default class Page extends React.Component<any, any> {
     this.columns = bulider.GetColumns((newColumns: any[])=>{
       this.setState({columns: newColumns});
     });
+
+    // bulider.on
   }
 
   public render() {

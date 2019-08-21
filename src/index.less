@@ -49,7 +49,7 @@
 // @btn-primary-color: #fff;
 // @btn-primary-bg: @primary-color;
 
-@primary-color: #FF8C58; // 全局主色
+@primary-color: #ff8c58; // 全局主色
 // @menu-color: #fff;
 // @menu-item-font-size: 16px;
 // @menu-icon-size: 16px;
@@ -61,14 +61,22 @@
 
 //全局覆盖滚动条样式
 ::-webkit-scrollbar {
-  width: 15px;
-  height: 15px;
-  background-color: transparent;
-  border-radius: 12px;
+    width: 15px;
+    height: 15px;
+    background-color: transparent;
+    border-radius: 12px;
 }
 ::-webkit-scrollbar-thumb {
-  background: #999;
-  border-radius: 9px;
-  background-clip: content-box;
-  border: 5px solid transparent;
+    background: #999;
+    border-radius: 9px;
+    background-clip: content-box;
+    border: 5px solid transparent;
+}
+
+.qj-table-filter-column {
+    display: block;
+    padding: 5px 8px;
+    .ant-checkbox-group-item {
+        display: block;
+    }
 }
