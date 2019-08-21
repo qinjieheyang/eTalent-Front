@@ -1,4 +1,4 @@
-import { IColumnRender } from "../TableColumnBuilder";
+import { IColumnRender, IFilterDropdown } from "../TableColumnBuilder";
  
 export interface IColumnDefine {
     canAutoOrder: boolean;
@@ -11,4 +11,5 @@ export interface IColumnDefine {
     prefixText?: string;
     /** 后缀 */
     suffixText?: string;
+    filterDropdown?:  IFilterDropdown;
 }

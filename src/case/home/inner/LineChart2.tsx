@@ -7,7 +7,7 @@ export class LineChart2 extends React.Component {
 
     return (
       <div>
-        <Framework.Com.charts.Line data= {data}  />     
+        <Framework.Com.Charts.Line data= {data}  />     
       </div>
     );
   }

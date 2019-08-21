@@ -1,4 +1,4 @@
-import { Divider, Popconfirm, Switch, Tooltip } from "antd";
+import { Divider, Popconfirm, Switch, Tooltip, Checkbox } from "antd";
 import * as React from "react";
 
 import { DataTable } from "../../data/dataTable/DataTable";
@@ -11,9 +11,19 @@ export type IColumnRender = (cellValue: any, row: object, index: number) => Reac
 
 export type IOptColumnRender = (row: any) => React.ReactNode;
 
+
 interface IColumnSortDefine extends IColumnDefine {
     sorter?: any;
 }
+
+interface FilterDropdownProps {
+    setSelectedKeys: (target: string[]) => void;
+    selectedKeys: string[];
+    confirm: () => void;
+    clearFilters: ()=> void;
+}
+
+export type IFilterDropdown = (props: FilterDropdownProps)  => React.ReactElement<any>;
 
 export class TableColumnBuilder {
     private optGroups: OptGroup[] = [];
@@ -48,7 +58,7 @@ export class TableColumnBuilder {
         const optColumn: IColumnSortDefine = {
             canAutoOrder: false,
             dataIndex: "操作",
-            key: "opt",
+            key: "operationColumn",
             width: this.optColumnWidth,
             title: "操作",
             render: (cellValue: any, row: any, index: number): React.ReactElement<any> => {
@@ -71,6 +81,26 @@ export class TableColumnBuilder {
                         })}
                     </span>
                 );
+            },
+            filterDropdown: (props: FilterDropdownProps): React.ReactElement<any> => {
+                // const { setSelectedKeys, selectedKeys, confirm, clearFilters } = props;
+                const filterColumns: IColumnSortDefine[] =  columns.slice(0, -1); //去除操作项
+                const defaultValues: string[] = [];
+                const plainOptions: any[] = filterColumns.map((column: any, index: number) =>{
+                    defaultValues.push(column.key);
+                    return { label: column.title, value: column.key }
+                });
+                return (
+                    <div className="custom-filter-dropdown">
+                        <Checkbox.Group 
+                            options={plainOptions} 
+                            defaultValue={defaultValues} 
+                            onChange={(checkedValues: string[]) => {
+                                this.onColumnsChange(checkedValues);
+                            }} 
+                        />
+                    </div>
+                )
             }
         };
 
@@ -79,6 +109,16 @@ export class TableColumnBuilder {
         return columns;
     };
 
+
+    public onColumnsChange = (onChange: (checkedColumnValues: string[]) => void)  =>{
+        const newColumns: IColumnSortDefine[] = [];
+        for (const col of this.columnDefines) {
+            if(checkedColumnValues.indexOf(col.key) || col.key === "operationColumn"){
+                newColumns.push(col)
+            }
+        }
+        return onChange;
+    }
     // -----------------------------------------------------------------------------------------------------------------
 
     /** 排序号 */
