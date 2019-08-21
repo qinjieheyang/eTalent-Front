@@ -96,13 +96,12 @@ export class TableColumnBuilder {
 
                 const onChangeFunc = (checkedColumnValues: string[])  =>{
                     const newColumns: IColumnSortDefine[] = [];
-                    for (const col of this.columnDefines) {
-                        if(checkedColumnValues.indexOf(col.key) || col.key === "operationColumn"){
+                    for (const col of columns) {
+                        if(checkedColumnValues.includes(col.key) || col.key === "operationColumn"){
                             newColumns.push(col)
                         }
                     }
                     onColChange(newColumns);
-                    // return newColumns;
                 }
 
                 return (
