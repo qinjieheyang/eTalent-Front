@@ -42,7 +42,7 @@ export class TableColumnBuilder {
         this.optColumnRenders = [];
     }
 
-    public GetColumns = () => {
+    public GetColumns = (onColumnsChange?: (newColumns: IColumnSortDefine[]) => void) => {
         const columns: IColumnSortDefine[] = [];
         for (const c of this.columnDefines) {
             columns.push(c);
@@ -54,6 +54,7 @@ export class TableColumnBuilder {
         if (this.optColumnRenders.length === 0) {
             return columns;
         }
+        
 
         const optColumn: IColumnSortDefine = {
             canAutoOrder: false,
@@ -90,13 +91,27 @@ export class TableColumnBuilder {
                     defaultValues.push(column.key);
                     return { label: column.title, value: column.key }
                 });
+
+                const onColChange = onColumnsChange? onColumnsChange : function(){};
+
+                const onChangeFunc = (checkedColumnValues: string[])  =>{
+                    const newColumns: IColumnSortDefine[] = [];
+                    for (const col of this.columnDefines) {
+                        if(checkedColumnValues.indexOf(col.key) || col.key === "operationColumn"){
+                            newColumns.push(col)
+                        }
+                    }
+                    onColChange(newColumns);
+                    // return newColumns;
+                }
+
                 return (
                     <div className="custom-filter-dropdown">
                         <Checkbox.Group 
                             options={plainOptions} 
                             defaultValue={defaultValues} 
                             onChange={(checkedValues: string[]) => {
-                                this.onColumnsChange(checkedValues);
+                                onChangeFunc(checkedValues);
                             }} 
                         />
                     </div>
@@ -110,15 +125,7 @@ export class TableColumnBuilder {
     };
 
 
-    public onColumnsChange = (onChange: (checkedColumnValues: string[]) => void)  =>{
-        const newColumns: IColumnSortDefine[] = [];
-        for (const col of this.columnDefines) {
-            if(checkedColumnValues.indexOf(col.key) || col.key === "operationColumn"){
-                newColumns.push(col)
-            }
-        }
-        return onChange;
-    }
+   
     // -----------------------------------------------------------------------------------------------------------------
 
     /** 排序号 */

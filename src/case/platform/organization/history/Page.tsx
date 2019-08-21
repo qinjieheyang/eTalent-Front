@@ -49,15 +49,12 @@ export default class Page extends React.Component<any, any> {
     bulider.AddText("姓名","name");
     bulider.AddNumber("年龄","age");
     bulider.AddText("住址","address");
-    bulider.AddButtonDelete(function(row:any){
+    bulider.AddButtonDelete((row:any) => {});
+
+
+    this.columns = bulider.GetColumns((newColumns: any[])=>{
+      this.setState({columns: newColumns});
     });
-
-
-    bulider.onColumnsChange((newColumns: any[])=>{
-      
-    })
-
-    this.columns = bulider.GetColumns();
   }
 
   public render() {
