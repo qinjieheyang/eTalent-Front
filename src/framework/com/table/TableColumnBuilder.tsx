@@ -16,13 +16,16 @@ interface FilterDropdownProps {
     selectedKeys: string[];
     confirm: () => void;
     clearFilters: ()=> void;
+    
 }
 
-interface IColumnSortDefine extends IColumnDefine {
+export interface IColumnSortDefine extends IColumnDefine {
     sorter?: any;
     filterDropdown?:  (props: FilterDropdownProps)  => React.ReactElement<any>;
     filterIcon?: (filtered: string|undefined) => React.ReactNode;
     onFilterDropdownVisibleChange?: (visible: boolean) => void;
+    filterDropdownVisible?: boolean;
+    sortOrder?:boolean;
 }
 
 export class TableColumnBuilder {
@@ -35,16 +38,17 @@ export class TableColumnBuilder {
     private optColumnRenders: IOptColumnRender[] = [];
     private optColumnWidth: number = 100;
 
-    private mapSelectTable = new Map<string, DataTable>();
+    private checkedColumnDefines: IColumnSortDefine[] = [];
 
-    private allSearchFilter: object = {};
+    private mapSelectTable = new Map<string, DataTable>();
 
     constructor() {
         this.columnDefines = [];
+        this.checkedColumnDefines = [];
         this.optColumnRenders = [];
     }
 
-    public GetColumns = (onColumnsChange?: (newColumns: IColumnSortDefine[]) => void) => {
+    public GetColumns = () => {
         const columns: IColumnSortDefine[] = [];
         for (const c of this.columnDefines) {
             columns.push(c);
@@ -56,17 +60,51 @@ export class TableColumnBuilder {
             return columns;
         }
 
-        columns.push(this.AddOperation(columns, onColumnsChange));
-
+        columns.push(this.AddOperation());
+        this.checkedColumnDefines = columns;
         return columns;
     };
 
-
+    public GetCheckedColumns = () => {
+        return this.checkedColumnDefines;
+    }
     
+    private SetCheckedColumns = (checkedColumnValues: string[])  =>{
+        const newColumns: IColumnSortDefine[] = [];
+        for(const c of this.columnDefines){
+            if(checkedColumnValues.includes(c.dataIndex) || c.dataIndex === "__operationColumn"){
+                newColumns.push(c);
+                if (c.canAutoOrder) {
+                    c.sorter = (row1: object, row2: object) => rowSorter(row1, row2, c.dataIndex);
+                }
+            }
+        }
+        if (this.optColumnRenders.length) {
+            newColumns.push(this.AddOperation());
+        }
+
+        this.checkedColumnDefines = newColumns;
+    }
+    
+    
+
     // -----------------------------------------------------------------------------------------------------------------
 
     /** 私有化操作列，有操作时自动加入到columns */
-    private AddOperation = (columns: IColumnSortDefine[], onColumnsChange?: (newColumns: IColumnSortDefine[]) => void) : IColumnDefine => {
+    private AddOperation = () : IColumnDefine => {
+
+        const columns: IColumnSortDefine[] = this.columnDefines;
+
+        const onCheckedColumnChange = (checkedColumnValues: string[], setSelectedKeys: (target: string[]) => void, confirm: ()=> void)  =>{
+            setSelectedKeys(checkedColumnValues);
+            this.SetCheckedColumns(checkedColumnValues);
+            confirm();
+        }
+
+        const onMouseLeaveFilterDropdown = (confirm: ()=> void) => {
+            confirm();
+        }
+        
         const col: IColumnSortDefine = {
             canAutoOrder: false,
             dataIndex: "__operationColumn",
@@ -94,40 +132,29 @@ export class TableColumnBuilder {
                 );
             },
             filterDropdown: (props: FilterDropdownProps): React.ReactElement<any> => {
-                const filterColumns: IColumnSortDefine[] =  columns.slice(0, -1); //去除操作项
+                const filterColumns: IColumnSortDefine[] =  columns; //去除操作项
                 const defaultValues: string[] = [];
                 const plainOptions: any[] = filterColumns.map((column: any, index: number) =>{
                     defaultValues.push(column.key);
                     return { label: column.title, value: column.key }
                 });
 
-                const onColChange = onColumnsChange? onColumnsChange : function(){};
-
-                const onChangeFunc = (checkedColumnValues: string[])  =>{
-                    const newColumns: IColumnSortDefine[] = [];
-                    for (const col of columns) {
-                        if(checkedColumnValues.includes(col.key) || col.key === "__operationColumn"){
-                            newColumns.push(col)
-                        }
-                    }
-                    onColChange(newColumns);
-                }
-
                 return (
-                    <div className="custom-filter-dropdown">
+                    <div className="custom-filter-dropdown" onMouseLeave={()=>{onMouseLeaveFilterDropdown(props.confirm);}} >
                         <Checkbox.Group 
                             className="qj-table-filter-column"
                             options={plainOptions} 
                             defaultValue={defaultValues} 
-                            onChange={(checkedValues: string[]) => {
-                                onChangeFunc(checkedValues);
+                            onChange={(checkedValues: string[]) =>{
+                                col.filterDropdownVisible = true;
+                                onCheckedColumnChange(checkedValues, props.setSelectedKeys, props.confirm)
                             }} 
                         />
                     </div>
                 )
             },
             filterIcon: (filtered: string|undefined) => (
-                <Icon type="setting" style={{ color: filtered ? '#1890ff' : undefined }} />
+                <Icon type="setting" style={{ color: filtered ? '#bfbfbf' : undefined }} />
             )
         };
         return col;
@@ -158,18 +185,22 @@ export class TableColumnBuilder {
             textDisplayLength = 20;
         }
 
-        const handleSearch = (dataIndex:string, selectedKeys: string[], confirm: ()=> void) =>{
-            this.allSearchFilter[dataIndex] = selectedKeys;
+        const handleSearch = (selectedKeys: string[], confirm: ()=> void) =>{
             confirm();
-            
         }
 
-        const handleReset = (dataIndex:string, clearFilters: ()=> void) =>{
-            this.allSearchFilter[dataIndex] = [];
-            delete this.allSearchFilter[dataIndex];
-            clearFilters();
+        // const handleReset = (clearFilters: ()=> void) =>{
+        //     clearFilters();
+        // }
+
+        const handleNull = (setSelectedKeys: (target: string[]) => void, selectedKeys: string[], confirm: ()=> void) =>{
+            setSelectedKeys(["null"]);
+            confirm();
         }
 
+        const handleMouseLeave = () => {
+
+        }
         const col: IColumnSortDefine = {
             canAutoOrder: false,
             dataIndex: fieldName,
@@ -197,32 +228,31 @@ export class TableColumnBuilder {
             width,
             filterDropdown: (props: FilterDropdownProps): React.ReactElement<any> => {
                 return (
-                    <div style={{ padding: 8 }}>
+                    <div style={{ padding: 8 }} onMouseLeave={()=>{handleMouseLeave()}}>
                     <Input
                       placeholder={`Search ${col.dataIndex}`}
                       value={props.selectedKeys[0]}
                       onChange={e => props.setSelectedKeys(e.target.value ? [e.target.value] : [])}
-                      onPressEnter={() => handleSearch(col.dataIndex, props.selectedKeys, props.confirm)}
+                      onPressEnter={e => handleSearch(props.selectedKeys, props.confirm)}
                       style={{ width: 188, marginBottom: 8, display: 'block' }}
                     />
                     <Button
                       type="primary"
-                      onClick={() => handleSearch(col.dataIndex, props.selectedKeys, props.confirm)}
-                      icon="search"
+                      onClick={() => handleSearch(props.selectedKeys, props.confirm)}
                       size="small"
                       style={{ width: 90, marginRight: 8 }}
                     >
-                      Search
+                      确定
                     </Button>
-                    <Button onClick={() => handleReset(col.dataIndex, props.clearFilters)} size="small" style={{ width: 90 }}>
-                      Reset
+                    <Button onClick={() => handleNull(props.setSelectedKeys, props.selectedKeys, props.confirm)} size="small" style={{ width: 90 }}>
+                      筛选空值
                     </Button>
                   </div>         
 
                 )
             },
             filterIcon: (filtered: string|undefined) => (
-                <Icon type="search" style={{ color: filtered ? '#1890ff' : undefined }} />
+                <Icon type="search" style={{ color: filtered ? '#bfbfbf' : undefined }} />
             )
         };
         this.columnDefines.push(col);
@@ -460,11 +490,18 @@ export class TableColumnBuilder {
     public AddSwitch = (
         title: string,
         fieldName: string,
+        handleSwitchChange: (value: boolean, row: any) => void,
         trueValue = "是",
         falseValue = "否",
-        handleSwitchChange: (value: boolean, row: any) => void,
         width = 50
     ): IColumnDefine => {
+
+        const onChange = (value: boolean, row: any) => {
+            if(handleSwitchChange){
+                handleSwitchChange(value, row);
+            }
+        };
+        
         const col: IColumnSortDefine = {
             canAutoOrder: true,
             dataIndex: fieldName,
@@ -476,7 +513,7 @@ export class TableColumnBuilder {
                             checkedChildren={trueValue}
                             unCheckedChildren={falseValue}
                             checked={cellValue}
-                            onChange={handleSwitchChange.bind(this, row)}
+                            onChange={checked => {onChange(checked, row)}}
                         />
                     </div>
                 );

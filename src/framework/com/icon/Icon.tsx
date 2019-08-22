@@ -20,7 +20,7 @@ interface IIconProps{
  /** 开发阶段统一在iconfont.cn管理 */
  export   class Icon extends React.Component<IIconProps> {
  
-  public static IconfontUrl= "http://at.alicdn.com/t/font_1357704_bc1a2jw3bdi.js";
+  public static IconfontUrl= "http://at.alicdn.com/t/font_1365760_rr31bqjgi7.js";
   public render(){
     const size= this.props.size== null ?12 : this.props.size;
     const style={ ...this.props.style,  fontSize: size };

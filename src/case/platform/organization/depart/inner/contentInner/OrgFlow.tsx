@@ -1,2 +1,2 @@
-import * as go from 'go/release/go';
+// import * as go from 'go/release/go';
 

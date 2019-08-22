@@ -12,12 +12,14 @@ const dataSource = [
     name: '胡彦斌',
     age: 32,
     address: '西湖区湖底公园1号',
+    switch: false
   },
   {
     key: '2',
     name: '胡彦祖',
     age: 42,
     address: '西湖区湖底公园1号',
+    switch: true
   },
 ];
 
@@ -39,7 +41,7 @@ export default class Page extends React.Component<any, any> {
     super(props);
     this.bulider = new TableColumnBuilder();
     this.initColumns();
-    this.state = {columns: this.columns};
+    this.state = {columns: this.columns, dataSource: dataSource};
 
   }
 
@@ -48,23 +50,53 @@ export default class Page extends React.Component<any, any> {
 
     bulider.AddText("姓名","name");
     bulider.AddNumber("年龄","age");
+    bulider.AddSwitch("开关","switch", (value: boolean, row: any) => {
+      console.log(value, row)
+      row.switch = value;
+      this.setState({dataSource: dataSource.map(item => item.key ==row.key?row:item)})
+    });
     bulider.AddText("住址","address");
     bulider.AddButtonDelete((row:any) => {});
 
 
-    this.columns = bulider.GetColumns((newColumns: any[])=>{
-      this.setState({columns: newColumns});
-    });
+    this.columns = bulider.GetColumns();
 
     // bulider.on
   }
 
   public render() {
-    // return <div>历史机构</div>;
     return (
       <Card>
-        <Table dataSource={dataSource} columns={this.state.columns} />;
+        <Table dataSource={this.state.dataSource} columns={this.state.columns} onChange={this.handleChange} />;
       </Card>
     )
   }
+
+  // private oldFilters:any;
+
+  public handleChange = (pagination: any, filters: any, sorter: any) => {
+    console.log('Various parameters', pagination, filters, sorter);
+    // this.oldFilters = filters;
+    // const newColumns: any[] = [];
+    // if(filters.__operationColumn){
+    //   for(const c of this.columns){
+    //     if(filters.__operationColumn.includes(c.dataIndex) || c.dataIndex === "__operationColumn"){
+    //       newColumns.push(c);
+    //     }
+    //   }
+    // }
+    // console.log(filters.__operationColumn)
+    if(filters.__operationColumn){
+      this.setState({
+        columns: this.bulider.GetCheckedColumns()
+      });
+      // delete filters.__operationColumn;
+    }
+
+    // this.setState({
+    //   filteredInfo: filters,
+    //   sortedInfo: sorter,
+    //   columns: this.bulider.GetCheckedColumns()
+    // });
+  };
 }

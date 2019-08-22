@@ -6,7 +6,7 @@ import userinfoReg  from "./userinfo/Reg";
 
 const userRegs = Framework.Case.Reg.CreatePathReg(
   "用户管理",
-  Framework.Com.Icons.App.point,
+  Framework.Com.Icons.App.user,
   "/platform/user"
 );
 
