@@ -12,14 +12,18 @@ const dataSource = [
     name: '胡彦斌',
     age: 32,
     address: '西湖区湖底公园1号',
-    switch: false
+    switch: false,
+    bool: true,
+    date: "2019-10-30"
   },
   {
     key: '2',
     name: '胡彦祖',
     age: 42,
     address: '西湖区湖底公园1号',
-    switch: true
+    switch: true,
+    bool: false,
+    date: "2019-5-30"
   },
 ];
 
@@ -56,6 +60,8 @@ export default class Page extends React.Component<any, any> {
       this.setState({dataSource: dataSource.map(item => item.key ==row.key?row:item)})
     });
     bulider.AddText("住址","address");
+    bulider.AddBool("是否","bool");
+    bulider.AddDate("日期","date");
     bulider.AddButtonDelete((row:any) => {});
 
 

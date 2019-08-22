@@ -1,4 +1,4 @@
-import { Divider, Popconfirm, Switch, Tooltip, Checkbox, Icon, Input, Button } from "antd";
+import { Divider, Popconfirm, Switch, Tooltip, Checkbox, Icon, Input, Button, DatePicker } from "antd";
 import * as React from "react";
 
 import { DataTable } from "../../data/dataTable/DataTable";
@@ -286,14 +286,64 @@ export class TableColumnBuilder {
                 return ":" + val;
             },
             title,
-            width
+            width,
+            filterDropdown: (props: FilterDropdownProps): React.ReactElement<any> => {
+                return (
+                    <div style={{padding:8}}>
+                        <Checkbox.Group 
+                            className="qj-table-filter-column"
+                            options={[{ label: trueValue, value: true },{ label: falseValue, value: false }]} 
+                            defaultValue={[true,false]} 
+                            onChange={(checkedValues: string[]) =>{
+                                // col.filterDropdownVisible = true;
+                                // onCheckedColumnChange(checkedValues, props.setSelectedKeys, props.confirm)
+                            }} 
+                        />
+                    </div>
+                )
+            }
         };
         this.columnDefines.push(col);
         return col;
     };
 
     public AddNumber = (title: string, fieldName: string, width = 50): IColumnDefine => {
-        const col: IColumnSortDefine = { canAutoOrder: false, dataIndex: fieldName, key: fieldName, title, width };
+        const col: IColumnSortDefine = { 
+            canAutoOrder: false, 
+            dataIndex: fieldName, 
+            key: fieldName, 
+            title, 
+            width,
+            filterDropdown: (props: FilterDropdownProps): React.ReactElement<any> => {
+                return (
+                    <div className="custom-filter-dropdown" style={{ padding: 8 }}>
+                        <Input.Group compact>
+                            <Input style={{ width: 100, textAlign: 'center' }} placeholder="Minimum" />
+                            <Input
+                                style={{
+                                width: 30,
+                                borderLeft: 0,
+                                pointerEvents: 'none',
+                                backgroundColor: '#fff',
+                                }}
+                                placeholder="~"
+                                disabled
+                            />
+                            <Input style={{ width: 100, textAlign: 'center', borderLeft: 0 }} placeholder="Maximum" />
+                        </Input.Group>
+                        <div style={{ textAlign: "right"}}>
+                            <Button
+                                type="primary"
+                                size="small"
+                                style={{ width: 90, marginTop:8 }}
+                                >
+                                确定
+                            </Button>
+                        </div>
+                    </div>
+                )
+            }
+        };
         this.columnDefines.push(col);
         return col;
     };
@@ -369,7 +419,14 @@ export class TableColumnBuilder {
                 return localeString;
             },
             title,
-            width
+            width,
+            filterDropdown: (props: FilterDropdownProps): React.ReactElement<any> => {
+                return (
+                    <div style={{padding:8}}>
+                         <DatePicker.RangePicker />
+                    </div>
+                )
+            }
         };
         this.columnDefines.push(col);
         return col;
@@ -503,7 +560,7 @@ export class TableColumnBuilder {
         };
         
         const col: IColumnSortDefine = {
-            canAutoOrder: true,
+            canAutoOrder: false,
             dataIndex: fieldName,
             key: fieldName,
             render: (cellValue: any, row: object, index: number): any => {
@@ -519,7 +576,22 @@ export class TableColumnBuilder {
                 );
             },
             title,
-            width
+            width,
+            filterDropdown: (props: FilterDropdownProps): React.ReactElement<any> => {
+                return (
+                    <div className="custom-filter-dropdown" >
+                        <Checkbox.Group 
+                            className="qj-table-filter-column"
+                            options={[{ label: trueValue, value: true },{ label: falseValue, value: false }]} 
+                            defaultValue={[true,false]} 
+                            onChange={(checkedValues: string[]) =>{
+                                // col.filterDropdownVisible = true;
+                                // onCheckedColumnChange(checkedValues, props.setSelectedKeys, props.confirm)
+                            }} 
+                        />
+                    </div>
+                )
+            }
         };
         this.columnDefines.push(col);
         return col;
