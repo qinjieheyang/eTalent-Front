@@ -466,6 +466,7 @@ export class TableColumnBuilder {
             dataIndex: fieldName,
             key: fieldName,
             render: (cellValue: any, row: object, index: number): any => {
+                console.info(cellValue)
                 const table = this.mapSelectTable.get(fieldName);
                 if (!table) {
                     return cellValue;
@@ -478,7 +479,27 @@ export class TableColumnBuilder {
                 return codeRow.name;
             },
             title,
-            width
+            width,
+            filterDropdown: (props: FilterDropdownProps): React.ReactElement<any> => {
+                const defaultValues: string[] = [];
+                const plainOptions: any[] = rowItems.map((item: any, index: number) =>{
+                    defaultValues.push(item.id);
+                    return { label: item.name, value: item.id }
+                });
+                return (
+                    <div style={{padding:8}}>
+                        <Checkbox.Group 
+                            className="qj-table-filter-column"
+                            options={plainOptions} 
+                            defaultValue={defaultValues} 
+                            onChange={(checkedValues: string[]) =>{
+                                // col.filterDropdownVisible = true;
+                                // onCheckedColumnChange(checkedValues, props.setSelectedKeys, props.confirm)
+                            }} 
+                        />
+                    </div>
+                )
+            }
         };
 
         this.columnDefines.push(col);
