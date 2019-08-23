@@ -81,6 +81,7 @@ const DepartTable = (props: IDepartTableProps) => {
     <Fragment>
       <Table
         className="qj-depart-table"
+        bordered
         columns={DepartTableColumns}
         rowSelection={rowSelection}
         dataSource={props.dataSource}

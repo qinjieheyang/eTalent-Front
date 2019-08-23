@@ -48,10 +48,10 @@ export default class Content extends React.Component<IContentProps, IContentStat
           <TabPane key="1" className="qj-depart-tab-pane"
             tab={ <span><Icon type="table" />机构表</span> }>
             <div className="qj-depart-btns" style={{ marginBottom: 16 }}>
-              <Button size="small" type="primary">新增</Button>
-              <Button size="small" type="primary" ghost>删除</Button>
+              <Button type="primary">新增</Button>
+              <Button >删除</Button>
               <Dropdown overlay={menu}>
-                <Button size="small" type="primary" ghost>更多</Button>
+                <Button>更多</Button>
               </Dropdown>
             </div>
             <DepartTable dataSource={this.state.dataSource} />

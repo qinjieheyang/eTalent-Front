@@ -15,7 +15,8 @@ const dataSource = [
     switch: false,
     bool: true,
     date: "2019-10-30",
-    type: "1"
+    type: "1",
+    orgName: "某某集团"
   },
   {
     key: '2',
@@ -25,7 +26,8 @@ const dataSource = [
     switch: true,
     bool: false,
     date: "2019-5-30",
-    type: "3"
+    type: "3",
+    orgName: "莫某单位"
   },
 ];
 
@@ -47,7 +49,7 @@ export default class Page extends React.Component<any, any> {
     super(props);
     this.bulider = new TableColumnBuilder();
     this.initColumns();
-    this.state = {columns: this.columns, dataSource: dataSource};
+    this.state = {columns: this.columns, dataSource: dataSource, selectedRowKeys:[]};
 
   }
 
@@ -56,15 +58,41 @@ export default class Page extends React.Component<any, any> {
 
     bulider.AddText("姓名","name");
     bulider.AddNumber("年龄","age");
-    bulider.AddSwitch("开关","switch", (value: boolean, row: any) => {
-      console.log(value, row)
-      row.switch = value;
-      this.setState({dataSource: dataSource.map(item => item.key ==row.key?row:item)})
-    });
+    // bulider.AddSwitch("开关","switch", (value: boolean, row: any) => {
+    //   console.log(value, row)
+    //   row.switch = value;
+    //   this.setState({dataSource: dataSource.map(item => item.key ==row.key?row:item)})
+    // });
     bulider.AddText("住址","address");
     bulider.AddBool("是否","bool");
     bulider.AddDate("日期","date");
     bulider.AddIdToName("组织类型","type",[{name:"集团",id:"1"},{name:"单位",id:"2"},{name:"部门",id:"3"}]);
+    bulider.AddTreeText("机构树","orgName",[
+      {
+        title:"集团1",
+        value:"1",
+        key:"1",
+        children: [{
+          title:"单位1",
+          value:"1-1",
+          key:"1-1"
+        }]
+      },
+      {
+        title:"集团2",
+        value:"2",
+        key:"2",
+        children: [{
+          title:"单位2",
+          value:"2-1",
+          key:"2-1"
+        },{
+          title:"单位3",
+          value:"2-2",
+          key:"2-2"
+        }]
+      },
+    ]);
     bulider.AddButtonDelete((row:any) => {});
 
 
@@ -74,14 +102,30 @@ export default class Page extends React.Component<any, any> {
   }
 
   public render() {
+
+    const { selectedRowKeys } = this.state;
+
+    const rowSelection = {
+      selectedRowKeys,
+      onChange: this.onSelectChange,
+    };
+
     return (
       <Card>
-        <Table dataSource={this.state.dataSource} columns={this.state.columns} onChange={this.handleChange} />;
+        <Table 
+          bordered
+          dataSource={this.state.dataSource}
+          columns={this.state.columns}
+          rowSelection={rowSelection}
+          onChange={this.handleChange} />;
       </Card>
     )
   }
 
-  // private oldFilters:any;
+  public onSelectChange = (selectedRowKeys: string[] ) => {
+    console.log('selectedRowKeys changed: ', selectedRowKeys);
+    this.setState({ selectedRowKeys });
+  }
 
   public handleChange = (pagination: any, filters: any, sorter: any) => {
     console.log('Various parameters', pagination, filters, sorter);

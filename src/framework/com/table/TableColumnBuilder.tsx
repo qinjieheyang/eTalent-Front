@@ -1,4 +1,4 @@
-import { Divider, Popconfirm, Switch, Tooltip, Checkbox, Icon, Input, Button, DatePicker } from "antd";
+import { Divider, Popconfirm, Switch, Tooltip, Checkbox, Icon, Input, Button, DatePicker, TreeSelect } from "antd";
 import * as React from "react";
 
 import { DataTable } from "../../data/dataTable/DataTable";
@@ -16,7 +16,6 @@ interface FilterDropdownProps {
     selectedKeys: string[];
     confirm: () => void;
     clearFilters: ()=> void;
-    
 }
 
 export interface IColumnSortDefine extends IColumnDefine {
@@ -25,7 +24,6 @@ export interface IColumnSortDefine extends IColumnDefine {
     filterIcon?: (filtered: string|undefined) => React.ReactNode;
     onFilterDropdownVisibleChange?: (visible: boolean) => void;
     filterDropdownVisible?: boolean;
-    sortOrder?:boolean;
 }
 
 export class TableColumnBuilder {
@@ -131,7 +129,7 @@ export class TableColumnBuilder {
                     </span>
                 );
             },
-            filterDropdown: (props: FilterDropdownProps): React.ReactElement<any> => {
+            filterDropdown: (props: FilterDropdownProps ): React.ReactElement<any> => {
                 const filterColumns: IColumnSortDefine[] =  columns; //去除操作项
                 const defaultValues: string[] = [];
                 const plainOptions: any[] = filterColumns.map((column: any, index: number) =>{
@@ -229,32 +227,104 @@ export class TableColumnBuilder {
             filterDropdown: (props: FilterDropdownProps): React.ReactElement<any> => {
                 return (
                     <div style={{ padding: 8 }} onMouseLeave={()=>{handleMouseLeave()}}>
-                    <Input
-                      placeholder={`Search ${col.dataIndex}`}
-                      value={props.selectedKeys[0]}
-                      onChange={e => props.setSelectedKeys(e.target.value ? [e.target.value] : [])}
-                      onPressEnter={e => handleSearch(props.selectedKeys, props.confirm)}
-                      style={{ width: 188, marginBottom: 8, display: 'block' }}
-                    />
-                    <Button
-                      type="primary"
-                      onClick={() => handleSearch(props.selectedKeys, props.confirm)}
-                      size="small"
-                      style={{ width: 90, marginRight: 8 }}
-                    >
-                      确定
-                    </Button>
-                    <Button onClick={() => handleNull(props.setSelectedKeys, props.selectedKeys, props.confirm)} size="small" style={{ width: 90 }}>
-                      筛选空值
-                    </Button>
+                        <div style={{marginBottom: 8}}>
+                            <Input
+                            placeholder={`Search ${col.dataIndex}`}
+                            value={props.selectedKeys[0]}
+                            onChange={e => props.setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                            onPressEnter={e => handleSearch(props.selectedKeys, props.confirm)}
+                            style={{ width: 188, }}
+                            />
+                            <Button
+                                type="primary"
+                                onClick={() => handleSearch(props.selectedKeys, props.confirm)}
+                                style={{ marginLeft: 8 }}
+                                >
+                                确定
+                            </Button>
+                        </div>
+                        <Button onClick={() => handleNull(props.setSelectedKeys, props.selectedKeys, props.confirm)} style={{ width: 90 }}>
+                        筛选空值
+                        </Button>
                   </div>         
 
                 )
             },
             filterIcon: (filtered: string|undefined) => (
-                <Icon type="search" style={{ color: filtered ? '#bfbfbf' : undefined }} />
+                <Icon type="down-circle" style={{ color: filtered ? '#bfbfbf' : undefined }} />
             )
         };
+        this.columnDefines.push(col);
+        return col;
+    };
+
+    /** 默认开启树选择 */
+    public AddTreeText = (
+        title: string,
+        fieldName: string,
+        treeData: any[],
+        textDisplayLength = 20,
+        width = 100
+    ): IColumnSortDefine => {
+
+        if (!textDisplayLength) {
+            textDisplayLength = 20;
+        }
+        if (textDisplayLength < 1) {
+            textDisplayLength = 20;
+        }
+
+        const col: IColumnSortDefine = {
+            canAutoOrder: false,
+            dataIndex: fieldName,
+            key: fieldName,
+            render: (cellValue: any, row: object, index: number): any => {
+                if (cellValue == null) {
+                    return "";
+                }
+
+                if (typeof cellValue !== "string") {
+                    UtilLog.error("文本列不能包含文本值", { fieldName, cellValue });
+                    throw new Error("列非文本类型, 在：" + fieldName + "=" + cellValue);
+                }
+
+                const length = cellValue.length;
+                if (length <= textDisplayLength) {
+                    return col.prefixText ? col.prefixText + cellValue : cellValue;
+                }
+                let newCellText = cellValue.substr(0, textDisplayLength);
+                newCellText = newCellText + "...";
+
+                return <Tooltip title={cellValue}>{col.prefixText ? col.prefixText + cellValue : newCellText}</Tooltip>;
+            },
+            title,
+            width,
+            filterDropdown: (props: FilterDropdownProps): React.ReactElement<any> => {
+                
+                const onChange = (value: string) => {
+                    console.log('onChange ', value);
+                };
+                
+                const tProps = {
+                    treeData,
+                    onChange: onChange,
+                    treeCheckable: true,
+                    showCheckedStrategy: TreeSelect.SHOW_PARENT,
+                    searchPlaceholder: '请选择',
+                    style: {
+                        width: 188,
+                    },
+                };
+
+                return (
+                    <div style={{padding:8}}>
+                        <TreeSelect {...tProps} />
+                        <Button type="primary" style={{marginLeft: 8}}>确定</Button>
+                    </div>
+                )
+            }
+        };
+
         this.columnDefines.push(col);
         return col;
     };
@@ -299,6 +369,12 @@ export class TableColumnBuilder {
                                 // onCheckedColumnChange(checkedValues, props.setSelectedKeys, props.confirm)
                             }} 
                         />
+                        <div style={{ textAlign: "center"}}>
+                            <Button
+                                type="primary">
+                                确定
+                            </Button>
+                        </div>
                     </div>
                 )
             }
@@ -317,29 +393,23 @@ export class TableColumnBuilder {
             filterDropdown: (props: FilterDropdownProps): React.ReactElement<any> => {
                 return (
                     <div className="custom-filter-dropdown" style={{ padding: 8 }}>
-                        <Input.Group compact>
-                            <Input style={{ width: 100, textAlign: 'center' }} placeholder="Minimum" />
-                            <Input
-                                style={{
-                                width: 30,
-                                borderLeft: 0,
-                                pointerEvents: 'none',
-                                backgroundColor: '#fff',
-                                }}
-                                placeholder="~"
-                                disabled
-                            />
-                            <Input style={{ width: 100, textAlign: 'center', borderLeft: 0 }} placeholder="Maximum" />
-                        </Input.Group>
-                        <div style={{ textAlign: "right"}}>
-                            <Button
-                                type="primary"
-                                size="small"
-                                style={{ width: 90, marginTop:8 }}
-                                >
-                                确定
-                            </Button>
+                        <div style={{display: "inline-block", verticalAlign: "middle"}}>
+                            <Input.Group compact >
+                                <Input style={{ width: 100, textAlign: 'center' }} placeholder="Minimum" />
+                                <Input
+                                    style={{
+                                    width: 30,
+                                    borderLeft: 0,
+                                    pointerEvents: 'none',
+                                    backgroundColor: '#fff',
+                                    }}
+                                    placeholder="~"
+                                    disabled
+                                />
+                                <Input style={{ width: 100, textAlign: 'center', borderLeft: 0 }} placeholder="Maximum" />
+                            </Input.Group>
                         </div>
+                        <Button type="primary" style={{marginLeft:8, verticalAlign: "middle"}}>确定</Button>
                     </div>
                 )
             }
@@ -424,6 +494,13 @@ export class TableColumnBuilder {
                 return (
                     <div style={{padding:8}}>
                          <DatePicker.RangePicker />
+                         <Button
+                            type="primary"
+                            style={{ marginLeft:8 }}
+                            >
+                            确定
+                        </Button>
+                        
                     </div>
                 )
             }
@@ -466,7 +543,6 @@ export class TableColumnBuilder {
             dataIndex: fieldName,
             key: fieldName,
             render: (cellValue: any, row: object, index: number): any => {
-                console.info(cellValue)
                 const table = this.mapSelectTable.get(fieldName);
                 if (!table) {
                     return cellValue;
@@ -497,6 +573,12 @@ export class TableColumnBuilder {
                                 // onCheckedColumnChange(checkedValues, props.setSelectedKeys, props.confirm)
                             }} 
                         />
+                        <div style={{ textAlign: "center"}}>
+                            <Button
+                                type="primary">
+                                确定
+                            </Button>
+                        </div>
                     </div>
                 )
             }
@@ -505,6 +587,8 @@ export class TableColumnBuilder {
         this.columnDefines.push(col);
         return col;
     };
+
+    
 
     /** TODO:ID到名称的转换 ,性能低下以后优化 */
     public AddIdArrayToName = (
