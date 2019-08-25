@@ -2,7 +2,7 @@ import * as React from "react";
 import { Layout } from "antd";
 import { Route, Switch } from "react-router-dom";
 
-import { mainRegs} from "../../../case/mainRegs";
+import { mainRegs} from "src/case/mainRegs";
 
 import NoMatch from "../../NoMatch";
 import { Sider } from "./inner/Sider";

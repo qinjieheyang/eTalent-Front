@@ -11,6 +11,6 @@ export interface IGlobalState {
     currentUser: IUserInfo;
     /** 菜单注册器集合 */
     menuRegCollection: Framework.Case.RegCollection;
-    /** 是否显示Loading */
+    /** 页面是否加载中 */
     loading: boolean;
 }

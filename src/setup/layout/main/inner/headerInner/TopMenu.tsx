@@ -1,12 +1,14 @@
 import { Menu } from 'antd';
 import * as React from "react";
+import { Link } from 'react-router-dom';
 import * as Framework from "src/framework/Framework";
 // import "./TopMenu.less";
-import { Link } from 'react-router-dom';
-// tslint:disable-next-line:no-empty-interface
+
+import { mainRegs } from "src/case/mainRegs";
+
+const topRegs = mainRegs.getTopRegs();
 
 export interface ITopMenuProps {
-  topRegs: Framework.Case.Reg[];
   topUrl: string;
   onMenuChange:(routePath:string) => void;
 }
@@ -21,7 +23,7 @@ export default class TopMenu extends React.Component<ITopMenuProps> {
     
     return (
       <Menu onClick={this.handleClick} selectedKeys={selectedKeys} mode="horizontal" className="qj-header-menu">
-        {this.getMenuItems(this.props.topRegs)}
+        {this.getMenuItems(topRegs)}
       </Menu>
     );
   }

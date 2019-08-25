@@ -8,7 +8,7 @@ import PagesHeader from "./OutHeader";
 const routes = pageRegs.getRoutes();
 
 /** 页面布局 */
-export class PageLayout extends React.Component {
+export default class PageLayout extends React.Component {
     public componentDidMount() {
         document.body.style.overflow = "unset";
     }

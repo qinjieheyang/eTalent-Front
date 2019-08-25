@@ -2,6 +2,7 @@ import * as Framework from "src/framework/Framework";
 import { IGlobalState } from "../states/IGlobalState";
 import { codeTables } from "./codeTables";
 import { isWaitHttpRequest } from "./isWaitHttpRequest";
+import { menuRegs } from "./menuRegs";
 import { isLoading } from "./isLoading";
 type IAction = Framework.Action.IAction;
 
@@ -14,7 +15,7 @@ export function reduxReducer(oldState: IGlobalState, action: any) {
         isWaitHttpRequest: isWaitHttpRequest(oldState.isWaitHttpRequest, action),
         currentUser: oldState.currentUser,
         loading: isLoading(oldState.loading, action),
-        menuRegCollection: oldState.menuRegCollection
+        menuRegCollection: menuRegs(oldState.menuRegCollection, action)
     };
 
     logEnd(oldState, newState);

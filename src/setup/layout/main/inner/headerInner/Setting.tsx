@@ -1,5 +1,7 @@
-import { Dropdown, Icon, Menu } from "antd";
 import * as React from "react";
+import { Dropdown, Icon, Menu } from "antd";
+import * as GlobalRedux from "src/globalRedux/GlobalRedux";
+
 import { IconBlock } from "./IconBlock";
 // tslint:disable-next-line:no-empty-interface
 
@@ -23,12 +25,9 @@ const ThemeVariablesArray: Array<any> = [{
   '@logo-bg-color': '#48B9C4'
 }]
 
-export interface ISetProps {
-  beforeThemeChange: () => void;
-  afterThemeChange: () => void;
-}
+export interface ISetProps extends GlobalRedux.States.IGlobalStateProps, GlobalRedux.Actions.IGlobalActionDispatcher {};
 
-export default class Setting extends React.Component<ISetProps> {
+class Setting extends React.Component<ISetProps> {
   constructor(props: ISetProps) {
     super(props);
   }
@@ -64,20 +63,22 @@ export default class Setting extends React.Component<ISetProps> {
   };
 
   private handleClick = (theme: number) => {
-
-    this.props.beforeThemeChange();
+    
+    this.props.globalLoadingStart()
     setTimeout(() => {
       window["less"].modifyVars(
         ThemeVariablesArray[theme]
       )
         .then(() => {
-          this.props.afterThemeChange();
+          this.props.globalLoadingEnd();
         })
         .catch((error: any) => {
           console.error(error);
-          this.props.afterThemeChange();
+          this.props.globalLoadingEnd();
         });
     }, 1000);
 
   };
 }
+
+export default GlobalRedux.ConnectPage.ConnectGlobal(Setting);

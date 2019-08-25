@@ -6,7 +6,8 @@ enum ActionType {
     HttpRequested = "Http/Requested",
     CodeTablesReset = "CodeTables/Reset",
     SetUserInfo = "App/SetUserInfo",
-    Loading = "App/Loading"
+    Loading = "App/Loading",
+    setMenuRegs = "APP/setMenuRegs"
 }
 
 /** 全局动作 */
@@ -47,6 +48,10 @@ class GlobalActionClass {
 
     public endLoading(){
         return {type: ActionType.Loading, data:false};
+    }
+
+    public setMenuRegs(data: any){
+        return {type: ActionType.setMenuRegs, data}
     }
 }
 

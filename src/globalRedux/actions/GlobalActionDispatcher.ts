@@ -16,11 +16,15 @@ export class GlobalActionDispatcher extends ActionDispatcherBase {
         this.service.getInit();
     };
 
-    public globalSetStartLoading = async () => {
+    public globalLoadingStart = async () => {
         this.send(GlobalAction.startLoading());
     }
 
-    public globalSetEndLoading = async () => {
+    public globalLoadingEnd = async () => {
         this.send(GlobalAction.endLoading());
+    }
+
+    public globalSetMeunRegs = async (data: any) => {
+        this.send(GlobalAction.setMenuRegs(data));
     }
 }

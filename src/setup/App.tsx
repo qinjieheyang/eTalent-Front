@@ -3,7 +3,7 @@ import * as React from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import GlobalRedux from "src/globalRedux/GlobalRedux";
-import { PageLayout } from "./layout/out/OutLayout";
+import PageLayout from "./layout/out/OutLayout";
 import MainLayout from './layout/main/MainLayout';
 
 // 集成Redux + Router + 统一后端日期格式转换

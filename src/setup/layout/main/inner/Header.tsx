@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Layout } from "antd";
 import * as Framework from "src/framework/Framework";
 
@@ -9,23 +9,31 @@ import Help from "./headerInner/Help";
 import LoginUser from "./headerInner/LoginUser";
 import Message from "./headerInner/Message";
 import Setting from "./headerInner/Setting";
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import "./Header.less";
 
 interface IHeaderProps {
-    onLoginOff: () => void;
     onMenuChange:(routePath:string) => void;
-    beforeThemeChange: () => void;
-    afterThemeChange: () => void;
     messages: IMessageRow[];
-    topRegs: Framework.Case.Reg[];
     topUrl: string;
 }
 
 const Header = (props: IHeaderProps) => {
+    const [isLogin, setLogin] = useState<boolean>(Framework.CurrentUser.isLogin);
 
-    const {onMenuChange, topRegs, topUrl, messages, beforeThemeChange, afterThemeChange, onLoginOff} = props;
+    if (isLogin === false) {
+        return <Redirect to={{ pathname: "/out/login" }} />;
+    }
+
+    const handleLoginOff = () => {
+        // debugger;
+        Framework.CurrentUser.off();
+        setLogin(false);
+    };
+
+    const {onMenuChange, topUrl, messages} = props;
+
 
     return (
         <Layout.Header id="topHeader" className="qj-header">
@@ -36,13 +44,13 @@ const Header = (props: IHeaderProps) => {
                     </Link>
                 </div>
                 <div className="qj-header-center">
-                    <TopMenu topRegs={topRegs} topUrl={topUrl} onMenuChange={onMenuChange}/>
+                    <TopMenu topUrl={topUrl} onMenuChange={onMenuChange}/>
                 </div>
                 <div className="qj-header-right">
                     <Message msgRows={messages} />
                     <Help />
-                    <Setting beforeThemeChange={beforeThemeChange} afterThemeChange={afterThemeChange} />
-                    <LoginUser onLoginOff={onLoginOff} />
+                    <Setting />
+                    <LoginUser onLoginOff={handleLoginOff} />
                 </div>
             </Layout.Header>
     )

@@ -41,7 +41,6 @@ export default class Content extends React.Component<IContentProps, IContentStat
   // }
 
   public render() {
-    // console.log(222)
     return (
       <Layout.Content className="qj-depart-content">
         <Tabs size="large" animated={false}>
