@@ -7,9 +7,10 @@ const getData = (): Array<any> => {
   const data: Array<any> = [];
   for (let i = 0; i < 10; i++) {
     data.push({
-      key: i,
+      key: `a${i}`,
+      dataIndex: `a${i}`,
       name: `Edrward ${i}`,
-      age: 32,
+      age: "aaa32",
       address: `London Park no. ${i}`,
     });
   }

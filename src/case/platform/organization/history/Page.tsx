@@ -35,15 +35,6 @@ const dataSource = [
 export default class Page extends React.Component<any, any> {
   private bulider: any; 
   private columns: any[];
-  // const CreateColumn = (): any[] => {
-  //   bulider.AddText("姓名","name");
-  //   bulider.AddNumber("年龄","age");
-  //   bulider.AddText("住址","address");
-  //   bulider.AddButtonDelete(function(row){
-  //   });
-  
-  //   return bulider.GetColumns();
-  // }
 
   constructor(props: any) {
     super(props);

@@ -1,8 +1,9 @@
-import * as React from "react";
-
+import React from "react";
 import Framework from "src/framework/Framework";
+const AdaptiveTable = Framework.Com.Tables.AdaptiveTable;
 
-const AdaptiveTable = Framework.Com.Tables.AdaptiveTable
+import DepartTableColumns from './DepartTableColumns';
+
 
 const dataSource = [
   {
@@ -41,12 +42,18 @@ const columns = [{
   dataType: "number",
 }]
 
-export default class Page extends React.Component<any, any> {
-  constructor(props: any) {
-    super(props);
-  }
-
-  public render() {
-    return <AdaptiveTable columns={columns} dataSource={dataSource} />;
-  }
+interface IDepartTableProps {
+  dataSource: Array<any>,
 }
+
+const DepartTable = (props: IDepartTableProps) => {
+  
+  return (
+    <AdaptiveTable
+      columns={columns}
+      dataSource={dataSource}
+    />
+  )
+}
+
+export default DepartTable;
