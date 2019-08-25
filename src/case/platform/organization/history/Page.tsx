@@ -62,17 +62,12 @@ export default class Page extends React.Component<any, any> {
     //   dataIndex: "name",
     //   dataType: "text",
     //   reader: null,
-    //   enableFilter:true,
-    //   filterData:[],
+    //   enableSearch:true,
+    //   searchData:[],
     //   filterDropdown: null,
-
     //   textDisplayLength: 100,
     //   width: 100,
-    //   typeAttrs:{
-    //     checkNull: true,
-    //     trueValue: "是",
-    //     falseValue: "否"
-    //   },
+    //   checkNull: true,
     //   handler:{
     //     onClick:()=>{
 
@@ -82,43 +77,80 @@ export default class Page extends React.Component<any, any> {
       
     // });
 
-    bulider.AddText("姓名","name");
-    bulider.AddNumber("年龄","age");
+    bulider.AddText({
+      title: "姓名",
+      key: "name",
+      dataIndex: "name",
+      dataType: "text"
+    });
+    bulider.AddNumber({
+      title: "年龄",
+      key: "age",
+      dataIndex: "age",
+      dataType: "number"
+    });
     // bulider.AddSwitch("开关","switch", (value: boolean, row: any) => {
     //   console.log(value, row)
     //   row.switch = value;
     //   this.setState({dataSource: dataSource.map(item => item.key ==row.key?row:item)})
     // });
-    bulider.AddText("住址","address");
-    bulider.AddBool("是否","bool");
-    bulider.AddDate("日期","date");
-    bulider.AddIdToName("组织类型","type",[{name:"集团",id:"1"},{name:"单位",id:"2"},{name:"部门",id:"3"}]);
-    bulider.AddTreeText("机构树","orgName",[
-      {
-        title:"集团1",
-        value:"1",
-        key:"1",
-        children: [{
-          title:"单位1",
-          value:"1-1",
-          key:"1-1"
-        }]
-      },
-      {
-        title:"集团2",
-        value:"2",
-        key:"2",
-        children: [{
-          title:"单位2",
-          value:"2-1",
-          key:"2-1"
-        },{
-          title:"单位3",
-          value:"2-2",
-          key:"2-2"
-        }]
-      },
-    ]);
+    bulider.AddText({
+      title: "住址",
+      key: "address",
+      dataIndex: "address",
+      dataType: "text"
+    });
+    bulider.AddBool({
+      title: "是否",
+      key: "bool",
+      dataIndex: "bool",
+      dataType: "boolean"
+    });
+    bulider.AddDate({
+      title: "日期",
+      key: "date",
+      dataIndex: "date",
+      dataType: "date"
+    });
+    bulider.AddIdToName({
+      title: "组织类型",
+      key: "type",
+      dataIndex: "type",
+      dataType: "checkbox",
+      searchData: [{name:"集团",id:"1"},{name:"单位",id:"2"},{name:"部门",id:"3"}]
+    });
+    bulider.AddTreeText({
+      title: "机构树",
+      key: "orgName",
+      dataIndex: "orgName",
+      dataType: "treeText",
+      searchData: [
+        {
+          title:"集团1",
+          value:"1",
+          key:"1",
+          children: [{
+            title:"单位1",
+            value:"1-1",
+            key:"1-1"
+          }]
+        },
+        {
+          title:"集团2",
+          value:"2",
+          key:"2",
+          children: [{
+            title:"单位2",
+            value:"2-1",
+            key:"2-1"
+          },{
+            title:"单位3",
+            value:"2-2",
+            key:"2-2"
+          }]
+        }
+      ]
+    });
     bulider.AddButtonDelete((row:any) => {});
 
 

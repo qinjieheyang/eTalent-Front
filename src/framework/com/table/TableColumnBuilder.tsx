@@ -16,13 +16,13 @@ interface FilterDropdownProps {
     setSelectedKeys: (target: string[]) => void;
     selectedKeys: string[];
     confirm: () => void;
-    clearFilters: ()=> void;
+    clearFilters: () => void;
 }
 
 export interface IColumnSortDefine extends IColumnDefine {
     sorter?: any;
-    filterDropdown?:  (props: FilterDropdownProps)  => React.ReactElement<any>;
-    filterIcon?: (filtered: string|undefined) => React.ReactNode;
+    filterDropdown?: (props: FilterDropdownProps) => React.ReactElement<any>;
+    filterIcon?: (filtered: string | undefined) => React.ReactNode;
     onFilterDropdownVisibleChange?: (visible: boolean) => void;
     filterDropdownVisible?: boolean;
 }
@@ -54,9 +54,9 @@ export class TableColumnBuilder {
             if (c.canAutoOrder) {
                 c.sorter = (row1: object, row2: object) => rowSorter(row1, row2, c.dataIndex);
             }
-            c.serachEnable === undefined ? c.serachEnable = true : c.serachEnable = false;
-            if(c.serachEnable){
-                c.filterIcon = (filtered: string|undefined) => (
+            c.enableSearch === undefined ? c.enableSearch = true : c.enableSearch = false;
+            if (c.enableSearch) {
+                c.filterIcon = (filtered: string | undefined) => (
                     <Icon type="down-circle" style={{ color: filtered ? '#bfbfbf' : undefined }} />
                 )
             }
@@ -73,18 +73,18 @@ export class TableColumnBuilder {
     public GetCheckedColumns = () => {
         return this.checkedColumnDefines;
     }
-    
-    private SetCheckedColumns = (checkedColumnValues: string[])  =>{
+
+    private SetCheckedColumns = (checkedColumnValues: string[]) => {
         const newColumns: IColumnSortDefine[] = [];
-        for(const c of this.columnDefines){
-            if(checkedColumnValues.includes(c.dataIndex) || c.dataIndex === "__operationColumn"){
+        for (const c of this.columnDefines) {
+            if (checkedColumnValues.includes(c.dataIndex) || c.dataIndex === "__operationColumn") {
                 newColumns.push(c);
                 if (c.canAutoOrder) {
                     c.sorter = (row1: object, row2: object) => rowSorter(row1, row2, c.dataIndex);
                 }
-                c.serachEnable === undefined ? c.serachEnable = true : c.serachEnable = false;
-                if(c.serachEnable){
-                    c.filterIcon = (filtered: string|undefined) => (
+                c.enableSearch === undefined ? c.enableSearch = true : c.enableSearch = false;
+                if (c.enableSearch) {
+                    c.filterIcon = (filtered: string | undefined) => (
                         <Icon type="down-circle" style={{ color: filtered ? '#bfbfbf' : undefined }} />
                     )
                 }
@@ -96,31 +96,23 @@ export class TableColumnBuilder {
 
         this.checkedColumnDefines = newColumns;
     }
-    
-    
+
+
 
     // -----------------------------------------------------------------------------------------------------------------
 
     /** 私有化操作列，有操作时自动加入到columns */
-    private AddOperation = () : IColumnDefine => {
+    private AddOperation = (): IColumnDefine => {
 
         const columns: IColumnSortDefine[] = this.columnDefines;
 
-        const onCheckedColumnChange = (checkedColumnValues: string[], setSelectedKeys: (target: string[]) => void, confirm: ()=> void)  =>{
-            setSelectedKeys(checkedColumnValues);
-            this.SetCheckedColumns(checkedColumnValues);
-            confirm();
-        }
-
-        // const getTitle = (optCount: number) => optCount === 0? "" : "操作";
-
-
         const col: IColumnSortDefine = {
             canAutoOrder: false,
-            dataIndex: "__operationColumn",
-            key: "__operationColumn",
-            width: this.optColumnWidth,
             title: "操作",
+            key: "__operationColumn",
+            dataIndex: "__operationColumn",
+            dataType: "__operation",
+            width: this.optColumnWidth,
             render: (cellValue: any, row: any, index: number): React.ReactElement<any> => {
                 return (
                     <span>
@@ -141,29 +133,31 @@ export class TableColumnBuilder {
                     </span>
                 );
             },
-            filterDropdown: (props: FilterDropdownProps ): React.ReactElement<any> => {
-                const filterColumns: IColumnSortDefine[] =  columns; //去除操作项
+            filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }: FilterDropdownProps): React.ReactElement<any> => {
+                const filterColumns: IColumnSortDefine[] = columns; //去除操作项
                 const defaultValues: string[] = [];
-                const plainOptions: any[] = filterColumns.map((column: any, index: number) =>{
+                const plainOptions: any[] = filterColumns.map((column: any, index: number) => {
                     defaultValues.push(column.key);
                     return { label: column.title, value: column.key }
                 });
 
                 return (
-                    <div className="custom-filter-dropdown" onMouseLeave={()=>{confirm()}} >
-                        <Checkbox.Group 
+                    <div className="custom-filter-dropdown" onMouseLeave={() => { confirm() }} >
+                        <Checkbox.Group
                             className="qj-table-filter-column"
-                            options={plainOptions} 
-                            defaultValue={defaultValues} 
-                            onChange={(checkedValues: string[]) =>{
+                            options={plainOptions}
+                            defaultValue={defaultValues}
+                            onChange={(checkedValues: string[]) => {
                                 col.filterDropdownVisible = true;
-                                onCheckedColumnChange(checkedValues, props.setSelectedKeys, props.confirm)
-                            }} 
+                                setSelectedKeys(checkedValues);
+                                confirm();
+                                this.SetCheckedColumns(checkedValues);
+                            }}
                         />
                     </div>
                 )
             },
-            filterIcon: (filtered: string|undefined) => (
+            filterIcon: (filtered: string | undefined) => (
                 <Icon type="setting" style={{ color: filtered ? '#bfbfbf' : undefined }} />
             )
         };
@@ -171,23 +165,38 @@ export class TableColumnBuilder {
     }
 
     /** 排序号 */
-    public AddSortNum = (title: string, width = 20): IColumnDefine => {
+    public AddSortNum = ({
+        title = "序号",
+        key = "__SortNum",
+        dataIndex = "__SortNum",
+        dataType = "__SortNum",
+        width = 50
+    }: IColumnDefine): IColumnDefine => {
         const col: IColumnSortDefine = {
-            canAutoOrder: false,
-            dataIndex: "__SortNum",
-            key: "__SortNum",
+            title,
+            key,
+            dataIndex,
+            dataType,
             render: (cellValue: any, row: object, index: number): any => {
                 const indexLabel = index + 1;
                 return <Tooltip title={indexLabel}>{indexLabel}</Tooltip>;
             },
-            title,
             width
         };
         this.columnDefines.push(col);
         return col;
     };
 
-    public AddText = (title: string, fieldName: string, textDisplayLength = 20, width = 100): IColumnDefine => {
+    public AddText = ({
+        title,
+        key,
+        dataIndex,
+        dataType,
+        width = 100,
+        textDisplayLength = 20,
+        enableSearch = true,
+        checkNull = true
+    }: IColumnDefine): IColumnSortDefine => {
         if (!textDisplayLength) {
             textDisplayLength = 20;
         }
@@ -196,17 +205,19 @@ export class TableColumnBuilder {
         }
 
         const col: IColumnSortDefine = {
-            canAutoOrder: false,
-            dataIndex: fieldName,
-            key: fieldName,
+            title,
+            key,
+            dataIndex,
+            dataType,
+            width,
             render: (cellValue: any, row: object, index: number): any => {
                 if (cellValue == null) {
                     return "";
                 }
 
                 if (typeof cellValue !== "string") {
-                    UtilLog.error("文本列不能包含文本值", { fieldName, cellValue });
-                    throw new Error("列非文本类型, 在：" + fieldName + "=" + cellValue);
+                    UtilLog.error("文本列不能包含文本值", { dataIndex, cellValue });
+                    throw new Error("列非文本类型, 在：" + dataIndex + "=" + cellValue);
                 }
 
                 const length = cellValue.length;
@@ -218,9 +229,7 @@ export class TableColumnBuilder {
 
                 return <Tooltip title={cellValue}>{col.prefixText ? col.prefixText + cellValue : newCellText}</Tooltip>;
             },
-            title,
-            width,
-            ...ColumnSearch.getTextSearchProps({title})
+            ...ColumnSearch.getTextSearchProps({ title, enableSearch, checkNull })
         };
         this.columnDefines.push(col);
         return col;
@@ -307,13 +316,16 @@ export class TableColumnBuilder {
     // };
 
     /** 默认开启树选择 */
-    public AddTreeText = (
-        title: string,
-        fieldName: string,
-        treeData: any[],
+    public AddTreeText = ({
+        title,
+        key,
+        dataIndex,
+        dataType,
+        width = 100,
         textDisplayLength = 20,
-        width = 100
-    ): IColumnSortDefine => {
+        enableSearch = true,
+        searchData = []
+    }: IColumnDefine): IColumnSortDefine => {
 
         if (!textDisplayLength) {
             textDisplayLength = 20;
@@ -323,17 +335,19 @@ export class TableColumnBuilder {
         }
 
         const col: IColumnSortDefine = {
-            canAutoOrder: false,
-            dataIndex: fieldName,
-            key: fieldName,
+            title,
+            key,
+            dataIndex,
+            dataType,
+            width,
             render: (cellValue: any, row: object, index: number): any => {
                 if (cellValue == null) {
                     return "";
                 }
 
                 if (typeof cellValue !== "string") {
-                    UtilLog.error("文本列不能包含文本值", { fieldName, cellValue });
-                    throw new Error("列非文本类型, 在：" + fieldName + "=" + cellValue);
+                    UtilLog.error("文本列不能包含文本值", { dataIndex, cellValue });
+                    throw new Error("列非文本类型, 在：" + dataIndex + "=" + cellValue);
                 }
 
                 const length = cellValue.length;
@@ -345,152 +359,183 @@ export class TableColumnBuilder {
 
                 return <Tooltip title={cellValue}>{col.prefixText ? col.prefixText + cellValue : newCellText}</Tooltip>;
             },
-            title,
-            width,
-            ...ColumnSearch.getTreeSearchProps({title, searchData: treeData})
+            ...ColumnSearch.getTreeSearchProps({ title, enableSearch, searchData })
         };
 
         this.columnDefines.push(col);
         return col;
     };
 
-    public AddBool = (
-        title: string,
-        fieldName: string,
-        trueValue = "是",
-        falseValue = "否",
-        width = 50
-    ): IColumnDefine => {
+    public AddBool = ({
+        title,
+        key,
+        dataIndex,
+        dataType,
+        width = 100,
+        enableSearch = true,
+        searchData = ["是", "否"]
+    }: IColumnDefine): IColumnSortDefine => {
         const col: IColumnSortDefine = {
-            canAutoOrder: false,
-            dataIndex: fieldName,
-            key: fieldName,
+            title,
+            key,
+            dataIndex,
+            dataType,
+            width,
             render: (cellValue: any, row: object, index: number): any => {
-                const val = row[fieldName];
+                const val = row[dataIndex];
                 if (val === "" || val == null) {
                     return "";
                 }
 
                 if (val === true) {
-                    return trueValue;
+                    return searchData[0] || "是";
                 }
                 if (val === false) {
-                    return falseValue;
+                    return searchData[1] || "否";
                 }
 
                 return ":" + val;
             },
-            title,
-            width,
-            ...ColumnSearch.getBoolSearchProps({title})
+            ...ColumnSearch.getBoolSearchProps({ title, enableSearch })
         };
         this.columnDefines.push(col);
         return col;
     };
 
-    public AddNumber = (title: string, fieldName: string, width = 50): IColumnDefine => {
-        const col: IColumnSortDefine = { 
-            canAutoOrder: false, 
-            dataIndex: fieldName, 
-            key: fieldName, 
-            title, 
-            width,
-            ...ColumnSearch.getNumberSearchProps({title})
-        };
-        this.columnDefines.push(col);
-        return col;
-    };
-
-    public AddMoney = (title: string, fieldName: string, width = 50): IColumnDefine => {
+    public AddNumber = ({
+        title,
+        key,
+        dataIndex,
+        dataType,
+        width = 50,
+        enableSearch = true,
+        searchData = [0, 100]
+    }: IColumnDefine): IColumnSortDefine => {
         const col: IColumnSortDefine = {
-            canAutoOrder: false,
-            dataIndex: fieldName,
-            key: fieldName,
+            title,
+            key,
+            dataIndex,
+            dataType,
+            width,
+            ...ColumnSearch.getNumberSearchProps({ title, enableSearch, searchData })
+        };
+        this.columnDefines.push(col);
+        return col;
+    };
+
+    public AddMoney = ({
+        title,
+        key,
+        dataIndex,
+        dataType,
+        width = 50
+    }: IColumnDefine): IColumnSortDefine => {
+        const col: IColumnSortDefine = {
+            title,
+            key,
+            dataIndex,
+            dataType,
+            width,
             render: (cellValue: any, row: object, index: number) => {
                 return UtilNumber.numberToRMB(cellValue, "￥") as any;
-            },
+            }
+        };
+        this.columnDefines.push(col);
+        return col;
+    };
+
+    public AddCustomRender = ({
+        title,
+        key,
+        dataIndex,
+        dataType,
+        width = 50
+    }: IColumnDefine): IColumnSortDefine => {
+        const col: IColumnSortDefine = {
             title,
+            key,
+            dataIndex,
+            dataType,
             width
         };
         this.columnDefines.push(col);
         return col;
     };
 
-    public AddCustomRender = (
-        title: string,
-        fieldName: string,
-        render: (cellValue: any, row: object, index: number) => any,
+    /** 年-月-日 时：分 */
+    public AddDateYYYYMMDDHHmm = ({
+        title,
+        key,
+        dataIndex,
+        dataType,
         width = 100
-    ): IColumnDefine => {
+    }: IColumnDefine): IColumnSortDefine => {
         const col: IColumnSortDefine = {
-            canAutoOrder: false,
-            dataIndex: fieldName,
-            key: fieldName,
-            render,
             title,
-            width
-        };
-        this.columnDefines.push(col);
-        return col;
-    };
-
-    /** 年-月-日 时：分：秒 */
-    public AddDateYYYYMMDDHHmm = (title: string, fieldName: string, width = 100): IColumnDefine => {
-        const col: IColumnSortDefine = {
-            canAutoOrder: false,
-            dataIndex: fieldName,
-            key: fieldName,
+            key,
+            dataIndex,
+            dataType,
+            width,
             render: (cellValue: any, row: object, index: number): any => {
                 if (!cellValue || cellValue === "") {
                     return "";
                 }
                 const date2 = new Date(cellValue);
-                const localeString = `${date2.getFullYear()}年${date2.getMonth() +
-                    1}月${date2.getDate()}日${date2.getHours()}时${date2.getMinutes()}分`;
+                const localeString = `${date2.getFullYear()}-${date2.getMonth() +
+                    1}-${date2.getDate()} ${date2.getHours()}:${date2.getMinutes()}`;
                 return localeString;
-            },
-            title,
-            width
+            }
         };
         this.columnDefines.push(col);
         return col;
     };
 
     /** 年-月-日 */
-    public AddDate = (title: string, fieldName: string, width = 100) => {
+    public AddDate = ({
+        title,
+        key,
+        dataIndex,
+        dataType,
+        width = 100
+    }: IColumnDefine): IColumnSortDefine => {
         const col: IColumnSortDefine = {
-            canAutoOrder: false,
-            dataIndex: fieldName,
-            key: fieldName,
+            title,
+            key,
+            dataIndex,
+            dataType,
+            width,
             render: (cellValue: any, row: object, index: number): any => {
                 if (!cellValue || cellValue === "") {
                     return "";
                 }
-
                 const date2 = new Date(cellValue);
-                const localeString = `${date2.getFullYear()}年${date2.getMonth() + 1}月${date2.getDate()}日`;
+                const localeString = `${date2.getFullYear()}-${date2.getMonth() + 1}-${date2.getDate()}`;
                 return localeString;
             },
-            title,
-            width,
-            ...ColumnSearch.getDateSearchProps({title})
+            ...ColumnSearch.getDateSearchProps({ title })
         };
         this.columnDefines.push(col);
         return col;
     };
 
-    public AddYearMonth = (title: string, fieldName: string, width = 100, isAutoOrderColumn = false) => {
+    public AddYearMonth = ({
+        title,
+        key,
+        dataIndex,
+        dataType,
+        width = 100
+    }: IColumnDefine): IColumnSortDefine => {
         const col: IColumnSortDefine = {
-            canAutoOrder: false,
-            dataIndex: fieldName,
-            key: fieldName,
+            title,
+            key,
+            dataIndex,
+            dataType,
+            width,
             render: (cellValue: any, row: object, index: number): any => {
                 const date2 = new Date(cellValue);
                 const localeString = `${date2.getFullYear()}年${date2.getMonth() + 1}月`;
                 return localeString;
-            },
-            title,
-            width
+            }
         };
 
         this.columnDefines.push(col);
@@ -498,22 +543,25 @@ export class TableColumnBuilder {
     };
 
     /** ID到名称的转换 ,性能低下以后优化 */
-    public AddIdToName = (
-        title: string,
-        fieldName: string,
-        rowItems: any[],
+    public AddIdToName = ({
+        title,
+        key,
+        dataIndex,
+        dataType,
         width = 100,
-        isAutoOrderColumn = false
-    ): IColumnSortDefine => {
-        const selectTable = new DataTable(rowItems);
-        this.mapSelectTable.set(fieldName, selectTable);
-
+        enableSearch = true,
+        searchData = []
+    }: IColumnDefine): IColumnSortDefine => {
+        const selectTable = new DataTable(searchData);
+        this.mapSelectTable.set(dataIndex, selectTable);
         const col: IColumnSortDefine = {
-            canAutoOrder: false,
-            dataIndex: fieldName,
-            key: fieldName,
+            title,
+            key,
+            dataIndex,
+            dataType,
+            width,
             render: (cellValue: any, row: object, index: number): any => {
-                const table = this.mapSelectTable.get(fieldName);
+                const table = this.mapSelectTable.get(dataIndex);
                 if (!table) {
                     return cellValue;
                 }
@@ -524,40 +572,42 @@ export class TableColumnBuilder {
                 const codeRow: any = table.getById(cellValue);
                 return codeRow.name;
             },
-            title,
-            width,
-            ...ColumnSearch.getCheckboxSearchProps({title, searchData: rowItems})
+            ...ColumnSearch.getCheckboxSearchProps({ title, searchData })
         };
 
         this.columnDefines.push(col);
         return col;
     };
 
-    
+
 
     /** TODO:ID到名称的转换 ,性能低下以后优化 */
-    public AddIdArrayToName = (
-        title: string,
-        fieldName: string,
-        rowItems: any[],
+    public AddIdArrayToName = ({
+        title,
+        key,
+        dataIndex,
+        dataType,
         width = 100,
-        isAutoOrderColumn = false,
+        enableSearch = false,
+        searchData = [],
         textDisplayLength = 30
-    ): IColumnSortDefine => {
-        const selectTable = new DataTable(rowItems);
-        this.mapSelectTable.set(fieldName, selectTable);
+    }: IColumnDefine): IColumnSortDefine => {
+        const selectTable = new DataTable(searchData);
+        this.mapSelectTable.set(dataIndex, selectTable);
 
         const col: IColumnSortDefine = {
-            canAutoOrder: false,
-            dataIndex: fieldName,
-            key: fieldName,
+            title,
+            key,
+            dataIndex,
+            dataType,
+            width,
             render: (cellValue: any, row: object, index: number): any => {
                 if (cellValue) {
                     if (cellValue.constructor !== Array) {
-                        throw new Error(fieldName + " | 字段值非string数组");
+                        throw new Error(dataIndex + " | 字段值非string数组");
                     }
                 }
-                const table = this.mapSelectTable.get(fieldName);
+                const table = this.mapSelectTable.get(dataIndex);
                 if (!table) {
                     return cellValue;
                 }
@@ -585,62 +635,40 @@ export class TableColumnBuilder {
                 const newCellText = finalText.substr(0, textDisplayLength) + "...";
 
                 return <Tooltip title={finalText}>{newCellText}</Tooltip>;
-            },
-            title,
-            width
+            }
         };
 
         this.columnDefines.push(col);
         return col;
     };
 
-    public AddSwitch = (
-        title: string,
-        fieldName: string,
-        handleSwitchChange: (value: boolean, row: any) => void,
-        trueValue = "是",
-        falseValue = "否",
-        width = 50
-    ): IColumnDefine => {
+    public AddSwitch = ({
+        title,
+        key,
+        dataIndex,
+        dataType,
+        width = 100,
+        textDisplayLength = 30,
+        handler
+    }: IColumnDefine): IColumnSortDefine => {
 
-        const onChange = (value: boolean, row: any) => {
-            if(handleSwitchChange){
-                handleSwitchChange(value, row);
-            }
-        };
-        
         const col: IColumnSortDefine = {
-            canAutoOrder: false,
-            dataIndex: fieldName,
-            key: fieldName,
+            title,
+            key,
+            dataIndex,
+            dataType,
+            width,
             render: (cellValue: any, row: object, index: number): any => {
                 return (
                     <div>
                         <Switch
-                            checkedChildren={trueValue}
-                            unCheckedChildren={falseValue}
+                            checkedChildren={"ON"}
+                            unCheckedChildren={"OFF"}
                             checked={cellValue}
-                            onChange={checked => {onChange(checked, row)}}
+                            onChange={checked => { handler && handler["onChange"](checked, row) }}
                         />
                     </div>
                 );
-            },
-            title,
-            width,
-            filterDropdown: (props: FilterDropdownProps): React.ReactElement<any> => {
-                return (
-                    <div className="custom-filter-dropdown" >
-                        <Checkbox.Group 
-                            className="qj-table-filter-column"
-                            options={[{ label: trueValue, value: true },{ label: falseValue, value: false }]} 
-                            defaultValue={[true,false]} 
-                            onChange={(checkedValues: string[]) =>{
-                                // col.filterDropdownVisible = true;
-                                // onCheckedColumnChange(checkedValues, props.setSelectedKeys, props.confirm)
-                            }} 
-                        />
-                    </div>
-                )
             }
         };
         this.columnDefines.push(col);

@@ -13,19 +13,19 @@
 
 export interface IColumnDefine {
     title: string;
-    dataIndex: string;
     key: string;
+    dataIndex: string;
+    dataType?: string; //text、number、Boolean、switch、tree、checkbox、operation 默认text
     render?: (cellValue: any, row: object, index: number) => React.ReactElement<any>;
     width?: number;
-    filedType?: string; //text、number、Boolean、switch、tree、checkbox、operation
     canAutoOrder?: boolean;
     /** 前缀 */
     prefixText?: string;
     /** 后缀 */
     suffixText?: string;
-    // fixed?: string;
+    textDisplayLength?: number;
     checkNull?: boolean; //是否检查空值
-    serachEnable?: boolean; // 字段是否可被搜索
-    attrs?: object;
+    enableSearch?: boolean; // 字段是否可被搜索
+    searchData?: any[];
     handler?: object;
 }

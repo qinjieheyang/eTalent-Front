@@ -9,7 +9,7 @@ interface FilterDropdownProps {
 }
 
 interface ISearchProps {
-  title: string;
+  title?: string;
   dataIndex?: string;
   enableSearch?: boolean;
   searchData?: any[];
@@ -96,7 +96,7 @@ export class ColumnSearch {
     }
   }
 
-  public static getDateSearchProps = ({ title, enableSearch = true, checkNull = true }: ISearchProps) => {
+  public static getDateSearchProps = ({  enableSearch = true, checkNull = true }: ISearchProps) => {
 
     if (!enableSearch) return {};
 
@@ -105,7 +105,7 @@ export class ColumnSearch {
     return {
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }: FilterDropdownProps): React.ReactElement<any> => {
         return (
-          <div style={{ padding: 8 }}>
+          <div style={{ padding: 8 }} onMouseLeave={()=>{confirm()}} >
             <DatePicker.RangePicker onChange={(dates: any, dateStrings: [string, string]) => { changeValues = dateStrings }} />
             <Button
               type="primary"
@@ -121,7 +121,7 @@ export class ColumnSearch {
     }
   }
 
-  public static getBoolSearchProps = ({ title, enableSearch = true, trueValue = "是", falseValue = "否" }: ISearchProps) => {
+  public static getBoolSearchProps = ({  enableSearch = true, trueValue = "是", falseValue = "否" }: ISearchProps) => {
 
     if (!enableSearch) return {};
 
@@ -149,7 +149,7 @@ export class ColumnSearch {
     }
   }
 
-  public static getCheckboxSearchProps = ({ title, enableSearch = true, searchData = [] }: ISearchProps) => {
+  public static getCheckboxSearchProps = ({  enableSearch = true, searchData = [] }: ISearchProps) => {
 
     if (!enableSearch) return {};
 
@@ -183,7 +183,7 @@ export class ColumnSearch {
     }
   }
 
-  public static getNumberSearchProps = ({ title, enableSearch = true, trueValue = "是", falseValue = "否" }: ISearchProps) => {
+  public static getNumberSearchProps = ({  enableSearch = true , searchData = [0, 100] }: ISearchProps) => {
 
     if (!enableSearch) return {};
 
@@ -191,13 +191,12 @@ export class ColumnSearch {
 
     return {
       filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }: FilterDropdownProps): React.ReactElement<any> => {
-        const defaultValues = [0, 100]
         return (
           <div className="custom-filter-dropdown" style={{ padding: 8 }} onMouseLeave={() => { confirm() }}>
             <div style={{ display: "inline-block", verticalAlign: "middle" }}>
               <Input.Group compact >
                 <InputNumber style={{ width: 100, textAlign: 'center' }} placeholder="Minimum"
-                  defaultValue={defaultValues[0]}
+                  defaultValue={searchData[0]}
                   onChange={(value: number) => { minValue = value }} />
                 <Input
                   style={{
@@ -209,7 +208,7 @@ export class ColumnSearch {
                   disabled
                 />
                 <InputNumber style={{ width: 100, textAlign: 'center' }} placeholder="Maximum"
-                  defaultValue={defaultValues[1]}
+                  defaultValue={searchData[1]}
                   onChange={(value: number) => { maxValue = value }} />
               </Input.Group>
             </div>
@@ -220,4 +219,5 @@ export class ColumnSearch {
       }
     }
   }
+
 }
