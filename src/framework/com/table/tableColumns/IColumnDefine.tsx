@@ -1,4 +1,4 @@
-import { IColumnRender } from "../TableColumnBuilder";
+// import { IColumnRender } from "../TableColumnBuilder";
  
 // interface ITreeData {
 //     title: string;
@@ -15,15 +15,17 @@ export interface IColumnDefine {
     title: string;
     dataIndex: string;
     key: string;
-    render?: IColumnRender;
-    width: number;
+    render?: (cellValue: any, row: object, index: number) => React.ReactElement<any>;
+    width?: number;
     filedType?: string; //text、number、Boolean、switch、tree、checkbox、operation
-    canAutoOrder: boolean;
+    canAutoOrder?: boolean;
     /** 前缀 */
     prefixText?: string;
     /** 后缀 */
     suffixText?: string;
+    // fixed?: string;
     checkNull?: boolean; //是否检查空值
     serachEnable?: boolean; // 字段是否可被搜索
-    attrs?: object
+    attrs?: object;
+    handler?: object;
 }

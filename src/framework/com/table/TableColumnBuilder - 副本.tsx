@@ -1,4 +1,4 @@
-import { Divider, Popconfirm, Switch, Tooltip, Checkbox, Icon } from "antd";
+import { Divider, Popconfirm, Switch, Tooltip, Checkbox, Icon, Input, Button, DatePicker, TreeSelect } from "antd";
 import * as React from "react";
 
 import { DataTable } from "../../data/dataTable/DataTable";
@@ -6,7 +6,6 @@ import { UtilNumber } from "../../utils/UtilNumber";
 import { UtilLog } from "../../utils/UtilLog";
 import { IColumnDefine } from "./tableColumns/IColumnDefine";
 import { IOptGroup, OptGroup } from "./tableColumns/OptGroup";
-import { ColumnSearch } from "./tableColumns/ColumnSearch";
 
 export type IColumnRender = (cellValue: any, row: object, index: number) => React.ReactElement<any>;
 
@@ -54,12 +53,6 @@ export class TableColumnBuilder {
             if (c.canAutoOrder) {
                 c.sorter = (row1: object, row2: object) => rowSorter(row1, row2, c.dataIndex);
             }
-            c.serachEnable === undefined ? c.serachEnable = true : c.serachEnable = false;
-            if(c.serachEnable){
-                c.filterIcon = (filtered: string|undefined) => (
-                    <Icon type="down-circle" style={{ color: filtered ? '#bfbfbf' : undefined }} />
-                )
-            }
         }
         if (this.optColumnRenders.length === 0) {
             return columns;
@@ -81,12 +74,6 @@ export class TableColumnBuilder {
                 newColumns.push(c);
                 if (c.canAutoOrder) {
                     c.sorter = (row1: object, row2: object) => rowSorter(row1, row2, c.dataIndex);
-                }
-                c.serachEnable === undefined ? c.serachEnable = true : c.serachEnable = false;
-                if(c.serachEnable){
-                    c.filterIcon = (filtered: string|undefined) => (
-                        <Icon type="down-circle" style={{ color: filtered ? '#bfbfbf' : undefined }} />
-                    )
                 }
             }
         }
@@ -112,9 +99,10 @@ export class TableColumnBuilder {
             confirm();
         }
 
-        // const getTitle = (optCount: number) => optCount === 0? "" : "操作";
-
-
+        const onMouseLeaveFilterDropdown = (confirm: ()=> void) => {
+            confirm();
+        }
+        
         const col: IColumnSortDefine = {
             canAutoOrder: false,
             dataIndex: "__operationColumn",
@@ -150,7 +138,7 @@ export class TableColumnBuilder {
                 });
 
                 return (
-                    <div className="custom-filter-dropdown" onMouseLeave={()=>{confirm()}} >
+                    <div className="custom-filter-dropdown" onMouseLeave={()=>{onMouseLeaveFilterDropdown(props.confirm);}} >
                         <Checkbox.Group 
                             className="qj-table-filter-column"
                             options={plainOptions} 
@@ -195,6 +183,22 @@ export class TableColumnBuilder {
             textDisplayLength = 20;
         }
 
+        const handleSearch = (selectedKeys: string[], confirm: ()=> void) =>{
+            confirm();
+        }
+
+        // const handleReset = (clearFilters: ()=> void) =>{
+        //     clearFilters();
+        // }
+
+        const handleNull = (setSelectedKeys: (target: string[]) => void, selectedKeys: string[], confirm: ()=> void) =>{
+            setSelectedKeys(["null"]);
+            confirm();
+        }
+
+        const handleMouseLeave = () => {
+
+        }
         const col: IColumnSortDefine = {
             canAutoOrder: false,
             dataIndex: fieldName,
@@ -220,91 +224,39 @@ export class TableColumnBuilder {
             },
             title,
             width,
-            ...ColumnSearch.getTextSearchProps({title})
+            filterDropdown: (props: FilterDropdownProps): React.ReactElement<any> => {
+                return (
+                    <div style={{ padding: 8 }} onMouseLeave={()=>{handleMouseLeave()}}>
+                        <div style={{marginBottom: 8}}>
+                            <Input
+                            placeholder={`Search ${col.dataIndex}`}
+                            value={props.selectedKeys[0]}
+                            onChange={e => props.setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                            onPressEnter={e => handleSearch(props.selectedKeys, props.confirm)}
+                            style={{ width: 188, }}
+                            />
+                            <Button
+                                type="primary"
+                                onClick={() => handleSearch(props.selectedKeys, props.confirm)}
+                                style={{ marginLeft: 8 }}
+                                >
+                                确定
+                            </Button>
+                        </div>
+                        <Button onClick={() => handleNull(props.setSelectedKeys, props.selectedKeys, props.confirm)} style={{ width: 90 }}>
+                        筛选空值
+                        </Button>
+                  </div>         
+
+                )
+            },
+            filterIcon: (filtered: string|undefined) => (
+                <Icon type="down-circle" style={{ color: filtered ? '#bfbfbf' : undefined }} />
+            )
         };
         this.columnDefines.push(col);
         return col;
     };
-
-    // public AddLinkText = (props : {title: string , fieldName: string, textDisplayLength:number, width:number}): IColumnDefine => {
-    //     if (!textDisplayLength) {
-    //         textDisplayLength = 20;
-    //     }
-    //     if (textDisplayLength < 1) {
-    //         textDisplayLength = 20;
-    //     }
-
-    //     const handleSearch = (selectedKeys: string[], confirm: ()=> void) =>{
-    //         confirm();
-    //     }
-
-    //     // const handleReset = (clearFilters: ()=> void) =>{
-    //     //     clearFilters();
-    //     // }
-
-    //     const handleNull = (setSelectedKeys: (target: string[]) => void, selectedKeys: string[], confirm: ()=> void) =>{
-    //         setSelectedKeys(["null"]);
-    //         confirm();
-    //     }
-
-    //     const handleMouseLeave = () => {
-
-    //     }
-    //     const col: IColumnSortDefine = {
-    //         canAutoOrder: false,
-    //         dataIndex: fieldName,
-    //         key: fieldName,
-    //         render: (cellValue: any, row: object, index: number): any => {
-    //             if (cellValue == null) {
-    //                 return "";
-    //             }
-
-    //             if (typeof cellValue !== "string") {
-    //                 UtilLog.error("文本列不能包含文本值", { fieldName, cellValue });
-    //                 throw new Error("列非文本类型, 在：" + fieldName + "=" + cellValue);
-    //             }
-
-    //             const length = cellValue.length;
-    //             if (length <= textDisplayLength) {
-    //                 return col.prefixText ? col.prefixText + cellValue : cellValue;
-    //             }
-    //             let newCellText = cellValue.substr(0, textDisplayLength);
-    //             newCellText = newCellText + "...";
-
-    //             return <Tooltip title={cellValue}>{col.prefixText ? col.prefixText + cellValue : newCellText}</Tooltip>;
-    //         },
-    //         title,
-    //         width,
-    //         filterDropdown: (props: FilterDropdownProps): React.ReactElement<any> => {
-    //             return (
-    //                 <div style={{ padding: 8 }} onMouseLeave={()=>{handleMouseLeave()}}>
-    //                     <div style={{marginBottom: 8}}>
-    //                         <Input
-    //                         placeholder={`Search ${col.dataIndex}`}
-    //                         value={props.selectedKeys[0]}
-    //                         onChange={e => props.setSelectedKeys(e.target.value ? [e.target.value] : [])}
-    //                         onPressEnter={e => handleSearch(props.selectedKeys, props.confirm)}
-    //                         style={{ width: 188, }}
-    //                         />
-    //                         <Button
-    //                             type="primary"
-    //                             onClick={() => handleSearch(props.selectedKeys, props.confirm)}
-    //                             style={{ marginLeft: 8 }}
-    //                             >
-    //                             确定
-    //                         </Button>
-    //                     </div>
-    //                     <Button onClick={() => handleNull(props.setSelectedKeys, props.selectedKeys, props.confirm)} style={{ width: 90 }}>
-    //                     筛选空值
-    //                     </Button>
-    //               </div>         
-
-    //             )
-    //         }
-    //     };
-    //     this.columnDefines.push(col);
-    //     return col;
-    // };
 
     /** 默认开启树选择 */
     public AddTreeText = (
@@ -347,7 +299,30 @@ export class TableColumnBuilder {
             },
             title,
             width,
-            ...ColumnSearch.getTreeSearchProps({title, searchData: treeData})
+            filterDropdown: (props: FilterDropdownProps): React.ReactElement<any> => {
+                
+                const onChange = (value: string) => {
+                    console.log('onChange ', value);
+                };
+                
+                const tProps = {
+                    treeData,
+                    onChange: onChange,
+                    treeCheckable: true,
+                    showCheckedStrategy: TreeSelect.SHOW_PARENT,
+                    searchPlaceholder: '请选择',
+                    style: {
+                        width: 188,
+                    },
+                };
+
+                return (
+                    <div style={{padding:8}}>
+                        <TreeSelect {...tProps} />
+                        <Button type="primary" style={{marginLeft: 8}}>确定</Button>
+                    </div>
+                )
+            }
         };
 
         this.columnDefines.push(col);
@@ -382,7 +357,27 @@ export class TableColumnBuilder {
             },
             title,
             width,
-            ...ColumnSearch.getBoolSearchProps({title})
+            filterDropdown: (props: FilterDropdownProps): React.ReactElement<any> => {
+                return (
+                    <div style={{padding:8}}>
+                        <Checkbox.Group 
+                            className="qj-table-filter-column"
+                            options={[{ label: trueValue, value: true },{ label: falseValue, value: false }]} 
+                            defaultValue={[true,false]} 
+                            onChange={(checkedValues: string[]) =>{
+                                // col.filterDropdownVisible = true;
+                                // onCheckedColumnChange(checkedValues, props.setSelectedKeys, props.confirm)
+                            }} 
+                        />
+                        <div style={{ textAlign: "center"}}>
+                            <Button
+                                type="primary">
+                                确定
+                            </Button>
+                        </div>
+                    </div>
+                )
+            }
         };
         this.columnDefines.push(col);
         return col;
@@ -395,7 +390,29 @@ export class TableColumnBuilder {
             key: fieldName, 
             title, 
             width,
-            ...ColumnSearch.getNumberSearchProps({title})
+            filterDropdown: (props: FilterDropdownProps): React.ReactElement<any> => {
+                return (
+                    <div className="custom-filter-dropdown" style={{ padding: 8 }}>
+                        <div style={{display: "inline-block", verticalAlign: "middle"}}>
+                            <Input.Group compact >
+                                <Input style={{ width: 100, textAlign: 'center' }} placeholder="Minimum" />
+                                <Input
+                                    style={{
+                                    width: 30,
+                                    borderLeft: 0,
+                                    pointerEvents: 'none',
+                                    backgroundColor: '#fff',
+                                    }}
+                                    placeholder="~"
+                                    disabled
+                                />
+                                <Input style={{ width: 100, textAlign: 'center', borderLeft: 0 }} placeholder="Maximum" />
+                            </Input.Group>
+                        </div>
+                        <Button type="primary" style={{marginLeft:8, verticalAlign: "middle"}}>确定</Button>
+                    </div>
+                )
+            }
         };
         this.columnDefines.push(col);
         return col;
@@ -473,7 +490,20 @@ export class TableColumnBuilder {
             },
             title,
             width,
-            ...ColumnSearch.getDateSearchProps({title})
+            filterDropdown: (props: FilterDropdownProps): React.ReactElement<any> => {
+                return (
+                    <div style={{padding:8}}>
+                         <DatePicker.RangePicker />
+                         <Button
+                            type="primary"
+                            style={{ marginLeft:8 }}
+                            >
+                            确定
+                        </Button>
+                        
+                    </div>
+                )
+            }
         };
         this.columnDefines.push(col);
         return col;
@@ -526,7 +556,32 @@ export class TableColumnBuilder {
             },
             title,
             width,
-            ...ColumnSearch.getCheckboxSearchProps({title, searchData: rowItems})
+            filterDropdown: (props: FilterDropdownProps): React.ReactElement<any> => {
+                const defaultValues: string[] = [];
+                const plainOptions: any[] = rowItems.map((item: any, index: number) =>{
+                    defaultValues.push(item.id);
+                    return { label: item.name, value: item.id }
+                });
+                return (
+                    <div style={{padding:8}}>
+                        <Checkbox.Group 
+                            className="qj-table-filter-column"
+                            options={plainOptions} 
+                            defaultValue={defaultValues} 
+                            onChange={(checkedValues: string[]) =>{
+                                // col.filterDropdownVisible = true;
+                                // onCheckedColumnChange(checkedValues, props.setSelectedKeys, props.confirm)
+                            }} 
+                        />
+                        <div style={{ textAlign: "center"}}>
+                            <Button
+                                type="primary">
+                                确定
+                            </Button>
+                        </div>
+                    </div>
+                )
+            }
         };
 
         this.columnDefines.push(col);

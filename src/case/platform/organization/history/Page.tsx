@@ -56,6 +56,32 @@ export default class Page extends React.Component<any, any> {
   public initColumns(){
     const bulider = this.bulider;
 
+    // bulider.AddText({
+    //   title: "姓名",
+    //   key: "name",
+    //   dataIndex: "name",
+    //   dataType: "text",
+    //   reader: null,
+    //   enableFilter:true,
+    //   filterData:[],
+    //   filterDropdown: null,
+
+    //   textDisplayLength: 100,
+    //   width: 100,
+    //   typeAttrs:{
+    //     checkNull: true,
+    //     trueValue: "是",
+    //     falseValue: "否"
+    //   },
+    //   handler:{
+    //     onClick:()=>{
+
+    //     }
+    //   }
+      
+      
+    // });
+
     bulider.AddText("姓名","name");
     bulider.AddNumber("年龄","age");
     // bulider.AddSwitch("开关","switch", (value: boolean, row: any) => {
@@ -143,7 +169,6 @@ export default class Page extends React.Component<any, any> {
       this.setState({
         columns: this.bulider.GetCheckedColumns()
       });
-      // delete filters.__operationColumn;
     }
 
     // this.setState({
