@@ -12,7 +12,7 @@ export class DateInput extends AInput<IDateProp> {
     public render = () => {
         const formatText = this.props.format ? this.props.format : "YYYY-MM-DD";
         return (
-            <Form.Item id={"form-item-" + this.props.fieldName} style={this.Style}>
+            <Form.Item id={"form-item-" + this.props.fieldName} style={this.Style} {...this.props.formItem}>
                 {this.props.getFD(this.props.fieldName, {
                     ...this.getIniValue(),
                     onChange: this.handleChange,

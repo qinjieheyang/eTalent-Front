@@ -36,7 +36,7 @@ export class ComboBoxTreeInput extends AInput<IComboBoxProp> {
             opts = toKeyTitle(this.props.selectItems, this.props.onlySelectLeftNode === true);
         }
         return (
-            <Form.Item style={this.Style}>
+            <Form.Item style={this.Style} {...this.props.formItem}>
                 {this.props.getFD(this.props.fieldName, {
                     ...this.getIniValue(this.props.value),
                     onChange: this.handleChange,

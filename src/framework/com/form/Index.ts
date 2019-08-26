@@ -1,4 +1,5 @@
-import * as Input from "./input/Index";
-import * as FormItem from "./FormItem";
+import * as Inputs from "./input/Index";
+export * from "./FormItem";
+export * from "./Group";
 
-export {Input, FormItem}
+export { Inputs }

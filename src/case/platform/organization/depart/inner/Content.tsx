@@ -3,6 +3,7 @@ import { Layout, Tabs, Button, Dropdown, Menu, Icon } from "antd";
 
 import Framework from "src/framework/Framework";
 import DepartTableColumns from './contentInner/DepartTableColumns';
+import AddModal from "./contentInner/AddModal";
 
 const AdaptiveTable = Framework.Com.Tables.AdaptiveTable;
 
@@ -36,6 +37,7 @@ export default class Content extends React.Component<IContentProps, IContentStat
   }
 
   public render() {
+    const { visibleAdd, confirmLoading} = this.state;
     return (
       <Layout.Content className="qj-depart-content">
         <Tabs size="large" animated={false}>
@@ -61,7 +63,12 @@ export default class Content extends React.Component<IContentProps, IContentStat
             Content of Tab Pane 2
           </TabPane>
         </Tabs>
-        
+        <AddModal 
+          visible={visibleAdd} 
+          confirmLoading={confirmLoading}
+          onOk={this.handleAdd}
+          onCancel={this.handleAddCancel}
+        />
       </Layout.Content>
     );
   }
@@ -70,11 +77,11 @@ export default class Content extends React.Component<IContentProps, IContentStat
     this.setState({ visibleAdd: true });
   }
 
-  // private handleAdd = () => {
+  private handleAdd = () => {
+    this.setState({ visibleAdd: false });
+  }
 
-  // }
-
-  // private handleAddCancel = () => {
-
-  // }
+  private handleAddCancel = () => {
+    this.setState({ visibleAdd: false });
+  }
 }

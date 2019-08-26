@@ -1,7 +1,9 @@
 import * as React from "react";
+import { FormItemProps } from 'antd/lib/form';
 
 export interface IAInputProp {
     style?: React.CSSProperties;
+    formItem? : FormItemProps;
     getFD: any;
 
     /** 字段 */

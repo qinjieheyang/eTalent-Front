@@ -13,7 +13,8 @@ import * as React from "react";
 /** 带标签和输入框 */
 export class FormItem extends React.Component<IProps> {
  
-    public render = (): React.ReactElement<any> => {
+    public render = (): React.ReactElement<any> =>{
+        console.log(this.props.children)
         if (document.body.clientWidth < 1200) {
             return this.getSmallGroup();
         }

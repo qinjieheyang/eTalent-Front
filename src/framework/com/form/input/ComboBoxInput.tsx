@@ -19,7 +19,7 @@ interface IComboBoxProp extends IAInputProp {
 export class ComboBoxInput extends AInput<IComboBoxProp> {
     public render = (): React.ReactElement<any> => {
         return (
-            <Form.Item style={this.Style}>
+            <Form.Item style={this.Style} {...this.props.formItem}>
                 {this.props.getFD(this.props.fieldName, {
                     ...this.getIniValue(this.props.value),
                     onChange: this.handleChange,

@@ -9,7 +9,7 @@ export interface ITextProp extends IAInputProp {
 export class TextInput extends AInput<ITextProp> {
     public render = (): React.ReactElement<any> => {
         return (
-            <Form.Item style={this.Style}>
+            <Form.Item style={this.Style} {...this.props.formItem}>
                 {this.props.getFD(this.props.fieldName, {
                     initialValue: this.GetIniValue(this.props.value),
                     onChange: (e: any) => {
