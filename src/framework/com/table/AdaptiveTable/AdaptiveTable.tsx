@@ -29,11 +29,11 @@ const getViewportOffset = (): { w: number, h: number } => {
 }
 
 // 根据窗口大小计算table自适应高度
-const computerTableHeightByViewport = (dataSource: Array<any>): number | undefined => {
+const computerTableHeightByViewport = (dataSource: Array<any>, minusHeight: number = 0): number | undefined => {
   const viewport = getViewportOffset();
   let height: number | undefined = undefined;
-  if (viewport && viewport.h && viewport.h > 258) {
-    height = viewport.h - 258;
+  if (viewport && viewport.h && viewport.h > minusHeight) {
+    height = viewport.h - minusHeight;
   }
 
   if (height && height > dataSource.length * 54) {
@@ -57,20 +57,21 @@ const rowSelection = {
 
 interface IAdaptiveTableProps {
   dataSource: object[],
-  columns: IColumnSortDefine[]
+  columns: IColumnSortDefine[],
+  minusHeight?: number
 }
 
 const AdaptiveTable = (props: IAdaptiveTableProps) => {
 
-  const { dataSource } = props;
+  const { dataSource, minusHeight = 0 } = props;
 
   const [columns, setColumns] = useState(Factory.createColumns(props.columns));
 
-  const [scroll, setScroll] = useState<{ x: string | undefined, y: number | undefined }>({ x: undefined, y: computerTableHeightByViewport(dataSource) });
+  const [scroll, setScroll] = useState<{ x: string | undefined, y: number | undefined }>({ x: undefined, y: computerTableHeightByViewport(dataSource, minusHeight+54) });
 
   useEffect(() => {
     const reloadLayout = () => {
-      const height: number | undefined = computerTableHeightByViewport(dataSource);
+      const height: number | undefined = computerTableHeightByViewport(dataSource, minusHeight+54);
       setScroll({ x: scroll.x, y: height });
     }
 
@@ -90,6 +91,7 @@ const AdaptiveTable = (props: IAdaptiveTableProps) => {
   return (
     <Table
       className="qj-depart-table"
+      style = {{height: `calc(100vh - ${minusHeight}px)`}}
       bordered
       dataSource={dataSource}
       columns={columns}

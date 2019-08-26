@@ -216,8 +216,10 @@ export class TableColumnBuilder {
                 }
 
                 if (typeof cellValue !== "string") {
-                    UtilLog.error("文本列不能包含文本值", { dataIndex, cellValue });
-                    throw new Error("列非文本类型, 在：" + dataIndex + "=" + cellValue);
+                    //强制转化为字符串
+                    UtilLog.warn("文本列包含非文本值", { dataIndex, cellValue });
+                    cellValue = String(cellValue);
+                    // throw new Error("列非文本类型, 在：" + dataIndex + "=" + cellValue);
                 }
 
                 const length = cellValue.length;

@@ -5,7 +5,7 @@ const { TabPane } = Tabs;
 
 const getData = (): Array<any> => {
   const data: Array<any> = [];
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 20; i++) {
     data.push({
       key: `a${i}`,
       dataIndex: `a${i}`,
