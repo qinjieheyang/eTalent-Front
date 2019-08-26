@@ -12,9 +12,10 @@ export interface ITreeBase {
 
 export interface IState {
     treeData: Array<ITreeBase>;
+    tableData: Array<any>;
 }
 
 export const initState= { 
-    treeData:[]
-    // loaded: false
+    treeData:[],
+    tableData: []
 };

@@ -27,7 +27,10 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
 
   public async init(){
     const treeData = await this.service.getInit();
-    this.setState({treeData});
+
+    const tableData = await this.service.getTableDate();
+
+    this.setState({treeData, tableData});
   }
   
   public render() {
@@ -37,7 +40,7 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
       <Layout className="qj-depart-wrapper">
         <Sider showAll={this.showAll} treeData={this.state.treeData} onShowChange={this.onShowChange} />
         <Layout>
-          <Content />
+          <Content dataSource={this.state.tableData}/>
         </Layout>
       </Layout>
     );

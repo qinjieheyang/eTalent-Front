@@ -37,6 +37,20 @@ export class ServiceMock {
         } ;
         return [treeData];
     };
+    // 表格数据
+    public getTableDate = async (): Promise<any[]> => {
+        const data: Array<any> = [];
+        for (let i = 0; i < 20; i++) {
+            data.push({
+            key: `a${i}`,
+            dataIndex: `a${i}`,
+            name: `Edrward ${i}`,
+            age: "aaa32",
+            address: `London Park no. ${i}`,
+            });
+        }
+        return data;
+    };
 }
 
 export interface IService extends ServiceMock {}

@@ -1,21 +1,12 @@
 import React from "react";
 import { Layout, Tabs, Button, Dropdown, Menu, Icon } from "antd";
-import DepartTable from "./contentInner/DepartTable";
-const { TabPane } = Tabs;
 
-const getData = (): Array<any> => {
-  const data: Array<any> = [];
-  for (let i = 0; i < 20; i++) {
-    data.push({
-      key: `a${i}`,
-      dataIndex: `a${i}`,
-      name: `Edrward ${i}`,
-      age: "aaa32",
-      address: `London Park no. ${i}`,
-    });
-  }
-  return data;
-}
+import Framework from "src/framework/Framework";
+import DepartTableColumns from './contentInner/DepartTableColumns';
+
+const AdaptiveTable = Framework.Com.Tables.AdaptiveTable;
+
+const { TabPane } = Tabs;
 
 const menu = (
   <Menu>
@@ -24,46 +15,66 @@ const menu = (
     }
   </Menu>
 );
-interface IContentState{
+
+interface IContentState {
+  visibleAdd: boolean;
+  confirmLoading: boolean;
+
+}
+interface IContentProps {
   dataSource: Array<any>;
 }
-interface IContentProps {}
 export default class Content extends React.Component<IContentProps, IContentState> {
+  public state: IContentState;
 
   constructor(props: IContentProps) {
     super(props);
-    this.state ={
-      dataSource: getData()
+    this.state = {
+      visibleAdd: false,
+      confirmLoading: false
     }
   }
-
-  // componentDidMount(){
-  //     this.setState({ dataSource: getData()})
-  // }
 
   public render() {
     return (
       <Layout.Content className="qj-depart-content">
         <Tabs size="large" animated={false}>
           <TabPane key="1" className="qj-depart-tab-pane"
-            tab={ <span><Icon type="table" />机构表</span> }>
-            <div className="qj-depart-btns" style={{ marginBottom: 16 }}>
-              <Button type="primary">新增</Button>
+            tab={<span><Icon type="table" />机构表</span>}>
+            <div className="qj-depart-btns">
+              <Button type="primary" onClick={this.openAddModal}>新增</Button>
               <Button >删除</Button>
               <Dropdown overlay={menu}>
                 <Button>更多</Button>
               </Dropdown>
             </div>
-            <div style={{padding: '0 24px'}}>
-              <DepartTable dataSource={this.state.dataSource} />
+            <div style={{ padding: '0 24px' }}>
+              <AdaptiveTable
+                columns={DepartTableColumns}
+                dataSource={this.props.dataSource}
+                minusHeight={264}
+              />
             </div>
           </TabPane>
           <TabPane key="2" className="qj-depart-tab-pane"
-            tab={ <span><Icon type="apartment" />机构图</span> }>
+            tab={<span><Icon type="apartment" />机构图</span>}>
             Content of Tab Pane 2
           </TabPane>
         </Tabs>
+        
       </Layout.Content>
     );
   }
+
+  private openAddModal = () => {
+    this.setState({ visibleAdd: true });
+  }
+
+  // private handleAdd = () => {
+
+  // }
+
+  // private handleAddCancel = () => {
+
+  // }
 }

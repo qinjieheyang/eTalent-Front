@@ -10,4 +10,9 @@ export class Service extends Framework.Case.ServiceBase implements IService {
         const data = await this.http.get("/api/org/departTree");
         return data;
     };
+
+    public getTableDate = async (): Promise<any[]> => {
+        const data = await this.http.get("/api/org/departs");
+        return data;
+    };
 }
