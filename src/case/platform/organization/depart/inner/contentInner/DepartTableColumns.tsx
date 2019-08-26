@@ -17,7 +17,7 @@ const DepartTableColumns: Array<any> = [
     title: '机构编码',
     dataIndex: 'address',
     key: '1',
-    width: 150
+    width: 120
   },
   {
     title: '机构类型',

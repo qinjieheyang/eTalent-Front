@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Table } from "antd";
 import { IColumnSortDefine } from "../TableColumnBuilder";
 import { TableColumnFactory } from "../TableColumnFactory";
-
-
-const Factory = new TableColumnFactory();
+import "../table.less";
 
 //获取浏览器窗口大小
 const getViewportOffset = (): { w: number, h: number } => {
@@ -63,11 +61,13 @@ interface IAdaptiveTableProps {
 
 const AdaptiveTable = (props: IAdaptiveTableProps) => {
 
+  const Factory = new TableColumnFactory();
+
   const { dataSource, minusHeight = 0 } = props;
 
   const [columns, setColumns] = useState(Factory.createColumns(props.columns));
 
-  const [scroll, setScroll] = useState<{ x: string | undefined, y: number | undefined }>({ x: undefined, y: computerTableHeightByViewport(dataSource, minusHeight+54) });
+  const [scroll, setScroll] = useState<{ x: string | undefined, y: number | undefined }>({ x: "90%", y: computerTableHeightByViewport(dataSource, minusHeight+54) });
 
   useEffect(() => {
     const reloadLayout = () => {
@@ -90,7 +90,7 @@ const AdaptiveTable = (props: IAdaptiveTableProps) => {
 
   return (
     <Table
-      className="qj-depart-table"
+      className="qj-adaptive-table"
       style = {{height: `calc(100vh - ${minusHeight}px)`}}
       bordered
       dataSource={dataSource}

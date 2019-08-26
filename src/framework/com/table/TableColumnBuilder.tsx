@@ -25,7 +25,33 @@ export interface IColumnSortDefine extends IColumnDefine {
     filterIcon?: (filtered: string | undefined) => React.ReactNode;
     onFilterDropdownVisibleChange?: (visible: boolean) => void;
     filterDropdownVisible?: boolean;
+    title: any;
+    onCell?: (record: any, rowIndex: number) => any;
+    onHeaderCell?: (column: any) => any;
 }
+
+const formatTitle =  (title: string, width: number) => {
+    width = width > 46 ?  width-46 : width;
+    return <Tooltip title={title}><span className="qj-table-td-txt" style={{width}}>{title}</span></Tooltip>
+}
+/** 格式化单元格宽度 */
+// const formatCell = (width: number) => {
+//     return {
+//         onHeaderCell: (column: any) =>({
+//             style: {
+//                 whiteSpace: 'nowrap',
+//                 maxWidth: width,
+
+//             }
+//         }),
+//         onCell: (record: any, rowIndex: number) =>({
+//             style: {
+//                 whiteSpace: 'nowrap',
+//                 maxWidth: width,
+//             }
+//         }),
+//     }
+// }
 
 export class TableColumnBuilder {
     private optGroups: OptGroup[] = [];
@@ -173,13 +199,13 @@ export class TableColumnBuilder {
         width = 50
     }: IColumnDefine): IColumnDefine => {
         const col: IColumnSortDefine = {
-            title,
+            title: formatTitle(title, width),
             key,
             dataIndex,
             dataType,
             render: (cellValue: any, row: object, index: number): any => {
                 const indexLabel = index + 1;
-                return <Tooltip title={indexLabel}>{indexLabel}</Tooltip>;
+                return <Tooltip title={indexLabel}><span className="qj-table-td-txt" style={{width:width - 32}}>{indexLabel}</span></Tooltip>;
             },
             width
         };
@@ -193,23 +219,17 @@ export class TableColumnBuilder {
         dataIndex,
         dataType,
         width = 100,
-        textDisplayLength = 20,
         enableSearch = true,
         checkNull = true
     }: IColumnDefine): IColumnSortDefine => {
-        if (!textDisplayLength) {
-            textDisplayLength = 20;
-        }
-        if (textDisplayLength < 1) {
-            textDisplayLength = 20;
-        }
 
         const col: IColumnSortDefine = {
-            title,
+            title: formatTitle(title, width),
             key,
             dataIndex,
             dataType,
             width,
+            
             render: (cellValue: any, row: object, index: number): any => {
                 if (cellValue == null) {
                     return "";
@@ -221,15 +241,9 @@ export class TableColumnBuilder {
                     cellValue = String(cellValue);
                     // throw new Error("列非文本类型, 在：" + dataIndex + "=" + cellValue);
                 }
-
-                const length = cellValue.length;
-                if (length <= textDisplayLength) {
-                    return col.prefixText ? col.prefixText + cellValue : cellValue;
-                }
-                let newCellText = cellValue.substr(0, textDisplayLength);
-                newCellText = newCellText + "...";
-
-                return <Tooltip title={cellValue}>{col.prefixText ? col.prefixText + cellValue : newCellText}</Tooltip>;
+                
+                const text = col.prefixText ? col.prefixText + cellValue : cellValue;
+                return <Tooltip title={text}><span className="qj-table-td-txt" style={{width:width -32}}>{text}</span></Tooltip>
             },
             ...ColumnSearch.getTextSearchProps({ title, enableSearch, checkNull })
         };
@@ -324,20 +338,12 @@ export class TableColumnBuilder {
         dataIndex,
         dataType,
         width = 100,
-        textDisplayLength = 20,
         enableSearch = true,
         searchData = []
     }: IColumnDefine): IColumnSortDefine => {
 
-        if (!textDisplayLength) {
-            textDisplayLength = 20;
-        }
-        if (textDisplayLength < 1) {
-            textDisplayLength = 20;
-        }
-
         const col: IColumnSortDefine = {
-            title,
+            title: formatTitle(title, width),
             key,
             dataIndex,
             dataType,
@@ -348,18 +354,13 @@ export class TableColumnBuilder {
                 }
 
                 if (typeof cellValue !== "string") {
-                    UtilLog.error("文本列不能包含文本值", { dataIndex, cellValue });
-                    throw new Error("列非文本类型, 在：" + dataIndex + "=" + cellValue);
+                    UtilLog.warn("文本列不能包含文本值", { dataIndex, cellValue });
+                    // throw new Error("列非文本类型, 在：" + dataIndex + "=" + cellValue);
+                    cellValue = String(cellValue);
                 }
 
-                const length = cellValue.length;
-                if (length <= textDisplayLength) {
-                    return col.prefixText ? col.prefixText + cellValue : cellValue;
-                }
-                let newCellText = cellValue.substr(0, textDisplayLength);
-                newCellText = newCellText + "...";
-
-                return <Tooltip title={cellValue}>{col.prefixText ? col.prefixText + cellValue : newCellText}</Tooltip>;
+                const text = col.prefixText ? col.prefixText + cellValue : cellValue;
+                return <Tooltip title={text}><span className="qj-table-td-txt" style={{width:width -32}}>{text}</span></Tooltip>
             },
             ...ColumnSearch.getTreeSearchProps({ title, enableSearch, searchData })
         };
@@ -598,7 +599,7 @@ export class TableColumnBuilder {
         this.mapSelectTable.set(dataIndex, selectTable);
 
         const col: IColumnSortDefine = {
-            title,
+            title: formatTitle(title, width),
             key,
             dataIndex,
             dataType,
@@ -650,12 +651,11 @@ export class TableColumnBuilder {
         dataIndex,
         dataType,
         width = 100,
-        textDisplayLength = 30,
         handler
     }: IColumnDefine): IColumnSortDefine => {
 
         const col: IColumnSortDefine = {
-            title,
+            title: formatTitle(title, width),
             key,
             dataIndex,
             dataType,

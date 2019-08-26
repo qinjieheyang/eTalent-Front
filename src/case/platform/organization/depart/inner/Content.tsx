@@ -54,7 +54,9 @@ export default class Content extends React.Component<IContentProps, IContentStat
                 <Button>更多</Button>
               </Dropdown>
             </div>
-            <DepartTable dataSource={this.state.dataSource} />
+            <div style={{padding: '0 24px'}}>
+              <DepartTable dataSource={this.state.dataSource} />
+            </div>
           </TabPane>
           <TabPane key="2" className="qj-depart-tab-pane"
             tab={ <span><Icon type="apartment" />机构图</span> }>
