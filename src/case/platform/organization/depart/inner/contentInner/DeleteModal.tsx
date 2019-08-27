@@ -1,15 +1,9 @@
-import React from "react";
-import { Modal, Icon, Checkbox, List } from "antd";
+import * as React from "react";
+import { Modal, Icon } from "antd";
 
-const onCheckAllChange = () =>{
+import Framework from "src/framework/Framework";
 
-}
-
-const onCheckChange = () =>{
-
-}
-
-
+const { CheckBoxList } = Framework.Com.CheckBox;
 
 interface IDeleteModalProps{
   title?: string;
@@ -17,17 +11,26 @@ interface IDeleteModalProps{
   confirmLoading: boolean;
   onOk: () => void;
   onCancel: () => void;
-  indeterminate: boolean;
-  checkAll: boolean;
-  checkedList: any[];
 }
 
+const checkedList = [
+  {
+    value: 1,
+    name: "xxx"
+  },
+  {
+    value: 2,
+    name: "yyy"
+  },
+]
+
+
 const DeleteModal = (props: IDeleteModalProps) => {
-  const { title = "确认删除", visible, confirmLoading, onOk, onCancel, indeterminate, checkedList, checkAll} = props;
+  const { title = "确认删除", visible, confirmLoading, onOk, onCancel} = props;
 
   const modalProps = { title, visible, confirmLoading, onOk, onCancel }
 
-  const checkProps = {indeterminate, checkedList, checkAll}
+  // const checkProps = {indeterminate, checkedList, checkAll}
 
   return (
     <Modal {...modalProps}>
@@ -36,32 +39,8 @@ const DeleteModal = (props: IDeleteModalProps) => {
         <span style={{fontWeight: "bold", marginLeft: 16}}>确认删除下表选中的机构吗？</span>
       </p>
       <div>
-        <p style={{paddingLeft: 24}}>
-          待删除机构：
-        </p>
-        <List
-          header={
-            <Checkbox
-              indeterminate={indeterminate}
-              onChange={onCheckAllChange}
-              checked={checkAll}
-            >
-              全选
-            </Checkbox>
-          }
-          bordered
-          dataSource={checkedList}
-          renderItem={item => (
-            <List.Item>
-              <Checkbox
-                onChange={onCheckChange}
-                defaultChecked ={item.checked}
-              >
-                {item.name}
-              </Checkbox>
-            </List.Item>
-          )}
-        />
+        {/* <p>待删除机构：</p> */}
+        <CheckBoxList items={checkedList}/>
       </div>
     </Modal>
   )

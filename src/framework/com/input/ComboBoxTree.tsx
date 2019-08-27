@@ -13,15 +13,15 @@ interface IProps   {
     canMulSelect?: boolean;
     treeDefaultExpandAll?: boolean;
     onlySelectLeftNode?: boolean;
-        /** 值 */
-        value: any;
-        /** 是否禁用，无法录入 */
-        isDisabled?: boolean;
-        /** 输入框提示 */
-        placeholder?: string;
-        onChange?: (value: any, label: any, extra: any) => void;
-        items?: IRow[];
-        style?: React.CSSProperties;
+    /** 值 */
+    value: any;
+    /** 是否禁用，无法录入 */
+    isDisabled?: boolean;
+    /** 输入框提示 */
+    placeholder?: string;
+    onChange?: (value: any, label: any, extra: any) => void;
+    items?: IRow[];
+    style?: React.CSSProperties;
 }
 
 export class ComboBoxTree extends React.Component<IProps>  {
