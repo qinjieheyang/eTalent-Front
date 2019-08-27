@@ -5,22 +5,18 @@ import Framework from "src/framework/Framework";
 import DepartTableColumns from './contentInner/DepartTableColumns';
 import AddModal from "./contentInner/AddModal";
 import DeleteModal from "./contentInner/DeleteModal";
+import MergeModal from "./contentInner/MergeModal";
 
 const AdaptiveTable = Framework.Com.Tables.AdaptiveTable;
 
 const { TabPane } = Tabs;
 
-const menu = (
-  <Menu>
-    {
-      ["封存", "解封", "合并", "划转", "排序", "模板", "导入", "导出"].map((item, index) => <Menu.Item key={index}>{item}</Menu.Item>)
-    }
-  </Menu>
-);
+
 
 interface IContentState {
   visibleAdd: boolean;
   visibleDelete: boolean;
+  visibleMerge: boolean;
   confirmLoading: boolean;
 
 }
@@ -35,12 +31,26 @@ export default class Content extends React.Component<IContentProps, IContentStat
     this.state = {
       visibleAdd: false,
       visibleDelete: false,
+      visibleMerge: false,
       confirmLoading: false,
     }
   }
 
   public render() {
-    const { visibleAdd, visibleDelete, confirmLoading} = this.state;
+    const { visibleAdd, visibleDelete, visibleMerge, confirmLoading} = this.state;
+
+    const menu = (
+      <Menu>
+        <Menu.Item>封存</Menu.Item>
+        <Menu.Item>解封</Menu.Item>
+        <Menu.Item onClick={this.openMergeModal}>合并</Menu.Item>
+        <Menu.Item>划转</Menu.Item>
+        <Menu.Item>排序</Menu.Item>
+        <Menu.Item>导入</Menu.Item>
+        <Menu.Item>导出</Menu.Item>
+      </Menu>
+    );
+
     return (
       <Layout.Content className="qj-depart-content">
         <Tabs size="large" animated={false}>
@@ -78,9 +88,17 @@ export default class Content extends React.Component<IContentProps, IContentStat
           onOk={this.handleDelete}
           onCancel={this.handleDelCancel}
         />
+        <MergeModal
+          visible={visibleMerge} 
+          confirmLoading={confirmLoading}
+          onOk={this.handleMerge}
+          onCancel={this.handleMergeCancel}
+        />
       </Layout.Content>
     );
   }
+
+  
 
   private openAddModal = () => {
     this.setState({ visibleAdd: true });
@@ -104,5 +122,17 @@ export default class Content extends React.Component<IContentProps, IContentStat
 
   private handleDelCancel = () => {
     this.setState({ visibleDelete: false });
+  }
+
+  private openMergeModal = () => {
+    this.setState({ visibleMerge: true });
+  }
+
+  private handleMerge = () => {
+    this.setState({ visibleMerge: false });
+  }
+
+  private handleMergeCancel = () => {
+    this.setState({ visibleMerge: false });
   }
 }

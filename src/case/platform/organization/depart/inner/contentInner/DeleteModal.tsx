@@ -34,9 +34,9 @@ const DeleteModal = (props: IDeleteModalProps) => {
 
   return (
     <Modal {...modalProps}>
-      <p style={{lineHeight: "24px"}}>
+      <p style={{lineHeight: 1.5}}>
         <Icon type="question-circle" theme="filled" style={{color: "#FFD532", fontSize: 20, verticalAlign:"text-top"}}/>
-        <span style={{fontWeight: "bold", marginLeft: 16}}>确认删除下表选中的机构吗？</span>
+        <span style={{fontWeight: "bold", marginLeft: 8}}>确认删除下表选中的机构吗？</span>
       </p>
       <div>
         {/* <p>待删除机构：</p> */}

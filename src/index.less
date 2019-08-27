@@ -59,7 +59,22 @@
 // @menu-item-active-bg: #ff8c58;
 // @menu-item-active-color: #fff;
 
-//全局覆盖滚动条样式
+.qj-table-filter-column {
+    display: block;
+    padding: 5px 8px;
+    .ant-checkbox-group-item {
+        display: block;
+        padding: 5px 0;
+    }
+}
+
+.ant-table-content .ant-table-body {
+    tr:nth-child(even) {
+        background-color: #fafafa;
+    }
+}
+
+/** 全局覆盖滚动条样式*/
 ::-webkit-scrollbar {
     width: 15px;
     height: 15px;
@@ -73,19 +88,23 @@
     border: 5px solid transparent;
 }
 
-.qj-table-filter-column {
-    display: block;
-    padding: 5px 8px;
-    .ant-checkbox-group-item {
-        display: block;
-        padding: 5px 0;
+/** CheckBoxList组件样式*/
+.qj-checkbox-list {
+    .ant-list-items {
+        max-height: 180px;
+        overflow-y: auto;
+    }
+    &-item {
+        cursor: pointer;
+        padding: 0 !important;
+        &:hover,
+        &-checked {
+            background: @menu-item-active-bg;
+        }
+        &-checkbox {
+            height: 100%;
+            width: 100%;
+            padding: 12px 24px;
+        }
     }
 }
-
-
-.ant-table-content .ant-table-body {
-    tr:nth-child(even){
-        background-color: #FAFAFA;
-    }
-}
-

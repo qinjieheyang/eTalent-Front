@@ -2,6 +2,7 @@
 export * from "./BoolInput";
 export * from "./ComboBoxInput";
 export * from "./ComboBoxTreeInput";
+export * from "./CheckBoxListInput";
 
 export * from "./DateInput";
 

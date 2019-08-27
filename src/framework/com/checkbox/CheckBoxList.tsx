@@ -48,6 +48,7 @@ export class CheckBoxList extends React.Component<IProps, IState>  {
 
     return (
       <List
+        className="qj-checkbox-list"
         bordered
         header={
           <Checkbox indeterminate={indeterminate} onChange={this.onCheckAllChange} checked={checkAll}>
@@ -56,8 +57,8 @@ export class CheckBoxList extends React.Component<IProps, IState>  {
         }
         dataSource={checkItems}
         renderItem={item => (
-          <List.Item>
-            <Checkbox value= {item.value} onChange={this.onChange} checked={item.checked}>{item.name}</Checkbox>
+          <List.Item className={this.getClassName(item.checked)}>
+            <Checkbox className="qj-checkbox-list-item-checkbox" value= {item.value} onChange={this.onChange} checked={item.checked}>{item.name}</Checkbox>
           </List.Item>
         )}
       />
@@ -107,6 +108,7 @@ export class CheckBoxList extends React.Component<IProps, IState>  {
   }
 
   private onChange = (e: any) =>{
+    // e.stopPropagation();
     const targetChecked = e.target.checked;
     const targetValue = e.target.value;
 
@@ -135,5 +137,13 @@ export class CheckBoxList extends React.Component<IProps, IState>  {
         return;
     }
     this.props.onChange(this.checkedValues);
+  }
+
+  private getClassName = (checked: boolean) =>{
+    let className = "qj-checkbox-list-item";
+    if(checked) {
+      className += " qj-checkbox-list-item-checked"
+    }
+    return className;
   }
 }
