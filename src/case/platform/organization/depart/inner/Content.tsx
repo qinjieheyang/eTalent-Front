@@ -4,6 +4,7 @@ import { Layout, Tabs, Button, Dropdown, Menu, Icon } from "antd";
 import Framework from "src/framework/Framework";
 import DepartTableColumns from './contentInner/DepartTableColumns';
 import AddModal from "./contentInner/AddModal";
+import DeleteModal from "./contentInner/DeleteModal";
 
 const AdaptiveTable = Framework.Com.Tables.AdaptiveTable;
 
@@ -19,6 +20,7 @@ const menu = (
 
 interface IContentState {
   visibleAdd: boolean;
+  visibleDelete: boolean;
   confirmLoading: boolean;
 
 }
@@ -32,12 +34,13 @@ export default class Content extends React.Component<IContentProps, IContentStat
     super(props);
     this.state = {
       visibleAdd: false,
-      confirmLoading: false
+      visibleDelete: false,
+      confirmLoading: false,
     }
   }
 
   public render() {
-    const { visibleAdd, confirmLoading} = this.state;
+    const { visibleAdd, visibleDelete, confirmLoading} = this.state;
     return (
       <Layout.Content className="qj-depart-content">
         <Tabs size="large" animated={false}>
@@ -45,7 +48,7 @@ export default class Content extends React.Component<IContentProps, IContentStat
             tab={<span><Icon type="table" />机构表</span>}>
             <div className="qj-depart-btns">
               <Button type="primary" onClick={this.openAddModal}>新增</Button>
-              <Button >删除</Button>
+              <Button onClick={this.openDelModal}>删除</Button>
               <Dropdown overlay={menu}>
                 <Button>更多</Button>
               </Dropdown>
@@ -69,6 +72,12 @@ export default class Content extends React.Component<IContentProps, IContentStat
           onOk={this.handleAdd}
           onCancel={this.handleAddCancel}
         />
+        <DeleteModal
+          visible={visibleDelete} 
+          confirmLoading={confirmLoading}
+          onOk={this.handleDelete}
+          onCancel={this.handleDelCancel}
+        />
       </Layout.Content>
     );
   }
@@ -83,5 +92,17 @@ export default class Content extends React.Component<IContentProps, IContentStat
 
   private handleAddCancel = () => {
     this.setState({ visibleAdd: false });
+  }
+
+  private openDelModal = () => {
+    this.setState({ visibleDelete: true });
+  }
+
+  private handleDelete = () => {
+    this.setState({ visibleDelete: false });
+  }
+
+  private handleDelCancel = () => {
+    this.setState({ visibleDelete: false });
   }
 }
