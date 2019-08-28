@@ -1,23 +1,21 @@
 import * as React from "react";
-import { Button } from "antd";
 
-const download = (url: string) => {
+const download = (url: string, fileName: string) => {
   let link = document.createElement('a');
   link.style.display = 'none';
   link.href = url;
   link.setAttribute('download', 'excel.xlsx');
-
-  document.body.appendChild(link)
   link.click();
 };
 
 interface IDownloadProp {
   url: string;
+  fileName?: string|undefined;
 }
 
 const DownloadFile = (props: IDownloadProp) => {
   return (
-    <Button onClick={() => { download(props.url) }}>下载</Button>
+    <span onClick={() => { download(props.url, props.fileName||"download") }}>下载</span>
   )
 }
 

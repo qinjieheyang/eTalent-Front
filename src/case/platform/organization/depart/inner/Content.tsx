@@ -5,12 +5,13 @@ import Framework from "src/framework/Framework";
 import DepartTableColumns from './contentInner/DepartTableColumns';
 import AddModal from "./contentInner/AddModal";
 import DeleteModal from "./contentInner/DeleteModal";
+import SealModal from "./contentInner/SealModal";
+import UnSealModal from "./contentInner/UnSealModal";
 import MergeModal from "./contentInner/MergeModal";
 
 const AdaptiveTable = Framework.Com.Tables.AdaptiveTable;
 
 const { DropdownMore } = Framework.Com.Dropdowns;
-const { DownloadFile } = Framework.Com.Upload;
 const { TabPane } = Tabs;
 
 
@@ -19,6 +20,8 @@ const { TabPane } = Tabs;
 interface IContentState {
   visibleAdd: boolean;
   visibleDelete: boolean;
+  visibleSeal: boolean; //封存
+  visibleUnSeal: boolean; //解封
   visibleMerge: boolean;
   confirmLoading: boolean;
 
@@ -34,23 +37,30 @@ export default class Content extends React.Component<IContentProps, IContentStat
     this.state = {
       visibleAdd: false,
       visibleDelete: false,
+      visibleSeal: false,
+      visibleUnSeal: false,
       visibleMerge: false,
       confirmLoading: false,
     }
   }
 
   public render() {
-    const { visibleAdd, visibleDelete, visibleMerge, confirmLoading} = this.state;
+    const { visibleAdd, visibleDelete, visibleSeal, visibleUnSeal, visibleMerge, confirmLoading} = this.state;
 
     const menu = (
         <Menu style={{textAlign:"center"}}>
-          <Menu.Item>封存</Menu.Item>
-          <Menu.Item>解封</Menu.Item>
+          <Menu.Item onClick={this.openSealModal}>封存</Menu.Item>
+          <Menu.Item onClick={this.openUnSealModal}>解封</Menu.Item>
           <Menu.Item onClick={this.openMergeModal}>合并</Menu.Item>
-          <Menu.Item>划转</Menu.Item>
+          <Menu.Item onClick={this.openMergeModal}>划转</Menu.Item>
           <Menu.Item>排序</Menu.Item>
           <Menu.Item>导入</Menu.Item>
-          <Menu.Item onClick={()={DownloadFile("https://qinjee-datacenter-1253673776.cos.ap-guangzhou.myqcloud.com/user/logo.png")}}>导出</Menu.Item>
+          <Menu.Item 
+          onClick={ 
+            () => Framework.Utils.UtilDownload.Img({
+               url:"https://qinjee-datacenter-1253673776.cos.ap-guangzhou.myqcloud.com/user/logo.png",
+            })
+          }>导出</Menu.Item>
         </Menu>
     );
 
@@ -89,6 +99,18 @@ export default class Content extends React.Component<IContentProps, IContentStat
           onOk={this.handleDelete}
           onCancel={this.handleDelCancel}
         />
+        <SealModal
+          visible={visibleSeal} 
+          confirmLoading={confirmLoading}
+          onOk={this.handleSeal}
+          onCancel={this.handleSealCancel}
+        />
+        <UnSealModal
+          visible={visibleUnSeal} 
+          confirmLoading={confirmLoading}
+          onOk={this.handleUnSeal}
+          onCancel={this.handleUnSealCancel}
+        />
         <MergeModal
           visible={visibleMerge} 
           confirmLoading={confirmLoading}
@@ -123,6 +145,30 @@ export default class Content extends React.Component<IContentProps, IContentStat
 
   private handleDelCancel = () => {
     this.setState({ visibleDelete: false });
+  }
+
+  private openSealModal = () => {
+    this.setState({ visibleSeal: true });
+  }
+
+  private handleSeal = () => {
+    this.setState({ visibleSeal: false });
+  }
+
+  private handleSealCancel = () => {
+    this.setState({ visibleSeal: false });
+  }
+
+  private openUnSealModal = () => {
+    this.setState({ visibleUnSeal: true });
+  }
+
+  private handleUnSeal = () => {
+    this.setState({ visibleUnSeal: false });
+  }
+
+  private handleUnSealCancel = () => {
+    this.setState({ visibleUnSeal: false });
   }
 
   private openMergeModal = () => {
