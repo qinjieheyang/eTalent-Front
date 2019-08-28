@@ -168,19 +168,22 @@ export class TableColumnBuilder {
                 });
 
                 return (
-                    <div className="custom-filter-dropdown" onMouseLeave={() => { confirm() }} >
-                        <Checkbox.Group
-                            className="qj-table-filter-column"
-                            options={plainOptions}
-                            defaultValue={defaultValues}
-                            onChange={(checkedValues: string[]) => {
-                                col.filterDropdownVisible = true;
-                                setSelectedKeys(checkedValues);
-                                confirm();
-                                this.SetCheckedColumns(checkedValues);
-                            }}
-                        />
-                    </div>
+                    <React.Fragment>
+                        <span className="qj-filter-dropdown-arrow"></span>
+                        <div className="custom-filter-dropdown" onMouseLeave={() => { confirm() }} >
+                            <Checkbox.Group
+                                className="qj-table-filter-column"
+                                options={plainOptions}
+                                defaultValue={defaultValues}
+                                onChange={(checkedValues: string[]) => {
+                                    col.filterDropdownVisible = true;
+                                    setSelectedKeys(checkedValues);
+                                    confirm();
+                                    this.SetCheckedColumns(checkedValues);
+                                }}
+                            />
+                        </div>
+                    </React.Fragment>
                 )
             },
             filterIcon: (filtered: string | undefined) => (

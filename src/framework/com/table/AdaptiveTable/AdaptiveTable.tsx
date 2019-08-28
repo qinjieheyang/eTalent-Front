@@ -74,7 +74,7 @@ const AdaptiveTable = (props: IAdaptiveTableProps) => {
       const height: number | undefined = computerTableHeightByViewport(dataSource, minusHeight+54);
       setScroll({ x: scroll.x, y: height });
     }
-
+    reloadLayout();
     window.addEventListener("resize", reloadLayout);
 
     return () => {

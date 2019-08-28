@@ -44,7 +44,7 @@ const AddForm = Form.create({ name: 'normal_login' })((props: IAddFormProps) => 
   // const passwordError = isFieldTouched('password') && getFieldError('password');
 
   return (
-    <Form {...FormItemLayout}>
+    <Form {...FormItemLayout} labelAlign="left">
       <TextInput formItem ={{ label :"机构编码" }}
         fieldName="departNo" 
         getFD = {getFieldDecorator} 
@@ -74,7 +74,6 @@ const AddForm = Form.create({ name: 'normal_login' })((props: IAddFormProps) => 
       <TextInput formItem ={{ label :"机构负责人" }}
         fieldName="departLeader" 
         getFD = {getFieldDecorator} 
-        isRequired = {true}
         max = {100}
       />
     </Form>

@@ -1,0 +1,24 @@
+/** ant dropdown 下拉框添加箭头*/
+.qj-dropdown {
+  &::before{
+      content: "";
+      display: block;
+      z-index: 0;
+      opacity: 1;
+      position: absolute;
+      left: 50%;
+      top: -5px;
+      width: 10px;
+      height: 10px;
+      margin-left: -5px;
+      background: #fff;
+      border: 5px solid transparent;
+      border-top-color: #fff;
+      border-left-color: #fff;
+      transform: rotate(45deg);
+      box-shadow: -2px -2px 5px rgba(0, 0, 0, 0.1);
+  }
+  >.ant-dropdown-menu{
+      text-align: center;
+  }
+}

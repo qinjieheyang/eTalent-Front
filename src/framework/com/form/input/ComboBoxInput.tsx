@@ -13,9 +13,6 @@ interface IComboBoxProp extends IAInputProp {
     canMulSelect?: boolean;
 }
 
-
-
-
 export class ComboBoxInput extends AInput<IComboBoxProp> {
     public render = (): React.ReactElement<any> => {
         return (

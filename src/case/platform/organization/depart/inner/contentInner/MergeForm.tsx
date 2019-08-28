@@ -55,7 +55,7 @@ const AddForm = Form.create({ name: 'normal_login' })((props: IAddFormProps) => 
   // const passwordError = isFieldTouched('password') && getFieldError('password');
 
   return (
-    <Form {...FormItemLayout}>
+    <Form {...FormItemLayout} labelAlign="left">
       <TextInput formItem ={{ label :"新机构名称" }}
         fieldName="departName" 
         getFD = {getFieldDecorator} 
