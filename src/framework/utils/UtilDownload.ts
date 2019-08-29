@@ -32,6 +32,7 @@ class UtilDownloadClass {
     link.click();
     link.remove();
   }
+
 }
 
 const image2base64 = (img: any) => {
