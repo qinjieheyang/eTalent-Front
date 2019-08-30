@@ -1,1 +1,1 @@
-// export * from "./DonwloadFile";
+export * from "./UploadFileToCos";

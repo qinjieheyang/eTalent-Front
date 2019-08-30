@@ -6,4 +6,5 @@ export * from "./UtilLog";
 export * from "./UtilMessage";
 export * from "./UtilNumber";
 export * from "./UtilDownLoad";
+export * from "./UtilUpload";
  
