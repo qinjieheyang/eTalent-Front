@@ -29,45 +29,102 @@ export class UploadFileToCos extends React.Component<IUploadFileProps, IUploadFi
   //3、上传成功通知后端
 
   public render() {
+    
 
+    // const props = {
+    //   name: 'file',
+    //   action: 'https://qinjee-datacenter-1253673776.cos.ap-guangzhou.myqcloud.com',
+    //   headers: {
+    //     Authorization: this.state.Authorization,
+    //     'x-cos-security-token': this.state.sessionToken
+    //   },
+    //   // withCredentials: true,
+    //   onChange(info: any) {
+    //     if (info.file.status !== 'uploading') {
+    //       console.log(info.file, info.fileList);
+    //     }
+    //     if (info.file.status === 'done') {
+    //       console.log(`${info.file.name} file uploaded successfully`);
+    //     } else if (info.file.status === 'error') {
+    //       console.log(`${info.file.name} file upload failed.`);
+    //     }
+    //   },
+    //   beforeUpload: async (file: any) => {
+    //     const key = "img.jpg"
+    //     const authInfo = await Framework.Utils.UtilUpload.getAuth({key});
+    //     const fd = new FormData();
+    //     // fd.append('key', key);
+    //     // fd.append('Content-Type', '');
+    //     authInfo.Authorization && fd.append('Signature', authInfo.Authorization);
+    //     authInfo.sessionToken && fd.append('x-cos-security-token', authInfo.sessionToken);
+    //     fd.append('file', file);
+    //     // var url = prefix;
+    //     if(authInfo && authInfo.Authorization && authInfo.sessionToken){
+    //       this.setState({Authorization: authInfo.Authorization, sessionToken: authInfo.sessionToken})
+    //     }
+    //     return file;
+    //   }
+    // };
 
-    const props = {
-      name: 'file',
-      action: 'https://qinjee-datacenter-1253673776.cos.ap-guangzhou.myqcloud.com',
-      headers: {
-        Authorization: this.state.Authorization,
-        // 'x-cos-security-token': this.state.sessionToken
+    const uploadProps = {
+      action: 'https://qinjee-datacenter-1253673776.cos.ap-guangzhou.myqcloud.com/q.txt',
+      multiple: false,
+      onStart(file: any) {
+        console.log('onStart', file, file.name);
       },
-      // withCredentials: true,
-      onChange(info: any) {
-        if (info.file.status !== 'uploading') {
-          console.log(info.file, info.fileList);
-        }
-        if (info.file.status === 'done') {
-          console.log(`${info.file.name} file uploaded successfully`);
-        } else if (info.file.status === 'error') {
-          console.log(`${info.file.name} file upload failed.`);
-        }
+      onSuccess(ret: any, file: any) {
+        console.log('onSuccess', ret, file.name);
       },
-      beforeUpload: async (file: any) => {
-        const key = "img.jpg"
-        const authInfo = await Framework.Utils.UtilUpload.getAuth({key});
-        const fd = new FormData();
-        // fd.append('key', key);
-        // fd.append('Content-Type', '');
-        authInfo.Authorization && fd.append('Signature', authInfo.Authorization);
-        authInfo.sessionToken && fd.append('x-cos-security-token', authInfo.sessionToken);
-        fd.append('file', file);
-        // var url = prefix;
-        if(authInfo && authInfo.Authorization && authInfo.sessionToken){
-          this.setState({Authorization: authInfo.Authorization, sessionToken: authInfo.sessionToken})
-        }
-        return file;
-      }
+      onError(err: any) {
+        console.log('onError', err);
+      },
+      onProgress({ percent }: any, file: any) {
+        console.log('onProgress', `${percent}%`, file.name);
+      },
+      customRequest({
+        action,
+        file,
+        filename,
+        headers,
+        onError,
+        onProgress,
+        onSuccess,
+        withCredentials,
+      }: any) {
+        // EXAMPLE: post form-data with 'axios'
+        // const formData = new FormData();
+        // formData.append(filename, file);
+        const key = "q.txt"
+        const http = Framework.DefaultHttp;
+        Framework.Utils.UtilUpload.getAuth({key}).then(authInfo => {
+          const fd = new FormData();
+          fd.append('key', key);
+          fd.append('Content-Type', '');
+          authInfo.Authorization && fd.append('Signature', authInfo.Authorization);
+          authInfo.sessionToken && fd.append('x-cos-security-token', authInfo.sessionToken);
+          fd.append('file', file);
+          http.put(action, fd, {
+            withCredentials,
+            headers,
+            onUploadProgress: ({ total, loaded }: any) => {
+              onProgress({ percent: Math.round(loaded / total * 100).toFixed(2) }, file);
+            },
+          }).then(({ data: response }) => {
+            onSuccess(response, file);
+          })
+          .catch(onError);
+
+        });
+        return {
+          abort() {
+            console.log('upload progress is aborted.');
+          },
+        };
+      },
     };
 
     return (
-      <Upload {...props}>
+      <Upload {...uploadProps}>
         <Button>
           <Icon type="upload"/> Click to Upload
         </Button>

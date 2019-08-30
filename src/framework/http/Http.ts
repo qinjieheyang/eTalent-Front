@@ -47,6 +47,8 @@ export class Http {
     });
   };
 
+  // public SetContentTypeOnHeader
+
   public get = (url: string, params?: any): Promise<any> => {
     // AxiosPromise
     const timeWatch = HttpRunTimeWatch.create(url);
@@ -64,7 +66,7 @@ export class Http {
       .catch((error: any) => this.NotifiedError(error, url));
   };
 
-  public post = (url: string, params?: any): Promise<any> => {
+  public post = (url: string, params?: any, config?: any): Promise<any> => {
     const timeWatch = HttpRunTimeWatch.create(url);
     this.waitHandler.Start();
     return this.ax
@@ -73,7 +75,7 @@ export class Http {
       .then(responseDto => this.formatData(responseDto, timeWatch, url));
   };
 
-  public put = (url: string, params?: any): AxiosPromise => {
+  public put = (url: string, params?: any, config?: any): AxiosPromise => {
     const watch = HttpRunTimeWatch.create(url);
     this.waitHandler.Start();
     return this.ax
