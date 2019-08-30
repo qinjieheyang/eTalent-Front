@@ -1,6 +1,5 @@
 import * as React from "react";
-import { Upload, Button, Icon } from "antd";
-import { RcFile } from 'antd/lib/upload';
+// import { Upload, Button, Icon } from "antd";
 
 interface IUploadFileProps {
   action: string,
@@ -20,22 +19,8 @@ export class UploadFileToCos extends React.Component<IUploadFileProps>{
 
   
   public render() {
-    const props = {
-      action: '//jsonplaceholder.typicode.com/posts/',
-      beforeUpload: (file: RcFile, FileList: RcFile[]) => {
-        return new Promise((resolve, reject)=>{
-          resolve(file);
-        })
-        // return false;
-      }
-    };
-
     return (
-      <Upload {...props}>
-        <Button>
-          <Icon type="upload"/> Upload
-        </Button>
-      </Upload>
+      <div>xx</div>
     )
   }
 

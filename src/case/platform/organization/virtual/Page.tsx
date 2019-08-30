@@ -1,45 +1,5 @@
 import * as React from "react";
-
-import Framework from "src/framework/Framework";
-
-const AdaptiveTable = Framework.Com.Tables.AdaptiveTable
-
-const dataSource = [
-  {
-    key: '1',
-    name: '胡彦斌',
-    age: 32,
-    address: '西湖区湖底公园1号',
-    switch: false,
-    bool: true,
-    date: "2019-10-30",
-    type: "1",
-    orgName: "某某集团"
-  },
-  {
-    key: '2',
-    name: '胡彦祖',
-    age: 42,
-    address: '西湖区湖底公园1号',
-    switch: true,
-    bool: false,
-    date: "2019-5-30",
-    type: "3",
-    orgName: "莫某单位"
-  },
-];
-
-const columns = [{
-  title: "姓名",
-  key: "name",
-  dataIndex: "name",
-  dataType: "text",
-}, {
-  title: "年龄",
-  key: "age",
-  dataIndex: "age",
-  dataType: "number",
-}]
+import {Upload, Button, Icon} from "antd";
 
 export default class Page extends React.Component<any, any> {
   constructor(props: any) {
@@ -47,6 +7,51 @@ export default class Page extends React.Component<any, any> {
   }
 
   public render() {
-    return <AdaptiveTable columns={columns} dataSource={dataSource} />;
+
+    const props = {
+      name: 'file',
+      action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+      headers: {
+        authorization: 'authorization-text',
+      },
+      onChange(info: any) {
+        if (info.file.status !== 'uploading') {
+          console.log(info.file, info.fileList);
+        }
+        if (info.file.status === 'done') {
+          console.log(`${info.file.name} file uploaded successfully`);
+        } else if (info.file.status === 'error') {
+          console.log(`${info.file.name} file upload failed.`);
+        }
+      },
+      beforeUpload: (file: any) => {
+        // const  sleep = async (state: boolean) => {
+        //     return new Promise((resolve, reject) => {
+        //         resolve(state);
+        //     });
+        // };
+        // return await sleep;
+        // return Promise<{state: boolean}> => {
+        //     // const data = await this.http.get("/api/home/getInit");
+        //     return false;
+        // };
+        // return new Promise((resolve) => {
+        //   console.log('start check');
+        //   setTimeout(() => {
+        //     console.log('check finshed');
+        //     resolve(file);
+        //   }, 3000);
+        // });
+        return false;
+      },
+    };
+
+    return (
+      <Upload {...props}>
+        <Button>
+          <Icon type="upload" /> Click to Upload
+        </Button>
+      </Upload>
+    )
   }
 }

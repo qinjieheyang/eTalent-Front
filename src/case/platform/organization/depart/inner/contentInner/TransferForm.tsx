@@ -4,7 +4,7 @@ import Framework from "src/framework/Framework";
 import { FormComponentProps } from 'antd/lib/form/Form';
 const { Inputs } = Framework.Com.Forms;
 
-const { TextInput, CheckBoxListInput, SelectTreeInput  } = Inputs;
+const { CheckBoxListInput, SelectTreeInput  } = Inputs;
 
 const FormItemLayout = {
   labelCol: { span: 5 },
