@@ -70,7 +70,7 @@ export class Http {
     const timeWatch = HttpRunTimeWatch.create(url);
     this.waitHandler.Start();
     return this.ax
-      .post(url, params)
+      .post(url, params, config)
       .catch(error => this.NotifiedError(error, url))
       .then(responseDto => this.formatData(responseDto, timeWatch, url));
   };
@@ -79,7 +79,7 @@ export class Http {
     const watch = HttpRunTimeWatch.create(url);
     this.waitHandler.Start();
     return this.ax
-      .put(url, params)
+      .put(url, params, config)
       .catch(error => this.NotifiedError(error, url))
       .then(responseDto => this.formatData(responseDto, watch, url));
   };
