@@ -8,6 +8,7 @@ import DeleteModal from "./contentInner/DeleteModal";
 import SealModal from "./contentInner/SealModal";
 import UnSealModal from "./contentInner/UnSealModal";
 import MergeModal from "./contentInner/MergeModal";
+import ImportModal from './contentInner/ImportModal';
 
 const AdaptiveTable = Framework.Com.Tables.AdaptiveTable;
 
@@ -23,6 +24,7 @@ interface IContentState {
   visibleSeal: boolean; //封存
   visibleUnSeal: boolean; //解封
   visibleMerge: boolean;
+  visibleImport: boolean;
   confirmLoading: boolean;
 
 }
@@ -40,12 +42,13 @@ export default class Content extends React.Component<IContentProps, IContentStat
       visibleSeal: false,
       visibleUnSeal: false,
       visibleMerge: false,
+      visibleImport: false,
       confirmLoading: false,
     }
   }
 
   public render() {
-    const { visibleAdd, visibleDelete, visibleSeal, visibleUnSeal, visibleMerge, confirmLoading} = this.state;
+    const { visibleAdd, visibleDelete, visibleSeal, visibleUnSeal, visibleMerge, confirmLoading, visibleImport} = this.state;
 
     const menu = (
         <Menu style={{textAlign:"center"}}>
@@ -54,7 +57,7 @@ export default class Content extends React.Component<IContentProps, IContentStat
           <Menu.Item onClick={this.openMergeModal}>合并</Menu.Item>
           <Menu.Item onClick={this.openMergeModal}>划转</Menu.Item>
           <Menu.Item>排序</Menu.Item>
-          <Menu.Item>导入</Menu.Item>
+          <Menu.Item onClick={this.openImportModal}>导入</Menu.Item>
           <Menu.Item 
           onClick={ 
             () => Framework.Utils.UtilDownload.Img({
@@ -116,6 +119,12 @@ export default class Content extends React.Component<IContentProps, IContentStat
           confirmLoading={confirmLoading}
           onOk={this.handleMerge}
           onCancel={this.handleMergeCancel}
+        />
+        <ImportModal
+          visible={visibleImport} 
+          confirmLoading={confirmLoading}
+          onOk={this.handleImport}
+          onCancel={this.handleImportCancel}
         />
       </Layout.Content>
     );
@@ -181,5 +190,17 @@ export default class Content extends React.Component<IContentProps, IContentStat
 
   private handleMergeCancel = () => {
     this.setState({ visibleMerge: false });
+  }
+
+  private openImportModal = () => {
+    this.setState({ visibleImport: true });
+  }
+
+  private handleImport = () => {
+    this.setState({ visibleImport: false });
+  }
+
+  private handleImportCancel = () => {
+    this.setState({ visibleImport: false });
   }
 }

@@ -1,1 +1,2 @@
-export * from "./UploadFileToCos";
+export * from "./UploadToCos";
+export * from "./DraggerToCos";

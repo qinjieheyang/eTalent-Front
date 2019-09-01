@@ -51,28 +51,28 @@ export class Http {
 
   public get = (url: string, params?: any): Promise<any> => {
     // AxiosPromise
-    const timeWatch = HttpRunTimeWatch.create(url);
+    const watch = HttpRunTimeWatch.create(url);
     this.waitHandler.Start();
     return this.ax
       .get(url, { params }) // , headers: { 'X-Access-Token': this.token, "xxxx1": "xxx1111" }
       .catch((error: any) => this.NotifiedError(error, url))
-      .then((responseDto: any) => this.formatData(responseDto, timeWatch, url));
+      .then((responseDto: any) => this.formatData(responseDto, watch, url));
   };
 
-  public getOnly = (url: string, params?: any): Promise<any> => {
+  public getOnly = (url: string, params?: any): AxiosPromise => {
     this.waitHandler.Start();
     return this.ax
       .get(url, { params })
       .catch((error: any) => this.NotifiedError(error, url));
   };
 
-  public post = (url: string, params?: any, config?: any): Promise<any> => {
-    const timeWatch = HttpRunTimeWatch.create(url);
+  public post = (url: string, params?: any, config?: any): AxiosPromise => {
+    const watch = HttpRunTimeWatch.create(url);
     this.waitHandler.Start();
     return this.ax
       .post(url, params, config)
       .catch(error => this.NotifiedError(error, url))
-      .then(responseDto => this.formatData(responseDto, timeWatch, url));
+      .then(responseDto => this.formatData(responseDto, watch, url));
   };
 
   public put = (url: string, params?: any, config?: any): AxiosPromise => {
@@ -92,6 +92,24 @@ export class Http {
       .catch(error => this.NotifiedError(error, url))
       .then(responseDto => this.formatData(responseDto, watch, url));
   };
+
+  public upload = (url: string, params?: any, config?: any) : AxiosPromise => {
+    const watch = HttpRunTimeWatch.create(url);
+    this.waitHandler.Start();
+    return this.ax
+      .post(url, params, {
+        headers: { "Content-Type": "multipart/form-data" },
+        ...config
+      })
+      .catch(error => this.NotifiedError(error, url))
+      .then(responseDto => {
+        this.waitHandler.End();
+        watch.finishWatch();
+        window.console.log("文件上传成功："+watch.GetRunTimeFormatText());
+        return responseDto;
+      });
+
+  }
 
   public loginOff(): void {
     this.deleteCookie("isLogin");

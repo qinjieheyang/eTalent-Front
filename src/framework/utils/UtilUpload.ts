@@ -1,11 +1,9 @@
 import Framework from "src/framework/Framework";
 
-// const COS = require("cos-js-sdk-v5");
-
 // import CosAuth from "cos-js-sdk-v5/demo/common/cos-auth";
 
 interface IAuthOpt {
-  key: string;
+  key?: string;  //不需要key
   Bucket?: string;
   Region?: string;
 }
@@ -26,11 +24,11 @@ class UtilUploadClass {
 
     const http = Framework.DefaultHttp;
     const authUrl = "http://192.168.1.119:7000/qinjee/acquire"; // 后端签名接口
-    const { key , Bucket = 'qinjee-datacenter-1253673776', Region = 'ap-guangzhou'} = options;
+    const { /** key ,*/ Bucket = 'qinjee-datacenter-1253673776', Region = 'ap-guangzhou'} = options;
     let data: IAuthInfo = {};
     try{
-      data =  await http.get(authUrl, {
-        key,
+      data =  await http.post(authUrl, {
+        // key,
         Bucket,
         Region
       }) as IAuthInfo;

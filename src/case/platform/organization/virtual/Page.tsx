@@ -1,7 +1,7 @@
 import * as React from "react";
 import Framework from "src/framework/Framework";
 
-const { UploadFileToCos } = Framework.Com.Uploads
+const { UploadToCos } = Framework.Com.Uploads
 
 export default class Page extends React.Component<any, any> {
   constructor(props: any) {
@@ -11,7 +11,7 @@ export default class Page extends React.Component<any, any> {
   public render() {
 
     return (
-      <UploadFileToCos />
+      <UploadToCos key="test.txt"/>
     )
   }
 }
