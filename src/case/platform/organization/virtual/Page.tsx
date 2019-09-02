@@ -11,7 +11,7 @@ export default class Page extends React.Component<any, any> {
   public render() {
 
     return (
-      <UploadToCos key="test.txt"/>
+      <UploadToCos/>
     )
   }
 }

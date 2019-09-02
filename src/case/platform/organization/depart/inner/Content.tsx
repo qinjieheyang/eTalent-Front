@@ -9,6 +9,7 @@ import SealModal from "./contentInner/SealModal";
 import UnSealModal from "./contentInner/UnSealModal";
 import MergeModal from "./contentInner/MergeModal";
 import ImportModal from './contentInner/ImportModal';
+import OrgFlow from './contentInner/OrgFlow';
 
 const AdaptiveTable = Framework.Com.Tables.AdaptiveTable;
 
@@ -87,7 +88,9 @@ export default class Content extends React.Component<IContentProps, IContentStat
           </TabPane>
           <TabPane key="2" className="qj-depart-tab-pane"
             tab={<span><Icon type="apartment" />机构图</span>}>
-            Content of Tab Pane 2
+            <div style={{ padding: '0 24px' }}>
+              <OrgFlow />
+            </div>
           </TabPane>
         </Tabs>
         <AddModal 

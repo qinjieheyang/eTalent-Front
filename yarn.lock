@@ -6653,6 +6653,13 @@ react-dom@16.8.6:
     prop-types "^15.6.2"
     scheduler "^0.13.6"
 
+react-gojs@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.npm.taobao.org/react-gojs/download/react-gojs-4.5.0.tgz#515bffc4ba2ff9d926975066725b889e1ee1019c"
+  integrity sha1-UVv/xLov+dkml1BmcluInh7hAZw=
+  dependencies:
+    gojs "^2.0.15"
+
 react-highlight-words@^0.16.0:
   version "0.16.0"
   resolved "https://registry.npm.taobao.org/react-highlight-words/download/react-highlight-words-0.16.0.tgz#4b4b9824e3d2b98789d3e3b3aedb5e961ae1b7cf"

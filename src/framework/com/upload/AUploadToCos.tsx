@@ -18,27 +18,28 @@ export abstract class AUploadToCos extends React.Component<IUploadProps>{
     this.action = `https://${Bucket}.cos.${Region}.myqcloud.com/`;
   }
 
-  private getAuthFormData = async (key: string, file: any) => {
+  private getAuthFormData = async (filename:string, file: any) => {
     const { Bucket, Region } = CosConfig;
     const info = await Framework.Utils.UtilUpload.getAuth({ Bucket, Region });
     const fd = new FormData();
-    fd.append('key', key);
-    fd.append('Content-Type', '');
+    fd.append('key', "user/test.txt"); //key需要通过授权获取
+    // fd.append('Content-Type', '');
     info.Authorization && fd.append('Signature', info.Authorization);
     info.sessionToken && fd.append('x-cos-security-token', info.sessionToken);
+    fd.append(filename, file);
     return fd;
   }
 
   private upload = ({
-    key,
     file,
+    filename,
     onProgress,
     onSuccess,
     onError
   }: IUploadCosProps) => {
     const http = Framework.DefaultHttp;
     //1、上传之前做认证
-    this.getAuthFormData(key, file).then(fd => {
+    this.getAuthFormData( filename, file).then(fd => {
       //2、上传到腾讯云对象存储
       http.upload(this.action, fd, {
         onUploadProgress: ({ total, loaded }: any) => {
@@ -52,7 +53,7 @@ export abstract class AUploadToCos extends React.Component<IUploadProps>{
   }
 
   public getUploadProps = () => {
-    const { key, beforeUpload, onUploadSuccess } = this.props;
+    const { beforeUpload, onUploadSuccess } = this.props;
     const _this = this;
     return {
       action: this.action,
@@ -69,12 +70,13 @@ export abstract class AUploadToCos extends React.Component<IUploadProps>{
         console.log('onProgress', `${percent}%`, file.name);
       },
       customRequest({
+        filename,
         file,
         onError,
         onProgress,
         onSuccess
       }: any) {
-        _this.upload({ key, file, onProgress, onSuccess, onError });
+        _this.upload({ filename, file, onProgress, onSuccess, onError });
         return {
           abort() {
             console.log('upload progress is aborted.');
