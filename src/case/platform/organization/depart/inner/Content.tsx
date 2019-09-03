@@ -70,7 +70,7 @@ export default class Content extends React.Component<IContentProps, IContentStat
 
     return (
       <Layout.Content className="qj-depart-content">
-        <Tabs size="large" animated={false}>
+        <Tabs size="large" animated={false} defaultActiveKey={"2"}>
           <TabPane key="1" className="qj-depart-tab-pane"
             tab={<span><Icon type="table" />机构表</span>}>
             <div className="qj-depart-btns">
@@ -88,7 +88,7 @@ export default class Content extends React.Component<IContentProps, IContentStat
           </TabPane>
           <TabPane key="2" className="qj-depart-tab-pane"
             tab={<span><Icon type="apartment" />机构图</span>}>
-            <div style={{ padding: '0 24px' }}>
+            <div style={{ padding: '0 24px', height: "100%" }}>
               <OrgFlow />
             </div>
           </TabPane>

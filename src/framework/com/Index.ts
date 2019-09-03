@@ -6,5 +6,6 @@ import * as Forms from "./form/Index";
 import * as CheckBox from "./checkbox/Index";
 import * as Dropdowns from "./dropdown/Index";
 import * as Uploads from "./upload/Index";
+import * as Gojs from "./gojs/Index";
 
-export { Icons, Charts, Buttons, Tables, Forms, CheckBox, Dropdowns, Uploads };
+export { Icons, Charts, Buttons, Tables, Forms, CheckBox, Dropdowns, Uploads, Gojs };
