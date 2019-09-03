@@ -9,7 +9,7 @@ interface IDropdownProp {
 const DropdownMore = (props: IDropdownProp) => {
   return (
     <Dropdown overlay={props.menu} placement="bottomCenter" trigger={['click']} overlayClassName="qj-dropdown">
-      <Button>更多</Button>
+      <Button type="primary">更多</Button>
     </Dropdown>
   )
 }

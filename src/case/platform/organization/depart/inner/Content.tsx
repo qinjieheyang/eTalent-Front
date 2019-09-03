@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Layout, Tabs, Button, Menu, Icon } from "antd";
+import { Layout, Tabs, Button, Menu, Icon, Select } from "antd";
 
 import Framework from "src/framework/Framework";
 import DepartTableColumns from './contentInner/DepartTableColumns';
@@ -15,6 +15,7 @@ const AdaptiveTable = Framework.Com.Tables.AdaptiveTable;
 
 const { DropdownMore } = Framework.Com.Dropdowns;
 const { TabPane } = Tabs;
+const { Option } = Select;
 
 
 
@@ -27,6 +28,7 @@ interface IContentState {
   visibleMerge: boolean;
   visibleImport: boolean;
   confirmLoading: boolean;
+  orgAngle: number;
 
 }
 interface IContentProps {
@@ -45,6 +47,7 @@ export default class Content extends React.Component<IContentProps, IContentStat
       visibleMerge: false,
       visibleImport: false,
       confirmLoading: false,
+      orgAngle: 90
     }
   }
 
@@ -75,7 +78,7 @@ export default class Content extends React.Component<IContentProps, IContentStat
             tab={<span><Icon type="table" />机构表</span>}>
             <div className="qj-depart-btns">
               <Button type="primary" onClick={this.openAddModal}>新增</Button>
-              <Button onClick={this.openDelModal}>删除</Button>
+              <Button type="primary" onClick={this.openDelModal}>删除</Button>
               <DropdownMore menu = {menu}></DropdownMore>
             </div>
             <div style={{ padding: '0 24px' }}>
@@ -88,8 +91,18 @@ export default class Content extends React.Component<IContentProps, IContentStat
           </TabPane>
           <TabPane key="2" className="qj-depart-tab-pane"
             tab={<span><Icon type="apartment" />机构图</span>}>
-            <div style={{ padding: '0 24px', height: "100%" }}>
-              <OrgFlow />
+            <div className="qj-depart-btns">
+              <Button onClick={this.handelOrgAngle}>显示方向</Button>
+              <Button onClick={this.openDelModal}>显示内容</Button>
+              <Select defaultValue="0" style={{ width: 120 }}>
+                <Option value="0">全部显示</Option>
+                <Option value="1">显示1层</Option>
+                <Option value="2">显示2层</Option>
+              </Select>
+              <Button type="primary" onClick={this.openDelModal}>导出</Button>
+            </div>
+            <div style={{ padding: '0 24px', height: '100%'}}>
+              <OrgFlow angle = {this.state.orgAngle}/>
             </div>
           </TabPane>
         </Tabs>
@@ -134,6 +147,11 @@ export default class Content extends React.Component<IContentProps, IContentStat
   }
 
   
+
+  private handelOrgAngle = () => {
+    this.setState({ orgAngle:  this.state.orgAngle>0? 0: 90});
+    // console.log(this.state.orgAngle)
+  }
 
   private openAddModal = () => {
     this.setState({ visibleAdd: true });
