@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import go from 'gojs';
+import go, { Point } from 'gojs';
 const $ = go.GraphObject.make;
 
 const nodeDataArray = [
@@ -54,90 +54,116 @@ export default class GoJs extends Component<IOrgFlowProps> {
   renderCanvas = () => {
 
     let diagram = $(go.Diagram, "qj-org-flow",  // the DIV HTML element
-    {
-      // Put the diagram contents at the top center of the viewport
-      initialDocumentSpot: go.Spot.TopCenter,
-      initialViewportSpot: go.Spot.TopCenter,
-      // OR: Scroll to show a particular node, once the layout has determined where that node is
-      //"InitialLayoutCompleted": function(e) {
-      //  var node = e.diagram.findNodeForKey(28);
-      //  if (node !== null) e.diagram.commandHandler.scrollToPart(node);
-      //},
-      layout:
-        $(go.TreeLayout,  // use a TreeLayout to position all of the nodes
-          {
-            treeStyle: go.TreeLayout.StyleLastParents,
-            // properties for most of the tree:
-            angle: 90,
-            layerSpacing: 80,
-            // properties for the "last parents":
-            alternateAngle: 0,
-            alternateAlignment: go.TreeLayout.AlignmentStart,
-            alternateNodeIndent: 20,
-            alternateNodeIndentPastParent: 1,
-            alternateNodeSpacing: 20,
-            alternateLayerSpacing: 40,
-            alternateLayerSpacingParentOverlap: 1,
-            alternatePortSpot: new go.Spot(0.001, 1, 20, 0),
-            alternateChildPortSpot: go.Spot.Left
-          })
-    });
+      {
+        // Put the diagram contents at the top center of the viewport
+        initialDocumentSpot: go.Spot.TopCenter,
+        initialViewportSpot: go.Spot.TopCenter,
+        layout:
+          $(go.TreeLayout,  // use a TreeLayout to position all of the nodes
+            {
+              treeStyle: go.TreeLayout.StyleLastParents,
+              // properties for most of the tree:
+              angle: 90,
+              layerSpacing: 80,
+              // // properties for the "last parents":
+              alternateAngle: 0,
+              alternateAlignment: go.TreeLayout.AlignmentStart,
+              alternateNodeIndent: 20,
+              alternateNodeIndentPastParent: 1,
+              alternateNodeSpacing: 20,
+              alternateLayerSpacing: 40,
+              alternateLayerSpacingParentOverlap: 1,
+              alternatePortSpot: new go.Spot(0.001, 1, 20, 0),
+              alternateChildPortSpot: go.Spot.Left
+            })
+      });
 
     function theNationFlagConverter(nation: string) {
       return "https://www.nwoods.com/go/Flags/" + nation.toLowerCase().replace(/\s/g, "-") + "-flag.Png";
     }
     function theInfoTextConverter(info: any) {
       var str = "";
-      if (info.title) str += "Title: " + info.title;
-      if (info.headOf) str += "\nHead of: " + info.headOf;
+      if (info.title) str += `在编人数: 10`;
+      if (info.headOf) str += "\n在岗人数: " + 10;
       return str;
     }
     diagram.nodeTemplate =
       $(go.Node, "Auto",
-        // the outer shape for the node, surrounding the Table
-        $(go.Shape, "Rectangle",
-          { stroke: null, strokeWidth: 0 },
-          /* reddish if highlighted, blue otherwise */
-          new go.Binding("fill", "isHighlighted", function (h) { return h ? "#F44336" : "#A7E7FC"; }).ofObject()),
+        {
+          isShadowed: true,
+          shadowColor: "#ccc",
+          shadowOffset: new Point(0, 0),
+          shadowBlur: 8,
+          selectable: false
+        },
+        // 长方形填充色
+        $(go.Shape, "RoundedRectangle",
+          { fill: "#FF8C58", stroke: null, strokeWidth: 0 },
+        ),
+        //垂直方向 panel
+        $(go.Panel, "Vertical",
+          //title头部
           $(go.TextBlock,
             {
-              maxSize: new go.Size(160, NaN), margin: 2,
+              margin: 6,
+              stroke: "white",
               font: "500 16px Roboto, sans-serif",
-              alignment: go.Spot.Top
+              alignment: go.Spot.Center,
+              overflow: go.TextBlock.OverflowEllipsis,
+              maxLines: 1,
             },
-            new go.Binding("text", "name")),
-        // a table to contain the different parts of the node
-        $(go.Panel, "Table",
-          { margin: 6, maxSize: new go.Size(200, NaN) },
-          // the two TextBlocks in column 0 both stretch in width
-          // but align on the left side
-          // the name
-          
-          $(go.RowColumnDefinition,
-            {
-              column: 0,
-              stretch: go.GraphObject.Horizontal,
-              alignment: go.Spot.Center
-            }),
-          
-          // the country flag
-          $(go.Picture,
-            {
-              row: 0, column: 0, margin: 2,
-              imageStretch: go.GraphObject.Uniform,
-              alignment: go.Spot.Left
-            },
-            // only set a desired size if a flag is also present:
-            new go.Binding("desiredSize", "nation", function () { return new go.Size(34, 26) }),
-            new go.Binding("source", "nation", theNationFlagConverter)),
-          // the additional textual information
-          $(go.TextBlock,
-            {
-              row: 1, column: 1,
-              font: "12px Roboto, sans-serif",
-              alignment: go.Spot.Right
-            },
-            new go.Binding("text", "", theInfoTextConverter))
+            new go.Binding("text", "name"),
+          ),
+          // 水平方向 panel
+          $(go.Panel, "Horizontal",
+            { background: "#fff" },
+            //图片
+            $(go.Picture,
+              {
+                margin: 12,
+                imageStretch: go.GraphObject.Uniform,
+                alignment: go.Spot.Left,
+              },
+              // only set a desired size if a flag is also present:
+              new go.Binding("desiredSize", "nation", function () { return new go.Size(32, 32) }),
+              new go.Binding("source", "nation", theNationFlagConverter)),
+
+            // a table to contain the different parts of the node
+            $(go.Panel, "Table",
+              { margin: 6, maxSize: new go.Size(200, NaN) },
+              // the two TextBlocks in column 0 both stretch in width
+
+              $(go.RowColumnDefinition,
+                {
+                  column: 1,
+                  // stretch: go.GraphObject.Horizontal,
+                  alignment: go.Spot.Center
+                }),
+
+              // the additional textual information
+              $(go.TextBlock,
+                {
+                  row: 1, column: 0,
+                  font: "16px Roboto, sans-serif",
+                  alignment: go.Spot.Right
+                },
+                new go.Binding("text", "", function(){ return "张三"})),
+              $(go.TextBlock,
+                {
+                  row: 2, column: 0,
+                  font: "12px Roboto, sans-serif",
+                  alignment: go.Spot.Right
+                },
+                new go.Binding("text", "", function(){ return "在编人数："}) )),
+              $(go.TextBlock,
+                {
+                  row: 3, column: 0,
+                  font: "12px Roboto, sans-serif",
+                  alignment: go.Spot.Right
+                },
+                new go.Binding("text", "", function(){ return "在岗人数:"}) )),
+            )
+          )
         )  // end Table Panel
       );  // end Node
     // define the Link template, a simple orthogonal line
