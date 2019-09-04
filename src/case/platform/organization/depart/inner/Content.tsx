@@ -18,7 +18,16 @@ const { TabPane } = Tabs;
 const { Option } = Select;
 
 
-
+const nodeDataArray = [
+  { key: 0, avatar: "Denmark", title: "中国雄安投资集团", name: "张三", total: 20, online: 10, color: "#FF8C58" },
+  { key: 1, parent: 0, avatar: "Denmark", title: "集团办公室", total: 20, online: 10, color: "#2FDD93" },
+  { key: 2, parent: 1, avatar: "Denmark", title: "党委办公室", total: 20, online: 10, color: "#19ADE6" },
+  { key: 3, parent: 1, avatar: "Denmark", title: "党委办公室", total: 20, online: 10, color: "#19ADE6" },
+  { key: 4, parent: 1, avatar: "Denmark", title: "党委办公室", total: 20, online: 10, color: "#19ADE6" },
+  { key: 5, parent: 1, avatar: "Denmark", title: "党委办公室", total: 20, online: 10, color: "#19ADE6" },
+  { key: 6, parent: 1, avatar: "Denmark", title: "党委办公室", total: 20, online: 10, color: "#19ADE6" },
+  { key: 7, parent: 1, avatar: "Denmark", title: "党委办公室", total: 20, online: 10, color: "#19ADE6" },
+];
 
 interface IContentState {
   visibleAdd: boolean;
@@ -92,17 +101,17 @@ export default class Content extends React.Component<IContentProps, IContentStat
           <TabPane key="2" className="qj-depart-tab-pane"
             tab={<span><Icon type="apartment" />机构图</span>}>
             <div className="qj-depart-btns">
-              <Button onClick={this.handelOrgAngle}>显示方向</Button>
+              <Button onClick={this.handleOrgAngle}>显示方向</Button>
               <Button onClick={this.openDelModal}>显示内容</Button>
               <Select defaultValue="0" style={{ width: 120 }}>
                 <Option value="0">全部显示</Option>
                 <Option value="1">显示1层</Option>
                 <Option value="2">显示2层</Option>
               </Select>
-              <Button type="primary" onClick={this.openDelModal}>导出</Button>
+              <Button type="primary" onClick={this.handleOrgExport}>导出</Button>
             </div>
             <div style={{ padding: '0 24px', height: '100%'}}>
-              <OrgFlow angle = {this.state.orgAngle}/>
+              <OrgFlow ref="orgFlow"  data={nodeDataArray} angle = {this.state.orgAngle}/>
             </div>
           </TabPane>
         </Tabs>
@@ -148,10 +157,18 @@ export default class Content extends React.Component<IContentProps, IContentStat
 
   
 
-  private handelOrgAngle = () => {
+  private handleOrgAngle = () => {
     this.setState({ orgAngle:  this.state.orgAngle>0? 0: 90});
-    // console.log(this.state.orgAngle)
+    const orgFlow = this.refs["orgFlow"] as OrgFlow;
+    orgFlow.setAngle(this.state.orgAngle>0? 0: 90);
   }
+
+  private handleOrgExport = () => {
+    const orgFlow = this.refs["orgFlow"] as OrgFlow;
+    orgFlow.export();
+  }
+
+
 
   private openAddModal = () => {
     this.setState({ visibleAdd: true });

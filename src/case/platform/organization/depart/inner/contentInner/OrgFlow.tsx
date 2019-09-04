@@ -1,34 +1,37 @@
 import React, { Component } from 'react';
+import { Button } from "antd";
 import go, { Point } from 'gojs';
 const $ = go.GraphObject.make;
 
-const nodeDataArray = [
-  { key: 0, avatar: "Denmark", title: "中国雄安投资集团", name:"张三", total: 20, online: 10, color:"#FF8C58" },
-  { key: 1, parent: 0, avatar: "Denmark", title: "集团办公室", total: 20, online: 10, color:"#2FDD93" },
-  { key: 2, parent: 1, avatar: "Denmark", title: "党委办公室", total: 20, online: 10, color:"#19ADE6" },
-  { key: 3, parent: 1, avatar: "Denmark", title: "党委办公室", total: 20, online: 10, color:"#19ADE6" },
-  { key: 4, parent: 1, avatar: "Denmark", title: "党委办公室", total: 20, online: 10, color:"#19ADE6" },
-  { key: 5, parent: 1, avatar: "Denmark", title: "党委办公室", total: 20, online: 10, color:"#19ADE6" },
-  { key: 6, parent: 1, avatar: "Denmark", title: "党委办公室", total: 20, online: 10, color:"#19ADE6" },
-  { key: 7, parent: 1, avatar: "Denmark", title: "党委办公室", total: 20, online: 10, color:"#19ADE6" },
-];
-
-interface IOrgFlowProps { 
+interface IOrgFlowProps {
   angle: number;
+  data: any[];
 }
-export default class GoJs extends Component<IOrgFlowProps> {
+interface IOrgFlowState {
+  ratio: string;
+  myModel: any;
+  myDiagram: any;
+}
+export default class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
+  public diagram: go.Diagram;
+
   constructor(props: IOrgFlowProps) {
     super(props);
-    this.state = { myModel: null, myDiagram: null }
+    this.state = { ratio: "100%", myModel: null, myDiagram: null }
   }
 
   renderCanvas = () => {
-    const {angle} = this.props;
+    const { angle } = this.props;
     let diagram = $(go.Diagram, "qj-org-flow",  // the DIV HTML element
       {
         // Put the diagram contents at the top center of the viewport
         initialDocumentSpot: go.Spot.TopCenter,
         initialViewportSpot: go.Spot.TopCenter,
+        // select: 1, // users can select only one part at a time
+        isReadOnly: true,
+        minScale: 0.2,
+        maxScale: 1,
+        // autoScale: go.Diagram.UniformToFill,
         layout:
           $(go.TreeLayout,  // use a TreeLayout to position all of the nodes
             {
@@ -46,7 +49,8 @@ export default class GoJs extends Component<IOrgFlowProps> {
       });
 
     function theavatarFlagConverter(avatar: string) {
-      return "https://www.nwoods.com/go/Flags/" + avatar.toLowerCase().replace(/\s/g, "-") + "-flag.Png";
+      // return "https://www.nwoods.com/go/Flags/" + avatar.toLowerCase().replace(/\s/g, "-") + "-flag.Png";
+      return "/img/avatar.png";
     }
     diagram.nodeTemplate =
       $(go.Node, "Auto",
@@ -60,7 +64,7 @@ export default class GoJs extends Component<IOrgFlowProps> {
         // 长方形填充色
         $(go.Shape, "RoundedRectangle",
           { stroke: null, strokeWidth: 0 },
-          new go.Binding("fill","color"),
+          new go.Binding("fill", "color"),
         ),
         //垂直方向 panel
         $(go.Panel, "Vertical",
@@ -90,18 +94,18 @@ export default class GoJs extends Component<IOrgFlowProps> {
             //图片
             $(go.Picture,
               {
-                margin: 12,
+                margin: 6,
                 imageStretch: go.GraphObject.Uniform,
                 alignment: go.Spot.Left,
               },
               // only set a desired size if a flag is also present:
-              new go.Binding("desiredSize", "avatar", function () { return new go.Size(32, 32) }),
+              new go.Binding("desiredSize", "avatar", function () { return new go.Size(48, 48) }),
               new go.Binding("source", "avatar", theavatarFlagConverter)
             ),
 
             // a table to contain the different parts of the node
             $(go.Panel, "Table",
-              { margin: 8, maxSize: new go.Size(200, NaN) },
+              { margin: 6, maxSize: new go.Size(200, NaN) },
               // the two TextBlocks in column 0 both stretch in width
 
               $(go.RowColumnDefinition,
@@ -162,10 +166,14 @@ export default class GoJs extends Component<IOrgFlowProps> {
         { corner: 5, selectable: false },
         $(go.Shape, { strokeWidth: 1, stroke: "#999" }));  // dark gray, rounded corner links
 
+    
     diagram.model = $(go.TreeModel,
       {
-        nodeDataArray: nodeDataArray
-      });;
+        nodeDataArray: this.props.data
+      }
+    );
+
+    this.diagram = diagram;
   }
 
 
@@ -174,7 +182,52 @@ export default class GoJs extends Component<IOrgFlowProps> {
     this.renderCanvas();
   }
 
-  render() {
-    return <div id="qj-org-flow"></div>;
+  componentWillUpdate (prevProps: any) {
+    if (this.props.data !== prevProps.data) {
+      console.log ('Updating');
+      const model = this.state.myModel;
+      const diagram = this.state.myDiagram;
+      model.nodeDataArray = this.props.data;
+      diagram.model = model;
+      this.setState({myModel: model, myDiagram: diagram});
+    }
   }
+
+  render() {
+    return (
+      <div className="qj-org-flow-wrapper">
+        <div className="qj-org-zoom-box">
+          <Button shape="circle" icon="plus" onClick={() => { this.handleZoom(1) }} />
+          <span style={{ display: "block", padding: "20px 0" }}>{this.state.ratio}</span>
+          <Button shape="circle" icon="minus" onClick={() => { this.handleZoom(0) }} />
+        </div>
+        <div id="qj-org-flow"></div>
+      </div>
+    );
+  }
+
+  handleZoom = (num: number) => {
+    const scale = this.diagram.scale;
+    this.diagram.scale = num > 0? scale+0.1 : scale-0.1;
+    this.setState({"ratio": `${Math.round(this.diagram.scale * 100)}%`})
+  }
+
+  export = () => {
+    const img = this.diagram.makeImage({scale: 1});
+    var url = String(img && img.src);
+    var a = document.createElement('a');
+    var event = new MouseEvent('click');
+    a.download = '组织机构图';
+    a.href = url;
+    a.dispatchEvent(event)
+  }
+
+  setAngle = (angle: number) => {
+    // console.log(this.diagram)
+    // debugger;
+    // const layout = this.diagram.layout;
+    this.diagram.layout.angle  = angle;
+    this.diagram.layout.alternateAngle = angle;
+    // layout.angle = 0;
+  } 
 }

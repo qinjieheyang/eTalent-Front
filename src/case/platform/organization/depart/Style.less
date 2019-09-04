@@ -39,7 +39,20 @@
 }
 
 #qj-org-flow{
+    height: 100%;
+}
+.qj-org-flow-wrapper{
     min-height: 500px;
     height: calc(100% - 64px);
-    overflow: hidden;
+    // overflow: hidden;
+    position: relative;
+}
+.qj-org-zoom-box{
+    position: absolute;
+    right: -16px;
+    top: 50%;
+    margin-top: -48px;
+    height: 96px;
+    width: 32px;
+    z-index: 10;
 }
