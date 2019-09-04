@@ -87,16 +87,14 @@ export default class Content extends React.Component<IContentProps, IContentStat
             tab={<span><Icon type="table" />机构表</span>}>
             <div className="qj-depart-btns">
               <Button type="primary" onClick={this.openAddModal}>新增</Button>
-              <Button type="primary" onClick={this.openDelModal}>删除</Button>
+              <Button onClick={this.openDelModal}>删除</Button>
               <DropdownMore menu = {menu}></DropdownMore>
             </div>
-            <div style={{ padding: '0 24px' }}>
               <AdaptiveTable
                 columns={DepartTableColumns}
                 dataSource={this.props.dataSource}
                 minusHeight={264}
               />
-            </div>
           </TabPane>
           <TabPane key="2" className="qj-depart-tab-pane"
             tab={<span><Icon type="apartment" />机构图</span>}>
@@ -111,7 +109,7 @@ export default class Content extends React.Component<IContentProps, IContentStat
               <Button type="primary" onClick={this.handleOrgExport}>导出</Button>
             </div>
             <div style={{ padding: '0 24px', height: '100%'}}>
-              <OrgFlow ref="orgFlow"  data={nodeDataArray} angle = {this.state.orgAngle}/>
+              <OrgFlow ref="orgFlow"  data={nodeDataArray}/>
             </div>
           </TabPane>
         </Tabs>
@@ -158,9 +156,8 @@ export default class Content extends React.Component<IContentProps, IContentStat
   
 
   private handleOrgAngle = () => {
-    this.setState({ orgAngle:  this.state.orgAngle>0? 0: 90});
     const orgFlow = this.refs["orgFlow"] as OrgFlow;
-    orgFlow.setAngle(this.state.orgAngle>0? 0: 90);
+    orgFlow.setAngle();
   }
 
   private handleOrgExport = () => {

@@ -222,8 +222,8 @@ export class TableColumnBuilder {
         dataIndex,
         dataType,
         width = 100,
-        enableSearch = true,
-        checkNull = true
+        enableSearch = false,
+        checkNull = false
     }: IColumnDefine): IColumnSortDefine => {
 
         const col: IColumnSortDefine = {

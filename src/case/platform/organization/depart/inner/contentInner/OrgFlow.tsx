@@ -4,25 +4,26 @@ import go, { Point } from 'gojs';
 const $ = go.GraphObject.make;
 
 interface IOrgFlowProps {
-  angle: number;
   data: any[];
 }
 interface IOrgFlowState {
   ratio: string;
   myModel: any;
   myDiagram: any;
+  angle: number
 }
 export default class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
   public diagram: go.Diagram;
+  
+  private orgFlowEl: React.RefObject<HTMLDivElement>;
 
   constructor(props: IOrgFlowProps) {
     super(props);
-    this.state = { ratio: "100%", myModel: null, myDiagram: null }
+    this.state = { ratio: "100%", myModel: null, myDiagram: null, angle: 90 }
   }
 
   renderCanvas = () => {
-    const { angle } = this.props;
-    let diagram = $(go.Diagram, "qj-org-flow",  // the DIV HTML element
+    let diagram = $(go.Diagram, this.orgFlowEl,  // the DIV HTML element
       {
         // Put the diagram contents at the top center of the viewport
         initialDocumentSpot: go.Spot.TopCenter,
@@ -38,13 +39,13 @@ export default class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
               treeStyle: go.TreeLayout.StyleLastParents,
               arrangement: go.TreeLayout.ArrangementHorizontal,
               // properties for most of the tree:
-              angle: angle,
-              layerSpacing: 35,
+              angle: 90,
+              layerSpacing: 48,
               // properties for the "last parents":
               alternateAngle: 90,
-              alternateLayerSpacing: 35,
+              alternateLayerSpacing: 48,
               alternateAlignment: go.TreeLayout.AlignmentCenterChildren,
-              alternateNodeSpacing: 20
+              alternateNodeSpacing: 56
             })
       });
 
@@ -78,7 +79,7 @@ export default class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
             {
               margin: 6,
               stroke: "white",
-              font: "500 16px Roboto, sans-serif",
+              font: "500 14px Roboto, sans-serif",
               alignment: go.Spot.Center,
               overflow: go.TextBlock.OverflowEllipsis,
               maxLines: 1,
@@ -119,7 +120,7 @@ export default class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
               $(go.TextBlock,
                 {
                   row: 1, column: 0, columnSpan: 2,
-                  font: "600 16px Roboto, sans-serif",
+                  font: "600 14px Roboto, sans-serif",
                   alignment: go.Spot.Left
                 },
                 new go.Binding("text", "", function () { return "张三" })
@@ -164,9 +165,9 @@ export default class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
     diagram.linkTemplate =
       $(go.Link, go.Link.Orthogonal,
         { corner: 5, selectable: false },
-        $(go.Shape, { strokeWidth: 1, stroke: "#999" }));  // dark gray, rounded corner links
+        $(go.Shape, { strokeWidth: 1, stroke: "#e0e0e0" }));  // dark gray, rounded corner links
 
-    
+
     diagram.model = $(go.TreeModel,
       {
         nodeDataArray: this.props.data
@@ -182,17 +183,6 @@ export default class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
     this.renderCanvas();
   }
 
-  componentWillUpdate (prevProps: any) {
-    if (this.props.data !== prevProps.data) {
-      console.log ('Updating');
-      const model = this.state.myModel;
-      const diagram = this.state.myDiagram;
-      model.nodeDataArray = this.props.data;
-      diagram.model = model;
-      this.setState({myModel: model, myDiagram: diagram});
-    }
-  }
-
   render() {
     return (
       <div className="qj-org-flow-wrapper">
@@ -201,19 +191,19 @@ export default class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
           <span style={{ display: "block", padding: "20px 0" }}>{this.state.ratio}</span>
           <Button shape="circle" icon="minus" onClick={() => { this.handleZoom(0) }} />
         </div>
-        <div id="qj-org-flow"></div>
+        <div id="qj-org-flow" ref={(node: any) => {this.orgFlowEl = node}}></div>
       </div>
     );
   }
 
   handleZoom = (num: number) => {
     const scale = this.diagram.scale;
-    this.diagram.scale = num > 0? scale+0.1 : scale-0.1;
-    this.setState({"ratio": `${Math.round(this.diagram.scale * 100)}%`})
+    this.diagram.scale = num > 0 ? scale + 0.1 : scale - 0.1;
+    this.setState({ "ratio": `${Math.round(this.diagram.scale * 100)}%` })
   }
 
   export = () => {
-    const img = this.diagram.makeImage({scale: 1});
+    const img = this.diagram.makeImage({ scale: 1 });
     var url = String(img && img.src);
     var a = document.createElement('a');
     var event = new MouseEvent('click');
@@ -222,12 +212,21 @@ export default class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
     a.dispatchEvent(event)
   }
 
-  setAngle = (angle: number) => {
-    // console.log(this.diagram)
-    // debugger;
-    // const layout = this.diagram.layout;
-    this.diagram.layout.angle  = angle;
-    this.diagram.layout.alternateAngle = angle;
-    // layout.angle = 0;
-  } 
+  setAngle = () => {
+    const angle = this.state.angle > 0 ? 0 : 90;
+    this.setState({ angle });
+    this.diagram.layout = $(go.TreeLayout,  // use a TreeLayout to position all of the nodes
+      {
+        treeStyle: go.TreeLayout.StyleLastParents,
+        arrangement: go.TreeLayout.ArrangementHorizontal,
+        // properties for most of the tree:
+        angle: angle,
+        layerSpacing: 48,
+        // properties for the "last parents":
+        alternateAngle: angle,
+        alternateLayerSpacing: 48,
+        alternateAlignment: go.TreeLayout.AlignmentCenterChildren,
+        alternateNodeSpacing: 56
+      })
+  }
 }

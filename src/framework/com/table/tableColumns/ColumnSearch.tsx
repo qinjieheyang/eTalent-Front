@@ -27,7 +27,7 @@ export interface IColumnSearchDefine {
 
 export class ColumnSearch {
 
-  public static getTextSearchProps = ({ title, enableSearch = true, checkNull = true }: ISearchProps) => {
+  public static getTextSearchProps = ({ title, enableSearch = false, checkNull = false }: ISearchProps) => {
 
     if (!enableSearch) return {};
 
@@ -70,7 +70,7 @@ export class ColumnSearch {
     }
   }
 
-  public static getTreeSearchProps = ({ title, enableSearch = true, searchData = [] }: ISearchProps) => {
+  public static getTreeSearchProps = ({ title, enableSearch = false, searchData = [] }: ISearchProps) => {
 
     if (!enableSearch) return {};
 
@@ -102,7 +102,7 @@ export class ColumnSearch {
     }
   }
 
-  public static getDateSearchProps = ({  enableSearch = true, checkNull = true }: ISearchProps) => {
+  public static getDateSearchProps = ({  enableSearch = false, checkNull = false }: ISearchProps) => {
 
     if (!enableSearch) return {};
 
@@ -129,7 +129,7 @@ export class ColumnSearch {
     }
   }
 
-  public static getBoolSearchProps = ({  enableSearch = true, trueValue = "是", falseValue = "否" }: ISearchProps) => {
+  public static getBoolSearchProps = ({  enableSearch = false, trueValue = "是", falseValue = "否" }: ISearchProps) => {
 
     if (!enableSearch) return {};
 
@@ -160,7 +160,7 @@ export class ColumnSearch {
     }
   }
 
-  public static getCheckboxSearchProps = ({  enableSearch = true, searchData = [] }: ISearchProps) => {
+  public static getCheckboxSearchProps = ({  enableSearch = false, searchData = [] }: ISearchProps) => {
 
     if (!enableSearch) return {};
 

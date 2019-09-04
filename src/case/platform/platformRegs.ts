@@ -4,7 +4,7 @@ import { Const } from "./Const";
 
 import {userRegs} from "./user/userRegs";
 import {organizationRegs} from "./organization/organizationRegs";
-import {positionRegs} from "./position/positionRegs";
+import positionReg from "./position/Reg";
 import {pointRegs} from "./point/pointRegs";
 import {establishmentRegs} from "./establishment/establishmentRegs"
 // import roleReg from "./role/Reg";
@@ -12,7 +12,7 @@ import {establishmentRegs} from "./establishment/establishmentRegs"
 const platRegs = Framework.Case.Reg.CreateCaseReg(Const, () => import("./Page"));
 
 platRegs.addChild(organizationRegs);
-platRegs.addChild(positionRegs);
+platRegs.addChild(positionReg);
 platRegs.addChild(pointRegs);
 platRegs.addChild(userRegs);
 platRegs.addChild(establishmentRegs);

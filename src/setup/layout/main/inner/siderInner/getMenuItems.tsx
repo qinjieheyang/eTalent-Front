@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon, Menu } from "antd";
+import {  Menu } from "antd";
 import { Link } from "react-router-dom";
 import * as Framework from "src/framework/Framework";
 import "./MenuItem.css";
@@ -24,7 +24,7 @@ export function getTopMenuItem(topReg: Framework.Case.Reg) {
     return (
       <Menu.Item key={topReg.routePath}>
         <Link to={topReg.routePath}>
-          <Icon type={topReg.icon} />
+          <IconFont type={topReg.icon} style={{paddingRight:14}} size={16}/>
           <span className="layout-main-menu-item">{topReg.title}</span>
         </Link>
       </Menu.Item>
@@ -40,7 +40,7 @@ export function getTopMenuItem(topReg: Framework.Case.Reg) {
       title={
         <div>
           <span>
-            <IconFont type={topReg.icon} style={{paddingRight:14}}/>
+            <IconFont type={topReg.icon} style={{paddingRight:14}}  size={16}/>
             <span>{topReg.title}</span>
           </span>
         </div>
