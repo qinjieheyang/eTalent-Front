@@ -7,14 +7,12 @@ import { IconBlock } from "./IconBlock";
 
 const ThemeVariablesArray: Array<any> = [{
   '@primary-color': '#FF8C58',
-  '@menu-item-active-bg': '#ff8c58',
   '@header-bg-color': '#495062',
   '@sider-bg-color': '#666C7B',
   '@collapes-bg-color': '#5D6474',
   '@logo-bg-color': '#495060'
 }, {
   '@primary-color': '#48B9C4',
-  '@menu-item-active-bg': '#48B9C4',
   '@header-bg-color': '#243952',
   '@sider-bg-color': '#243952',
   '@collapes-bg-color': '#1C334E',

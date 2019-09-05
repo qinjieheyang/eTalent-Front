@@ -88,7 +88,6 @@ module.exports = {
       mainLessFile: path.resolve(__dirname, '../src/styles/global.less'),
       themeVariables: [
         '@primary-color',
-        '@menu-item-active-bg',
         '@header-bg-color',
         '@sider-bg-color',
         '@collapes-bg-color',

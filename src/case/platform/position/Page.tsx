@@ -64,13 +64,13 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
             <Table style={{ margin: 16 }} columns={[]} dataSource={[]} bordered pagination={false} />
           </TabPane>
           <TabPane tab="职级设置" key="4">
-            <Layout>
-              <Layout.Sider>
+            <Layout style={{ height: "calc(100vh - 64px)" }}>
+              <Layout.Sider style={{ background: "#fff", borderRight: "1px solid #e8e8e8", marginTop: -16 }}>
                 <Menu
                   mode="inline"
                   openKeys={this.state.openKeys}
                   onOpenChange={this.onOpenChange}
-                  theme="light"
+                  style={{ border: "none" }}
                 >
                   <SubMenu
                     key="sub1"
@@ -118,7 +118,7 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
                   </SubMenu>
                 </Menu>
               </Layout.Sider>
-              <Layout.Content>
+              <Layout.Content style={{ background: "#fff" }}>
                 <div className="qj-table-outertop-btns">
                   <Button type="primary">新增</Button>
                   <Button>删除</Button>

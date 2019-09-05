@@ -1,11 +1,10 @@
 @import "_var.less";
 
-@success-color: #24C124; // 成功色
+@success-color: #24c124; // 成功色
 @error-color: #f03838; // 错误色
 @font-size-base: 14px; // 主字号
 @menu-item-active-color: #fff;
 @qj-menu-item-color: #d3d3d5;
-
 
 .qj-header {
     background: @header-bg-color;
@@ -46,39 +45,54 @@
         &-submenu-vertical-left,
         &-submenu-vertical-right,
         &-submenu-inline {
-
+            > .ant-menu-submenu-title{
+                &:active {
+                    background: transparent;
+                }
+            }
             > .ant-menu-submenu-title .ant-menu-submenu-arrow {
                 &::after,
                 &::before {
                     transition: transform 0.3s @ease-in-out, top 0.3s @ease-in-out !important;
-                    background: @qj-menu-item-color ;
+                    background: @qj-menu-item-color;
                 }
             }
             > .ant-menu-submenu-title:hover .ant-menu-submenu-arrow {
                 &::after,
                 &::before {
-                    background: @primary-color ;
+                    background: @primary-color;
                 }
             }
         }
-
-        &-item-active,
+        &-item,
+        &-item-active {
+            > a {
+                &:hover{
+                    color: @primary-color;
+                }
+                color: @qj-menu-item-color;
+            }
+        }
         &-item-selected {
+            background: @primary-color !important;
             color: @menu-item-active-color;
             > a,
             > a:hover {
                 color: @menu-item-active-color;
             }
         }
-
-       
     }
 }
 
 //二级菜单以弹出框形式展开，菜单不再qj-sidebar中
-.qj-side-menu-submenu{
-    > .ant-menu-sub{
+.qj-side-menu-submenu {
+    > .ant-menu-sub {
         background-color: @sider-bg-color;
+        .ant-menu-item {
+            > a {
+                color: @qj-menu-item-color;
+            }
+        }
         .ant-menu-item-active,
         .ant-menu-item-selected {
             color: @menu-item-active-color;
