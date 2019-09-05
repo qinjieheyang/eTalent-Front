@@ -3,14 +3,16 @@
 @success-color: #24C124; // 成功色
 @error-color: #f03838; // 错误色
 @font-size-base: 14px; // 主字号
+@menu-item-active-color: #fff;
+@qj-menu-item-color: #d3d3d5;
+
 
 .qj-header {
     background: @header-bg-color;
-    color: @menu-item-color;
+    color: @qj-menu-item-color;
 
     .ant-menu {
         background: @header-bg-color;
-
         &-item:hover,
         &-item-active,
         &-item-selected {
@@ -21,11 +23,12 @@
                 color: @menu-item-active-color;
             }
         }
-
-        > &-item {
-            color: @menu-item-color;
-            > a {
-                color: @menu-item-color;
+        &-horizontal {
+            > .ant-menu-item {
+                color: @qj-menu-item-color;
+                > a {
+                    color: @qj-menu-item-color;
+                }
             }
         }
     }
@@ -33,10 +36,11 @@
 
 .qj-sidebar {
     background: @sider-bg-color;
-    color: @menu-item-color;
+    color: @qj-menu-item-color;
 
     .ant-menu {
         background: @sider-bg-color;
+        color: @qj-menu-item-color;
 
         &-submenu-vertical,
         &-submenu-vertical-left,
@@ -47,7 +51,7 @@
                 &::after,
                 &::before {
                     transition: transform 0.3s @ease-in-out, top 0.3s @ease-in-out !important;
-                    background: @menu-item-color ;
+                    background: @qj-menu-item-color ;
                 }
             }
             > .ant-menu-submenu-title:hover .ant-menu-submenu-arrow {
@@ -88,7 +92,7 @@
 
 .qj-collapes {
     background: @collapes-bg-color;
-    color: @menu-item-color;
+    color: @qj-menu-item-color;
 }
 
 .qj-logo {

@@ -1,6 +1,5 @@
 import * as React from "react";
-import { Tabs, Radio, Table } from "antd";
-const { TabPane } = Tabs;
+import { Tabs, Button, Table, Layout, Menu, Icon } from "antd";
 
 import CaseCommon from "src/caseCommon/CaseCommon";
 import { Const } from "./Const";
@@ -8,334 +7,10 @@ import { Service } from "./Service";
 import { IService, ServiceMock } from "./ServiceMock";
 import { IState, initState } from "./State";
 
-const columns_0 = [
-  {
-    title: '职级',
-    key: 'level',
-    dataIndex: 'level',
-    width: 65
-  },
-  {
-    title: '研发族',
-    key: '1',
-    children: [
-      {
-        title: '职位',
-        dataIndex: 'key11',
-        key: 'key11',
-        render: (cellValue: any, row: any) => {
-          const obj = {
-            children: cellValue,
-            props: {},
-          };
-          if(row.key11rowSpan >= 0){
-            obj.props["rowSpan"] = row.key11rowSpan || 0;
-          }
-          return obj;
-        },
-      },
-      {
-        title: '职等',
-        dataIndex: 'key12',
-        key: 'key12',
-      },
-    ],
-  },
-  {
-    title: '销售族',
-    key: '2',
-    children: [
-      {
-        title: '职位',
-        dataIndex: 'key21',
-        key: 'key21',
-        render: (cellValue: any, row: any) => {
-          const obj = {
-            children: cellValue,
-            props: {},
-          };
-          if(row['key21rowSpan'] >= 0){
-            obj.props["rowSpan"] = row['key21rowSpan'] || 0;
-          }
-          return obj;
-        },
-      },
-      {
-        title: '职等',
-        dataIndex: 'key22',
-        key: 'key22',
-        render: (cellValue: any, row: any) => {
-          const obj = {
-            children: cellValue,
-            props: {},
-          };
-          if(row['key22rowSpan'] >= 0){
-            obj.props["rowSpan"] = row['key22rowSpan'] || 0;
-          }
-          return obj;
-        },
-      },
-    ],
-  },
-  {
-    title: '实施族',
-    key: '3',
-    children: [
-      {
-        title: '职位',
-        dataIndex: 'key31',
-        key: 'key31',
-      },
-      {
-        title: '职等',
-        dataIndex: 'key32',
-        key: 'key32',
-      },
-    ],
-  },
-  {
-    title: '职能族',
-    key: '4',
-    children: [
-      {
-        title: '职位',
-        dataIndex: 'key41',
-        key: 'key41',
-      },
-      {
-        title: '职等',
-        dataIndex: 'key42',
-        key: 'key42',
-      },
-    ],
-  },
-];
-
-const data_0 = [
-  {
-    level: 10,
-    // key11: "xx",
-    // key12: "xx",
-    // key21: "xx",
-    // key22: "xx",
-    // key31: "xx",
-    // key32: "xx",
-    // key41: "xx",
-    // key42: "xx",
-    key: 10
-  },
-  {
-    level: 9,
-    key: 9,
-    key11: "xx",
-    key12: "xx",
-    key21: "xx",
-    key22: "xx",
-    key31: "xx",
-    key32: "xx",
-    key41: "xx",
-    key42: "xx",
-  },
-  {
-    level: 8,
-    key: 8,
-    key11: "xx",
-    key12: "xx",
-    key21: "xx",
-    key22: "xx",
-    key31: "xx",
-    key32: "xx",
-    key41: "xx",
-    key42: "xx",
-  },
-  {
-    level: 7,
-    key: 7,
-    key11: "xx",
-    key12: "xx",
-    key21: "xx",
-    key21rowSpan:2,
-    key22: "xx",
-    key31: "xx",
-    key32: "xx",
-    key41: "xx",
-    key42: "xx",
-  },
-  {
-    level: 6,
-    key: 6,
-    key11: "xx",
-    key12: "xx",
-    key21: "xx",
-    key21rowSpan:0,
-    key22: "xx",
-    key22rowSpan:4,
-    key31: "xx",
-    key32: "xx",
-    key41: "xx",
-    key42: "xx",
-  },
-  {
-    level: 5,
-    key: 5,
-    key11: "xx",
-    key12: "xx",
-    key21: "xx",
-    key22: "xx",
-    key22rowSpan:0,
-    key31: "xx",
-    key32: "xx",
-    key41: "xx",
-    key42: "xx",
-  },
-  {
-    level: 4,
-    key: 4,
-    key11: "xx",
-    key12: "xx",
-    key21: "xx",
-    key22: "xx",
-    key22rowSpan:0,
-    key31: "xx",
-    key32: "xx",
-    key41: "xx",
-    key42: "xx",
-  },
-  {
-    level: 3,
-    key: 3,
-    key11: "xx",
-    key11rowSpan: 3,
-    key12: "xx",
-    key21: "xx",
-    key22: "xx",
-    key22rowSpan:0,
-    key31: "xx",
-    key32: "xx",
-    key41: "xx",
-    key42: "xx",
-  },
-  {
-    level: 2,
-    key: 2,
-    key11rowSpan: 0,
-    // key11: "xx",
-    key12: "xx",
-    key21: "xx",
-    key22: "xx",
-    key31: "xx",
-    key32: "xx",
-    key41: "xx",
-    key42: "xx",
-  },
-  {
-    level: 1,
-    key: 1,
-    key11rowSpan: 0,
-    // key11: "xx",
-    key12: "xx",
-    key21: "xx",
-    key22: "xx",
-    key31: "xx",
-    key32: "xx",
-    key41: "xx",
-    key42: "xx",
-  },
-]
-
-const columns_1 = [
-  {
-    title: '职位族',
-    key: 'key1',
-    dataIndex: 'key1',
-    render: (cellValue: any, row: any) => {
-      const obj = {
-        children: cellValue,
-        props: {},
-      };
-      if(row.key1rowSpan >= 0){
-        obj.props["rowSpan"] = row.key1rowSpan || 0;
-      }
-      return obj;
-    },
-  },
-  {
-    title: '职位',
-    key: 'key2',
-    dataIndex: 'key2',
-    render: (cellValue: any, row: any) => {
-      const obj = {
-        children: cellValue,
-        props: {},
-      };
-      if(row.key2rowSpan >= 0){
-        obj.props["rowSpan"] = row.key2rowSpan || 0;
-      }
-      return obj;
-    },
-  },
-  {
-    title: '职等',
-    key: 'key3',
-    dataIndex: 'key3',
-    render: (cellValue: any, row: any) => {
-      const obj = {
-        children: cellValue,
-        props: {},
-      };
-      if(row.key3rowSpan >= 0){
-        obj.props["rowSpan"] = row.key3rowSpan || 0;
-      }
-      return obj;
-    },
-  },
-  {
-    title: '职级',
-    key: 'key4',
-    dataIndex: 'key4',
-  },
-];
-
-const data_1 = [
-  {
-    key1: "研发族",
-    key1rowSpan: 5,
-    key2: "前段开发",
-    key2rowSpan: 3,
-    key3: "中级",
-    key3rowSpan: 2,
-    key4: "1",
-  },
-  {
-    key1rowSpan: 0,
-    key2rowSpan: 0,
-    key3rowSpan: 0,
-    key4: "2",
-  },
-  {
-    key1rowSpan: 0,
-    key2rowSpan: 0,
-    key3: "高级",
-    key4: "3",
-  },
-  {
-    key1rowSpan: 0,
-    key2: "后端开发",
-    key2rowSpan: 2,
-    key3: "中级",
-    key3rowSpan: 2,
-    key4: "1",
-  },
-  {
-    key1rowSpan: 0,
-    key2rowSpan: 0,
-    key3rowSpan: 0,
-    key4: "2",
-  },
-];
-
-const columnCollection = [columns_0, columns_1];
-const dataCollection = [data_0, data_1];
+import PositionSystem from './inner/PositionSystem';
+// import PositionGroup from './inner/PositionGroup';
+const { TabPane } = Tabs;
+const { SubMenu } = Menu;
 
 interface IPageProps { }
 export default class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
@@ -346,47 +21,124 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
   }
 
   public async init() {
-    const positionType = this.state.positionType;
-    this.setState({
-      columns: columnCollection[positionType],
-      data: dataCollection[positionType]
-    })
+    const data = await this.service.getInit();
+    this.setState(data.initData)
   }
 
+
+  rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
+
+  onOpenChange = (openKeys: string[]) => {
+    const latestOpenKey = openKeys.find((key: string) => this.state.openKeys.indexOf(key) === -1);
+    if (latestOpenKey && this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+      this.setState({ openKeys });
+    } else {
+      this.setState({
+        openKeys: latestOpenKey ? [latestOpenKey] : [],
+      });
+    }
+  };
+
   public render() {
+    const { PS_columnCollection, PS_dataCollection } = this.state;
     return (
       <div className="qj-content">
         <Tabs size="large" animated={false} defaultActiveKey="1">
           <TabPane tab="职位体系" key="1">
-            <Radio.Group value={this.state.positionType} style={{ marginLeft: 24 }} onChange={this.handlePositionTypeChange}>
-              <Radio value={0}>按职级</Radio>
-              <Radio value={1}>按职位</Radio>
-            </Radio.Group>
-            <Table className="qj-table-no-hover" style={{ margin: 16 }} columns={this.state.columns} dataSource={this.state.data} bordered pagination={false}/>
+            <PositionSystem columnCollection={PS_columnCollection} dataCollection={PS_dataCollection} />
           </TabPane>
           <TabPane tab="职位族设置" key="2">
-            Content of Tab Pane 2
+            <div className="qj-table-outertop-btns">
+              <Button type="primary">新增</Button>
+              <Button>删除</Button>
+              <Button>更多操作</Button>
+            </div>
+            <Table style={{ margin: 16 }} columns={[]} dataSource={[]} bordered pagination={false} />
           </TabPane>
           <TabPane tab="职位设置" key="3">
-            Content of Tab Pane 3
+            <div className="qj-table-outertop-btns">
+              <Button type="primary">新增</Button>
+              <Button>删除</Button>
+              <Button>更多操作</Button>
+            </div>
+            <Table style={{ margin: 16 }} columns={[]} dataSource={[]} bordered pagination={false} />
           </TabPane>
           <TabPane tab="职级设置" key="4">
-            Content of Tab Pane 3
+            <Layout>
+              <Layout.Sider>
+                <Menu
+                  mode="inline"
+                  openKeys={this.state.openKeys}
+                  onOpenChange={this.onOpenChange}
+                  theme="light"
+                >
+                  <SubMenu
+                    key="sub1"
+                    title={
+                      <span>
+                        <Icon type="mail" />
+                        <span>Navigation One</span>
+                      </span>
+                    }
+                  >
+                    <Menu.Item key="1">Option 1</Menu.Item>
+                    <Menu.Item key="2">Option 2</Menu.Item>
+                    <Menu.Item key="3">Option 3</Menu.Item>
+                    <Menu.Item key="4">Option 4</Menu.Item>
+                  </SubMenu>
+                  <SubMenu
+                    key="sub2"
+                    title={
+                      <span>
+                        <Icon type="appstore" />
+                        <span>Navigation Two</span>
+                      </span>
+                    }
+                  >
+                    <Menu.Item key="5">Option 5</Menu.Item>
+                    <Menu.Item key="6">Option 6</Menu.Item>
+                    <SubMenu key="sub3" title="Submenu">
+                      <Menu.Item key="7">Option 7</Menu.Item>
+                      <Menu.Item key="8">Option 8</Menu.Item>
+                    </SubMenu>
+                  </SubMenu>
+                  <SubMenu
+                    key="sub4"
+                    title={
+                      <span>
+                        <Icon type="setting" />
+                        <span>Navigation Three</span>
+                      </span>
+                    }
+                  >
+                    <Menu.Item key="9">Option 9</Menu.Item>
+                    <Menu.Item key="10">Option 10</Menu.Item>
+                    <Menu.Item key="11">Option 11</Menu.Item>
+                    <Menu.Item key="12">Option 12</Menu.Item>
+                  </SubMenu>
+                </Menu>
+              </Layout.Sider>
+              <Layout.Content>
+                <div className="qj-table-outertop-btns">
+                  <Button type="primary">新增</Button>
+                  <Button>删除</Button>
+                  <Button>更多操作</Button>
+                </div>
+                <Table style={{ margin: 16 }} columns={[]} dataSource={[]} bordered pagination={false} />
+              </Layout.Content>
+            </Layout>
           </TabPane>
           <TabPane tab="职等设置" key="5">
-            Content of Tab Pane 3
+            <div className="qj-table-outertop-btns">
+              <Button type="primary">新增</Button>
+              <Button>删除</Button>
+              <Button>更多操作</Button>
+            </div>
+            <Table style={{ margin: 16 }} columns={[]} dataSource={[]} bordered pagination={false} />
           </TabPane>
         </Tabs>
       </div>
     );
   }
 
-  handlePositionTypeChange = (e: any) => {
-      const value = e.target.value;
-      this.setState({
-        positionType: value,
-        columns: columnCollection[value],
-        data: dataCollection[value]
-      })
-  }
 }

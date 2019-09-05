@@ -88,13 +88,11 @@ module.exports = {
       mainLessFile: path.resolve(__dirname, '../src/styles/global.less'),
       themeVariables: [
         '@primary-color',
-        '@menu-item-color',
         '@menu-item-active-bg',
         '@header-bg-color',
         '@sider-bg-color',
         '@collapes-bg-color',
-        '@logo-bg-color',
-        '@menu-item-active-color'
+        '@logo-bg-color'
       ],
     }),
     //动态创建html

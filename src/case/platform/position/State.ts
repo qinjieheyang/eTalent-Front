@@ -1,11 +1,11 @@
 export interface IState {
-    positionType: number;
-    columns: any[];
-    data: any[];
+    PS_columnCollection: any[]; //职位体系列数据集
+    PS_dataCollection: any[]; //职位体table data数据集
+    openKeys: string[];
 };
 
 export const initState= {
-    positionType: 0,
-    columns: [],
-    data: []
+    PS_columnCollection: [],
+    PS_dataCollection: [],
+    openKeys: ["sub1"]
 };

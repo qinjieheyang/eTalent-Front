@@ -1,4 +1,4 @@
-import { Divider, Popconfirm, Switch, Tooltip, Checkbox, Icon } from "antd";
+import { Divider, Popconfirm, Switch, Checkbox, Icon } from "antd";
 import * as React from "react";
 
 import { DataTable } from "../../data/dataTable/DataTable";
@@ -32,7 +32,7 @@ export interface IColumnSortDefine extends IColumnDefine {
 
 const formatTitle =  (title: string, width: number) => {
     width = width > 46 ?  width-46 : width;
-    return <Tooltip title={title}><span className="qj-table-td-txt" style={{width}}>{title}</span></Tooltip>
+    return <span title={title} className="qj-table-td-txt" style={{width}}>{title}</span>
 }
 /** 格式化单元格宽度 */
 // const formatCell = (width: number) => {
@@ -208,7 +208,7 @@ export class TableColumnBuilder {
             dataType,
             render: (cellValue: any, row: object, index: number): any => {
                 const indexLabel = index + 1;
-                return <Tooltip title={indexLabel}><span className="qj-table-td-txt" style={{width:width - 32}}>{indexLabel}</span></Tooltip>;
+                return <span className="qj-table-td-txt" style={{width:width - 32}}>{indexLabel}</span>;
             },
             width
         };
@@ -246,7 +246,7 @@ export class TableColumnBuilder {
                 }
                 
                 const text = col.prefixText ? col.prefixText + cellValue : cellValue;
-                return <Tooltip title={text}><span className="qj-table-td-txt" style={{width:width -32}}>{text}</span></Tooltip>
+                return <span title={cellValue} className="qj-table-td-txt" style={{width:width -32}}>{text}</span>
             },
             ...ColumnSearch.getTextSearchProps({ title, enableSearch, checkNull })
         };
@@ -363,7 +363,7 @@ export class TableColumnBuilder {
                 }
 
                 const text = col.prefixText ? col.prefixText + cellValue : cellValue;
-                return <Tooltip title={text}><span className="qj-table-td-txt" style={{width:width -32}}>{text}</span></Tooltip>
+                return <span title={cellValue} className="qj-table-td-txt" style={{width:width -32}}>{text}</span>
             },
             ...ColumnSearch.getTreeSearchProps({ title, enableSearch, searchData })
         };
@@ -640,7 +640,7 @@ export class TableColumnBuilder {
 
                 const newCellText = finalText.substr(0, textDisplayLength) + "...";
 
-                return <Tooltip title={finalText}>{newCellText}</Tooltip>;
+                return newCellText;
             }
         };
 

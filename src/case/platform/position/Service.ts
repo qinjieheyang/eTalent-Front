@@ -9,7 +9,7 @@ export class Service extends Framework.Case.ServiceBase implements IService {
     public getInit = async (): Promise<{
         initData: IState;
     }> => {
-        const data = await this.http.get("/api/home/getInit");
+        const data = await this.http.get("/api/platform/position/getInit");
         return data;
     };
 }
