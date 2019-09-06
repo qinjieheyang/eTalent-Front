@@ -14,7 +14,7 @@ const DepartTable = (props: IDepartTableProps) => {
     <AdaptiveTable
       columns={DepartTableColumns}
       dataSource={props.dataSource}
-      minusHeight={264}
+      minusHeight={247}
     />
   )
 }

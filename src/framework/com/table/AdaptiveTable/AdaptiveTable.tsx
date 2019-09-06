@@ -72,9 +72,9 @@ const AdaptiveTable = (props: IAdaptiveTableProps) => {
   useEffect(() => {
     const reloadLayout = () => {
       const height: number | undefined = computerTableHeightByViewport(dataSource, minusHeight+54);
-      setScroll({ x: scroll.x, y: height });
+      setScroll({ x: "130%", y: height });
     }
-    reloadLayout();
+    // reloadLayout();
     window.addEventListener("resize", reloadLayout);
 
     return () => {
@@ -92,7 +92,7 @@ const AdaptiveTable = (props: IAdaptiveTableProps) => {
     <Table
       className="qj-adaptive-table"
       style = {{height: `calc(100vh - ${minusHeight}px)`}}
-      bordered
+      // bordered
       dataSource={dataSource}
       columns={columns}
       rowSelection={rowSelection}

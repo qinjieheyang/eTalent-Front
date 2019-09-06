@@ -50,6 +50,34 @@ const DepartTableColumns: Array<any> = [
     enableSearch: true
     // width: 150,
   },
+  {
+    title: '机构全称',
+    dataIndex: 'address',
+    key: '6',
+    enableSearch: true
+    // width: 150,
+  },
+  {
+    title: '机构全称',
+    dataIndex: 'address',
+    key: '7',
+    enableSearch: true
+    // width: 150,
+  },
+  {
+    title: '机构全称',
+    dataIndex: 'address',
+    key: '8',
+    enableSearch: true
+    // width: 150,
+  },
+  {
+    title: '机构全称',
+    dataIndex: 'address',
+    key: '9',
+    enableSearch: true
+    // width: 150,
+  },
   // {
   //   title: '操作',
   //   key: 'operation',

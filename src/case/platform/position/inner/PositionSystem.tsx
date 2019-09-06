@@ -28,11 +28,11 @@ const PositionSystem = (props: IProps) => {
 
   return (
     <Fragment>
-      <Radio.Group value={positionType} style={{ marginLeft: 24 }} onChange={handlePositionTypeChange}>
+      <Radio.Group value={positionType} onChange={handlePositionTypeChange} style={{marginBottom: 16}}>
         <Radio value={0}>按职级</Radio>
         <Radio value={1}>按职位</Radio>
       </Radio.Group>
-      <Table className="qj-table-no-hover" style={{ margin: 16 }} columns={columns} dataSource={data} bordered pagination={false} />
+      <Table className="qj-table-no-hover" columns={columns} dataSource={data} bordered pagination={false} />
     </Fragment>
   )
 }
