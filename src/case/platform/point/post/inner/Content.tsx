@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Layout, Tabs, Button, Menu, Icon, Select } from "antd";
+import { Layout, Tabs, Button, Menu, Icon, Select, Card } from "antd";
 
 import Framework from "src/framework/Framework";
 import DepartTableColumns from './contentInner/DepartTableColumns';
@@ -19,14 +19,14 @@ const { Option } = Select;
 
 
 const nodeDataArray = [
-  { key: 0, avatar: "Denmark", title: "中国雄安投资集团", name: "张三", total: 20, online: 10, color: "#FF8C58" },
-  { key: 1, parent: 0, avatar: "Denmark", title: "集团办公室", total: 20, online: 10, color: "#2FDD93" },
-  { key: 2, parent: 1, avatar: "Denmark", title: "党委办公室", total: 20, online: 10, color: "#19ADE6" },
-  { key: 3, parent: 1, avatar: "Denmark", title: "党委办公室", total: 20, online: 10, color: "#19ADE6" },
-  { key: 4, parent: 1, avatar: "Denmark", title: "党委办公室", total: 20, online: 10, color: "#19ADE6" },
-  { key: 5, parent: 1, avatar: "Denmark", title: "党委办公室", total: 20, online: 10, color: "#19ADE6" },
-  { key: 6, parent: 1, avatar: "Denmark", title: "党委办公室", total: 20, online: 10, color: "#19ADE6" },
-  { key: 7, parent: 1, avatar: "Denmark", title: "党委办公室", total: 20, online: 10, color: "#19ADE6" },
+  { key: 0,            title: "人力资源部经理", online: 10, color: "#FF8C58" },
+  { key: 1, parent: 0, title: "人事专员", online: 10, color: "#2FDD93" },
+  { key: 2, parent: 1, title: "人事专员", online: 10, color: "#19ADE6" },
+  { key: 3, parent: 1, title: "人事专员", online: 10, color: "#19ADE6" },
+  { key: 4, parent: 1, title: "人事专员", online: 10, color: "#19ADE6" },
+  { key: 5, parent: 1, title: "人事专员", online: 10, color: "#19ADE6" },
+  { key: 6, parent: 1, title: "人事专员", online: 10, color: "#19ADE6" },
+  { key: 7, parent: 1, title: "人事专员", online: 10, color: "#19ADE6" },
 ];
 
 interface IContentState {
@@ -61,90 +61,94 @@ export default class Content extends React.Component<IContentProps, IContentStat
   }
 
   public render() {
-    const { visibleAdd, visibleDelete, visibleSeal, visibleUnSeal, visibleMerge, confirmLoading, visibleImport} = this.state;
+    const { visibleAdd, visibleDelete, visibleSeal, visibleUnSeal, visibleMerge, confirmLoading, visibleImport } = this.state;
 
     const menu = (
-        <Menu style={{textAlign:"center"}}>
-          <Menu.Item onClick={this.openSealModal}>封存</Menu.Item>
-          <Menu.Item onClick={this.openUnSealModal}>解封</Menu.Item>
-          <Menu.Item onClick={this.openMergeModal}>合并</Menu.Item>
-          <Menu.Item onClick={this.openMergeModal}>划转</Menu.Item>
-          <Menu.Item>排序</Menu.Item>
-          <Menu.Item onClick={this.openImportModal}>导入</Menu.Item>
-          <Menu.Item 
-          onClick={ 
+      <Menu style={{ textAlign: "center" }}>
+        <Menu.Item onClick={this.openSealModal}>封存</Menu.Item>
+        <Menu.Item onClick={this.openUnSealModal}>解封</Menu.Item>
+        <Menu.Item onClick={this.openMergeModal}>合并</Menu.Item>
+        <Menu.Item onClick={this.openMergeModal}>划转</Menu.Item>
+        <Menu.Item>排序</Menu.Item>
+        <Menu.Item onClick={this.openImportModal}>导入</Menu.Item>
+        <Menu.Item
+          onClick={
             () => Framework.Utils.UtilDownload.Img({
-               url:"https://qinjee-datacenter-1253673776.cos.ap-guangzhou.myqcloud.com/user/logo.png",
+              url: "https://qinjee-datacenter-1253673776.cos.ap-guangzhou.myqcloud.com/user/logo.png",
             })
           }>导出</Menu.Item>
-        </Menu>
+      </Menu>
     );
+
+    console.log(this.props.dataSource,22);
 
     return (
       <Layout.Content className="qj-depart-content">
-        <Tabs size="large" animated={false} defaultActiveKey={"2"}>
-          <TabPane key="1" className="qj-depart-tab-pane"
-            tab={<span><Icon type="table" />机构表</span>}>
-            <div className="qj-depart-btns">
-              <Button type="primary" onClick={this.openAddModal}>新增</Button>
-              <Button onClick={this.openDelModal}>删除</Button>
-              <DropdownMore menu = {menu}></DropdownMore>
-            </div>
-              <AdaptiveTable
-                columns={DepartTableColumns}
-                dataSource={this.props.dataSource}
-                minusHeight={264}
-              />
-          </TabPane>
-          <TabPane key="2" className="qj-depart-tab-pane"
-            tab={<span><Icon type="apartment" />机构图</span>}>
-            <div className="qj-depart-btns">
-              <Button onClick={this.handleOrgAngle}>显示方向</Button>
-              <Button onClick={this.openDelModal}>显示内容</Button>
-              <Select defaultValue="0" style={{ width: 120 }}>
-                <Option value="0">全部显示</Option>
-                <Option value="1">显示1层</Option>
-                <Option value="2">显示2层</Option>
-              </Select>
-              <Button type="primary" onClick={this.handleOrgExport}>导出</Button>
-            </div>
-            <div style={{ padding: '0 24px', height: '100%'}}>
-              <OrgFlow ref="orgFlow"  data={nodeDataArray}/>
-            </div>
-          </TabPane>
-        </Tabs>
-        <AddModal 
-          visible={visibleAdd} 
+          <Tabs size="large" animated={false} defaultActiveKey={"1"} tabBarStyle={{margin: 0}}>
+            <TabPane key="1" className="qj-depart-tab-pane"
+              tab={<span><Icon type="table" />岗位表</span>}>
+              <Card bodyStyle={{ padding: "16px" }} bordered={false}>
+                <div className="qj-depart-btns">
+                  <Button type="primary" onClick={this.openAddModal}>新增</Button>
+                  <Button onClick={this.openDelModal}>删除</Button>
+                  <DropdownMore menu={menu}></DropdownMore>
+                </div>
+                <AdaptiveTable
+                  columns={DepartTableColumns}
+                  dataSource={this.props.dataSource}
+                  minusHeight={247}
+                />
+              </Card>
+            </TabPane>
+            <TabPane key="2" className="qj-depart-tab-pane"
+              tab={<span><Icon type="apartment" />岗位图</span>}>
+              <Card bodyStyle={{ padding: "16px", height:"100%" }} style={{height: "100%"}} bordered={false}>
+                <div className="qj-depart-btns">
+                  <Button onClick={this.handleOrgAngle}>显示方向</Button>
+                  <Button onClick={this.openDelModal}>显示内容</Button>
+                  <Select defaultValue="0" style={{ width: 120, marginRight: 16 }}>
+                    <Option value="0">全部显示</Option>
+                    <Option value="1">显示1层</Option>
+                    <Option value="2">显示2层</Option>
+                  </Select>
+                  <Button type="primary" onClick={this.handleOrgExport}>导出</Button>
+                </div>
+                <OrgFlow ref="orgFlow" data={nodeDataArray} />
+              </Card>
+            </TabPane>
+          </Tabs>
+        <AddModal
+          visible={visibleAdd}
           confirmLoading={confirmLoading}
           onOk={this.handleAdd}
           onCancel={this.handleAddCancel}
         />
         <DeleteModal
-          visible={visibleDelete} 
+          visible={visibleDelete}
           confirmLoading={confirmLoading}
           onOk={this.handleDelete}
           onCancel={this.handleDelCancel}
         />
         <SealModal
-          visible={visibleSeal} 
+          visible={visibleSeal}
           confirmLoading={confirmLoading}
           onOk={this.handleSeal}
           onCancel={this.handleSealCancel}
         />
         <UnSealModal
-          visible={visibleUnSeal} 
+          visible={visibleUnSeal}
           confirmLoading={confirmLoading}
           onOk={this.handleUnSeal}
           onCancel={this.handleUnSealCancel}
         />
         <MergeModal
-          visible={visibleMerge} 
+          visible={visibleMerge}
           confirmLoading={confirmLoading}
           onOk={this.handleMerge}
           onCancel={this.handleMergeCancel}
         />
         <ImportModal
-          visible={visibleImport} 
+          visible={visibleImport}
           confirmLoading={confirmLoading}
           onOk={this.handleImport}
           onCancel={this.handleImportCancel}
@@ -153,7 +157,7 @@ export default class Content extends React.Component<IContentProps, IContentStat
     );
   }
 
-  
+
 
   private handleOrgAngle = () => {
     const orgFlow = this.refs["orgFlow"] as OrgFlow;

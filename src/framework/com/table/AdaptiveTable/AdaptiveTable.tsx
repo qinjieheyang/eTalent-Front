@@ -67,20 +67,21 @@ const AdaptiveTable = (props: IAdaptiveTableProps) => {
 
   const [columns, setColumns] = useState(Factory.createColumns(props.columns));
 
-  const [scroll, setScroll] = useState<{ x: string | undefined, y: number | undefined }>({ x: "90%", y: computerTableHeightByViewport(dataSource, minusHeight+54) });
+  const [scroll, setScroll] = useState<{ x: string | undefined, y: number | undefined }>({x: undefined, y: computerTableHeightByViewport(dataSource, minusHeight+54)});
 
   useEffect(() => {
     const reloadLayout = () => {
       const height: number | undefined = computerTableHeightByViewport(dataSource, minusHeight+54);
       setScroll({ x: "130%", y: height });
     }
-    // reloadLayout();
+
     window.addEventListener("resize", reloadLayout);
 
     return () => {
       window.removeEventListener("resize", reloadLayout);
     }
   })
+
 
   const handleChange = (pagination: any, filters: any, sorter: any) => {
     if (filters.__operationColumn) {

@@ -4,7 +4,7 @@ const Const: Framework.Case.IConst = {
   title: "岗位维护",
   icon: Framework.Com.Icons.Case.file,
   routePath: "/platform/point/post",
-  isTest: false,
+  isTest: true,
   case: "PointPost",
   topPath: "/platform"
 };

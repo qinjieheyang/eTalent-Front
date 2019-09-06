@@ -22,7 +22,7 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
 
   public async init() {
     const data = await this.service.getInit();
-    this.setState(data.initData)
+    this.setState(data.initData);
   }
 
 
@@ -42,35 +42,25 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
   public render() {
     const { PS_columnCollection, PS_dataCollection } = this.state;
     return (
-      <div style={{height: "100%", background: "#fff"}}>
+      <div style={{ height: "100%", background: "#fff" }}>
 
-      <Tabs size="large" animated={false} defaultActiveKey="1">
+        <Tabs size="large" animated={false} defaultActiveKey="1">
           <TabPane tab="职位体系" key="1">
-            <Card bodyStyle={{padding:"0 16px"}} bordered={false}> 
+            <Card bodyStyle={{ padding: "0 16px" }} bordered={false}>
               <PositionSystem columnCollection={PS_columnCollection} dataCollection={PS_dataCollection} />
             </Card>
           </TabPane>
           <TabPane tab="职位族设置" key="2">
-            <Card bodyStyle={{padding:"0 16px"}} bordered={false}> 
-            <div className="qj-table-outertop-btns">
-              <Button type="primary">新增</Button>
-              <Button>删除</Button>
-              <Button>更多操作</Button>
-            </div>
-            <Table columns={[]} dataSource={[]} bordered pagination={false} />
-            </Card>
-          </TabPane>
-          <TabPane tab="职位设置" key="3">
-            <Card bodyStyle={{padding:"0 16px"}} bordered={false}> 
+            <Card bodyStyle={{ padding: "0 16px" }} bordered={false}>
               <div className="qj-table-outertop-btns">
                 <Button type="primary">新增</Button>
                 <Button>删除</Button>
                 <Button>更多操作</Button>
               </div>
               <Table columns={[]} dataSource={[]} bordered pagination={false} />
-              </Card>
+            </Card>
           </TabPane>
-          <TabPane tab="职级设置" key="4">
+          <TabPane tab="职位设置" key="3">
             <Layout style={{ height: "calc(100vh - 64px)" }}>
               <Layout.Sider style={{ background: "#fff", borderRight: "1px solid #e8e8e8", marginTop: -16 }}>
                 <Menu
@@ -122,25 +112,35 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
                 </Menu>
               </Layout.Sider>
               <Layout.Content style={{ background: "#fff" }}>
-              <Card bodyStyle={{padding:"0 16px"}} bordered={false}> 
-                <div className="qj-table-outertop-btns">
-                  <Button type="primary">新增</Button>
-                  <Button>删除</Button>
-                  <Button>更多操作</Button>
-                </div>
-                <Table columns={[]} dataSource={[]} bordered pagination={false} />
+                <Card bodyStyle={{ padding: "0 16px" }} bordered={false}>
+                  <div className="qj-table-outertop-btns">
+                    <Button type="primary">新增</Button>
+                    <Button>删除</Button>
+                    <Button>更多操作</Button>
+                  </div>
+                  <Table columns={[]} dataSource={[]} bordered pagination={false} />
                 </Card>
               </Layout.Content>
             </Layout>
           </TabPane>
+          <TabPane tab="职级设置" key="4">
+            <Card bodyStyle={{ padding: "0 16px" }} bordered={false}>
+              <div className="qj-table-outertop-btns">
+                <Button type="primary">新增</Button>
+                <Button>删除</Button>
+                <Button>更多操作</Button>
+              </div>
+              <Table columns={[]} dataSource={[]} bordered pagination={false} />
+            </Card>
+          </TabPane>
           <TabPane tab="职等设置" key="5">
-          <Card bodyStyle={{padding:"0 16px"}} bordered={false}> 
-            <div className="qj-table-outertop-btns">
-              <Button type="primary">新增</Button>
-              <Button>删除</Button>
-              <Button>更多操作</Button>
-            </div>
-            <Table columns={[]} dataSource={[]} bordered pagination={false} />
+            <Card bodyStyle={{ padding: "0 16px" }} bordered={false}>
+              <div className="qj-table-outertop-btns">
+                <Button type="primary">新增</Button>
+                <Button>删除</Button>
+                <Button>更多操作</Button>
+              </div>
+              <Table columns={[]} dataSource={[]} bordered pagination={false} />
             </Card>
           </TabPane>
         </Tabs>
