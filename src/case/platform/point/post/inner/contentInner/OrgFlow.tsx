@@ -14,7 +14,7 @@ interface IOrgFlowState {
 }
 export default class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
   public diagram: go.Diagram;
-  
+
   private orgFlowEl: React.RefObject<HTMLDivElement>;
 
   constructor(props: IOrgFlowProps) {
@@ -49,10 +49,6 @@ export default class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
             })
       });
 
-    function theavatarFlagConverter(avatar: string) {
-      // return "https://www.nwoods.com/go/Flags/" + avatar.toLowerCase().replace(/\s/g, "-") + "-flag.Png";
-      return "/img/avatar.png";
-    }
     diagram.nodeTemplate =
       $(go.Node, "Auto",
         {
@@ -133,7 +129,7 @@ export default class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
           <span style={{ display: "block", padding: "20px 0" }}>{this.state.ratio}</span>
           <Button shape="circle" icon="minus" onClick={() => { this.handleZoom(0) }} />
         </div>
-        <div id="qj-org-flow" ref={(node: any) => {this.orgFlowEl = node}}></div>
+        <div id="qj-org-flow" ref={(node: any) => { this.orgFlowEl = node }}></div>
       </div>
     );
   }

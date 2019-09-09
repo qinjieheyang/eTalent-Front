@@ -24,8 +24,6 @@ setTimeout(fn, 0)在下一轮“事件循环”开始时执行，Promise.then()�
 
 10、虚拟dom和真实DOM 的区别，为什么虚拟DOM可以提高性能
 
-11、react必须使用JSX吗
-
 12、React 的生命周期
 
 13、require和import导入模块区别
@@ -49,12 +47,6 @@ setTimeout(fn, 0)在下一轮“事件循环”开始时执行，Promise.then()�
 22、在React中如何避免不必要的render？
 
 23、请说下react组件更新的机制是什么？
-
-
-
-
-
-
 
 
 结合react项目如何做性能优化
