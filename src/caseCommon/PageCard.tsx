@@ -18,7 +18,7 @@ export default class PageContent extends React.Component<Props> {
     const getTitle = () => {
       const { title } = this.props;
 
-      return title === undefined ? null : { title: React.createElement("div", {}, title) };
+      return title === undefined ? null : { title };
     }
 
     return (
