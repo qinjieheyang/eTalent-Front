@@ -80,8 +80,6 @@ export default class Content extends React.Component<IContentProps, IContentStat
       </Menu>
     );
 
-    console.log(this.props.dataSource,22);
-
     return (
       <Layout.Content className="qj-depart-content">
           <Tabs size="large" animated={false} defaultActiveKey={"1"} tabBarStyle={{margin: 0}}>

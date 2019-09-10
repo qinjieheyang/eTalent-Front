@@ -1,14 +1,12 @@
 import * as React from "react";
-import { Layout } from "antd";
 import { RouteComponentProps } from "react-router-dom";
 import * as GlobalRedux from "src/globalRedux/GlobalRedux";
-import CaseCommon from "src/caseCommon/CaseCommon";
+import CaseCommon, { OrgTree } from "src/caseCommon/CaseCommon";
 import {Const} from "./Const";
 import {Service} from "./Service";
 import {IService, ServiceMock} from "./ServiceMock";
 import { initState, IState } from "./State";
 
-import Sider from "./inner/Sider";
 import Content from "./inner/Content";
 
 import "./Style.less";
@@ -38,12 +36,14 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
     // const treeData = this.state.treeData;
     // console.log(this.props.globalState.isWaitHttpRequest)
     return (
-      <Layout className="qj-depart-wrapper">
-        <Sider showAll={this.showAll} treeData={this.state.treeData} onShowChange={this.onShowChange} />
-        <Layout>
+      <CaseCommon.PageLayout>
+        <CaseCommon.PageSide>
+          <OrgTree showAll={this.showAll}  onShowChange={this.onShowChange} treeData={this.state.treeData}/>
+        </CaseCommon.PageSide>
+        <CaseCommon.PageContent>
           <Content dataSource={this.state.tableData}/>
-        </Layout>
-      </Layout>
+        </CaseCommon.PageContent>
+      </CaseCommon.PageLayout>
     );
   }
 

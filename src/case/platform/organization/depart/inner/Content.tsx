@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Layout, Tabs, Button, Menu, Icon, Select, Card } from "antd";
+import { Tabs, Button, Menu, Icon, Select, Card } from "antd";
 
 import Framework from "src/framework/Framework";
 import DepartTableColumns from './contentInner/DepartTableColumns';
@@ -81,44 +81,42 @@ export default class Content extends React.Component<IContentProps, IContentStat
     );
 
     return (
-      <Layout.Content className="qj-depart-content">
-        <Card bodyStyle={{ padding: "0 0" }} style={{ height: "100%" }}>
-          <Tabs size="large" animated={false} defaultActiveKey={"1"}>
-            <TabPane key="1" className="qj-depart-tab-pane"
-              tab={<span><Icon type="table" />机构表</span>}>
-              <Card bodyStyle={{ padding: "0 16px" }} bordered={false}>
-                <div className="qj-depart-btns">
-                  <Button type="primary" onClick={this.openAddModal}>新增</Button>
-                  <Button onClick={this.openDelModal}>删除</Button>
-                  <DropdownMore menu={menu}></DropdownMore>
-                </div>
-                <AdaptiveTable
-                  columns={DepartTableColumns}
-                  dataSource={this.props.dataSource}
-                  minusHeight={27}
-                />
-              </Card>
-            </TabPane>
-            <TabPane key="2" className="qj-depart-tab-pane"
-              tab={<span><Icon type="apartment" />机构图</span>}>
-              <Card bodyStyle={{ padding: "0 16px", height:"100%" }} style={{height: "100%"}} bordered={false}>
-                <div className="qj-depart-btns">
-                  <Button onClick={this.handleOrgAngle}>显示方向</Button>
-                  <Button onClick={this.openDelModal}>显示内容</Button>
-                  <Select defaultValue="0" style={{ width: 120, marginRight: 16 }}>
-                    <Option value="0">全部显示</Option>
-                    <Option value="1">显示1层</Option>
-                    <Option value="2">显示2层</Option>
-                  </Select>
-                  <Button type="primary" onClick={this.handleOrgExport}>导出</Button>
-                </div>
-                <div style={{ padding: '0 24px', height: '100%' }}>
-                  <OrgFlow ref="orgFlow" data={nodeDataArray} />
-                </div>
-              </Card>
-            </TabPane>
-          </Tabs>
-        </Card>
+      <React.Fragment>
+        <Tabs size="large" animated={false} tabBarStyle={{ marginBottom: 0 }}>
+          <TabPane key="1" className="qj-depart-tab-pane"
+            tab={<span><Icon type="table" />机构表</span>}>
+            <Card bodyStyle={{ padding: 16, height: "calc(100vh - 135px)" }} bordered={false}>
+              <div className="qj-depart-btns">
+                <Button type="primary" onClick={this.openAddModal}>新增</Button>
+                <Button onClick={this.openDelModal}>删除</Button>
+                <DropdownMore menu={menu}></DropdownMore>
+              </div>
+              <AdaptiveTable
+                columns={DepartTableColumns}
+                dataSource={this.props.dataSource}
+                minusHeight={247}
+              />
+            </Card>
+          </TabPane>
+          <TabPane key="2" className="qj-depart-tab-pane"
+            tab={<span><Icon type="apartment" />机构图</span>}>
+            <Card bodyStyle={{ padding: 16, height: "calc(100vh - 135px)" }} bordered={false}>
+              <div className="qj-depart-btns">
+                <Button onClick={this.handleOrgAngle}>显示方向</Button>
+                <Button onClick={this.openDelModal}>显示内容</Button>
+                <Select defaultValue="0" style={{ width: 120, marginRight: 16 }}>
+                  <Option value="0">全部显示</Option>
+                  <Option value="1">显示1层</Option>
+                  <Option value="2">显示2层</Option>
+                </Select>
+                <Button type="primary" onClick={this.handleOrgExport}>导出</Button>
+              </div>
+              <div style={{ padding: '0 24px', height: '100%' }}>
+                <OrgFlow ref="orgFlow" data={nodeDataArray} />
+              </div>
+            </Card>
+          </TabPane>
+        </Tabs>
         <AddModal
           visible={visibleAdd}
           confirmLoading={confirmLoading}
@@ -155,7 +153,7 @@ export default class Content extends React.Component<IContentProps, IContentStat
           onOk={this.handleImport}
           onCancel={this.handleImportCancel}
         />
-      </Layout.Content>
+      </React.Fragment>
     );
   }
 

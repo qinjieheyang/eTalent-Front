@@ -17,12 +17,12 @@ export class OrgTree extends React.Component<IProps> {
   }
 
   public render() {
-    const { showAll, onShowChange, treeData } = this.props;
+    const { onShowChange, treeData } = this.props;
     return (
       <div className="qj-depart-side-box">
         <div className="qj-depart-side-title">
           <span>显示封存：</span>
-          <Switch checked={showAll} onChange={onShowChange} />
+          <Switch size="small" onChange={onShowChange} />
         </div>
         {
           treeData.length ? <Tree
