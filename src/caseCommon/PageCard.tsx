@@ -18,12 +18,14 @@ export default class PageContent extends React.Component<Props> {
     const getTitle = () => {
       const { title } = this.props;
 
-      return title === undefined ? null : { title };
+      return title === undefined ? null : {
+        title: <div className="qj-page-card-title-btn-warpper">{title}</div>
+      };
     }
 
     return (
       <Card
-        bodyStyle={{ padding: 16, height: "calc(100vh - 119px)"}}
+        bodyStyle={{ padding: 16, height: "calc(100vh - 119px)" }}
         bordered={false}
         {...getTitle()}
       >

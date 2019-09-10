@@ -6,8 +6,14 @@ const DepartTableColumns: Array<any> = [
     key: 'name',
     dataIndex: 'name',
     width: 150,
-    enableSearch: true
-  }, 
+    enableSearch: true,
+    dataType: "linkText",
+    handler: {
+      onLinkClick: (row: any) => {
+        alert(JSON.stringify(row))
+      }
+    }
+  },
   {
     title: '封存',
     dataIndex: 'age',

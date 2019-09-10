@@ -30,9 +30,9 @@ export interface IColumnSortDefine extends IColumnDefine {
     onHeaderCell?: (column: any) => any;
 }
 
-const formatTitle =  (title: string, width: number) => {
-    width = width > 46 ?  width-46 : width;
-    return <span title={title} className="qj-table-td-txt" style={{width}}>{title}</span>
+const formatTitle = (title: string, width: number) => {
+    width = width > 46 ? width - 46 : width;
+    return <span title={title} className="qj-table-td-txt" style={{ width }}>{title}</span>
 }
 /** 格式化单元格宽度 */
 // const formatCell = (width: number) => {
@@ -208,7 +208,7 @@ export class TableColumnBuilder {
             dataType,
             render: (cellValue: any, row: object, index: number): any => {
                 const indexLabel = index + 1;
-                return <span className="qj-table-td-txt" style={{width:width - 32}}>{indexLabel}</span>;
+                return <span className="qj-table-td-txt" style={{ width: width - 32 }}>{indexLabel}</span>;
             },
             width
         };
@@ -232,7 +232,7 @@ export class TableColumnBuilder {
             dataIndex,
             dataType,
             width,
-            
+
             render: (cellValue: any, row: object, index: number): any => {
                 if (cellValue == null) {
                     return "";
@@ -244,9 +244,9 @@ export class TableColumnBuilder {
                     cellValue = String(cellValue);
                     // throw new Error("列非文本类型, 在：" + dataIndex + "=" + cellValue);
                 }
-                
+
                 const text = col.prefixText ? col.prefixText + cellValue : cellValue;
-                return <span title={cellValue} className="qj-table-td-txt" style={{width:width -32}}>{text}</span>
+                return <span title={cellValue} className="qj-table-td-txt" style={{ width: width - 32 }}>{text}</span>
             },
             ...ColumnSearch.getTextSearchProps({ title, enableSearch, checkNull })
         };
@@ -254,85 +254,49 @@ export class TableColumnBuilder {
         return col;
     };
 
-    // public AddLinkText = (props : {title: string , fieldName: string, textDisplayLength:number, width:number}): IColumnDefine => {
-    //     if (!textDisplayLength) {
-    //         textDisplayLength = 20;
-    //     }
-    //     if (textDisplayLength < 1) {
-    //         textDisplayLength = 20;
-    //     }
+    public AddLinkText = ({
+        title,
+        key,
+        dataIndex,
+        dataType,
+        width = 100,
+        enableSearch = false,
+        checkNull = false,
+        handler
+    }: IColumnDefine): IColumnSortDefine => {
 
-    //     const handleSearch = (selectedKeys: string[], confirm: ()=> void) =>{
-    //         confirm();
-    //     }
+        const handleLinkClick = (row: any) => {
+            if (handler && handler["onLinkClick"]) {
+                handler["onLinkClick"](row);
+            }
+        }
 
-    //     // const handleReset = (clearFilters: ()=> void) =>{
-    //     //     clearFilters();
-    //     // }
+        const col: IColumnSortDefine = {
+            title: formatTitle(title, width),
+            key,
+            dataIndex,
+            dataType,
+            width,
+            render: (cellValue: any, row: object, index: number): any => {
+                if (cellValue == null) {
+                    return "";
+                }
 
-    //     const handleNull = (setSelectedKeys: (target: string[]) => void, selectedKeys: string[], confirm: ()=> void) =>{
-    //         setSelectedKeys(["null"]);
-    //         confirm();
-    //     }
+                if (typeof cellValue !== "string") {
+                    //强制转化为字符串
+                    UtilLog.warn("文本列包含非文本值", { dataIndex, cellValue });
+                    cellValue = String(cellValue);
+                    // throw new Error("列非文本类型, 在：" + dataIndex + "=" + cellValue);
+                }
 
-    //     const handleMouseLeave = () => {
-
-    //     }
-    //     const col: IColumnSortDefine = {
-    //         canAutoOrder: false,
-    //         dataIndex: fieldName,
-    //         key: fieldName,
-    //         render: (cellValue: any, row: object, index: number): any => {
-    //             if (cellValue == null) {
-    //                 return "";
-    //             }
-
-    //             if (typeof cellValue !== "string") {
-    //                 UtilLog.error("文本列不能包含文本值", { fieldName, cellValue });
-    //                 throw new Error("列非文本类型, 在：" + fieldName + "=" + cellValue);
-    //             }
-
-    //             const length = cellValue.length;
-    //             if (length <= textDisplayLength) {
-    //                 return col.prefixText ? col.prefixText + cellValue : cellValue;
-    //             }
-    //             let newCellText = cellValue.substr(0, textDisplayLength);
-    //             newCellText = newCellText + "...";
-
-    //             return <Tooltip title={cellValue}>{col.prefixText ? col.prefixText + cellValue : newCellText}</Tooltip>;
-    //         },
-    //         title,
-    //         width,
-    //         filterDropdown: (props: FilterDropdownProps): React.ReactElement<any> => {
-    //             return (
-    //                 <div style={{ padding: 8 }} onMouseLeave={()=>{handleMouseLeave()}}>
-    //                     <div style={{marginBottom: 8}}>
-    //                         <Input
-    //                         placeholder={`Search ${col.dataIndex}`}
-    //                         value={props.selectedKeys[0]}
-    //                         onChange={e => props.setSelectedKeys(e.target.value ? [e.target.value] : [])}
-    //                         onPressEnter={e => handleSearch(props.selectedKeys, props.confirm)}
-    //                         style={{ width: 188, }}
-    //                         />
-    //                         <Button
-    //                             type="primary"
-    //                             onClick={() => handleSearch(props.selectedKeys, props.confirm)}
-    //                             style={{ marginLeft: 8 }}
-    //                             >
-    //                             确定
-    //                         </Button>
-    //                     </div>
-    //                     <Button onClick={() => handleNull(props.setSelectedKeys, props.selectedKeys, props.confirm)} style={{ width: 90 }}>
-    //                     筛选空值
-    //                     </Button>
-    //               </div>         
-
-    //             )
-    //         }
-    //     };
-    //     this.columnDefines.push(col);
-    //     return col;
-    // };
+                const text = col.prefixText ? col.prefixText + cellValue : cellValue;
+                return <a href="javascript:;" title={cellValue} className="qj-table-td-txt" style={{ width: width - 32 }} onClick={() => { handleLinkClick(row) }}>{text}</a>
+            },
+            ...ColumnSearch.getTextSearchProps({ title, enableSearch, checkNull })
+        };
+        this.columnDefines.push(col);
+        return col;
+    };
 
     /** 默认开启树选择 */
     public AddTreeText = ({
@@ -363,7 +327,7 @@ export class TableColumnBuilder {
                 }
 
                 const text = col.prefixText ? col.prefixText + cellValue : cellValue;
-                return <span title={cellValue} className="qj-table-td-txt" style={{width:width -32}}>{text}</span>
+                return <span title={cellValue} className="qj-table-td-txt" style={{ width: width - 32 }}>{text}</span>
             },
             ...ColumnSearch.getTreeSearchProps({ title, enableSearch, searchData })
         };

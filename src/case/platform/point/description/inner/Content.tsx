@@ -35,7 +35,7 @@ export default class Content extends React.Component<IContentProps, IContentStat
     };
     return (
       <CaseCommon.PageCard title={
-        <div className="qj-page-card-title-btn-warpper">
+        <React.Fragment>
           <Button type="primary">保存</Button>
           <Button onClick={this.onPrint}>打印</Button>
           <span style={{ display: "inline-block", marginRight: 8 }}>
@@ -44,7 +44,7 @@ export default class Content extends React.Component<IContentProps, IContentStat
             </Upload>
           </span>
           <Button onClick={this.onExport}>导出</Button>
-        </div>
+        </React.Fragment>
       }>
         <Editor
           apiKey="0cp5cdywq4wik2cyx1ewp0q7dhwg5762uhpv6t7pcblkkkij"

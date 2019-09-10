@@ -29,7 +29,7 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
     const tableData = await this.service.getTableDate();
     
     this.setState({treeData, tableData});
-    console.log(treeData,333)
+    // console.log(treeData,333)
   }
   
   public render() {

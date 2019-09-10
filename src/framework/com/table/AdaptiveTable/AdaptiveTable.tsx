@@ -72,7 +72,7 @@ const AdaptiveTable = (props: IAdaptiveTableProps) => {
   useEffect(() => {
     const reloadLayout = () => {
       const height: number | undefined = computerTableHeightByViewport(dataSource, minusHeight+54);
-      setScroll({ x: "130%", y: height });
+      setScroll({ x: undefined, y: height });
     }
 
     window.addEventListener("resize", reloadLayout);

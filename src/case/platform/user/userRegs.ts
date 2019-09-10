@@ -1,7 +1,7 @@
 // 负责将模块注册到框架（包括路由、菜单）
 import * as Framework from "src/framework/Framework";
 
-import signupReg  from "./signup/Reg";
+import signupReg  from "./register/Reg";
 import userinfoReg  from "./userinfo/Reg";
 
 const userRegs = Framework.Case.Reg.CreatePathReg(
