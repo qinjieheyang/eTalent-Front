@@ -1,5 +1,5 @@
 import * as React from "react";
-import CaseCommon from "src/caseCommon/CaseCommon";
+import { PageLayout, PageCard, PageContent } from "src/caseCommon/PageCommon";
 import Framework from "src/framework/Framework";
 const AdaptiveTable = Framework.Com.Tables.AdaptiveTable;
 
@@ -63,17 +63,17 @@ export default class Page extends React.Component<any, any> {
       },
     ];
     return (
-      <CaseCommon.PageLayout>
-        <CaseCommon.PageContent>
-          <CaseCommon.PageCard title="注册用户">
-            <AdaptiveTable
-              columns={columns}
-              dataSource={dataSource}
-              minusHeight={199}
-            />
-          </CaseCommon.PageCard>
-        </CaseCommon.PageContent>
-      </CaseCommon.PageLayout>
+      <PageLayout>
+        <PageContent>
+          <PageCard title="注册用户">
+              <AdaptiveTable
+                columns={columns}
+                dataSource={dataSource}
+                minusHeight={199}
+              />
+          </PageCard>
+        </PageContent>
+      </PageLayout>
     );
   }
 }

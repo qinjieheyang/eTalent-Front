@@ -77,9 +77,10 @@ export class TableColumnBuilder {
         const columns: IColumnSortDefine[] = [];
         for (const c of this.columnDefines) {
             columns.push(c);
-            if (c.canAutoOrder) {
-                c.sorter = (row1: object, row2: object) => rowSorter(row1, row2, c.dataIndex);
-            }
+            // if (c.canAutoOrder) {
+            //     c.sorter = (row1: object, row2: object) => rowSorter(row1, row2, c.dataIndex);
+            // }
+            c.sorter = true;
             c.enableSearch === undefined ? c.enableSearch = true : c.enableSearch = false;
             if (c.enableSearch) {
                 c.filterIcon = (filtered: string | undefined) => (
@@ -223,7 +224,9 @@ export class TableColumnBuilder {
         dataType,
         width = 100,
         enableSearch = false,
-        checkNull = false
+        checkNull = false,
+        canAutoOrder = true,
+        handler
     }: IColumnDefine): IColumnSortDefine => {
 
         const col: IColumnSortDefine = {
@@ -232,7 +235,7 @@ export class TableColumnBuilder {
             dataIndex,
             dataType,
             width,
-
+            canAutoOrder,
             render: (cellValue: any, row: object, index: number): any => {
                 if (cellValue == null) {
                     return "";
@@ -248,7 +251,7 @@ export class TableColumnBuilder {
                 const text = col.prefixText ? col.prefixText + cellValue : cellValue;
                 return <span title={cellValue} className="qj-table-td-txt" style={{ width: width - 32 }}>{text}</span>
             },
-            ...ColumnSearch.getTextSearchProps({ title, enableSearch, checkNull })
+            ...ColumnSearch.getTextSearchProps({ title, enableSearch, checkNull, handler })
         };
         this.columnDefines.push(col);
         return col;
@@ -262,6 +265,7 @@ export class TableColumnBuilder {
         width = 100,
         enableSearch = false,
         checkNull = false,
+        canAutoOrder = true,
         handler
     }: IColumnDefine): IColumnSortDefine => {
 
@@ -277,6 +281,7 @@ export class TableColumnBuilder {
             dataIndex,
             dataType,
             width,
+            canAutoOrder,
             render: (cellValue: any, row: object, index: number): any => {
                 if (cellValue == null) {
                     return "";
@@ -306,6 +311,7 @@ export class TableColumnBuilder {
         dataType,
         width = 100,
         enableSearch = true,
+        canAutoOrder = true,
         searchData = []
     }: IColumnDefine): IColumnSortDefine => {
 
@@ -315,6 +321,7 @@ export class TableColumnBuilder {
             dataIndex,
             dataType,
             width,
+            canAutoOrder,
             render: (cellValue: any, row: object, index: number): any => {
                 if (cellValue == null) {
                     return "";
@@ -343,6 +350,7 @@ export class TableColumnBuilder {
         dataType,
         width = 100,
         enableSearch = true,
+        canAutoOrder = true,
         searchData = ["是", "否"]
     }: IColumnDefine): IColumnSortDefine => {
         const col: IColumnSortDefine = {
@@ -351,6 +359,7 @@ export class TableColumnBuilder {
             dataIndex,
             dataType,
             width,
+            canAutoOrder,
             render: (cellValue: any, row: object, index: number): any => {
                 const val = row[dataIndex];
                 if (val === "" || val == null) {
@@ -379,6 +388,7 @@ export class TableColumnBuilder {
         dataType,
         width = 50,
         enableSearch = true,
+        canAutoOrder = true,
         searchData = [0, 100]
     }: IColumnDefine): IColumnSortDefine => {
         const col: IColumnSortDefine = {
@@ -387,6 +397,7 @@ export class TableColumnBuilder {
             dataIndex,
             dataType,
             width,
+            canAutoOrder,
             ...ColumnSearch.getNumberSearchProps({ title, enableSearch, searchData })
         };
         this.columnDefines.push(col);
@@ -398,6 +409,7 @@ export class TableColumnBuilder {
         key,
         dataIndex,
         dataType,
+        canAutoOrder = true,
         width = 50
     }: IColumnDefine): IColumnSortDefine => {
         const col: IColumnSortDefine = {
@@ -406,6 +418,7 @@ export class TableColumnBuilder {
             dataIndex,
             dataType,
             width,
+            canAutoOrder,
             render: (cellValue: any, row: object, index: number) => {
                 return UtilNumber.numberToRMB(cellValue, "￥") as any;
             }

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Layout, Tabs, Button, Menu, Icon, Select, Card } from "antd";
+import { Tabs, Button, Menu, Icon, Select, Card } from "antd";
 
 import Framework from "src/framework/Framework";
 import DepartTableColumns from './contentInner/DepartTableColumns';
@@ -81,11 +81,11 @@ export default class Content extends React.Component<IContentProps, IContentStat
     );
 
     return (
-      <Layout.Content className="qj-depart-content">
-          <Tabs size="large" animated={false} defaultActiveKey={"1"} tabBarStyle={{margin: 0}}>
+      <React.Fragment>
+          <Tabs size="large" animated={false} tabBarStyle={{ marginBottom: 0, background: "#fff" }}>
             <TabPane key="1" className="qj-depart-tab-pane"
               tab={<span><Icon type="table" />岗位表</span>}>
-              <Card bodyStyle={{ padding: "16px" }} bordered={false}>
+              <Card style={{margin: 16}} bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
                 <div className="qj-depart-btns">
                   <Button type="primary" onClick={this.openAddModal}>新增</Button>
                   <Button onClick={this.openDelModal}>删除</Button>
@@ -94,13 +94,13 @@ export default class Content extends React.Component<IContentProps, IContentStat
                 <AdaptiveTable
                   columns={DepartTableColumns}
                   dataSource={this.props.dataSource}
-                  minusHeight={247}
+                  minusHeight={279}
                 />
               </Card>
             </TabPane>
             <TabPane key="2" className="qj-depart-tab-pane"
               tab={<span><Icon type="apartment" />岗位图</span>}>
-              <Card bodyStyle={{ padding: "16px", height:"100%" }} style={{height: "100%"}} bordered={false}>
+              <Card style={{margin: 16}} bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
                 <div className="qj-depart-btns">
                   <Button onClick={this.handleOrgAngle}>显示方向</Button>
                   <Button onClick={this.openDelModal}>显示内容</Button>
@@ -151,7 +151,7 @@ export default class Content extends React.Component<IContentProps, IContentStat
           onOk={this.handleImport}
           onCancel={this.handleImportCancel}
         />
-      </Layout.Content>
+      </React.Fragment>
     );
   }
 

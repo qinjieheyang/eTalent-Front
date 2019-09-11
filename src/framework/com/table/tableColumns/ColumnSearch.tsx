@@ -16,6 +16,7 @@ interface ISearchProps {
   checkNull?: boolean;
   trueValue?: string;
   falseValue?: string;
+  handler?: object;
 }
 
 export interface IColumnSearchDefine {
@@ -27,7 +28,7 @@ export interface IColumnSearchDefine {
 
 export class ColumnSearch {
 
-  public static getTextSearchProps = ({ title, enableSearch = false, checkNull = false }: ISearchProps) => {
+  public static getTextSearchProps = ({ title, enableSearch = false, checkNull = false, handler = {} }: ISearchProps) => {
 
     if (!enableSearch) return {};
 
@@ -46,7 +47,6 @@ export class ColumnSearch {
                 <Input
                   placeholder={`请输入${title}`}
                   defaultValue={selectedKeys[0]}
-                  // value={selectedKeys[0]}
                   onChange={e => { changeValues = e.target.value === undefined ? [] : [e.target.value] }}
                   style={{ width: 188 }}
                 />

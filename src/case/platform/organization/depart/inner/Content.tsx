@@ -82,10 +82,10 @@ export default class Content extends React.Component<IContentProps, IContentStat
 
     return (
       <React.Fragment>
-        <Tabs size="large" animated={false} tabBarStyle={{ marginBottom: 0 }}>
+        <Tabs size="large" animated={false} tabBarStyle={{ marginBottom: 0, background: "#fff" }}>
           <TabPane key="1" className="qj-depart-tab-pane"
             tab={<span><Icon type="table" />机构表</span>}>
-            <Card bodyStyle={{ padding: 16, height: "calc(100vh - 135px)" }} bordered={false}>
+            <Card style={{margin: 16}} bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
               <div className="qj-depart-btns">
                 <Button type="primary" onClick={this.openAddModal}>新增</Button>
                 <Button onClick={this.openDelModal}>删除</Button>
@@ -94,13 +94,13 @@ export default class Content extends React.Component<IContentProps, IContentStat
               <AdaptiveTable
                 columns={DepartTableColumns}
                 dataSource={this.props.dataSource}
-                minusHeight={247}
+                minusHeight={279}
               />
             </Card>
           </TabPane>
           <TabPane key="2" className="qj-depart-tab-pane"
             tab={<span><Icon type="apartment" />机构图</span>}>
-            <Card bodyStyle={{ padding: 16, height: "calc(100vh - 135px)" }} bordered={false}>
+            <Card style={{margin: 16}} bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
               <div className="qj-depart-btns">
                 <Button onClick={this.handleOrgAngle}>显示方向</Button>
                 <Button onClick={this.openDelModal}>显示内容</Button>

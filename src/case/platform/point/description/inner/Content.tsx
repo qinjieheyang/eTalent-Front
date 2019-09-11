@@ -1,16 +1,14 @@
 import * as React from "react";
 import { Button, Upload, message } from "antd";
 import { Editor } from '@tinymce/tinymce-react';
-import CaseCommon from "src/caseCommon/CaseCommon";
+import {PageCard} from "src/caseCommon/PageCommon";
 
 
 
 interface IContentState {
 
 }
-interface IContentProps {
-  dataSource: Array<any>;
-}
+interface IContentProps { }
 export default class Content extends React.Component<IContentProps, IContentState> {
   public state: IContentState;
 
@@ -34,7 +32,7 @@ export default class Content extends React.Component<IContentProps, IContentStat
       },
     };
     return (
-      <CaseCommon.PageCard title={
+      <PageCard title={
         <React.Fragment>
           <Button type="primary">保存</Button>
           <Button onClick={this.onPrint}>打印</Button>
@@ -62,7 +60,7 @@ export default class Content extends React.Component<IContentProps, IContentStat
             }
           }}
         />
-      </CaseCommon.PageCard>
+      </PageCard>
 
     );
   }

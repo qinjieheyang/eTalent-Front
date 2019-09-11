@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import * as React from "react";
 import { Table } from "antd";
 import { IColumnSortDefine } from "../TableColumnBuilder";
 import { TableColumnFactory } from "../TableColumnFactory";
@@ -27,7 +27,7 @@ const getViewportOffset = (): { w: number, h: number } => {
 }
 
 // 根据窗口大小计算table自适应高度
-const computerTableHeightByViewport = (dataSource: Array<any>, minusHeight: number = 0): number | undefined => {
+const computerTableHeightByViewport = (dataSource: any[], minusHeight: number): number | undefined => {
   const viewport = getViewportOffset();
   let height: number | undefined = undefined;
   if (viewport && viewport.h && viewport.h > minusHeight) {
@@ -53,51 +53,69 @@ const rowSelection = {
   },
 };
 
-interface IAdaptiveTableProps {
-  dataSource: object[],
-  columns: IColumnSortDefine[],
-  minusHeight?: number
+interface IProps {
+  dataSource: object[];
+  columns: IColumnSortDefine[];
+  minusHeight?: number;
+  onChange?: (pagination: any, filters: any, sorter: any) => void;
 }
 
-const AdaptiveTable = (props: IAdaptiveTableProps) => {
+interface IState {
+  scroll: { x: string | undefined, y: number | undefined };
+  columns: any;
+}
 
-  const Factory = new TableColumnFactory();
+class AdaptiveTable extends React.Component<IProps, IState> {
+  public state: IState;
+  private Factory = new TableColumnFactory();
 
-  const { dataSource, minusHeight = 0 } = props;
-
-  const [columns, setColumns] = useState(Factory.createColumns(props.columns));
-
-  const [scroll, setScroll] = useState<{ x: string | undefined, y: number | undefined }>({x: undefined, y: computerTableHeightByViewport(dataSource, minusHeight+54)});
-
-  useEffect(() => {
-    const reloadLayout = () => {
-      const height: number | undefined = computerTableHeightByViewport(dataSource, minusHeight+54);
-      setScroll({ x: undefined, y: height });
-    }
-
-    window.addEventListener("resize", reloadLayout);
-
-    return () => {
-      window.removeEventListener("resize", reloadLayout);
-    }
-  })
-
-
-  const handleChange = (pagination: any, filters: any, sorter: any) => {
-    if (filters.__operationColumn) {
-      setColumns(Factory.GetCheckedColumns())
+  constructor(props: IProps) {
+    super(props);
+    this.state = {
+      scroll: { x: undefined, y: undefined },
+      columns: this.Factory.createColumns(props.columns)
     }
   }
 
-  return (
-    <Table
+  private reloadLayout = () => {
+    const { minusHeight = 0, dataSource } = this.props;
+    const height: number | undefined = computerTableHeightByViewport(dataSource, minusHeight + 54);
+    this.setState({ scroll: { x: "130%", y: height } });
+  }
+
+  private handleChange = (pagination: any, filters: any, sorter: any) => {
+    if (filters.__operationColumn) {
+      this.setState({ columns: this.Factory.GetCheckedColumns() })
+    }
+    const onChange = this.props.onChange;
+    if (onChange !== undefined) {
+      onChange(pagination, filters, sorter);
+    }
+  }
+
+  componentDidMount() {
+    window.addEventListener("resize", this.reloadLayout);
+
+    //props数据加载后，重新布局
+    setTimeout(() => {
+      this.reloadLayout();
+    })
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.reloadLayout);
+  }
+
+  render() {
+    const { minusHeight, dataSource } = this.props;
+    return <Table
       className="qj-adaptive-table"
-      style = {{height: `calc(100vh - ${minusHeight}px)`}}
-      // bordered
+      style={{ height: `calc(100vh - ${minusHeight}px)` }}
+      bordered
       dataSource={dataSource}
-      columns={columns}
+      columns={this.state.columns}
       rowSelection={rowSelection}
-      onChange={handleChange}
+      onChange={this.handleChange}
       pagination={{
         showQuickJumper: true,
         showSizeChanger: true,
@@ -105,8 +123,8 @@ const AdaptiveTable = (props: IAdaptiveTableProps) => {
         total: 500,
         showTotal: (total, range) => `显示${range[0]}-${range[1]}，每页显示 ${total} 条`
       }}
-      scroll={scroll} />
-  )
+      scroll={this.state.scroll} />
+  }
 
 }
 

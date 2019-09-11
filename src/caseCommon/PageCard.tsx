@@ -25,7 +25,7 @@ export default class PageContent extends React.Component<Props> {
 
     return (
       <Card
-        bodyStyle={{ padding: 16, height: "calc(100vh - 119px)" }}
+        bodyStyle={{ padding: 16, height: "calc(100vh - 119px)", background: ""}}
         bordered={false}
         {...getTitle()}
       >
