@@ -52,7 +52,9 @@ const PageCard = (props: any) => {
       bordered={false}
       {...getTitle()}
     >
-      {props.children}
+      <div style={{height: "100%", background:"#fff"}}>
+        {props.children}
+      </div>
     </Card>
   )
 }

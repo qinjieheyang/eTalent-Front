@@ -1,8 +1,10 @@
 import * as React from "react";
-import { PageLayout, PageCard, PageContent } from "src/caseCommon/PageCommon";
+import { Tabs, Card } from "antd";
+import { PageLayout, PageContent } from "src/caseCommon/PageCommon";
 import Framework from "src/framework/Framework";
 const AdaptiveTable = Framework.Com.Tables.AdaptiveTable;
 
+const { TabPane } = Tabs;
 
 export default class Page extends React.Component<any, any> {
   constructor(props: any) {
@@ -65,13 +67,18 @@ export default class Page extends React.Component<any, any> {
     return (
       <PageLayout>
         <PageContent>
-          <PageCard title="注册用户">
-              <AdaptiveTable
-                columns={columns}
-                dataSource={dataSource}
-                minusHeight={199}
-              />
-          </PageCard>
+          <Tabs size="large" animated={false} tabBarStyle={{ marginBottom: 0, background: "#fff" }}>
+            <TabPane key="1" className="qj-depart-tab-pane"
+              tab="注册用户">
+              <Card style={{ margin: 16 }} bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
+                <AdaptiveTable
+                  columns={columns}
+                  dataSource={dataSource}
+                  minusHeight={231}
+                />
+              </Card>
+            </TabPane>
+          </Tabs>
         </PageContent>
       </PageLayout>
     );

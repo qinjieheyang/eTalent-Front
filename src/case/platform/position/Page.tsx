@@ -42,16 +42,15 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
   public render() {
     const { PS_columnCollection, PS_dataCollection } = this.state;
     return (
-      <div style={{ height: "100%", background: "#fff" }}>
-
-        <Tabs size="large" animated={false} defaultActiveKey="1">
+      <React.Fragment>
+        <Tabs size="large" animated={false} tabBarStyle={{ marginBottom: 0, background: "#fff" }}>
           <TabPane tab="职位体系" key="1">
-            <Card bodyStyle={{ padding: "0 16px" }} bordered={false}>
+            <Card style={{ margin: 16 }} bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
               <PositionSystem columnCollection={PS_columnCollection} dataCollection={PS_dataCollection} />
             </Card>
           </TabPane>
           <TabPane tab="职位族设置" key="2">
-            <Card bodyStyle={{ padding: "0 16px" }} bordered={false}>
+            <Card style={{ margin: 16 }} bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
               <div className="qj-table-outertop-btns">
                 <Button type="primary">新增</Button>
                 <Button>删除</Button>
@@ -61,8 +60,8 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
             </Card>
           </TabPane>
           <TabPane tab="职位设置" key="3">
-            <Layout style={{ height: "calc(100vh - 64px)" }}>
-              <Layout.Sider style={{ background: "#fff", borderRight: "1px solid #e8e8e8", marginTop: -16 }}>
+            <Layout style={{ margin: 16, height: "calc(100vh - 151px)" }}>
+              <Layout.Sider style={{ background: "#fff", borderRight: "1px solid #e8e8e8" }}>
                 <Menu
                   mode="inline"
                   openKeys={this.state.openKeys}
@@ -112,7 +111,7 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
                 </Menu>
               </Layout.Sider>
               <Layout.Content style={{ background: "#fff" }}>
-                <Card bodyStyle={{ padding: "0 16px" }} bordered={false}>
+                <Card bodyStyle={{ padding: 16 }} bordered={false}>
                   <div className="qj-table-outertop-btns">
                     <Button type="primary">新增</Button>
                     <Button>删除</Button>
@@ -124,7 +123,7 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
             </Layout>
           </TabPane>
           <TabPane tab="职级设置" key="4">
-            <Card bodyStyle={{ padding: "0 16px" }} bordered={false}>
+            <Card style={{ margin: 16 }} bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
               <div className="qj-table-outertop-btns">
                 <Button type="primary">新增</Button>
                 <Button>删除</Button>
@@ -134,7 +133,7 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
             </Card>
           </TabPane>
           <TabPane tab="职等设置" key="5">
-            <Card bodyStyle={{ padding: "0 16px" }} bordered={false}>
+            <Card style={{ margin: 16 }} bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
               <div className="qj-table-outertop-btns">
                 <Button type="primary">新增</Button>
                 <Button>删除</Button>
@@ -144,7 +143,7 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
             </Card>
           </TabPane>
         </Tabs>
-      </div>
+      </React.Fragment>
     );
   }
 

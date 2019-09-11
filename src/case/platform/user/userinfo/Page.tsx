@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Button } from "antd";
+import { Tabs, Card, Button } from "antd";
+import { PageLayout, PageContent, PageSide } from "src/caseCommon/PageCommon";
 import { RouteComponentProps } from "react-router-dom";
 import * as GlobalRedux from "src/globalRedux/GlobalRedux";
 import CaseCommon, { OrgTree } from "src/caseCommon/CaseCommon";
@@ -9,7 +10,7 @@ import { Const } from "./Const";
 import { Service } from "./Service";
 import { IService, ServiceMock } from "./ServiceMock";
 import { initState, IState } from "./State";
-
+const { TabPane } = Tabs;
 const AdaptiveTable = Framework.Com.Tables.AdaptiveTable;
 
 
@@ -88,22 +89,28 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
       },
     ];
     return (
-      <CaseCommon.PageLayout>
-        <CaseCommon.PageSide>
+      <PageLayout>
+        <PageSide>
           <OrgTree showAll={this.showAll} onShowChange={this.onShowChange} treeData={this.state.treeData} />
-        </CaseCommon.PageSide>
-        <CaseCommon.PageContent>
-          <CaseCommon.PageCard title={
-            <Button type="primary">密码重置</Button>
-          }>
-            <AdaptiveTable
-              columns={columns}
-              dataSource={dataSource}
-              minusHeight={199}
-            />
-          </CaseCommon.PageCard>
-        </CaseCommon.PageContent>
-      </CaseCommon.PageLayout>
+        </PageSide>
+        <PageContent>
+          <Tabs size="large" animated={false} tabBarStyle={{ marginBottom: 0, background: "#fff" }}>
+            <TabPane key="1" className="qj-depart-tab-pane"
+              tab="用户信息">
+              <Card style={{ margin: 16 }} bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
+                <div className="qj-page-title-btns">
+                  <Button type="primary">重置密码</Button>
+                </div>
+                <AdaptiveTable
+                  columns={columns}
+                  dataSource={dataSource}
+                  minusHeight={279}
+                />
+              </Card>
+            </TabPane>
+          </Tabs>
+        </PageContent>
+      </PageLayout>
     );
   }
 
