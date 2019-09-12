@@ -85,12 +85,12 @@ export default class Content extends React.Component<IContentProps, IContentStat
         <Tabs size="large" animated={false} tabBarStyle={{ marginBottom: 0, background: "#fff" }}>
           <TabPane key="1" className="qj-depart-tab-pane"
             tab={<span><Icon type="table" />机构表</span>}>
-            <Card style={{margin: 16}} bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
-              <div className="qj-depart-btns">
+            <Card bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
+              <Framework.Com.Buttons.Tool.LeftArea>
                 <Button type="primary" onClick={this.openAddModal}>新增</Button>
                 <Button onClick={this.openDelModal}>删除</Button>
                 <DropdownMore menu={menu}></DropdownMore>
-              </div>
+              </Framework.Com.Buttons.Tool.LeftArea>
               <AdaptiveTable
                 columns={DepartTableColumns}
                 dataSource={this.props.dataSource}
@@ -100,20 +100,18 @@ export default class Content extends React.Component<IContentProps, IContentStat
           </TabPane>
           <TabPane key="2" className="qj-depart-tab-pane"
             tab={<span><Icon type="apartment" />机构图</span>}>
-            <Card style={{margin: 16}} bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
-              <div className="qj-depart-btns">
+            <Card bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
+              <Framework.Com.Buttons.Tool.LeftArea>
                 <Button onClick={this.handleOrgAngle}>显示方向</Button>
                 <Button onClick={this.openDelModal}>显示内容</Button>
-                <Select defaultValue="0" style={{ width: 120, marginRight: 16 }}>
+                <Select defaultValue="0">
                   <Option value="0">全部显示</Option>
                   <Option value="1">显示1层</Option>
                   <Option value="2">显示2层</Option>
                 </Select>
                 <Button type="primary" onClick={this.handleOrgExport}>导出</Button>
-              </div>
-              <div style={{ padding: '0 24px', height: '100%' }}>
-                <OrgFlow ref="orgFlow" data={nodeDataArray} />
-              </div>
+              </Framework.Com.Buttons.Tool.LeftArea>
+              <OrgFlow ref="orgFlow" data={nodeDataArray} />
             </Card>
           </TabPane>
         </Tabs>

@@ -19,7 +19,7 @@ const { Option } = Select;
 
 
 const nodeDataArray = [
-  { key: 0,            title: "人力资源部经理", online: 10, color: "#FF8C58" },
+  { key: 0, title: "人力资源部经理", online: 10, color: "#FF8C58" },
   { key: 1, parent: 0, title: "人事专员", online: 10, color: "#2FDD93" },
   { key: 2, parent: 1, title: "人事专员", online: 10, color: "#19ADE6" },
   { key: 3, parent: 1, title: "人事专员", online: 10, color: "#19ADE6" },
@@ -82,39 +82,39 @@ export default class Content extends React.Component<IContentProps, IContentStat
 
     return (
       <React.Fragment>
-          <Tabs size="large" animated={false} tabBarStyle={{ marginBottom: 0, background: "#fff" }}>
-            <TabPane key="1" className="qj-depart-tab-pane"
-              tab={<span><Icon type="table" />岗位表</span>}>
-              <Card style={{margin: 16}} bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
-                <div className="qj-depart-btns">
-                  <Button type="primary" onClick={this.openAddModal}>新增</Button>
-                  <Button onClick={this.openDelModal}>删除</Button>
-                  <DropdownMore menu={menu}></DropdownMore>
-                </div>
-                <AdaptiveTable
-                  columns={DepartTableColumns}
-                  dataSource={this.props.dataSource}
-                  minusHeight={279}
-                />
-              </Card>
-            </TabPane>
-            <TabPane key="2" className="qj-depart-tab-pane"
-              tab={<span><Icon type="apartment" />岗位图</span>}>
-              <Card style={{margin: 16}} bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
-                <div className="qj-depart-btns">
-                  <Button onClick={this.handleOrgAngle}>显示方向</Button>
-                  <Button onClick={this.openDelModal}>显示内容</Button>
-                  <Select defaultValue="0" style={{ width: 120, marginRight: 16 }}>
-                    <Option value="0">全部显示</Option>
-                    <Option value="1">显示1层</Option>
-                    <Option value="2">显示2层</Option>
-                  </Select>
-                  <Button type="primary" onClick={this.handleOrgExport}>导出</Button>
-                </div>
-                <OrgFlow ref="orgFlow" data={nodeDataArray} />
-              </Card>
-            </TabPane>
-          </Tabs>
+        <Tabs size="large" animated={false} tabBarStyle={{ marginBottom: 0, background: "#fff" }}>
+          <TabPane key="1" className="qj-depart-tab-pane"
+            tab={<span><Icon type="table" />岗位表</span>}>
+            <Card bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
+              <Framework.Com.Buttons.Tool.LeftArea>
+                <Button type="primary" onClick={this.openAddModal}>新增</Button>
+                <Button onClick={this.openDelModal}>删除</Button>
+                <DropdownMore menu={menu}></DropdownMore>
+              </Framework.Com.Buttons.Tool.LeftArea>
+              <AdaptiveTable
+                columns={DepartTableColumns}
+                dataSource={this.props.dataSource}
+                minusHeight={279}
+              />
+            </Card>
+          </TabPane>
+          <TabPane key="2" className="qj-depart-tab-pane"
+            tab={<span><Icon type="apartment" />岗位图</span>}>
+            <Card bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
+              <Framework.Com.Buttons.Tool.LeftArea>
+                <Button onClick={this.handleOrgAngle}>显示方向</Button>
+                <Button onClick={this.openDelModal}>显示内容</Button>
+                <Select defaultValue="0">
+                  <Option value="0">全部显示</Option>
+                  <Option value="1">显示1层</Option>
+                  <Option value="2">显示2层</Option>
+                </Select>
+                <Button type="primary" onClick={this.handleOrgExport}>导出</Button>
+              </Framework.Com.Buttons.Tool.LeftArea>
+              <OrgFlow ref="orgFlow" data={nodeDataArray} />
+            </Card>
+          </TabPane>
+        </Tabs>
         <AddModal
           visible={visibleAdd}
           confirmLoading={confirmLoading}

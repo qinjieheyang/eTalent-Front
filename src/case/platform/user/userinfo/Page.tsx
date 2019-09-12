@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Tabs, Card, Button } from "antd";
+import { Card, Button } from "antd";
 import { PageLayout, PageContent, PageSide } from "src/caseCommon/PageCommon";
 import { RouteComponentProps } from "react-router-dom";
 import * as GlobalRedux from "src/globalRedux/GlobalRedux";
@@ -10,7 +10,6 @@ import { Const } from "./Const";
 import { Service } from "./Service";
 import { IService, ServiceMock } from "./ServiceMock";
 import { initState, IState } from "./State";
-const { TabPane } = Tabs;
 const AdaptiveTable = Framework.Com.Tables.AdaptiveTable;
 
 
@@ -94,21 +93,16 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
           <OrgTree showAll={this.showAll} onShowChange={this.onShowChange} treeData={this.state.treeData} />
         </PageSide>
         <PageContent>
-          <Tabs size="large" animated={false} tabBarStyle={{ marginBottom: 0, background: "#fff" }}>
-            <TabPane key="1" className="qj-depart-tab-pane"
-              tab="用户信息">
-              <Card style={{ margin: 16 }} bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
-                <div className="qj-page-title-btns">
-                  <Button type="primary">重置密码</Button>
-                </div>
-                <AdaptiveTable
-                  columns={columns}
-                  dataSource={dataSource}
-                  minusHeight={279}
-                />
-              </Card>
-            </TabPane>
-          </Tabs>
+          <Card bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
+            <Framework.Com.Buttons.Tool.LeftArea>
+              <Button type="primary">重置密码</Button>
+            </Framework.Com.Buttons.Tool.LeftArea>
+            <AdaptiveTable
+              columns={columns}
+              dataSource={dataSource}
+              minusHeight={224}
+            />
+          </Card>
         </PageContent>
       </PageLayout>
     );

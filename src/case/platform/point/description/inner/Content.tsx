@@ -1,7 +1,8 @@
 import * as React from "react";
-import { Button, Upload, message, Tabs, Card } from "antd";
+import { Button, Upload, message } from "antd";
 import { Editor } from '@tinymce/tinymce-react';
-const { TabPane } = Tabs;
+import { PageCard } from 'src/caseCommon/PageCommon';
+import Framework from 'src/framework/Framework';
 
 
 
@@ -33,39 +34,33 @@ export default class Content extends React.Component<IContentProps, IContentStat
     };
     return (
       <React.Fragment>
-        <Tabs size="large" animated={false} tabBarStyle={{ marginBottom: 0, background: "#fff" }}>
-          <TabPane key="1" className="qj-depart-tab-pane"
-            tab="岗位说明书">
-            <Card style={{ margin: 16 }} bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
-              <div className="qj-depart-btns">
-                <Button type="primary">保存</Button>
-                <Button onClick={this.onPrint}>打印</Button>
-                <span style={{ display: "inline-block", marginRight: 8 }}>
-                  <Upload {...props} >
-                    <Button >导入</Button>
-                  </Upload>
-                </span>
-                <Button onClick={this.onExport}>导出</Button>
-              </div>
-              <Editor
-                apiKey="0cp5cdywq4wik2cyx1ewp0q7dhwg5762uhpv6t7pcblkkkij"
-                toolbar='undo redo | formatselect | bold italic | insertdatetime image table | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent'
-                init={{
-                  plugins: [
-                    'advlist autolink lists link image charmap print preview anchor',
-                    'searchreplace visualblocks code fullscreen',
-                    'insertdatetime media table paste code help wordcount',
-                  ],
-                  menubar: false,
-                  height: "calc(100vh - 235px)",
-                  setup: (ed: any) => {
-                    this.editor = ed;
-                  }
-                }}
-              />
-            </Card>
-          </TabPane>
-        </Tabs>
+
+        <PageCard>
+          <Framework.Com.Buttons.Tool.LeftArea>
+            <Button type="primary">保存</Button>
+            <Button onClick={this.onPrint}>打印</Button>
+            <Upload {...props} >
+              <Button >导入</Button>
+            </Upload>
+            <Button onClick={this.onExport}>导出</Button>
+          </Framework.Com.Buttons.Tool.LeftArea>
+          <Editor
+            apiKey="0cp5cdywq4wik2cyx1ewp0q7dhwg5762uhpv6t7pcblkkkij"
+            toolbar='undo redo | formatselect | bold italic | insertdatetime image table | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent'
+            init={{
+              plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table paste code help wordcount',
+              ],
+              menubar: false,
+              height: "calc(100% - 48px)",
+              setup: (ed: any) => {
+                this.editor = ed;
+              }
+            }}
+          />
+        </PageCard>
       </React.Fragment>
     );
   }

@@ -28,7 +28,7 @@ const PageContent = (props: any) => {
 
   return (
     <Layout>
-      <Layout.Content style={{ margin: 0 }}>
+      <Layout.Content style={{ margin: 16 }}>
         {props.children}
       </Layout.Content>
     </Layout>
@@ -48,13 +48,11 @@ const PageCard = (props: any) => {
   return (
     <Card
       className="qj-page-card"
-      bodyStyle={{ padding: 16, background: "rgb(240, 240, 240)", height: "calc(100vh - 119px)", overflow: "hidden" }}
+      bodyStyle={{ padding: 16, height: "calc(100vh - 96px)", overflow: "hidden" }}
       bordered={false}
       {...getTitle()}
     >
-      <div style={{height: "100%", background:"#fff"}}>
-        {props.children}
-      </div>
+      {props.children}
     </Card>
   )
 }
