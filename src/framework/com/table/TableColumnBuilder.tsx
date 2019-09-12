@@ -12,6 +12,21 @@ export type IColumnRender = (cellValue: any, row: object, index: number) => Reac
 
 export type IOptColumnRender = (row: any) => React.ReactNode;
 
+const formatTitle = (title: string, width?: number, enableSearch?: boolean, canAutoOrder?: boolean) => {
+    let subtractWidth = 0;
+    if (enableSearch) {
+        subtractWidth += 46;
+    }
+    if (canAutoOrder) {
+        subtractWidth += 20;
+    }
+
+    if (width && width > subtractWidth) {
+        return <span title={title} className="qj-table-td-txt" style={{ width: width - subtractWidth }}>{title}</span>
+    }
+    return <span title={title} className="qj-table-td-txt">{title}</span>
+}
+
 interface FilterDropdownProps {
     setSelectedKeys: (target: string[]) => void;
     selectedKeys: string[];
@@ -29,29 +44,6 @@ export interface IColumnSortDefine extends IColumnDefine {
     onCell?: (record: any, rowIndex: number) => any;
     onHeaderCell?: (column: any) => any;
 }
-
-const formatTitle = (title: string, width: number) => {
-    width = width > 46 ? width - 46 : width;
-    return <span title={title} className="qj-table-td-txt" style={{ width }}>{title}</span>
-}
-/** 格式化单元格宽度 */
-// const formatCell = (width: number) => {
-//     return {
-//         onHeaderCell: (column: any) =>({
-//             style: {
-//                 whiteSpace: 'nowrap',
-//                 maxWidth: width,
-
-//             }
-//         }),
-//         onCell: (record: any, rowIndex: number) =>({
-//             style: {
-//                 whiteSpace: 'nowrap',
-//                 maxWidth: width,
-//             }
-//         }),
-//     }
-// }
 
 export class TableColumnBuilder {
     private optGroups: OptGroup[] = [];
@@ -77,10 +69,10 @@ export class TableColumnBuilder {
         const columns: IColumnSortDefine[] = [];
         for (const c of this.columnDefines) {
             columns.push(c);
-            // if (c.canAutoOrder) {
-            //     c.sorter = (row1: object, row2: object) => rowSorter(row1, row2, c.dataIndex);
-            // }
-            c.sorter = true;
+            if (c.canAutoOrder) {
+                // c.sorter = (row1: object, row2: object) => rowSorter(row1, row2, c.dataIndex);
+                c.sorter = true;
+            }
             c.enableSearch === undefined ? c.enableSearch = true : c.enableSearch = false;
             if (c.enableSearch) {
                 c.filterIcon = (filtered: string | undefined) => (
@@ -107,7 +99,7 @@ export class TableColumnBuilder {
             if (checkedColumnValues.includes(c.dataIndex) || c.dataIndex === "__operationColumn") {
                 newColumns.push(c);
                 if (c.canAutoOrder) {
-                    c.sorter = (row1: object, row2: object) => rowSorter(row1, row2, c.dataIndex);
+                    c.sorter = true;
                 }
                 c.enableSearch === undefined ? c.enableSearch = true : c.enableSearch = false;
                 if (c.enableSearch) {
@@ -203,7 +195,7 @@ export class TableColumnBuilder {
         width = 50
     }: IColumnDefine): IColumnDefine => {
         const col: IColumnSortDefine = {
-            title: formatTitle(title, width),
+            title,
             key,
             dataIndex,
             dataType,
@@ -222,20 +214,22 @@ export class TableColumnBuilder {
         key,
         dataIndex,
         dataType,
-        width = 100,
+        width,
         enableSearch = false,
         checkNull = false,
         canAutoOrder = true,
+        fixed = false,
         handler
     }: IColumnDefine): IColumnSortDefine => {
 
         const col: IColumnSortDefine = {
-            title: formatTitle(title, width),
+            title,
             key,
             dataIndex,
             dataType,
             width,
             canAutoOrder,
+            fixed,
             render: (cellValue: any, row: object, index: number): any => {
                 if (cellValue == null) {
                     return "";
@@ -249,9 +243,13 @@ export class TableColumnBuilder {
                 }
 
                 const text = col.prefixText ? col.prefixText + cellValue : cellValue;
-                return <span title={cellValue} className="qj-table-td-txt" style={{ width: width - 32 }}>{text}</span>
+                if (width && width > 32) {
+                    return <span title={cellValue} className="qj-table-td-txt" style={{ width: width - 32 }}>{text}</span>
+                }
+                return <span title={cellValue} className="qj-table-td-txt">{text}</span>
             },
-            ...ColumnSearch.getTextSearchProps({ title, enableSearch, checkNull, handler })
+            ...ColumnSearch.getTextSearchProps({ title, enableSearch, checkNull, handler }),
+
         };
         this.columnDefines.push(col);
         return col;
@@ -262,10 +260,11 @@ export class TableColumnBuilder {
         key,
         dataIndex,
         dataType,
-        width = 100,
+        width = 150,
         enableSearch = false,
         checkNull = false,
         canAutoOrder = true,
+        fixed = false,
         handler
     }: IColumnDefine): IColumnSortDefine => {
 
@@ -276,12 +275,13 @@ export class TableColumnBuilder {
         }
 
         const col: IColumnSortDefine = {
-            title: formatTitle(title, width),
+            title,
             key,
             dataIndex,
             dataType,
             width,
             canAutoOrder,
+            fixed,
             render: (cellValue: any, row: object, index: number): any => {
                 if (cellValue == null) {
                     return "";
@@ -316,7 +316,7 @@ export class TableColumnBuilder {
     }: IColumnDefine): IColumnSortDefine => {
 
         const col: IColumnSortDefine = {
-            title: formatTitle(title, width),
+            title,
             key,
             dataIndex,
             dataType,
@@ -579,7 +579,7 @@ export class TableColumnBuilder {
         this.mapSelectTable.set(dataIndex, selectTable);
 
         const col: IColumnSortDefine = {
-            title: formatTitle(title, width),
+            title,
             key,
             dataIndex,
             dataType,
@@ -635,7 +635,7 @@ export class TableColumnBuilder {
     }: IColumnDefine): IColumnSortDefine => {
 
         const col: IColumnSortDefine = {
-            title: formatTitle(title, width),
+            title,
             key,
             dataIndex,
             dataType,
@@ -741,21 +741,21 @@ export class TableColumnBuilder {
 
 // ===============================================
 
-const rowSorter = (row1: object, row2: object, field: string) => {
-    const a = row1[field];
-    const b = row2[field];
-    if (a === b) {
-        return 0;
-    }
-    if (typeof a === "string" && typeof b === "string") {
-        return a > b ? 1 : -1;
-    }
-    if (typeof a === "string") {
-        return 1;
-    }
-    if (typeof b === "string") {
-        return -1;
-    }
+// const rowSorter = (row1: object, row2: object, field: string) => {
+//     const a = row1[field];
+//     const b = row2[field];
+//     if (a === b) {
+//         return 0;
+//     }
+//     if (typeof a === "string" && typeof b === "string") {
+//         return a > b ? 1 : -1;
+//     }
+//     if (typeof a === "string") {
+//         return 1;
+//     }
+//     if (typeof b === "string") {
+//         return -1;
+//     }
 
-    return a - b;
-};
+//     return a - b;
+// };

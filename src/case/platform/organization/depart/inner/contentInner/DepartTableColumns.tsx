@@ -9,6 +9,7 @@ const DepartTableColumns: Array<any> = [
     enableSearch: true,
     dataType: "linkText",
     canAutoOrder: true,
+    fixed: true,
     handler: {
       onLinkClick: (row: any) => {
         alert(JSON.stringify(row))
@@ -27,7 +28,7 @@ const DepartTableColumns: Array<any> = [
     title: '机构编码',
     dataIndex: 'address',
     key: '1',
-    width: 120,
+    width: 150,
     enableSearch: true
   },
   {
@@ -55,45 +56,9 @@ const DepartTableColumns: Array<any> = [
     title: '机构全称',
     dataIndex: 'address',
     key: '5',
-    width: 150,
-    enableSearch: true
-  },
-  {
-    title: '机构全称',
-    dataIndex: 'address',
-    key: '6',
-    width: 150,
-    enableSearch: true
-  },
-  {
-    title: '机构全称',
-    dataIndex: 'address',
-    key: '7',
-    width: 150,
-    enableSearch: true
-  },
-  {
-    title: '机构全称',
-    dataIndex: 'address',
-    key: '8',
-    width: 150,
-    enableSearch: true
-  },
-  {
-    title: '机构全称',
-    dataIndex: 'address',
-    key: '9',
     // width: 150,
     enableSearch: true
-  },
-  // {
-  //   title: '操作',
-  //   key: 'operation',
-  //   dataIndex: "operation",
-  //   fixed: 'right',
-  //   width: 150,
-  //   render: () => <a href="javascript:;">action</a>,
-  // },
+  }
 ];
 
 

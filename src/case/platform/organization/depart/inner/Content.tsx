@@ -95,6 +95,7 @@ export default class Content extends React.Component<IContentProps, IContentStat
                 columns={DepartTableColumns}
                 dataSource={this.props.dataSource}
                 minusHeight={279}
+                // scrollX={"100%"}
               />
             </Card>
           </TabPane>

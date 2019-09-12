@@ -1,15 +1,15 @@
 // import { IColumnRender } from "../TableColumnBuilder";
- 
+
 // interface ITreeData {
 //     title: string;
 //     key: string;
 //     value: string|boolean|number;
 // }
-  
+
 // interface IColumnExtAttrs {
 //     treeData: ITreeData[]
 // }
-  
+
 
 export interface IColumnDefine {
     title: string;
@@ -28,4 +28,5 @@ export interface IColumnDefine {
     enableSearch?: boolean; // 字段是否可被搜索
     searchData?: any[];
     handler?: object;
+    fixed?: string|boolean;
 }

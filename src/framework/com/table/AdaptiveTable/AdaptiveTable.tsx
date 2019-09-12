@@ -57,12 +57,13 @@ interface IProps {
   dataSource: object[];
   columns: IColumnSortDefine[];
   minusHeight?: number;
+  scrollX?: number | string;
   onChange?: (pagination: any, filters: any, sorter: any) => void;
 }
 
 interface IState {
-  scroll: { x: string | undefined, y: number | undefined };
-  columns: any;
+  scroll: { x: string | number | undefined, y: number | undefined };
+  columns: any[];
 }
 
 class AdaptiveTable extends React.Component<IProps, IState> {
@@ -78,9 +79,9 @@ class AdaptiveTable extends React.Component<IProps, IState> {
   }
 
   private reloadLayout = () => {
-    const { minusHeight = 0, dataSource } = this.props;
+    const { minusHeight = 0, dataSource, scrollX = undefined } = this.props;
     const height: number | undefined = computerTableHeightByViewport(dataSource, minusHeight + 54);
-    this.setState({ scroll: { x: "130%", y: height } });
+    this.setState({ scroll: { x: scrollX, y: height } });
   }
 
   private handleChange = (pagination: any, filters: any, sorter: any) => {
@@ -111,7 +112,7 @@ class AdaptiveTable extends React.Component<IProps, IState> {
     return <Table
       className="qj-adaptive-table"
       style={{ height: `calc(100vh - ${minusHeight}px)` }}
-      bordered
+      // bordered
       dataSource={dataSource}
       columns={this.state.columns}
       rowSelection={rowSelection}

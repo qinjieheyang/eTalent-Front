@@ -19,7 +19,7 @@ const DepartTableColumns: Array<any> = [
     title: '岗位编码',
     dataIndex: 'address',
     key: '1',
-    width: 120,
+    width: 150,
     enableSearch: true
   },
   {
