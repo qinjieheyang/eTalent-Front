@@ -70,9 +70,7 @@ export default class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
         //垂直方向 panel
         $(go.Panel, "Vertical",
           {
-            // width: 200,
-            // height: 90,
-            maxSize: new go.Size(200, 100)
+            maxSize: new go.Size(360, 100)
           },
           //title头部
           $(go.TextBlock,
@@ -106,7 +104,7 @@ export default class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
 
             // a table to contain the different parts of the node
             $(go.Panel, "Table",
-              { margin: 6, maxSize: new go.Size(200, NaN) },
+              { margin: 8, maxSize: new go.Size(360, NaN) },
               // the two TextBlocks in column 0 both stretch in width
 
               $(go.RowColumnDefinition,

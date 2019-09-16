@@ -111,8 +111,8 @@ class AdaptiveTable extends React.Component<IProps, IState> {
     const { minusHeight, dataSource } = this.props;
     return <Table
       className="qj-adaptive-table"
-      style={{ height: `calc(100vh - ${minusHeight}px)` }}
-      // bordered
+      style={{ height: `calc(100vh - ${minusHeight}px)`}}
+      bordered
       dataSource={dataSource}
       columns={this.state.columns}
       rowSelection={rowSelection}

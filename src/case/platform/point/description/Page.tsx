@@ -17,8 +17,6 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
 
   public state = initState;
 
-  private showAll: boolean = false; //显示封存
-
   constructor(props: IPageProps) {
     super(props, Const, ServiceMock, Service);
   }
@@ -33,11 +31,13 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
   }
 
   public render() {
-
+    const { treeData } = this.state;
+    const isEnable = false;
+    const currOrgId = 0;
     return (
       <PageLayout>
         <PageSide>
-          <OrgTree showAll={this.showAll} onShowChange={this.onShowChange} treeData={this.state.treeData} />
+        <OrgTree showAll={isEnable} onShowChange={this.handleShowChange} treeData={treeData} selectedKeys={[currOrgId]} onSelect={this.handleSelectTreeNode} />
         </PageSide>
         <PageContent>
           <Content/>
@@ -48,7 +48,12 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
 
 
 
-  private onShowChange = (checked: boolean) => {
+  private handleShowChange = (checked: boolean) => {
+
+  }
+
+
+  private handleSelectTreeNode = (selectedKeys: number[]) => {
 
   }
 

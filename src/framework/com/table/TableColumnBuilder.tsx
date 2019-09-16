@@ -223,7 +223,7 @@ export class TableColumnBuilder {
     }: IColumnDefine): IColumnSortDefine => {
 
         const col: IColumnSortDefine = {
-            title,
+            title: formatTitle(title, width, enableSearch, canAutoOrder),
             key,
             dataIndex,
             dataType,
@@ -275,7 +275,7 @@ export class TableColumnBuilder {
         }
 
         const col: IColumnSortDefine = {
-            title,
+            title: formatTitle(title, width, enableSearch, canAutoOrder),
             key,
             dataIndex,
             dataType,
@@ -316,7 +316,7 @@ export class TableColumnBuilder {
     }: IColumnDefine): IColumnSortDefine => {
 
         const col: IColumnSortDefine = {
-            title,
+            title: formatTitle(title, width, enableSearch, canAutoOrder),
             key,
             dataIndex,
             dataType,
@@ -354,7 +354,7 @@ export class TableColumnBuilder {
         searchData = ["是", "否"]
     }: IColumnDefine): IColumnSortDefine => {
         const col: IColumnSortDefine = {
-            title,
+            title: formatTitle(title, width, enableSearch, canAutoOrder),
             key,
             dataIndex,
             dataType,
@@ -392,7 +392,7 @@ export class TableColumnBuilder {
         searchData = [0, 100]
     }: IColumnDefine): IColumnSortDefine => {
         const col: IColumnSortDefine = {
-            title,
+            title: formatTitle(title, width, enableSearch, canAutoOrder),
             key,
             dataIndex,
             dataType,
@@ -409,11 +409,12 @@ export class TableColumnBuilder {
         key,
         dataIndex,
         dataType,
+        enableSearch = true,
         canAutoOrder = true,
         width = 50
     }: IColumnDefine): IColumnSortDefine => {
         const col: IColumnSortDefine = {
-            title,
+            title: formatTitle(title, width, enableSearch, canAutoOrder),
             key,
             dataIndex,
             dataType,
@@ -432,10 +433,12 @@ export class TableColumnBuilder {
         key,
         dataIndex,
         dataType,
+        enableSearch = true,
+        canAutoOrder = true,
         width = 50
     }: IColumnDefine): IColumnSortDefine => {
         const col: IColumnSortDefine = {
-            title,
+            title: formatTitle(title, width, enableSearch, canAutoOrder),
             key,
             dataIndex,
             dataType,
@@ -451,10 +454,12 @@ export class TableColumnBuilder {
         key,
         dataIndex,
         dataType,
+        enableSearch = true,
+        canAutoOrder = true,
         width = 100
     }: IColumnDefine): IColumnSortDefine => {
         const col: IColumnSortDefine = {
-            title,
+            title: formatTitle(title, width, enableSearch, canAutoOrder),
             key,
             dataIndex,
             dataType,
@@ -479,10 +484,12 @@ export class TableColumnBuilder {
         key,
         dataIndex,
         dataType,
+        enableSearch = true,
+        canAutoOrder = true,
         width = 100
     }: IColumnDefine): IColumnSortDefine => {
         const col: IColumnSortDefine = {
-            title,
+            title: formatTitle(title, width, enableSearch, canAutoOrder),
             key,
             dataIndex,
             dataType,
@@ -506,10 +513,12 @@ export class TableColumnBuilder {
         key,
         dataIndex,
         dataType,
+        enableSearch = true,
+        canAutoOrder = true,
         width = 100
     }: IColumnDefine): IColumnSortDefine => {
         const col: IColumnSortDefine = {
-            title,
+            title: formatTitle(title, width, enableSearch, canAutoOrder),
             key,
             dataIndex,
             dataType,
@@ -533,12 +542,13 @@ export class TableColumnBuilder {
         dataType,
         width = 100,
         enableSearch = true,
+        canAutoOrder = true,
         searchData = []
     }: IColumnDefine): IColumnSortDefine => {
         const selectTable = new DataTable(searchData);
         this.mapSelectTable.set(dataIndex, selectTable);
         const col: IColumnSortDefine = {
-            title,
+            title: formatTitle(title, width, enableSearch, canAutoOrder),
             key,
             dataIndex,
             dataType,
@@ -571,7 +581,8 @@ export class TableColumnBuilder {
         dataIndex,
         dataType,
         width = 100,
-        enableSearch = false,
+        enableSearch = true,
+        canAutoOrder = true,
         searchData = [],
         textDisplayLength = 30
     }: IColumnDefine): IColumnSortDefine => {
@@ -579,7 +590,7 @@ export class TableColumnBuilder {
         this.mapSelectTable.set(dataIndex, selectTable);
 
         const col: IColumnSortDefine = {
-            title,
+            title: formatTitle(title, width, enableSearch, canAutoOrder),
             key,
             dataIndex,
             dataType,
@@ -630,12 +641,14 @@ export class TableColumnBuilder {
         key,
         dataIndex,
         dataType,
+        enableSearch = true,
+        canAutoOrder = true,
         width = 100,
         handler
     }: IColumnDefine): IColumnSortDefine => {
 
         const col: IColumnSortDefine = {
-            title,
+            title: formatTitle(title, width, enableSearch, canAutoOrder),
             key,
             dataIndex,
             dataType,
@@ -740,7 +753,7 @@ export class TableColumnBuilder {
 }
 
 // ===============================================
-
+// 排序
 // const rowSorter = (row1: object, row2: object, field: string) => {
 //     const a = row1[field];
 //     const b = row2[field];

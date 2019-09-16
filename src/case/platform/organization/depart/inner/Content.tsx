@@ -42,6 +42,9 @@ interface IContentState {
 }
 interface IContentProps {
   dataSource: Array<any>;
+  currentPage: number;
+  pageSize: number;
+  onTabChange: (activeKey: string)=> void;
 }
 export default class Content extends React.Component<IContentProps, IContentState> {
   public state: IContentState;
@@ -82,10 +85,10 @@ export default class Content extends React.Component<IContentProps, IContentStat
 
     return (
       <React.Fragment>
-        <Tabs size="large" animated={false} tabBarStyle={{ marginBottom: 0, background: "#fff" }}>
+        <Tabs size="large" animated={false} tabBarStyle={{ marginBottom: 0, background: "#fff" }} onChange={this.props.onTabChange}>
           <TabPane key="1" className="qj-depart-tab-pane"
             tab={<span><Icon type="table" />机构表</span>}>
-            <Card bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
+            <Card bodyStyle={{ padding: 16, height: "calc(100vh - 151px)", minWidth: 1150 }} bordered={false}>
               <Framework.Com.Buttons.Tool.LeftArea>
                 <Button type="primary" onClick={this.openAddModal}>新增</Button>
                 <Button onClick={this.openDelModal}>删除</Button>
@@ -95,7 +98,7 @@ export default class Content extends React.Component<IContentProps, IContentStat
                 columns={DepartTableColumns}
                 dataSource={this.props.dataSource}
                 minusHeight={279}
-                // scrollX={"100%"}
+              // scrollX={"calc(100% + 100px)"}
               />
             </Card>
           </TabPane>

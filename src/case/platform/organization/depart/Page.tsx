@@ -17,30 +17,41 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
 
   public state = initState;
 
-  private showAll: boolean = false; //显示封存
-
   constructor(props: IPageProps) {
     super(props, Const, ServiceMock, Service);
   }
 
   public async init() {
-    const treeData = await this.service.getInit();
 
-    const tableData = await this.service.getTableDate();
+    const { isEnable, pageSize, currentPage } = this.state;
 
-    this.setState({ treeData, tableData });
+    const treeData = await this.service.getOrganizationTree();
+    if (!treeData.length) {
+      return;
+    }
+    const currOrgId = treeData[0].orgId;
+    const tableData = await this.service.getOrganizationList({
+      orgParentId: currOrgId,
+      isEnable,
+      currentPage,
+      pageSize,
+    });
+
+    this.setState({ currOrgId, treeData, tableData });
 
   }
 
   public render() {
 
+    const { treeData, tableData, currOrgId, isEnable, currentPage, pageSize } = this.state;
+
     return (
       <PageLayout>
         <PageSide>
-          <OrgTree showAll={this.showAll} onShowChange={this.onShowChange} treeData={this.state.treeData} />
+          <OrgTree showAll={isEnable} onShowChange={this.handleShowChange} treeData={treeData} selectedKeys={[currOrgId]} onSelect={this.handleSelectTreeNode} />
         </PageSide>
         <PageContent>
-          <Content dataSource={this.state.tableData} />
+          <Content dataSource={tableData} currentPage={currentPage} pageSize={pageSize} onTabChange={this.handleTabChange} />
         </PageContent>
       </PageLayout>
     );
@@ -48,10 +59,21 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
 
 
 
-  private onShowChange = (checked: boolean) => {
+  private handleShowChange = (checked: boolean) => {
+    // this.state.treeData
+    this.setState({
+      isEnable: checked
+    })
+  }
+
+
+  private handleSelectTreeNode = (selectedKeys: number[]) => {
 
   }
 
+  private handleTabChange = (activeKey: string) => {
+
+  }
 }
 
 export default GlobalRedux.ConnectPage.ConnectGlobal(Page)

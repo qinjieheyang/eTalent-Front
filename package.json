@@ -37,6 +37,7 @@
     "devDependencies": {
         "@types/jest": "24.0.11",
         "@types/lodash": "^4.14.134",
+        "@types/mockjs": "^1.0.2",
         "@types/node": "11.13.8",
         "@types/react": "^16.8.24",
         "@types/react-dom": "^16.8.5",

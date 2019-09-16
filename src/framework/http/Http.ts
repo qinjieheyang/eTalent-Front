@@ -148,7 +148,8 @@ export class Http {
     if (responseDto.data == null) {
       return {};
     }
-    if (responseDto.data.status < 0) {
+    //code = 10000 表示请求成功
+    if (responseDto.data.code !== 10000) {
       notification.warn({
         message: "http.data.status:" + responseDto.data.status,
         description: responseDto.data.message

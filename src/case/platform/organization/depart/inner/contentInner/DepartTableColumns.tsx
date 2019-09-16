@@ -6,9 +6,10 @@ const DepartTableColumns: Array<any> = [
     key: 'name',
     dataIndex: 'name',
     width: 150,
-    enableSearch: true,
     dataType: "linkText",
+    enableSearch: true,
     canAutoOrder: true,
+    checkNull: true,
     fixed: true,
     handler: {
       onLinkClick: (row: any) => {
