@@ -20,9 +20,10 @@ export class ServiceMock {
         return { treeData, tableData };
     };
     // 表格数据
-    public getOrganizationList = async ({ orgParentId, isEnable, currentPage, pageSize, querFieldVos }: ITableParam): Promise<any[]> => {
-        const mock = Mock.mock({
-                "list|20": [{
+    public getOrganizationList = async ({ orgParentId, isEnable, currentPage, pageSize, querFieldVos }: ITableParam): Promise<any> => {
+        return Mock.mock({
+            "list|10": [{
+                key: "@id",
                 companyId: "@id",
                 createTime: "@date",
                 isEnable: true, //是否启用
@@ -31,13 +32,15 @@ export class ServiceMock {
                 orgFullname: "机构全称-@integer(1, 100)", //机构全称
                 orgId: "@id", //机构ID
                 orgManagerId: "@id", //机构负责人
+                orgManagerName: "负责人-@integer(1, 100)", //机构负责人
                 orgName: "中国雄安投资集团", //机构名称
                 orgParentId: "@id", //父级机构ID
-                "orgType|@integer(0, 2)": ["集团", "单位", "部门"],  //机构类型
+                orgParentName: "父级-@integer(1, 100)", //父级机构ID
+                "orgType|1": ["集团", "单位", "部门"],  //机构类型 ["集团", "单位", "部门"]
                 sortId: "@increment", //序号
-            }]
-        })
-        return mock.list;
+            }],
+            total: 100
+        });
     };
 
     //根据是否封存查询用户下所有的机构,树形结构展示
@@ -54,7 +57,7 @@ export class ServiceMock {
                 orgManagerId: "@id", //机构负责人
                 orgName: "中国雄安投资集团", //机构名称
                 orgParentId: "@id", //父级机构ID
-                "orgType|@integer(0, 2)": ["集团", "单位", "部门"],  //机构类型
+                "orgType|1": ["集团", "单位", "部门"],  //机构类型
                 sortId: "@increment", //序号
                 "childList|3-5": [{
                     companyId: "@id",

@@ -59,6 +59,11 @@ interface IProps {
   minusHeight?: number;
   scrollX?: number | string;
   onChange?: (pagination: any, filters: any, sorter: any) => void;
+  pageSize?: number;
+  current?: number;
+  total?: number;
+  onShowSizeChange?: (current: number, size: number) => void;
+  onPageChange?: (page: number, pageSize: number) => void;
 }
 
 interface IState {
@@ -108,10 +113,10 @@ class AdaptiveTable extends React.Component<IProps, IState> {
   }
 
   render() {
-    const { minusHeight, dataSource } = this.props;
+    const { minusHeight, dataSource, current, pageSize, total, onShowSizeChange, onPageChange } = this.props;
     return <Table
       className="qj-adaptive-table"
-      style={{ height: `calc(100vh - ${minusHeight}px)`}}
+      style={{ height: `calc(100vh - ${minusHeight}px)` }}
       bordered
       dataSource={dataSource}
       columns={this.state.columns}
@@ -121,8 +126,14 @@ class AdaptiveTable extends React.Component<IProps, IState> {
         showQuickJumper: true,
         showSizeChanger: true,
         defaultCurrent: 1,
-        total: 500,
-        showTotal: (total, range) => `显示${range[0]}-${range[1]}，每页显示 ${total} 条`
+        current: current,
+        pageSize: pageSize,
+        total: total,
+        onShowSizeChange: onShowSizeChange,
+        onChange: onPageChange,
+        showTotal: (total, range) => {
+          return `显示${range[0]}-${range[1]}，每页显示 ${pageSize} 条`;
+        }
       }}
       scroll={this.state.scroll} />
   }

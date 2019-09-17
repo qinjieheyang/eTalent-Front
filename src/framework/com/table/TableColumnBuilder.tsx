@@ -351,6 +351,7 @@ export class TableColumnBuilder {
         width = 100,
         enableSearch = true,
         canAutoOrder = true,
+        // prefixText,
         searchData = ["是", "否"]
     }: IColumnDefine): IColumnSortDefine => {
         const col: IColumnSortDefine = {
@@ -365,12 +366,11 @@ export class TableColumnBuilder {
                 if (val === "" || val == null) {
                     return "";
                 }
-
-                if (val === true) {
-                    return searchData[0] || "是";
+                if (val === true || val === 1) {
+                    return <span className="qj-boolean-text"><span className="qj-boolean-prefix qj-boolean-prefix-true"></span>{searchData[0] || "是"}</span>;
                 }
-                if (val === false) {
-                    return searchData[1] || "否";
+                if (val === false || val === 0) {
+                    return <span className="qj-boolean-text"><span className="qj-boolean-prefix qj-boolean-prefix-false"></span>{searchData[1] || "否"}</span>;
                 }
 
                 return ":" + val;
@@ -553,6 +553,7 @@ export class TableColumnBuilder {
             dataIndex,
             dataType,
             width,
+            canAutoOrder,
             render: (cellValue: any, row: object, index: number): any => {
                 const table = this.mapSelectTable.get(dataIndex);
                 if (!table) {
@@ -565,7 +566,7 @@ export class TableColumnBuilder {
                 const codeRow: any = table.getById(cellValue);
                 return codeRow.name;
             },
-            ...ColumnSearch.getCheckboxSearchProps({ title, searchData })
+            ...ColumnSearch.getCheckboxSearchProps({ enableSearch, title, searchData })
         };
 
         this.columnDefines.push(col);

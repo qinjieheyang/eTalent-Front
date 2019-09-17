@@ -1,10 +1,8 @@
-// import React from "react";
-
 export const DepartTableColumns: Array<any> = [
   {
     title: '机构名称',
-    key: 'name',
-    dataIndex: 'name',
+    key: 'orgName',
+    dataIndex: 'orgName',
     width: 150,
     dataType: "linkText",
     enableSearch: true,
@@ -19,44 +17,46 @@ export const DepartTableColumns: Array<any> = [
   },
   {
     title: '封存',
-    dataIndex: 'age',
-    key: 'age',
+    dataIndex: 'isEnable',
+    key: 'isEnable',
     width: 150,
-    canAutoOrder: true,
-    enableSearch: true
+    dataType: "boolean",
+    searchData: ["否", "是"]
   },
   {
     title: '机构编码',
-    dataIndex: 'address',
-    key: '1',
+    dataIndex: 'orgCode',
+    key: 'orgCode',
     width: 150,
     enableSearch: true
   },
   {
     title: '机构类型',
-    dataIndex: 'address',
-    key: '2',
+    dataIndex: 'orgType',
+    key: 'orgType',
     width: 150,
-    enableSearch: true
+    dataType: "checkbox",
+    enableSearch: true,
+    searchData: [{ id: "GROUP", name: "集团" }, { id: "UNIT", name: "单位" }, { id: "DEPT", name: "部门" }]
   },
   {
     title: '上级机构',
-    dataIndex: 'address',
-    key: '3',
+    dataIndex: 'orgParentName',
+    key: 'orgParentName',
     width: 150,
     enableSearch: true
   },
   {
     title: '部门负责人',
-    dataIndex: 'address',
-    key: '4',
+    dataIndex: 'orgManagerName',
+    key: 'orgManagerName',
     width: 150,
     enableSearch: true
   },
   {
     title: '机构全称',
-    dataIndex: 'address',
-    key: '5',
+    dataIndex: 'orgFullname',
+    key: 'orgFullname',
     // width: 150,
     enableSearch: true
   }

@@ -30,7 +30,7 @@ const nodeDataArray = [
   { key: 7, parent: 1, avatar: "Denmark", title: "党委办公室", total: 20, online: 10, color: "#19ADE6" },
 ];
 
-interface IPageProps extends GlobalRedux.Actions.IGlobalActionDispatcher { }
+interface IPageProps extends GlobalRedux.States.IGlobalStateProps { }
 
 class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
 
@@ -42,6 +42,7 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
 
   constructor(props: IPageProps) {
     super(props, Const, ServiceMock, Service);
+    // console.log(this.props.globalState.codeTables.orgType)
   }
 
   public async init() {
@@ -53,7 +54,7 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
       return;
     }
     this.currOrgId = treeData[0].orgId;
-    const tableData = await this.service.getOrganizationList({
+    const orgData = await this.service.getOrganizationList({
       orgParentId: this.currOrgId,
       isEnable,
       currentPage,
@@ -61,8 +62,7 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
     });
 
 
-    this.setState({ selectedKeys: [this.currOrgId], treeData, tableData });
-
+    this.setState({ selectedKeys: [this.currOrgId], treeData, tableData: orgData["list"], total: orgData["total"] });
   }
 
   private getMenu = () => (
@@ -84,8 +84,10 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
 
   public render() {
 
-    const { treeData, tableData, selectedKeys, isEnable } = this.state;
-    const { visibleAdd, visibleDelete, visibleSeal, visibleUnSeal, visibleMerge, confirmLoading, visibleImport } = this.state;
+    const { treeData, tableData, selectedKeys, isEnable, pageSize, currentPage, total, visibleAdd, visibleDelete, visibleSeal, visibleUnSeal, visibleMerge, confirmLoading, visibleImport } = this.state;
+
+
+
 
     return (
       <PageLayout>
@@ -106,6 +108,11 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
                   columns={DepartTableColumns}
                   dataSource={tableData}
                   minusHeight={279}
+                  pageSize={pageSize}
+                  current={currentPage}
+                  total={total}
+                  onPageChange={this.handlePageChange}
+                  onShowSizeChange={this.handleShowSizeChange}
                 />
               </Card>
             </TabPane>
@@ -167,7 +174,13 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
     );
   }
 
+  private handleShowSizeChange = (current: number, size: number) => {
+    this.setState({ pageSize: size, currentPage: 1 })
+  }
 
+  private handlePageChange = (page: number, pageSize: number) => {
+    this.setState({ currentPage: page })
+  }
 
   private handleShowChange = (checked: boolean) => {
     this.setState({

@@ -24,6 +24,7 @@ export interface IState {
     isEnable: boolean;
     currentPage: number;
     pageSize: number;
+    total: number,
     visibleAdd: boolean;
     visibleDelete: boolean;
     visibleSeal: boolean; //封存
@@ -41,6 +42,7 @@ export const initState: IState = {
     isEnable: false,
     currentPage: 1,
     pageSize: 10,
+    total: 0,
     visibleAdd: false,
     visibleDelete: false,
     visibleSeal: false,
