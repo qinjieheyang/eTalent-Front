@@ -21,17 +21,23 @@ export class ServiceMock {
     };
     // 表格数据
     public getOrganizationList = async ({ orgParentId, isEnable, currentPage, pageSize, querFieldVos }: ITableParam): Promise<any[]> => {
-        const data: Array<any> = [];
-        for (let i = 0; i < 20; i++) {
-            data.push({
-                key: `a${i}`,
-                dataIndex: `a${i}`,
-                name: `Edrward ${i}`,
-                age: "aaa32",
-                address: `London Park no. ${i}`,
-            });
-        }
-        return data;
+        const mock = Mock.mock({
+                "list|20": [{
+                companyId: "@id",
+                createTime: "@date",
+                isEnable: true, //是否启用
+                operatorId: "@id",
+                orgCode: "机构编码-@integer(1, 100)", //机构编码
+                orgFullname: "机构全称-@integer(1, 100)", //机构全称
+                orgId: "@id", //机构ID
+                orgManagerId: "@id", //机构负责人
+                orgName: "中国雄安投资集团", //机构名称
+                orgParentId: "@id", //父级机构ID
+                "orgType|@integer(0, 2)": ["集团", "单位", "部门"],  //机构类型
+                sortId: "@increment", //序号
+            }]
+        })
+        return mock.list;
     };
 
     //根据是否封存查询用户下所有的机构,树形结构展示
@@ -40,7 +46,7 @@ export class ServiceMock {
             list: [{
                 companyId: "@id",
                 createTime: "@date",
-                isEnable: "@boolean", //是否封存
+                isEnable: true, //是否启用
                 operatorId: "@id",
                 orgCode: "机构编码-@integer(1, 100)", //机构编码
                 orgFullname: "机构全称-@integer(1, 100)", //机构全称

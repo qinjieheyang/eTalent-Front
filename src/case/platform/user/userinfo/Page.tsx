@@ -87,7 +87,7 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
     ];
     const { treeData } = this.state;
     const isEnable = false;
-    const currOrgId = 0;
+    const currOrgId = String(0);
     return (
       <PageLayout>
         <PageSide>
@@ -114,7 +114,7 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
   }
 
 
-  private handleSelectTreeNode = (selectedKeys: number[]) => {
+  private handleSelectTreeNode = (selectedKeys: string[]) => {
 
   }
 }

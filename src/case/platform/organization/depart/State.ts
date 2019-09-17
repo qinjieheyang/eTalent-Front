@@ -1,22 +1,15 @@
 // import * as Framework from 'src/framework/Framework';
 
 export interface ITreeBase {
-    // id: string; //key
-    // name: string; //title
-    // icon?: string;
-    // disabled?: boolean;
-    // selectable?: boolean;
-    // isLeaf?: boolean;
-    // children?: ITreeBase[];
 
-    companyId: number;
+    companyId: string;
     createTime?: string;
     isEnable: boolean; //是否封存
-    operatorId: number;
+    operatorId: string;
     orgCode: string; //机构编码
     orgFullname: string; //机构全称
-    orgId: number; //机构ID
-    orgManagerId: number; //机构负责人
+    orgId: string; //机构ID
+    orgManagerId: string; //机构负责人
     orgName: string; //机构名称
     orgParentId: number; //父级机构ID
     orgType: string;  //机构类型
@@ -27,19 +20,35 @@ export interface ITreeBase {
 export interface IState {
     treeData: ITreeBase[];
     tableData: any[];
-    currOrgId: number;
+    selectedKeys: string[];
     isEnable: boolean;
     currentPage: number;
     pageSize: number;
+    visibleAdd: boolean;
+    visibleDelete: boolean;
+    visibleSeal: boolean; //封存
+    visibleUnSeal: boolean; //解封
+    visibleMerge: boolean;
+    visibleImport: boolean;
+    confirmLoading: boolean;
+    orgAngle: number;
 }
 
-export const initState = {
+export const initState: IState = {
     treeData: [],
     tableData: [],
-    currOrgId: 0,
+    selectedKeys: [],
     isEnable: false,
     currentPage: 1,
-    pageSize: 10
+    pageSize: 10,
+    visibleAdd: false,
+    visibleDelete: false,
+    visibleSeal: false,
+    visibleUnSeal: false,
+    visibleMerge: false,
+    visibleImport: false,
+    confirmLoading: false,
+    orgAngle: 90
 };
 
 export interface IFieldVos {
@@ -50,9 +59,14 @@ export interface IFieldVos {
 }
 
 export interface ITableParam {
-    orgParentId: number;
+    orgParentId: string;
     isEnable: boolean;
     currentPage: number;
     pageSize: number;
     querFieldVos?: IFieldVos[];
+}
+
+export enum TabKey {
+    Table = "1",
+    Flow = "2"
 }

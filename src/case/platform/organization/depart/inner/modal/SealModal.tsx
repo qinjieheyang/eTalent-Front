@@ -5,7 +5,7 @@ import Framework from "src/framework/Framework";
 
 const { CheckBoxList } = Framework.Com.CheckBox;
 
-interface ISealModalProps{
+export interface ISealModalProps{
   title?: string;
   visible: boolean;
   confirmLoading: boolean;
@@ -25,7 +25,7 @@ const checkedList = [
 ]
 
 
-const SealModal = (props: ISealModalProps) => {
+export const SealModal = (props: ISealModalProps) => {
   const { title = "确认封存", visible, confirmLoading, onOk, onCancel} = props;
 
   const modalProps = { title, visible, confirmLoading, onOk, onCancel }
@@ -44,5 +44,3 @@ const SealModal = (props: ISealModalProps) => {
     </Modal>
   )
 }
-
-export default SealModal;

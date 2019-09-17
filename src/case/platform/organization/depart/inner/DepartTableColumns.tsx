@@ -1,6 +1,6 @@
 // import React from "react";
 
-const DepartTableColumns: Array<any> = [
+export const DepartTableColumns: Array<any> = [
   {
     title: '机构名称',
     key: 'name',
@@ -61,6 +61,3 @@ const DepartTableColumns: Array<any> = [
     enableSearch: true
   }
 ];
-
-
-export default DepartTableColumns;

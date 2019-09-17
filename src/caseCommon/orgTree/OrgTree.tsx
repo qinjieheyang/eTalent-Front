@@ -8,8 +8,8 @@ interface IProps {
   showAll: boolean; //显示封存
   treeData: any[];
   onShowChange: (checked: boolean) => void;
-  onSelect: (selectedKeys: number[]) => void;
-  selectedKeys: number[];
+  onSelect: (selectedKeys: string[]) => void;
+  selectedKeys: string[];
 }
 
 export class OrgTree extends React.Component<IProps> {
@@ -19,7 +19,6 @@ export class OrgTree extends React.Component<IProps> {
   }
 
   public render() {
-    console.log(this.props.showAll)
     const { onShowChange, treeData } = this.props;
 
     return (
@@ -31,14 +30,9 @@ export class OrgTree extends React.Component<IProps> {
         {
           treeData.length ? <Tree
             className="qj-depart-tree"
-            // onExpand={this.onExpand}
-            // defaultExpandedKeys={['0-0-0', '0-0-1']}
             defaultExpandAll
-          // autoExpandParent={this.state.autoExpandParent}
-          // onCheck={this.onCheck}
-          // checkedKeys={this.state.checkedKeys}
-          // onSelect={this.onSelect}
-          // selectedKeys={this.state.selectedKeys}
+            onSelect={this.props.onSelect}
+            selectedKeys={this.props.selectedKeys}
           >
             {this.renderTreeNodes(this.props.treeData)}
           </Tree> : null
@@ -52,14 +46,20 @@ export class OrgTree extends React.Component<IProps> {
     const showAll = this.props.showAll;
 
     return data.map((item: any) => {
+      const style = {
+        display: (item.isEnable || showAll) ? "block" : "none"
+      }
+
+      const className = item.isEnable ? undefined : "qj-tree-node-hidden"
+
       if (item.childList) {
         return (
-          <TreeNode title={item.orgName} key={item.orgId} dataRef={item}>
+          <TreeNode className={className} title={item.orgName} key={item.orgId} dataRef={item} style={style}>
             {this.renderTreeNodes(item.childList)}
           </TreeNode>
         );
       }
-      return <TreeNode title={item.orgName} key={item.orgId} dataRef={item} />;
+      return <TreeNode className={className} title={item.orgName} key={item.orgId} dataRef={item} style={style} />;
     });
   }
 
