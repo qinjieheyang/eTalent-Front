@@ -4,10 +4,10 @@ import Framework from "src/framework/Framework";
 import * as GlobalRedux from "src/globalRedux/GlobalRedux";
 import CaseCommon, { OrgTree } from "src/caseCommon/CaseCommon";
 import { PageLayout, PageSide, PageContent } from "src/caseCommon/PageCommon";
-import { Const } from "./Const";
+import { Const, TabKey } from "./Const";
 import { Service } from "./Service";
 import { IService, ServiceMock } from "./ServiceMock";
-import { initState, IState, TabKey } from "./State";
+import { initState, IState } from "./State";
 import * as InnerIndex from "./inner";
 
 const AdaptiveTable = Framework.Com.Tables.AdaptiveTable;
@@ -36,33 +36,11 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
 
   public state = initState;
 
-  private currOrgId: string;
-
   private orgFlowRef: any;
 
   constructor(props: IPageProps) {
     super(props, Const, ServiceMock, Service);
-    // console.log(this.props.globalState.codeTables.orgType)
-  }
 
-  public async init() {
-
-    const { isEnable, pageSize, currentPage } = this.state;
-
-    const treeData = await this.service.getOrganizationTree();
-    if (!treeData.length) {
-      return;
-    }
-    this.currOrgId = treeData[0].orgId;
-    const orgData = await this.service.getOrganizationList({
-      orgParentId: this.currOrgId,
-      isEnable,
-      currentPage,
-      pageSize,
-    });
-
-
-    this.setState({ selectedKeys: [this.currOrgId], treeData, tableData: orgData["list"], total: orgData["total"] });
   }
 
   private getMenu = () => (
@@ -82,12 +60,23 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
     </Menu>
   );
 
+  public async init() {
+
+    const { isEnable, pageSize, currentPage, currOrgId } = this.state;
+
+    const { treeData, tableData, total } = await this.service.getInit({ isEnable, pageSize, currentPage, orgParentId: currOrgId });
+
+    const currId = currOrgId || treeData.length ? treeData[0].orgId : undefined;
+
+    const selKeys = currId ? [currId] : [];
+
+    this.setState({ selectedKeys: selKeys, currOrgId: currId, treeData, tableData, total });
+
+  }
+
   public render() {
 
     const { treeData, tableData, selectedKeys, isEnable, pageSize, currentPage, total, visibleAdd, visibleDelete, visibleSeal, visibleUnSeal, visibleMerge, confirmLoading, visibleImport } = this.state;
-
-
-
 
     return (
       <PageLayout>
@@ -174,12 +163,28 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
     );
   }
 
-  private handleShowSizeChange = (current: number, size: number) => {
-    this.setState({ pageSize: size, currentPage: 1 })
+  //翻页：pagesize 改变
+  private handleShowSizeChange = async (current: number, size: number) => {
+    const { isEnable, currOrgId } = this.state;
+    const { tableData } = await this.service.getOrganizationList({
+      orgParentId: currOrgId,
+      isEnable,
+      currentPage: 1,
+      pageSize: size,
+    });
+    this.setState({ pageSize: size, currentPage: 1, tableData })
   }
 
-  private handlePageChange = (page: number, pageSize: number) => {
-    this.setState({ currentPage: page })
+  //翻页：页码改变
+  private handlePageChange = async (page: number, pageSize: number) => {
+    const { isEnable, currOrgId } = this.state;
+    const { tableData } = await this.service.getOrganizationList({
+      orgParentId: currOrgId,
+      isEnable,
+      currentPage: page,
+      pageSize,
+    });
+    this.setState({ currentPage: page, tableData });
   }
 
   private handleShowChange = (checked: boolean) => {

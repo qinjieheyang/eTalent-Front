@@ -18,6 +18,7 @@ export interface ITreeBase {
 }
 
 export interface IState {
+    currOrgId: string|undefined;
     treeData: ITreeBase[];
     tableData: any[];
     selectedKeys: string[];
@@ -36,6 +37,7 @@ export interface IState {
 }
 
 export const initState: IState = {
+    currOrgId: undefined,
     treeData: [],
     tableData: [],
     selectedKeys: [],
@@ -61,14 +63,9 @@ export interface IFieldVos {
 }
 
 export interface ITableParam {
-    orgParentId: string;
+    orgParentId: string | undefined;
     isEnable: boolean;
     currentPage: number;
     pageSize: number;
     querFieldVos?: IFieldVos[];
-}
-
-export enum TabKey {
-    Table = "1",
-    Flow = "2"
 }

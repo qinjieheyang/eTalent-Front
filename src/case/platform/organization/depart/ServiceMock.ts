@@ -6,22 +6,14 @@ export class ServiceMock {
     public constructor() { }
 
     // 数据初始化
-    public getInit = async (): Promise<{ treeData: ITreeBase[], tableData: any[] }> => {
+    public getInit = async (params: ITableParam): Promise<{ treeData: ITreeBase[], tableData: any[], total: number }> => {
         const treeData = await this.getOrganizationTree();
-        if (!treeData.length) {
-            return { treeData: [], tableData: [] };
-        }
-        const tableData = await this.getOrganizationList({
-            orgParentId: treeData[0].orgId,
-            isEnable: false,
-            currentPage: 1,
-            pageSize: 10,
-        });
-        return { treeData, tableData };
+        const { tableData, total } = await this.getOrganizationList(params);
+        return { treeData, tableData, total };
     };
     // 表格数据
-    public getOrganizationList = async ({ orgParentId, isEnable, currentPage, pageSize, querFieldVos }: ITableParam): Promise<any> => {
-        return Mock.mock({
+    public getOrganizationList = async (params: ITableParam): Promise<{ tableData: any[], total: number }> => {
+        const { list, total } = Mock.mock({
             "list|10": [{
                 key: "@id",
                 companyId: "@id",
@@ -41,11 +33,16 @@ export class ServiceMock {
             }],
             total: 100
         });
+
+        return {
+            tableData: list,
+            total
+        }
     };
 
     //根据是否封存查询用户下所有的机构,树形结构展示
     public getOrganizationTree = async (): Promise<ITreeBase[]> => {
-        const result = Mock.mock({
+        const { list } = Mock.mock({
             list: [{
                 companyId: "@id",
                 createTime: "@date",
@@ -89,7 +86,7 @@ export class ServiceMock {
                 }], //子级机构
             }]
         });
-        return result["list"]
+        return list;
     };
 }
 
