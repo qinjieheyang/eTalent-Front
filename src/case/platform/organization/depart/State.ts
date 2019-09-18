@@ -19,8 +19,10 @@ export interface ITreeBase {
 
 export interface IState {
     currOrgId: string|undefined;
+    currOrgCode: string|undefined;
     treeData: ITreeBase[];
     tableData: any[];
+    orgFlowData: any[];
     selectedKeys: string[];
     isEnable: boolean;
     currentPage: number;
@@ -38,8 +40,10 @@ export interface IState {
 
 export const initState: IState = {
     currOrgId: undefined,
+    currOrgCode: undefined,
     treeData: [],
     tableData: [],
+    orgFlowData: [],
     selectedKeys: [],
     isEnable: false,
     currentPage: 1,

@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
-import { Button } from "antd";
+import { Button, Select } from "antd";
+import Framework from "src/framework/Framework";
 import go, { Point } from 'gojs';
 const $ = go.GraphObject.make;
+const { Option } = Select;
 
 interface IOrgFlowProps {
   data: any[];
+  parentCode: string | undefined;
 }
 interface IOrgFlowState {
   ratio: string;
   myModel: any;
   myDiagram: any;
-  angle: number
+  angle: number;
 }
 export class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
   public diagram: go.Diagram;
-  
+
   private orgFlowEl: React.RefObject<HTMLDivElement>;
 
   constructor(props: IOrgFlowProps) {
@@ -22,7 +25,7 @@ export class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
     this.state = { ratio: "100%", myModel: null, myDiagram: null, angle: 90 }
   }
 
-  renderCanvas = () => {
+  private renderCanvas = () => {
     let diagram = $(go.Diagram, this.orgFlowEl,  // the DIV HTML element
       {
         // Put the diagram contents at the top center of the viewport
@@ -53,6 +56,11 @@ export class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
       // return "https://www.nwoods.com/go/Flags/" + avatar.toLowerCase().replace(/\s/g, "-") + "-flag.Png";
       return "/img/avatar.png";
     }
+
+    // function convertData(data: any[]){
+    //   return data.filter(item => item.isEnable == showAll)
+    // }
+
     diagram.nodeTemplate =
       $(go.Node, "Auto",
         {
@@ -82,7 +90,7 @@ export class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
               overflow: go.TextBlock.OverflowEllipsis,
               maxLines: 1,
             },
-            new go.Binding("text", "title"),
+            new go.Binding("text", "orgName"),
           ),
           // 水平方向 panel
           $(go.Panel, "Horizontal",
@@ -121,7 +129,7 @@ export class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
                   font: "600 14px Roboto, sans-serif",
                   alignment: go.Spot.Left
                 },
-                new go.Binding("text", "", function () { return "张三" })
+                new go.Binding("text", "orgManagerName")
               ),
               $(go.TextBlock,
                 {
@@ -165,42 +173,57 @@ export class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
         { corner: 5, selectable: false },
         $(go.Shape, { strokeWidth: 1, stroke: "#e0e0e0" }));  // dark gray, rounded corner links
 
-
-    diagram.model = $(go.TreeModel,
-      {
-        nodeDataArray: this.props.data
-      }
-    );
-
     this.diagram = diagram;
   }
 
+  private renderOptionItem = () => {
+    const opt = [
+      { value: "0", text: "全部显示" },
+      { value: "1", text: "显示1层" },
+      { value: "2", text: "显示2层" },
+      { value: "3", text: "显示3层" },
+    ]
+    return opt.map(item => (
+      <Option value={item.value} key={item.value}>{item.text}</Option>
+    ))
+  }
 
 
   componentDidMount() {
     this.renderCanvas();
+    this.loadData();
   }
 
   render() {
     return (
-      <div className="qj-org-flow-wrapper">
-        <div className="qj-org-zoom-box">
-          <Button shape="circle" icon="plus" onClick={() => { this.handleZoom(1) }} />
-          <span style={{ display: "block", padding: "20px 0" }}>{this.state.ratio}</span>
-          <Button shape="circle" icon="minus" onClick={() => { this.handleZoom(0) }} />
+      <React.Fragment>
+        <Framework.Com.Buttons.Tool.LeftArea>
+          <Button onClick={this.handleOrgAngle}>显示方向</Button>
+          <Button>显示内容</Button>
+          <Select defaultValue="0" onChange={this.handleShowLevelChange}>
+            {this.renderOptionItem()}
+          </Select>
+          <Button type="primary" onClick={this.handleOrgExport}>导出</Button>
+        </Framework.Com.Buttons.Tool.LeftArea>
+        <div className="qj-org-flow-wrapper">
+          <div className="qj-org-zoom-box">
+            <Button shape="circle" icon="plus" onClick={() => { this.handleZoom(1) }} />
+            <span style={{ display: "block", padding: "20px 0" }}>{this.state.ratio}</span>
+            <Button shape="circle" icon="minus" onClick={() => { this.handleZoom(0) }} />
+          </div>
+          <div id="qj-org-flow" ref={(node: any) => { this.orgFlowEl = node }}></div>
         </div>
-        <div id="qj-org-flow" ref={(node: any) => {this.orgFlowEl = node}}></div>
-      </div>
+      </React.Fragment>
     );
   }
 
-  handleZoom = (num: number) => {
+  private handleZoom = (num: number) => {
     const scale = this.diagram.scale;
     this.diagram.scale = num > 0 ? scale + 0.1 : scale - 0.1;
     this.setState({ "ratio": `${Math.round(this.diagram.scale * 100)}%` })
   }
 
-  export = () => {
+  private handleOrgExport = () => {
     const img = this.diagram.makeImage({ scale: 1 });
     var url = String(img && img.src);
     var a = document.createElement('a');
@@ -210,7 +233,7 @@ export class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
     a.dispatchEvent(event)
   }
 
-  setAngle = () => {
+  private handleOrgAngle = () => {
     const angle = this.state.angle > 0 ? 0 : 90;
     this.setState({ angle });
     this.diagram.layout = $(go.TreeLayout,  // use a TreeLayout to position all of the nodes
@@ -226,5 +249,28 @@ export class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
         alternateAlignment: go.TreeLayout.AlignmentCenterChildren,
         alternateNodeSpacing: 56
       })
+  }
+
+  private loadData = (maxOrgCodeLength?: number) => {
+    const dataSource = this.props.data;
+    const convertData = (maxOrgCodeLength: number) => dataSource.filter(item => item.orgCode.length <= maxOrgCodeLength);
+    const data = maxOrgCodeLength ? convertData(maxOrgCodeLength) : dataSource;
+    this.diagram.model = $(go.TreeModel,
+      {
+        nodeParentKeyProperty: "orgParentId",
+        nodeKeyProperty: "orgId",
+        nodeDataArray: data
+      }
+    );
+  }
+
+  private handleShowLevelChange = (value: string) => {
+    if (this.props.parentCode === undefined) {
+      return this.loadData();
+    }
+    const parentIdLenght = this.props.parentCode.length;
+    const numberVal = Number(value);
+    this.loadData(numberVal > 0 ? parentIdLenght + (numberVal - 1) * 3 : undefined);
+
   }
 }

@@ -11,7 +11,7 @@ export class Service extends Framework.Case.ServiceBase implements IService {
         if (!treeData.length) {
             return { treeData: [], tableData: [], total: 0 };
         }
-        if(params.orgParentId === undefined && treeData.length){
+        if (params.orgParentId === undefined && treeData.length) {
             params.orgParentId = treeData[0].orgId;
         }
         const { tableData, total } = await this.getOrganizationList(params);
@@ -39,4 +39,9 @@ export class Service extends Framework.Case.ServiceBase implements IService {
         const data = await this.http.get("/organization/getOrganizationTree");
         return data["result"]["list"] || [];
     };
+
+    public getOrganizationGraphics = async (): Promise<any[]> => {
+        const data = await this.http.get("/organization/getOrganizationGraphics");
+        return data["result"]["list"] || [];
+    }
 }

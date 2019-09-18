@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Tabs, Button, Menu, Icon, Select, Card } from "antd";
+import { Tabs, Button, Menu, Icon, Card } from "antd";
 import Framework from "src/framework/Framework";
 import * as GlobalRedux from "src/globalRedux/GlobalRedux";
 import CaseCommon, { OrgTree } from "src/caseCommon/CaseCommon";
@@ -13,22 +13,10 @@ import * as InnerIndex from "./inner";
 const AdaptiveTable = Framework.Com.Tables.AdaptiveTable;
 const { DropdownMore } = Framework.Com.Dropdowns;
 const { TabPane } = Tabs;
-const { Option } = Select;
 
 const { AddModal, DeleteModal, SealModal, UnSealModal, MergeModal, ImportModal, DepartTableColumns, OrgFlow } = InnerIndex;
 
 import "./Style.less";
-
-const nodeDataArray = [
-  { key: 0, avatar: "Denmark", title: "中国雄安投资集团", name: "张三", total: 20, online: 10, color: "#FF8C58" },
-  { key: 1, parent: 0, avatar: "Denmark", title: "集团办公室", total: 20, online: 10, color: "#2FDD93" },
-  { key: 2, parent: 1, avatar: "Denmark", title: "党委办公室", total: 20, online: 10, color: "#19ADE6" },
-  { key: 3, parent: 1, avatar: "Denmark", title: "党委办公室", total: 20, online: 10, color: "#19ADE6" },
-  { key: 4, parent: 1, avatar: "Denmark", title: "党委办公室", total: 20, online: 10, color: "#19ADE6" },
-  { key: 5, parent: 1, avatar: "Denmark", title: "党委办公室", total: 20, online: 10, color: "#19ADE6" },
-  { key: 6, parent: 1, avatar: "Denmark", title: "党委办公室", total: 20, online: 10, color: "#19ADE6" },
-  { key: 7, parent: 1, avatar: "Denmark", title: "党委办公室", total: 20, online: 10, color: "#19ADE6" },
-];
 
 interface IPageProps extends GlobalRedux.States.IGlobalStateProps { }
 
@@ -36,14 +24,12 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
 
   public state = initState;
 
-  private orgFlowRef: any;
-
   constructor(props: IPageProps) {
     super(props, Const, ServiceMock, Service);
 
   }
 
-  private getMenu = () => (
+  private renderMenu = () => (
     <Menu style={{ textAlign: "center" }}>
       <Menu.Item onClick={this.openSealModal}>封存</Menu.Item>
       <Menu.Item onClick={this.openUnSealModal}>解封</Menu.Item>
@@ -60,23 +46,33 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
     </Menu>
   );
 
+  // private renderCard = (children: any) => (
+  //   <Card bodyStyle={{ padding: 16, height: "calc(100vh - 151px)", minWidth: 1150 }} bordered={false}>
+  //     {children}
+  //   </Card>
+  // )
+
   public async init() {
 
-    const { isEnable, pageSize, currentPage, currOrgId } = this.state;
+    const { isEnable, pageSize, currentPage, currOrgId, currOrgCode } = this.state;
 
     const { treeData, tableData, total } = await this.service.getInit({ isEnable, pageSize, currentPage, orgParentId: currOrgId });
 
     const currId = currOrgId || treeData.length ? treeData[0].orgId : undefined;
 
+    const currCode = currOrgCode || treeData.length ? treeData[0].orgCode : undefined;
+
     const selKeys = currId ? [currId] : [];
 
-    this.setState({ selectedKeys: selKeys, currOrgId: currId, treeData, tableData, total });
+    const orgFlowData = await this.service.getOrganizationGraphics();
+
+    this.setState({ selectedKeys: selKeys, currOrgId: currId, currOrgCode: currCode, treeData, tableData, total, orgFlowData });
 
   }
 
   public render() {
 
-    const { treeData, tableData, selectedKeys, isEnable, pageSize, currentPage, total, visibleAdd, visibleDelete, visibleSeal, visibleUnSeal, visibleMerge, confirmLoading, visibleImport } = this.state;
+    const { treeData, tableData, selectedKeys, isEnable, pageSize, currentPage, total, orgFlowData, currOrgCode, visibleAdd, visibleDelete, visibleSeal, visibleUnSeal, visibleMerge, confirmLoading, visibleImport } = this.state;
 
     return (
       <PageLayout>
@@ -87,11 +83,12 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
           <Tabs size="large" animated={false} tabBarStyle={{ marginBottom: 0, background: "#fff" }} onChange={this.handleTabChange}>
             <TabPane key="1" className="qj-depart-tab-pane"
               tab={<span><Icon type="table" />机构表</span>}>
+              {/* {this.renderCard()} */}
               <Card bodyStyle={{ padding: 16, height: "calc(100vh - 151px)", minWidth: 1150 }} bordered={false}>
                 <Framework.Com.Buttons.Tool.LeftArea>
                   <Button type="primary" onClick={this.openAddModal}>新增</Button>
                   <Button onClick={this.openDelModal}>删除</Button>
-                  <DropdownMore menu={this.getMenu()}></DropdownMore>
+                  <DropdownMore menu={this.renderMenu()}></DropdownMore>
                 </Framework.Com.Buttons.Tool.LeftArea>
                 <AdaptiveTable
                   columns={DepartTableColumns}
@@ -108,17 +105,7 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
             <TabPane key="2" className="qj-depart-tab-pane"
               tab={<span><Icon type="apartment" />机构图</span>}>
               <Card bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
-                <Framework.Com.Buttons.Tool.LeftArea>
-                  <Button onClick={this.handleOrgAngle}>显示方向</Button>
-                  <Button onClick={this.openDelModal}>显示内容</Button>
-                  <Select defaultValue="0">
-                    <Option value="0">全部显示</Option>
-                    <Option value="1">显示1层</Option>
-                    <Option value="2">显示2层</Option>
-                  </Select>
-                  <Button type="primary" onClick={this.handleOrgExport}>导出</Button>
-                </Framework.Com.Buttons.Tool.LeftArea>
-                <OrgFlow ref={this.orgFlowRef} data={nodeDataArray} />
+                <OrgFlow data={orgFlowData} parentCode={currOrgCode} />
               </Card>
             </TabPane>
           </Tabs>
@@ -187,33 +174,39 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
     this.setState({ currentPage: page, tableData });
   }
 
-  private handleShowChange = (checked: boolean) => {
-    this.setState({
-      isEnable: checked
-    })
+  //是否显示封存
+  private handleShowChange = async (checked: boolean) => {
+    const { pageSize, currOrgId } = this.state;
+    const { tableData } = await this.service.getOrganizationList({
+      orgParentId: currOrgId,
+      isEnable: checked,
+      currentPage: 1,
+      pageSize
+    });
+    this.setState({ currentPage: 1, tableData, isEnable: checked })
   }
 
-
-  private handleSelectTreeNode = (selectedKeys: string[]) => {
-    this.setState({ selectedKeys })
-  }
-
-  private handleTabChange = (activeKey: string) => {
-    // let data: any;
+  private handleTabChange = async (activeKey: string) => {
     if (activeKey === TabKey.Table) {
-      // data = this.service.get
+      // const { pageSize, currOrgId } = this.state;
+      // const { tableData } = await this.service.getOrganizationList({
+      //   orgParentId: currOrgId,
+      //   isEnable: checked,
+      //   currentPage: 1,
+      //   pageSize
+      // });
     }
     if (activeKey === TabKey.Flow) {
       // console.log(2)
     }
   }
-  private handleOrgAngle = () => {
-    this.orgFlowRef.setAngle();
+
+  private handleSelectTreeNode = (selectedKeys: string[]) => {
+    this.setState({ selectedKeys })
   }
 
-  private handleOrgExport = () => {
-    this.orgFlowRef.export();
-  }
+
+
 
 
 
