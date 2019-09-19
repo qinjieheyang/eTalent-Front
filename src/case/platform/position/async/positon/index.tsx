@@ -1,7 +1,7 @@
 import * as React from "react";
 
-const Postion = () => {
+const Position = () => {
   return <div>Postion</div>
 }
 
-export default Postion;
+export default Position;

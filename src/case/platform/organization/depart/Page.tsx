@@ -8,7 +8,7 @@ import { Const, TabKey } from "./Const";
 import { Service } from "./Service";
 import { IService, ServiceMock } from "./ServiceMock";
 import { initState, IState } from "./State";
-import * as InnerIndex from "./inner";
+import * as InnerIndex from "./inner/Index";
 
 const AdaptiveTable = Framework.Com.Tables.AdaptiveTable;
 const { DropdownMore } = Framework.Com.Dropdowns;
