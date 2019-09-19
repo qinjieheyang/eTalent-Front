@@ -13,6 +13,7 @@ class  State implements  Framework.Case.Model.IModelTablePageCurd {
     editingRow?: object | undefined;
     isDisplaySearchForm: boolean;
     searchDto: Framework.Case.Model.IPaging|any;
+    noTitleKey: string;
 }
 
 export const initState= {...new State()};

@@ -40,7 +40,7 @@ export default class Page extends React.Component<any, any> {
     super(props);
     this.bulider = new TableColumnBuilder();
     this.initColumns();
-    this.state = {columns: this.columns, dataSource: dataSource, selectedRowKeys:[]};
+    this.state = {columns: this.columns, dataSource: dataSource, selectedRowKeys:[], noTitleKey: "article"};
 
   }
 
@@ -159,8 +159,30 @@ export default class Page extends React.Component<any, any> {
       onChange: this.onSelectChange,
     };
 
+    const tabListNoTitle = [
+      {
+        key: 'article',
+        tab: 'article',
+      },
+      {
+        key: 'app',
+        tab: 'app',
+      },
+      {
+        key: 'project',
+        tab: 'project',
+      },
+    ];
+
     return (
-      <Card>
+      <Card
+          style={{ width: '100%' }}
+          tabList={tabListNoTitle}
+          activeTabKey={this.state.noTitleKey}
+          onTabChange={key => {
+            this.onTabChange(key, 'noTitleKey');
+          }}
+        >
         <Table 
           bordered
           dataSource={this.state.dataSource}
@@ -170,6 +192,11 @@ export default class Page extends React.Component<any, any> {
       </Card>
     )
   }
+
+  private onTabChange = (key: string, type: string) => {
+    console.log(key, type);
+    // this.setState({ [type]: key });
+  };
 
   public onSelectChange = (selectedRowKeys: string[] ) => {
     console.log('selectedRowKeys changed: ', selectedRowKeys);

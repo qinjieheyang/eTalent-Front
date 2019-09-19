@@ -1,22 +1,24 @@
 import * as React from "react";
-import { Tabs, Button, Table, Layout, Menu, Icon, Card } from "antd";
+import { Card } from "antd";
 
 import CaseCommon from "src/caseCommon/CaseCommon";
-import { Const } from "./Const";
+import { Const, TabList } from "./Const";
 import { Service } from "./Service";
 import { IService, ServiceMock } from "./ServiceMock";
 import { IState, initState } from "./State";
 
-import PositionSystem from './inner/PositionSystem';
+// import PositionSystem from './inner/PositionSystem';
 import { PageLayout, PageContent } from 'src/caseCommon/PageCommon';
-import Framework from 'src/framework/Framework';
+import AsyncContent from "./async/AsyncContent";
+// import Framework from 'src/framework/Framework';
 // import PositionGroup from './inner/PositionGroup';
-const { TabPane } = Tabs;
-const { SubMenu } = Menu;
+// const { TabPane } = Tabs;
+// const { SubMenu } = Menu;
+
 
 interface IPageProps { }
 export default class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
-  public state = initState;
+  public state: IState = initState;
 
   constructor(props: IPageProps) {
     super(props, Const, ServiceMock, Service);
@@ -42,113 +44,28 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
   };
 
   public render() {
-    const { PS_columnCollection, PS_dataCollection } = this.state;
+    // const { PS_columnCollection, PS_dataCollection } = this.state;
+    const { tabKey } = this.state;
     return (
       <PageLayout>
         <PageContent>
-          <Tabs size="large" animated={false} tabBarStyle={{ marginBottom: 0, background: "#fff" }}>
-            <TabPane tab="职位体系" key="1">
-              <Card bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
-                <PositionSystem columnCollection={PS_columnCollection} dataCollection={PS_dataCollection} />
-              </Card>
-            </TabPane>
-            <TabPane tab="职位族设置" key="2">
-              <Card bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
-                <Framework.Com.Buttons.Tool.LeftArea>
-                  <Button type="primary">新增</Button>
-                  <Button>删除</Button>
-                  <Button>更多操作</Button>
-                </Framework.Com.Buttons.Tool.LeftArea>
-                <Table columns={[]} dataSource={[]} bordered pagination={false} />
-              </Card>
-            </TabPane>
-            <TabPane tab="职位设置" key="3">
-              <Layout style={{ height: "calc(100vh - 151px)" }}>
-                <Layout.Sider style={{ background: "#fff", borderRight: "1px solid #e8e8e8" }}>
-                  <Menu
-                    mode="inline"
-                    openKeys={this.state.openKeys}
-                    onOpenChange={this.onOpenChange}
-                    style={{ border: "none" }}
-                  >
-                    <SubMenu
-                      key="sub1"
-                      title={
-                        <span>
-                          <Icon type="mail" />
-                          <span>研发族</span>
-                        </span>
-                      }
-                    >
-                      <Menu.Item key="1">产品设计</Menu.Item>
-                      <Menu.Item key="2">前端开发</Menu.Item>
-                      <Menu.Item key="3">后端测试</Menu.Item>
-                      <Menu.Item key="4">系统测试</Menu.Item>
-                    </SubMenu>
-                    <SubMenu
-                      key="sub2"
-                      title={
-                        <span>
-                          <Icon type="appstore" />
-                          <span>销售族</span>
-                        </span>
-                      }
-                    >
-                      <Menu.Item key="5">Option 5</Menu.Item>
-                      <Menu.Item key="6">Option 6</Menu.Item>
-                    </SubMenu>
-                    <SubMenu
-                      key="sub4"
-                      title={
-                        <span>
-                          <Icon type="setting" />
-                          <span>实施族</span>
-                        </span>
-                      }
-                    >
-                      <Menu.Item key="9">Option 9</Menu.Item>
-                      <Menu.Item key="10">Option 10</Menu.Item>
-                      <Menu.Item key="11">Option 11</Menu.Item>
-                      <Menu.Item key="12">Option 12</Menu.Item>
-                    </SubMenu>
-                  </Menu>
-                </Layout.Sider>
-                <Layout.Content style={{ background: "#fff" }}>
-                  <Card bodyStyle={{ padding: 16 }} bordered={false}>
-                    <Framework.Com.Buttons.Tool.LeftArea>
-                      <Button type="primary">新增</Button>
-                      <Button>删除</Button>
-                      <Button>更多操作</Button>
-                    </Framework.Com.Buttons.Tool.LeftArea>
-                    <Table columns={[]} dataSource={[]} bordered pagination={false} />
-                  </Card>
-                </Layout.Content>
-              </Layout>
-            </TabPane>
-            <TabPane tab="职级设置" key="4">
-              <Card bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
-                <Framework.Com.Buttons.Tool.LeftArea>
-                  <Button type="primary">新增</Button>
-                  <Button>删除</Button>
-                  <Button>更多操作</Button>
-                </Framework.Com.Buttons.Tool.LeftArea>
-                <Table columns={[]} dataSource={[]} bordered pagination={false} />
-              </Card>
-            </TabPane>
-            <TabPane tab="职等设置" key="5">
-              <Card bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
-                <Framework.Com.Buttons.Tool.LeftArea>
-                  <Button type="primary">新增</Button>
-                  <Button>删除</Button>
-                  <Button>更多操作</Button>
-                </Framework.Com.Buttons.Tool.LeftArea>
-                <Table columns={[]} dataSource={[]} bordered pagination={false} />
-              </Card>
-            </TabPane>
-          </Tabs>
+          <Card
+            className="qj-card-async"
+            tabList={TabList}
+            activeTabKey={tabKey}
+            onTabChange={this.onTabChange}
+            headStyle={{ paddingLeft: 0 }}
+            bodyStyle={{ height: "calc(100vh - 151px)" }}
+          >
+            <AsyncContent tabKey={tabKey} />
+          </Card>
         </PageContent>
       </PageLayout>
     );
   }
+
+  private onTabChange = (key: string) => {
+    this.setState({ "tabKey": key });
+  };
 
 }

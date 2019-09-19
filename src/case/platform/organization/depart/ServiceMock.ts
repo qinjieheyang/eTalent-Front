@@ -96,6 +96,7 @@ export class ServiceMock {
         return list;
     };
 
+    //根据是否封存查询用户下所有的机构,图形化展示
     public getOrganizationGraphics = async (): Promise<any[]> => {
 
         // const { list } = Mock.mock({
@@ -134,6 +135,8 @@ export class ServiceMock {
 
         return list;
     }
+
+    
 }
 
 export interface IService extends ServiceMock { }
