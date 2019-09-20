@@ -4,11 +4,11 @@ import CaseCommon from "src/caseCommon/CaseCommon";
 const { AsyncComponent } = CaseCommon;
 
 // 异步加载的组件页面
-const System = AsyncComponent(() => import('./system/index'));
-const Group = AsyncComponent(() => import('./group/index'));
-const Position = AsyncComponent(() => import('./positon/index'));
-const Level = AsyncComponent(() => import('./level/index'));
-const Grade = AsyncComponent(() => import('./garde/index'));
+const System = AsyncComponent(() => import('./system/Index'));
+const Group = AsyncComponent(() => import('./group/Index'));
+const Position = AsyncComponent(() => import('./positon/Index'));
+const Level = AsyncComponent(() => import('./level/Index'));
+const Grade = AsyncComponent(() => import('./garde/Index'));
 
 interface IProps {
   tabKey: string;

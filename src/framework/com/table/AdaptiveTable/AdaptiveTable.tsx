@@ -51,6 +51,7 @@ const rowSelection = {
   onSelectAll: (selected: any, selectedRows: any, changeRows: any) => {
     console.log(selected, selectedRows, changeRows);
   },
+  columnWidth: 50
 };
 
 interface IProps {

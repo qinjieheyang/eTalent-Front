@@ -55,7 +55,7 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
             activeTabKey={tabKey}
             onTabChange={this.onTabChange}
             headStyle={{ paddingLeft: 0 }}
-            bodyStyle={{ height: "calc(100vh - 151px)" }}
+            bodyStyle={{ height: "calc(100vh - 151px)", padding: 16 }}
           >
             <AsyncContent tabKey={tabKey} />
           </Card>

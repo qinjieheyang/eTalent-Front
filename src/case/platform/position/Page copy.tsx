@@ -7,9 +7,9 @@ import { Service } from "./Service";
 import { IService, ServiceMock } from "./ServiceMock";
 import { IState, initState } from "./State";
 
-import PositionSystem from './inner/PositionSystem';
 import { PageLayout, PageContent } from 'src/caseCommon/PageCommon';
 import Framework from 'src/framework/Framework';
+// import PositionSystem from './inner/PositionSystem';
 // import PositionGroup from './inner/PositionGroup';
 const { TabPane } = Tabs;
 const { SubMenu } = Menu;
@@ -42,14 +42,14 @@ export default class Page extends CaseCommon.PageBase<IPageProps, IState, IServi
   };
 
   public render() {
-    const { PS_columnCollection, PS_dataCollection } = this.state;
+    // const { PS_columnCollection, PS_dataCollection } = this.state;
     return (
       <PageLayout>
         <PageContent>
           <Tabs size="large" animated={false} tabBarStyle={{ marginBottom: 0, background: "#fff" }}>
             <TabPane tab="职位体系" key="1">
               <Card bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
-                <PositionSystem columnCollection={PS_columnCollection} dataCollection={PS_dataCollection} />
+                {/* <PositionSystem columnCollection={PS_columnCollection} dataCollection={PS_dataCollection} /> */}
               </Card>
             </TabPane>
             <TabPane tab="职位族设置" key="2">

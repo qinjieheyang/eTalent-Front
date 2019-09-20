@@ -28,8 +28,6 @@ export default class System extends CaseCommon.PageAsyncBase<IProps, IState, ISe
   public render() {
     const { showType, columns, tableData } = this.state;
 
-    console.log(columns)
-
     return (
       <div style={{ height: "100%", overflowY: "auto" }}>
         <Radio.Group value={showType} onChange={this.handleTypeChange} style={{ marginBottom: 16 }}>
@@ -45,18 +43,21 @@ export default class System extends CaseCommon.PageAsyncBase<IProps, IState, ISe
     const showType = e.target.value;
     let newColumns: any[] = [];
     let newTableData: any[] = [];
+
     //按职级
     if (showType === "1") {
-      newColumns = this.GetLevelColumns([]);
-      newTableData = this.GetLevelData([]);
+      const { list, columns } = await this.service.showByPositionLevel();
+      newColumns = this.GetLevelColumns(columns);
+      newTableData = this.GetLevelData(list);
     }
 
     //按职位
     if (showType === "2") {
-      const { list, columns } = await this.service.showByPositionLevel();
+      const { list, columns } = await this.service.showByPosition();
       newColumns = this.GetPositonColumns(columns);
       newTableData = this.GetPositionData(list);
     }
+
     this.setState({
       showType,
       columns: newColumns,
@@ -89,14 +90,7 @@ export default class System extends CaseCommon.PageAsyncBase<IProps, IState, ISe
   }
 
   private GetLevelColumns = (cols: any[]): any[] => {
-    // let columns = [];
-    // columns.push({
-    //   title: "职级",
-    //   key: "positionLevelName",
-    //   dataIndex: "positionLevelName",
-    //   width: 65
-    // });
-
+    console.log(cols, 22)
     return [
       {
         title: "职级",

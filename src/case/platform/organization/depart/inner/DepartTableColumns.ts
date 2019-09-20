@@ -1,4 +1,4 @@
-export const DepartTableColumns: Array<any> = [
+export const DepartTableColumns = [
   {
     title: '机构名称',
     key: 'orgName',

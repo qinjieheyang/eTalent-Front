@@ -27,6 +27,15 @@ const formatTitle = (title: string, width?: number, enableSearch?: boolean, canA
     return <span title={title} className="qj-table-td-txt">{title}</span>
 }
 
+const formatTextWidth = (width?: number) => {
+    if (width && width > 32) {
+        return {
+            width: width - 32
+        }
+    }
+    return {};
+}
+
 interface FilterDropdownProps {
     setSelectedKeys: (target: string[]) => void;
     selectedKeys: string[];
@@ -243,10 +252,8 @@ export class TableColumnBuilder {
                 }
 
                 const text = col.prefixText ? col.prefixText + cellValue : cellValue;
-                if (width && width > 32) {
-                    return <span title={cellValue} className="qj-table-td-txt" style={{ width: width - 32 }}>{text}</span>
-                }
-                return <span title={cellValue} className="qj-table-td-txt">{text}</span>
+
+                return <span title={cellValue} className="qj-table-td-txt" style={formatTextWidth(width)}>{text}</span>
             },
             ...ColumnSearch.getTextSearchProps({ title, enableSearch, checkNull, handler }),
 
@@ -260,7 +267,7 @@ export class TableColumnBuilder {
         key,
         dataIndex,
         dataType,
-        width = 150,
+        width,
         enableSearch = false,
         checkNull = false,
         canAutoOrder = true,
@@ -295,7 +302,8 @@ export class TableColumnBuilder {
                 }
 
                 const text = col.prefixText ? col.prefixText + cellValue : cellValue;
-                return <a href="javascript:;" title={cellValue} className="qj-table-td-txt" style={{ width: width - 32 }} onClick={() => { handleLinkClick(row) }}>{text}</a>
+
+                return <a href="javascript:;" title={cellValue} className="qj-table-td-txt" style={formatTextWidth(width)} onClick={() => { handleLinkClick(row) }}>{text}</a>
             },
             ...ColumnSearch.getTextSearchProps({ title, enableSearch, checkNull })
         };

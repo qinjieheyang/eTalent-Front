@@ -188,31 +188,6 @@ export class ServiceMock {
         return Mock.mock({
             columns: [
                 {
-                    title: "职位族",
-                    key: "positionGroupName",
-                },
-                {
-                    title: "职位",
-                    key: "positionName",
-                },
-                {
-                    title: "职等",
-                    key: "positionGradeName",
-                },
-                {
-                    title: "职级",
-                    key: "positionLevelName",
-                },
-            ],
-            tableData: []
-        })
-    }
-
-    //按职位展示职位体系
-    public showByPosition = async () => {
-        return Mock.mock({
-            columns: [
-                {
                     title: "研发族",
                     key: "positionGroupName1",
                 },
@@ -231,6 +206,32 @@ export class ServiceMock {
             ],
             tableData: []
         })
+    }
+
+    //按职位展示职位体系
+    public showByPosition = async () => {
+        return Mock.mock({
+            columns: [
+                {
+                    title: "职位族",
+                    key: "positionGroupName",
+                },
+                {
+                    title: "职位",
+                    key: "positionName",
+                },
+                {
+                    title: "职等",
+                    key: "positionGradeName",
+                },
+                {
+                    title: "职级",
+                    key: "positionLevelName",
+                },
+            ],
+            tableData: []
+        })
+
     }
 
 }

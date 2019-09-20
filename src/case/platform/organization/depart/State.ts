@@ -27,7 +27,7 @@ export interface IState {
     isEnable: boolean;
     currentPage: number;
     pageSize: number;
-    total: number,
+    total: number;
     visibleAdd: boolean;
     visibleDelete: boolean;
     visibleSeal: boolean; //封存

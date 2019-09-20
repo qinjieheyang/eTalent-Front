@@ -29,7 +29,7 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
 
   }
 
-  private renderMenu = () => (
+  private renderMore = () => (
     <Menu style={{ textAlign: "center" }}>
       <Menu.Item onClick={this.openSealModal}>封存</Menu.Item>
       <Menu.Item onClick={this.openUnSealModal}>解封</Menu.Item>
@@ -88,7 +88,7 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
                 <Framework.Com.Buttons.Tool.LeftArea>
                   <Button type="primary" onClick={this.openAddModal}>新增</Button>
                   <Button onClick={this.openDelModal}>删除</Button>
-                  <DropdownMore menu={this.renderMenu()}></DropdownMore>
+                  <DropdownMore menu={this.renderMore()}></DropdownMore>
                 </Framework.Com.Buttons.Tool.LeftArea>
                 <AdaptiveTable
                   columns={DepartTableColumns}
@@ -204,11 +204,6 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
   private handleSelectTreeNode = (selectedKeys: string[]) => {
     this.setState({ selectedKeys })
   }
-
-
-
-
-
 
   private openAddModal = () => {
     this.setState({ visibleAdd: true });
