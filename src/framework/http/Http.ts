@@ -111,6 +111,15 @@ export class Http {
 
   }
 
+  public download = (url: string, params?: any, config?: any): AxiosPromise => {
+    return this.ax
+      .post(url, params, config)
+      .catch(error => this.NotifiedError(error, url))
+      .then(responseDto => {
+        return responseDto;
+      });
+  }
+
   public loginOff(): void {
     this.deleteCookie("isLogin");
     this.deleteCookie("x-access-token");

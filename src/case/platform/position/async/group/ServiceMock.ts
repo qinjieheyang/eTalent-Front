@@ -1,5 +1,6 @@
 //  负责伪造后端 WebApi数据
 import Mock from 'mockjs';
+import Framework from 'src/framework/Framework';
 import { ITableParam } from "./State";
 
 export class ServiceMock {
@@ -12,8 +13,13 @@ export class ServiceMock {
     }
 
     //删除职位族
-    public deletePositionGroup = async () => {
-
+    public deletePositionGroup = async (positionGroupIds: string[]) => {
+        return {
+            "code": 0,
+            "message": "string",
+            "result": {},
+            "success": true
+        }
     }
 
     //编辑职位族
@@ -46,7 +52,10 @@ export class ServiceMock {
 
     //职位族导出excel
     public downloadPositionGroupExcel = async () => {
-
+        Framework.Utils.UtilDownload.File({
+            url: "https://qinjee-datacenter-1253673776.cos.ap-guangzhou.myqcloud.com/user/text.xlsx",
+            fileName: "导出名称.xlsx"
+        })
     }
 }
 

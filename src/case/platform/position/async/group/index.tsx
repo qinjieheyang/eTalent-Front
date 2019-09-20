@@ -37,21 +37,17 @@ export default class Group extends CaseCommon.PageAsyncBase<IProps, IState, ISer
     <Menu style={{ textAlign: "center" }}>
       <Menu.Item>排序</Menu.Item>
       <Menu.Item
-        onClick={
-          () => Framework.Utils.UtilDownload.Img({
-            url: "https://qinjee-datacenter-1253673776.cos.ap-guangzhou.myqcloud.com/user/logo.png",
-          })
-        }>导出
+        onClick={this.handleExport}>导出
       </Menu.Item>
     </Menu>
   );
 
   public render() {
-    const { tableData, pageSize, currentPage, total, confirmLoading, visibleAdd, visibleDelete, addModalTitle } = this.state;
+    const { tableData, pageSize, currentPage, total, confirmLoading, visibleAdd, visibleDelete, addModalTitle, checkedList } = this.state;
 
     const addProps = { visible: visibleAdd, confirmLoading, onOk: this.handleAdd, onCancel: this.handleAddCancel, title: addModalTitle };
-    const delProps = { visible: visibleDelete, confirmLoading, onOk: this.handleDelete, onCancel: this.handleDelCancel };
-
+    const delProps = { visible: visibleDelete, confirmLoading, onOk: this.handleDelete, onCancel: this.handleDelCancel, checkedList, onCheckedChange: this.handleCheckChange };
+    console.log(checkedList,111)
     return (
       <React.Fragment>
         <Framework.Com.Buttons.Tool.LeftArea>
@@ -69,6 +65,7 @@ export default class Group extends CaseCommon.PageAsyncBase<IProps, IState, ISer
           total={total}
           onPageChange={this.handlePageChange}
           onShowSizeChange={this.handleShowSizeChange}
+          onSelectRows={this.handleSelectRows}
         />
 
         <AddModal {...addProps} />
@@ -104,7 +101,7 @@ export default class Group extends CaseCommon.PageAsyncBase<IProps, IState, ISer
       currentPage: 1,
       pageSize: size,
     });
-    this.setState({ pageSize: size, currentPage: 1, tableData })
+    this.setState({ pageSize: size, currentPage: 1, tableData });
   }
 
   //翻页：页码改变
@@ -132,14 +129,37 @@ export default class Group extends CaseCommon.PageAsyncBase<IProps, IState, ISer
     this.setState({ visibleDelete: true });
   }
 
-  private handleDelete = () => {
-    this.setState({ visibleDelete: false });
+  private handleDelete = async () => {
+    const { checkedValues } = this.state;
+    console.log(checkedValues)
+    // const positionGroupIds = checkedValues.map(item => item.value);
+    // this.service.deletePositionGroup({ positionGroupIds })
+    // this.setState({ visibleDelete: false });
   }
 
   private handleDelCancel = () => {
     this.setState({ visibleDelete: false });
   }
 
+  //表格checkbox选中
+  private handleSelectRows = (selectRows: any[]) => {
+    // console.log(selectRows)
+    this.setState({
+      checkedList: selectRows.map(row => (
+        {
+          value: row.positionGroupId,
+          name: row.positionGroupName
+        })
+      )
+    })
+  }
 
+  private handleCheckChange = (checkedValues: any[]) => {
+    this.setState({ checkedValues })
+  }
 
+  //导出
+  private handleExport = () => {
+    this.service.downloadPositionGroupExcel();
+  }
 }

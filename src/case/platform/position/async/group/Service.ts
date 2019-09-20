@@ -12,8 +12,9 @@ export class Service extends Framework.Case.ServiceBase implements IService {
     }
 
     //删除职位族
-    public deletePositionGroup = async () => {
-
+    public deletePositionGroup = async (params: any) => {
+        const data: any = await this.http.post("/positionGroup/deletePositionGroup", params)
+        return data;
     }
 
     //编辑职位族
@@ -44,7 +45,7 @@ export class Service extends Framework.Case.ServiceBase implements IService {
 
     //职位族导出excel
     public downloadPositionGroupExcel = async () => {
-
+        this.http.download("/positionGroup/downloadExcel");
     }
 
 }

@@ -19,6 +19,7 @@ export default class System extends CaseCommon.PageAsyncBase<IProps, IState, ISe
     const { list, columns } = await this.service.showByPositionLevel();
     const newColumns = this.GetLevelColumns(columns);
     const newTableData = this.GetLevelData(list);
+    console.log(JSON.stringify(newColumns))
     this.setState({
       columns: newColumns,
       tableData: newTableData
@@ -90,7 +91,6 @@ export default class System extends CaseCommon.PageAsyncBase<IProps, IState, ISe
   }
 
   private GetLevelColumns = (cols: any[]): any[] => {
-    console.log(cols, 22)
     return [
       {
         title: "职级",
@@ -98,7 +98,7 @@ export default class System extends CaseCommon.PageAsyncBase<IProps, IState, ISe
         dataIndex: "positionLevelName",
         width: 65
       },
-      ...cols.map(col =>
+      ...cols.map((col, index) =>
         ({
           ...col,
           dataIndex: col.key,
@@ -126,8 +126,28 @@ export default class System extends CaseCommon.PageAsyncBase<IProps, IState, ISe
     ]
   }
 
-  private GetLevelData = (data: any[]): any[] => {
-    return [];
+  private GetLevelData = (list: any[]): any[] => {
+    // return list.map((item, index) => {
+    //   let _item = {
+    //     positionLevelName: item.positionLevelName,
+    //   };
+
+    //   if(item.positionGroups instanceof Array){
+    //     item.positionGroups.forEach((group, gIndex) => {
+    //       _item["positionGroups_"]
+    //     });
+    //   }
+
+    //   const 
+
+    //   return {
+    //     ...item,
+    //     positionGroups_
+    //   }
+
+    //   return _item;
+    // })
+    return []
   }
 
 

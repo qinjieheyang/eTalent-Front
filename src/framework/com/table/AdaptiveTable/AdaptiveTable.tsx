@@ -41,19 +41,6 @@ const computerTableHeightByViewport = (dataSource: any[], minusHeight: number): 
   return height;
 }
 
-const rowSelection = {
-  onChange: (selectedRowKeys: any, selectedRows: any) => {
-    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-  },
-  onSelect: (record: any, selected: any, selectedRows: any) => {
-    console.log(record, selected, selectedRows);
-  },
-  onSelectAll: (selected: any, selectedRows: any, changeRows: any) => {
-    console.log(selected, selectedRows, changeRows);
-  },
-  columnWidth: 50
-};
-
 interface IProps {
   dataSource: object[];
   columns: IColumnSortDefine[];
@@ -65,6 +52,7 @@ interface IProps {
   total?: number;
   onShowSizeChange?: (current: number, size: number) => void;
   onPageChange?: (page: number, pageSize: number) => void;
+  onSelectRows?: (selectedRows: any[]) => void;
 }
 
 interface IState {
@@ -114,14 +102,30 @@ class AdaptiveTable extends React.Component<IProps, IState> {
   }
 
   render() {
-    const { minusHeight, dataSource, current, pageSize, total, onShowSizeChange, onPageChange } = this.props;
+    const { minusHeight, dataSource, current, pageSize, total, onShowSizeChange, onPageChange, onSelectRows } = this.props;
+
+    const getRowSelection = (onSelectRows?: (selectedRows: any[]) => void) => {
+
+      const columnWidth = 50;
+      if (onSelectRows === undefined) {
+        return undefined;
+      }
+
+      return {
+        onChange: (selectedRowKeys: any, selectedRows: any) => {
+          onSelectRows(selectedRows);
+        },
+        columnWidth
+      }
+    }
+
     return <Table
       className="qj-adaptive-table"
       style={{ height: `calc(100vh - ${minusHeight}px)` }}
       bordered
       dataSource={dataSource}
       columns={this.state.columns}
-      rowSelection={rowSelection}
+      rowSelection={getRowSelection(onSelectRows)}
       onChange={this.handleChange}
       pagination={{
         showQuickJumper: true,
