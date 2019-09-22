@@ -10,11 +10,6 @@ import { IState, initState } from "./State";
 // import PositionSystem from './inner/PositionSystem';
 import { PageLayout, PageContent } from 'src/caseCommon/PageCommon';
 import AsyncContent from "./async/AsyncContent";
-// import Framework from 'src/framework/Framework';
-// import PositionGroup from './inner/PositionGroup';
-// const { TabPane } = Tabs;
-// const { SubMenu } = Menu;
-
 
 interface IPageProps { }
 export default class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {

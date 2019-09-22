@@ -9,5 +9,5 @@ export const initState= {
     PS_columnCollection: [],
     PS_dataCollection: [],
     openKeys: ["sub1"],
-    tabKey: "system"
+    tabKey: "group"
 };

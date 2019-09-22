@@ -30,29 +30,17 @@ export class CheckBoxList extends React.Component<IProps, IState>  {
 
   constructor(props: IProps) {
     super(props);
-    this.state = {
-      checkAll: false,
-      indeterminate: false,
-      checkItems: []
-    }
+
+    this.initData(props.items, true);
   }
 
   public componentWillReceiveProps(nextProps: IProps) {
-    this.checkItems = this.GetIniCheckItems(nextProps.items, nextProps.value);
-    this.checkedValues = this.GetIniValue(nextProps.value);
-    const checkAll = this.checkedValues.length === nextProps.items.length;
-    setTimeout(()=>{
-      this.setState({
-        checkAll,
-        indeterminate: !!this.checkedValues.length && !checkAll,
-        checkItems: this.checkItems
-      });
-    })
+    if (this.props.items !== nextProps.items) {
+      this.initData(nextProps.items, false);
+    }
   }
 
   public render() {
-
-    this.checkItems = this.GetIniCheckItems(this.props.items, this.props.value);
 
     const { checkAll, indeterminate, checkItems } = this.state;
 
@@ -75,21 +63,27 @@ export class CheckBoxList extends React.Component<IProps, IState>  {
     )
   }
 
-  private GetIniValue = (values?: any[]): any[] => {
-    return values ? values : this.props.items.map(item => item.value);
+  private initData = (items: any[], first: boolean) => {
+    this.checkedValues = this.GetIniValue(items);
+    this.checkItems = this.GetIniCheckItems(items);
+    const checkAll = items.length > 0 ? true : false;
+    const state = {
+      checkAll: checkAll,
+      indeterminate: false,
+      checkItems: this.checkItems
+    }
+    if (first) {
+      this.state = state;
+    } else {
+      this.setState(state)
+    }
+  }
+  private GetIniValue = (items: any[]) => {
+    return items.map(item => item.value);
   };
 
-  private GetIniCheckItems = (items: ICheckbox[], values?: any[]) => {
-    if (!values) {
-      return items.map(item => ({ ...item, checked: true }));
-    }
-    return items.map(item => {
-      const checked = values.includes(item.value);
-      return {
-        ...item,
-        checked
-      }
-    })
+  private GetIniCheckItems = (items: any[]) => {
+    return items.map(item => ({ ...item, checked: true }));
   }
 
   private onCheckAllChange = (e: any) => {
@@ -123,17 +117,15 @@ export class CheckBoxList extends React.Component<IProps, IState>  {
     const targetValue = e.target.value;
 
     this.checkedValues = [];
-    for (let i = 0, len = this.checkItems.length; i < len; i++) {
 
-      if (targetValue === this.checkItems[i].value) {
-        this.checkItems[i].checked = targetChecked;
+    this.checkItems.forEach(item => {
+      if (targetValue === item.value) {
+        item.checked = targetChecked;
       }
-
-      const item = this.checkItems[i];
-      if (this.checkItems[i].checked) {
+      if (item.checked) {
         this.checkedValues.push(item.value)
-      };
-    }
+      }
+    })
 
     const checkAll = this.checkedValues.length === this.checkItems.length;
 

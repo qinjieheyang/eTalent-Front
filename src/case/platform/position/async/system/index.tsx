@@ -19,7 +19,7 @@ export default class System extends CaseCommon.PageAsyncBase<IProps, IState, ISe
     const { list, columns } = await this.service.showByPositionLevel();
     const newColumns = this.GetLevelColumns(columns);
     const newTableData = this.GetLevelData(list);
-    console.log(JSON.stringify(newColumns))
+
     this.setState({
       columns: newColumns,
       tableData: newTableData

@@ -18,6 +18,8 @@ export default class Group extends CaseCommon.PageAsyncBase<IProps, IState, ISer
 
   public state: IState = initState;
 
+  public checkedValues: any[];
+
   constructor(props: IProps) {
     super(props, Const, ServiceMock, Service);
   }
@@ -47,7 +49,6 @@ export default class Group extends CaseCommon.PageAsyncBase<IProps, IState, ISer
 
     const addProps = { visible: visibleAdd, confirmLoading, onOk: this.handleAdd, onCancel: this.handleAddCancel, title: addModalTitle };
     const delProps = { visible: visibleDelete, confirmLoading, onOk: this.handleDelete, onCancel: this.handleDelCancel, checkedList, onCheckedChange: this.handleCheckChange };
-    console.log(checkedList,111)
     return (
       <React.Fragment>
         <Framework.Com.Buttons.Tool.LeftArea>
@@ -130,11 +131,8 @@ export default class Group extends CaseCommon.PageAsyncBase<IProps, IState, ISer
   }
 
   private handleDelete = async () => {
-    const { checkedValues } = this.state;
-    console.log(checkedValues)
-    // const positionGroupIds = checkedValues.map(item => item.value);
-    // this.service.deletePositionGroup({ positionGroupIds })
-    // this.setState({ visibleDelete: false });
+    // const { checkedValues } = this.state;
+    this.setState({ visibleDelete: false });
   }
 
   private handleDelCancel = () => {
@@ -155,7 +153,7 @@ export default class Group extends CaseCommon.PageAsyncBase<IProps, IState, ISer
   }
 
   private handleCheckChange = (checkedValues: any[]) => {
-    this.setState({ checkedValues })
+    this.checkedValues = checkedValues;
   }
 
   //导出

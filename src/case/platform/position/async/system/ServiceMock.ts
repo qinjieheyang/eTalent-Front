@@ -186,18 +186,6 @@ export class ServiceMock {
     //按职级展示职位体系
     public showByPositionLevel = async () => {
 
-        const map = new Map();
-
-        // const data = {
-        //     [{"positionGroupName":"研发族"},{"positionGroupName":"销售族"}]: [{ "positionGroups": [{ "positionGradeNames": "专家", "positionGradeNamesRowSpan": 3, "positionNames": "前端开发", "positionNamesRowSpan": 2 }], "positionLevelName": "1级" }]
-        // }
-        map.set([{ "positionGroupName": "研发族" }, { "positionGroupName": "销售族" }], [{ "positionGroups": [{ "positionGradeNames": "专家", "positionGradeNamesRowSpan": 3, "positionNames": "前端开发", "positionNamesRowSpan": 2 }], "positionLevelName": "1级" }])
-
-        for (let key in map) {
-            console.log(key);
-            console.log(map[key]);
-        }
-
         return Mock.mock({
             // {[{"positionGroupName":"研发族"},{"positionGroupName":"销售族"}]:[{"positionGroups":[{"positionGradeNames":"专家","positionGradeNamesRowSpan":3,"positionNames":"前端开发","positionNamesRowSpan":2}],"positionLevelName":"1级"}]}
             columns: [
