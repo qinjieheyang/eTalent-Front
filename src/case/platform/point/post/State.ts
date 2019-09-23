@@ -36,5 +36,5 @@ export const initState: IState = {
     orgFlowData: [],
     selectedKeys: [],
     isEnable: false,
-    tabKey: "1"
+    tabKey: "table"
 };

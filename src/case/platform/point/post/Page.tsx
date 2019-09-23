@@ -20,19 +20,10 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
   }
 
   public async init() {
-    // const { isEnable, currOrgId, currOrgCode } = this.state;
 
-    // const { treeData, tableData, total } = await this.service.getInit({ isEnable, pageSize, currentPage, orgParentId: currOrgId });
+    const treeData = await this.service.getOrganizationTree();
 
-    // const currId = currOrgId || treeData.length ? treeData[0].orgId : undefined;
-
-    // const currCode = currOrgCode || treeData.length ? treeData[0].orgCode : undefined;
-
-    // const selKeys = currId ? [currId] : [];
-
-    // const orgFlowData = await this.service.getOrganizationGraphics();
-
-    // this.setState({ selectedKeys: selKeys, currOrgId: currId, currOrgCode: currCode, treeData, tableData, total, orgFlowData });
+    this.setState({ treeData });
 
   }
 
