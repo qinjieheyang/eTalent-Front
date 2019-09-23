@@ -30,7 +30,7 @@ export default class System extends CaseCommon.PageAsyncBase<IProps, IState, ISe
     const { showType, columns, tableData } = this.state;
 
     return (
-      <div style={{ height: "100%", overflowY: "auto" }}>
+      <div style={{ height: "100%", overflowY: "auto", padding: 16 }}>
         <Radio.Group value={showType} onChange={this.handleTypeChange} style={{ marginBottom: 16 }}>
           <Radio value="1">按职级</Radio>
           <Radio value="2">按职位</Radio>

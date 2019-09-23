@@ -1,16 +1,15 @@
 // ----------------------------------------------------
 
-export interface IRowBase {
-    id: string;
-    name: string;
-    disabled?: boolean;
-    children?: IRowBase[];
+/** 分页 */
+export interface IPaging {
+    pageSize: number;
+    currentPage: number;
 }
 
 /** 分页 */
-export interface IPaging {
-    size: number;
-    page: number;
+export class Paging implements IPaging {
+    public pageSize: number = 10;
+    public currentPage: number = 1;
 }
 
 /** 分页容器 */
@@ -18,11 +17,14 @@ export interface IPagingContainer {
     paper: IPaging;
 }
 
-/** 分页 */
-export class Paging implements IPaging {
-    public size: number = 10;
-    public page: number = 1;
+
+export interface IRowBase {
+    id: string;
+    name: string;
+    disabled?: boolean;
+    children?: IRowBase[];
 }
+
 
 /** 初始化选择表 */
 export interface IBaseTable {

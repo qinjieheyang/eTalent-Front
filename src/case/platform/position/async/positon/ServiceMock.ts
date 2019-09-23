@@ -1,4 +1,7 @@
 //  负责伪造后端 WebApi数据
+import Mock from 'mockjs';
+// import Framework from 'src/framework/Framework';
+import { ITableParam } from "./State";
 
 export class ServiceMock {
     public constructor() { }
@@ -29,14 +32,47 @@ export class ServiceMock {
     }
 
     //分页查询职位信息
-    public getPositionList = async () => {
+    public getPositionList = async (params: ITableParam) => {
+        const { list, total } = Mock.mock({
+            "list|10": [{
+                key: "@id",
+                positionId: "@id",
+                positionGroupId: "@id",
+                positionGroupName: "职位族-@integer(1, 100)",
+                positionName: "职位-@integer(1, 100)",
+                positionLevels: "1,2,3",
+                positionGrades: "xxx,xxx,xxx",
+                sortId: "@increment", //序号
+            }],
+            total: 100
+        });
 
+        return {
+            tableData: list,
+            total
+        }
     }
 
     //职位排序
     public sortPosition = async () => {
 
     }
+
+    // //获取职位族
+    // public getPositonGroup = async () =>{
+    //     return Mock.mock({
+    //         "menuData": [{
+    //             key: "@id",
+    //             positionGroupId: "@id",
+    //             positionGroupName: "职位族-@integer(1, 100)",
+    //             positionName: "职位-@integer(1, 100)",
+    //             positionLevels: "1,2,3",
+    //             positionGrades: "xxx,xxx,xxx",
+    //             sortId: "@increment", //序号
+    //         }],
+    //         total: 100
+    //     });
+    // }
 
 }
 

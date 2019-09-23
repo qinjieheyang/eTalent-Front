@@ -55,7 +55,7 @@ const TransferForm = Form.create({ name: 'normal_login' })((props: ITransferForm
   // const passwordError = isFieldTouched('password') && getFieldError('password');
 
   return (
-    <Form {...FormItemLayout} labelAlign="left">
+    <Form {...FormItemLayout}>
       <SelectTreeInput formItem ={{ label :"目标机构" }}
         fieldName="parentId" 
         getFD = {getFieldDecorator} 

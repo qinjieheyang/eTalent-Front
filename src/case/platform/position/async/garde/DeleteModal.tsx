@@ -25,7 +25,7 @@ export const DeleteModal = (props: IDeleteModalProps) => {
     <Modal {...modalProps}>
       <p style={{ lineHeight: 1.5 }}>
         <Icon type="question-circle" theme="filled" style={{ color: "#FFD532", fontSize: 20, verticalAlign: "text-top" }} />
-        <span style={{ fontWeight: "bold", marginLeft: 8 }}>确认删除下表选中的职位吗？</span>
+        <span style={{ fontWeight: "bold", marginLeft: 8 }}>确认删除下表选中的职位族吗？</span>
       </p>
       <div>
         <CheckBoxList items={checkedList} onChange={onCheckedChange} />

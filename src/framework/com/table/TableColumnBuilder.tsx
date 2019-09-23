@@ -27,7 +27,9 @@ const formatTitle = (title: string, width?: number, enableSearch?: boolean, canA
     return <span title={title} className="qj-table-td-txt">{title}</span>
 }
 
-const formatTextWidth = (width?: number) => {
+const formatTextWidth = (width?: number, enableSearch?: boolean) => {
+    if (!enableSearch) return { width };
+
     if (width && width > 32) {
         return {
             width: width - 32
@@ -253,7 +255,7 @@ export class TableColumnBuilder {
 
                 const text = col.prefixText ? col.prefixText + cellValue : cellValue;
 
-                return <span title={cellValue} className="qj-table-td-txt" style={formatTextWidth(width)}>{text}</span>
+                return <span title={cellValue} className="qj-table-td-txt" style={formatTextWidth(width, enableSearch)}>{text}</span>
             },
             ...ColumnSearch.getTextSearchProps({ title, enableSearch, checkNull, handler }),
 
@@ -303,7 +305,7 @@ export class TableColumnBuilder {
 
                 const text = col.prefixText ? col.prefixText + cellValue : cellValue;
 
-                return <a href="javascript:;" title={cellValue} className="qj-table-td-txt" style={formatTextWidth(width)} onClick={() => { handleLinkClick(row) }}>{text}</a>
+                return <a href="javascript:;" title={cellValue} className="qj-table-td-txt" style={formatTextWidth(width, enableSearch)} onClick={() => { handleLinkClick(row) }}>{text}</a>
             },
             ...ColumnSearch.getTextSearchProps({ title, enableSearch, checkNull })
         };

@@ -9,6 +9,7 @@ import { IState, initState } from "./State";
 
 import { AddModal } from "./AddModal";
 import { DeleteModal } from "./DeleteModal";
+import { UtilMessage, MessageType } from 'src/framework/utils/Index';
 
 const { DropdownMore } = Framework.Com.Dropdowns;
 const AdaptiveTable = Framework.Com.Tables.AdaptiveTable;
@@ -50,7 +51,7 @@ export default class Group extends CaseCommon.PageAsyncBase<IProps, IState, ISer
     const addProps = { visible: visibleAdd, confirmLoading, onOk: this.handleAdd, onCancel: this.handleAddCancel, title: addModalTitle };
     const delProps = { visible: visibleDelete, confirmLoading, onOk: this.handleDelete, onCancel: this.handleDelCancel, checkedList, onCheckedChange: this.handleCheckChange };
     return (
-      <React.Fragment>
+      <div style={{ height: "100%", padding: 16 }}>
         <Framework.Com.Buttons.Tool.LeftArea>
           <Button type="primary" onClick={() => { this.openAddModal() }}>新增</Button>
           <Button onClick={this.openDelModal}>删除</Button>
@@ -71,7 +72,7 @@ export default class Group extends CaseCommon.PageAsyncBase<IProps, IState, ISer
 
         <AddModal {...addProps} />
         <DeleteModal {...delProps} />
-      </React.Fragment>
+      </div>
     )
   }
 
@@ -127,6 +128,13 @@ export default class Group extends CaseCommon.PageAsyncBase<IProps, IState, ISer
   }
 
   private openDelModal = () => {
+    const { checkedList } = this.state;
+
+    if (checkedList.length <= 0) {
+      UtilMessage.showMessage("请勾选要删除的内容", MessageType.error);
+      return;
+    }
+
     this.setState({ visibleDelete: true });
   }
 

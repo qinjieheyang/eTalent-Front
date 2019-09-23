@@ -2,6 +2,7 @@
 
 import Framework from "src/framework/Framework";
 import { IService } from "./ServiceMock";
+import { ITableParam } from "./State";
 
 export class Service extends Framework.Case.ServiceBase implements IService {
 
@@ -31,13 +32,30 @@ export class Service extends Framework.Case.ServiceBase implements IService {
     }
 
     //分页查询职位信息
-    public getPositionList = async () => {
+    public getPositionList = async (params: ITableParam) => {
+        const data = await this.http.get("/position/getPositionList", params);
 
+        let res = {
+            tableData: [],
+            total: 0
+        }
+        if (data && data.list) {
+            res.tableData = data.list;
+        }
+        if (data && data.total) {
+            res.total = data.total;
+        }
+        return res;
     }
 
     //职位排序
     public sortPosition = async () => {
 
     }
+
+    // //获取职位族
+    // public getPositonGroup = async () =>{
+
+    // }
 
 }

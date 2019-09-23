@@ -1,33 +1,26 @@
 import * as Framework from "src/framework/Framework";
 
-export const Const: Framework.Case.IConst = {
-  title: "职位管理",
-  icon: Framework.Com.Icons.App.position,
-  routePath: "/platform/position/post",
+export const Const: Framework.Case.IAsyncConst = {
+  title: "职级",
   isTest: true,
-  case: "Post",
-  topPath: "/platform"
+  case: "PositionLevel"
 };
 
-export const TabList = [
+export const Columns = [
   {
-    key: 'system',
-    tab: '职位体系',
+    title: '职等名称',
+    key: 'positionGradeName',
+    dataType: "linkText",
+    width: 150,
+    enableSearch: false,
+    canAutoOrder: false,
+    checkNull: false,
   },
   {
-    key: 'group',
-    tab: '职位族设置',
-  },
-  {
-    key: 'position',
-    tab: '职位设置',
-  },
-  {
-    key: 'level',
-    tab: '职级设置',
-  },
-  {
-    key: 'grade',
-    tab: '职等设置',
+    title: '职等说明',
+    key: 'positionGradeRemark',
+    enableSearch: false,
+    canAutoOrder: false,
+    checkNull: false,
   },
 ]

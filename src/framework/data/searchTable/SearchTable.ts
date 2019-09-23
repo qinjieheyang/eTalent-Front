@@ -3,10 +3,10 @@ import { UtilLog } from "../../utils/UtilLog";
 import { FieldFacotry } from "./fields/FieldFacotry";
 
 
-interface IRow{
-    id:string ;
-    name:string ;
-    children?:IRow[];
+interface IRow {
+    id: string;
+    name: string;
+    children?: IRow[];
 }
 
 /** 组合查询单表记录 */
@@ -61,8 +61,8 @@ export class SearchTable {
             return getRows;
         }
         const pager: Paging = searchDto.pager;
-        const begin = pager.page * pager.size - pager.size;
-        const end = pager.page * pager.size;
+        const begin = pager.currentPage * pager.pageSize - pager.pageSize;
+        const end = pager.currentPage * pager.pageSize;
         if (begin < 0) {
             throw new Error("分页不能大于边界");
         }

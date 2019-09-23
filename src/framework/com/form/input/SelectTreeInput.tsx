@@ -1,24 +1,28 @@
 import { Form, TreeSelect } from "antd";
 import * as React from "react";
- 
+
 import { AInput, IAInputProp } from "./AInput";
 
-interface  IRow{
-    id: string| number ;
-    name:string ;
-    children?:IRow[];
+interface IRow {
+    id: string | number;
+    name: string;
+    children?: IRow[];
 }
 
 
 interface ISelectTreeProp extends IAInputProp {
     selectItems: IRow[];
     treeDefaultExpandAll?: boolean;
+    treeCheckable?: boolean;
 }
 
 export class SelectTreeInput extends AInput<ISelectTreeProp> {
     public render = (): React.ReactElement<any> => {
 
-        const treeDefaultExpandAll = false !== this.props.treeDefaultExpandAll;
+        const treeDefaultExpandAll = false || this.props.treeDefaultExpandAll;
+
+        const treeCheckable = false || this.props.treeCheckable;
+        
         let opts;
         if (this.props.selectItems == null || this.props.selectItems.length === 0) {
             opts = [
@@ -45,6 +49,7 @@ export class SelectTreeInput extends AInput<ISelectTreeProp> {
                         dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
                         treeData={opts}
                         treeDefaultExpandAll={treeDefaultExpandAll}
+                        treeCheckable={treeCheckable}
                         disabled={false}
                         allowClear={true}
                         showSearch={true}

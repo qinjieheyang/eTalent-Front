@@ -14,6 +14,7 @@ export interface IState {
     addModalTitle?: string;
     checkedList: IChecked[];
     checkedValues: any[];
+    openKeys: string[];
 }
 
 export const initState = {
@@ -26,7 +27,8 @@ export const initState = {
     confirmLoading: false,
     addModalTitle: undefined,
     checkedList: [],
-    checkedValues: []
+    checkedValues: [],
+    openKeys: []
 };
 
 export interface ITableParam {

@@ -4,24 +4,43 @@ import Framework from "src/framework/Framework";
 import { FormComponentProps } from 'antd/lib/form/Form';
 const { Inputs } = Framework.Com.Forms;
 
-const { TextInput } = Inputs;
+const { TextInput, SelectInput, SelectTreeInput } = Inputs;
 
 const FormItemLayout = {
   labelCol: { span: 5 },
   wrapperCol: { span: 19 },
 };
 
-interface IAddFormProps extends FormComponentProps {}
+interface IAddFormProps extends FormComponentProps { }
 
 const AddForm = Form.create({ name: 'normal_login' })((props: IAddFormProps) => {
   const { getFieldDecorator } = props.form;
   return (
-    <Form {...FormItemLayout} labelAlign="left">
-      <TextInput formItem ={{ label :"职位族名称" }}
-        fieldName="positionGroupName " 
-        getFD = {getFieldDecorator} 
-        isRequired = {true}
-        max = {100}
+    <Form {...FormItemLayout}>
+      <SelectInput formItem={{ label: "所属职位族" }}
+        fieldName="positionGroupName"
+        getFD={getFieldDecorator}
+        isRequired={true}
+        option={[{ title: "研发族", value: 1 }, { title: "销售族", value: 2 }, { title: "实施族", value: 3 }]}
+        value={1}
+      />
+      <TextInput formItem={{ label: "职位名称" }}
+        fieldName="positionName"
+        getFD={getFieldDecorator}
+        isRequired={true}
+        max={100}
+      />
+      <SelectTreeInput formItem={{ label: "职级" }}
+        fieldName="positionLevel"
+        getFD={getFieldDecorator}
+        treeCheckable={true}
+        selectItems={[{ id: 1, name: "1级" }, { id: 2, name: "2级" }, { id: 3, name: "3级" }]}
+      />
+      <SelectTreeInput formItem={{ label: "职等" }}
+        fieldName="positionGrade"
+        getFD={getFieldDecorator}
+        treeCheckable={true}
+        selectItems={[{ id: 1, name: "专员" }, { id: 2, name: "主管" }, { id: 3, name: "经理" }]}
       />
     </Form>
   )
@@ -29,4 +48,4 @@ const AddForm = Form.create({ name: 'normal_login' })((props: IAddFormProps) => 
 
 
 
-export default  AddForm;
+export default AddForm;

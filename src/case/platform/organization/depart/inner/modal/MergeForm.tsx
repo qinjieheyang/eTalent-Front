@@ -55,7 +55,7 @@ const MergeForm = Form.create({ name: 'normal_login' })((props: IMergeFormProps)
   // const passwordError = isFieldTouched('password') && getFieldError('password');
 
   return (
-    <Form {...FormItemLayout} labelAlign="left">
+    <Form {...FormItemLayout}>
       <TextInput formItem ={{ label :"新机构名称" }}
         fieldName="departName" 
         getFD = {getFieldDecorator} 

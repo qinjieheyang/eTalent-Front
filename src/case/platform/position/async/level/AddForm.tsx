@@ -17,7 +17,7 @@ const AddForm = Form.create({ name: 'normal_login' })((props: IAddFormProps) => 
   const { getFieldDecorator } = props.form;
   return (
     <Form {...FormItemLayout}>
-      <TextInput formItem ={{ label :"职位族名称" }}
+      <TextInput formItem ={{ label :"职级描述" }}
         fieldName="positionGroupName " 
         getFD = {getFieldDecorator} 
         isRequired = {true}
