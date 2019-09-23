@@ -72,14 +72,7 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
 
   //是否显示封存
   private handleShowChange = async (checked: boolean) => {
-    const { currOrgId } = this.state;
-    const { tableData } = await this.service.getOrganizationList({
-      orgParentId: currOrgId,
-      isEnable: checked,
-      currentPage: 1,
-      pageSize
-    });
-    this.setState({ currentPage: 1, tableData, isEnable: checked })
+    this.setState({ isEnable: checked })
   }
 
   private handleTabChange = async (activeKey: string) => {

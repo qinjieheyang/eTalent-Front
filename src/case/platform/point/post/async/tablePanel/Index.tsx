@@ -18,7 +18,7 @@ import { DepartTableColumns } from './DepartTableColumns';
 const AdaptiveTable = Framework.Com.Tables.AdaptiveTable;
 const { DropdownMore } = Framework.Com.Dropdowns;
 
-import "./Style.less";
+// import "./Style.less";
 
 interface IPageProps extends GlobalRedux.States.IGlobalStateProps { }
 
@@ -66,7 +66,7 @@ class Page extends CaseCommon.PageAsyncBase<IPageProps, IState, IService> {
 
   public render() {
 
-    const { tableData, isEnable, pageSize, currentPage, total, visibleAdd, visibleDelete, visibleSeal, visibleUnSeal, visibleMerge, confirmLoading, visibleImport } = this.state;
+    const { tableData, pageSize, currentPage, total, visibleAdd, visibleDelete, visibleSeal, visibleUnSeal, visibleMerge, confirmLoading, visibleImport } = this.state;
 
     return (
       <div>
