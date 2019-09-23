@@ -4,7 +4,7 @@ import Framework from "src/framework/Framework";
 import { FormComponentProps } from 'antd/lib/form/Form';
 const { Inputs } = Framework.Com.Forms;
 
-const { TextInput, CheckBoxListInput, SelectTreeInput  } = Inputs;
+const { CheckBoxListInput, SelectTreeInput  } = Inputs;
 
 const FormItemLayout = {
   labelCol: { span: 5 },
@@ -41,11 +41,11 @@ const checkedList = [
   },
 ]
 
-interface IMergeFormProps extends FormComponentProps {
+interface ITransferFormProps extends FormComponentProps {
   
 }
 
-const MergeForm = Form.create({ name: 'normal_login' })((props: IMergeFormProps) => {
+const TransferForm = Form.create({ name: 'normal_login' })((props: ITransferFormProps) => {
   const { getFieldDecorator } = props.form;
   // const onChange = (fieldName:string, value: string) =>{
   //   console.log(fieldName, value)
@@ -55,21 +55,15 @@ const MergeForm = Form.create({ name: 'normal_login' })((props: IMergeFormProps)
   // const passwordError = isFieldTouched('password') && getFieldError('password');
 
   return (
-    <Form {...FormItemLayout} labelAlign="left">
-      <TextInput formItem ={{ label :"新机构名称" }}
-        fieldName="departName" 
-        getFD = {getFieldDecorator} 
-        isRequired = {true}
-        max = {100}
-      />
-      <SelectTreeInput formItem ={{ label :"归属机构" }}
+    <Form {...FormItemLayout}>
+      <SelectTreeInput formItem ={{ label :"目标机构" }}
         fieldName="parentId" 
         getFD = {getFieldDecorator} 
         isRequired = {true}
         selectItems={selectTreeData}
         value = {"1-1"}
       />
-      <CheckBoxListInput formItem ={{ label :"待合并机构" }}
+      <CheckBoxListInput formItem ={{ label :"待划转机构" }}
         fieldName="departList" 
         getFD = {getFieldDecorator} 
         isRequired = {true}
@@ -81,4 +75,4 @@ const MergeForm = Form.create({ name: 'normal_login' })((props: IMergeFormProps)
 
 
 
-export default  MergeForm;
+export default  TransferForm;

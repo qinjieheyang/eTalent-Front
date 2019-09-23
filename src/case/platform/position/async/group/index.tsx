@@ -149,7 +149,6 @@ export default class Group extends CaseCommon.PageAsyncBase<IProps, IState, ISer
 
   //表格checkbox选中
   private handleSelectRows = (selectRows: any[]) => {
-    // console.log(selectRows)
     this.setState({
       checkedList: selectRows.map(row => (
         {

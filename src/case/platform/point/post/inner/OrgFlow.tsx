@@ -5,6 +5,7 @@ const $ = go.GraphObject.make;
 
 interface IOrgFlowProps {
   data: any[];
+  parentCode: string | undefined;
 }
 interface IOrgFlowState {
   ratio: string;
@@ -12,7 +13,7 @@ interface IOrgFlowState {
   myDiagram: any;
   angle: number
 }
-export default class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
+export class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
   public diagram: go.Diagram;
 
   private orgFlowEl: React.RefObject<HTMLDivElement>;
@@ -145,7 +146,7 @@ export default class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
     var url = String(img && img.src);
     var a = document.createElement('a');
     var event = new MouseEvent('click');
-    a.download = '组织机构图';
+    a.download = '岗位图';
     a.href = url;
     a.dispatchEvent(event)
   }

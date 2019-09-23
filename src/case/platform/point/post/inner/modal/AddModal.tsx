@@ -1,9 +1,9 @@
 import React from "react";
 import { Modal } from "antd";
 
-import MergeForm from "./MergeForm";
+import AddForm from "./AddForm";
 
-interface IMergeModalProps{
+export interface IAddModalProps{
   title?: string;
   visible: boolean;
   confirmLoading: boolean;
@@ -11,8 +11,8 @@ interface IMergeModalProps{
   onCancel: () => void;
 }
 
-const MergeModal = (props: IMergeModalProps) => {
-  const { title = "合并机构", visible, confirmLoading, onOk, onCancel} = props;
+export const AddModal = (props: IAddModalProps) => {
+  const { title = "新增机构", visible, confirmLoading, onOk, onCancel} = props;
 
   const modalProps = { title, visible, confirmLoading, onOk, onCancel }
 
@@ -20,9 +20,7 @@ const MergeModal = (props: IMergeModalProps) => {
 
   return (
     <Modal {...modalProps}>
-      <MergeForm {...formProps}/>
+      <AddForm {...formProps}/>
     </Modal>
   )
 }
-
-export default MergeModal;

@@ -1,6 +1,6 @@
 import * as Framework from "src/framework/Framework";
 
-const Const: Framework.Case.IConst = {
+export const Const: Framework.Case.IConst = {
   title: "岗位维护",
   icon: Framework.Com.Icons.Case.file,
   routePath: "/platform/point/post",
@@ -9,4 +9,21 @@ const Const: Framework.Case.IConst = {
   topPath: "/platform"
 };
 
-export { Const };
+export const TabList = [
+  {
+    key: 'table',
+    tab: '岗位表',
+    icon: 'table'
+  },
+  {
+    key: 'flow',
+    tab: '岗位图',
+    icon: 'apartment'
+  }
+]
+
+export const Columns = [
+  {
+
+  }
+]

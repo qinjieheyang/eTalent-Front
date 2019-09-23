@@ -5,7 +5,7 @@ import Framework from "src/framework/Framework";
 
 const { CheckBoxList } = Framework.Com.CheckBox;
 
-interface ISealModalProps{
+export interface IDeleteModalProps{
   title?: string;
   visible: boolean;
   confirmLoading: boolean;
@@ -25,8 +25,8 @@ const checkedList = [
 ]
 
 
-const SealModal = (props: ISealModalProps) => {
-  const { title = "确认封存", visible, confirmLoading, onOk, onCancel} = props;
+export const DeleteModal = (props: IDeleteModalProps) => {
+  const { title = "确认删除", visible, confirmLoading, onOk, onCancel} = props;
 
   const modalProps = { title, visible, confirmLoading, onOk, onCancel }
 
@@ -36,13 +36,14 @@ const SealModal = (props: ISealModalProps) => {
     <Modal {...modalProps}>
       <p style={{lineHeight: 1.5}}>
         <Icon type="question-circle" theme="filled" style={{color: "#FFD532", fontSize: 20, verticalAlign:"text-top"}}/>
-        <span style={{fontWeight: "bold", marginLeft: 8}}>确认封存下表选中的机构吗？</span>
+        <span style={{fontWeight: "bold", marginLeft: 8}}>确认删除下表选中的机构吗？</span>
       </p>
       <div>
+        {/* <p>待删除机构：</p> */}
         <CheckBoxList items={checkedList}/>
       </div>
     </Modal>
   )
 }
 
-export default SealModal;
+export default DeleteModal;

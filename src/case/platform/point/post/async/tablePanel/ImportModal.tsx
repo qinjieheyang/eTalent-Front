@@ -5,7 +5,7 @@ const { Dragger } = Upload;
 
 enum StepType { UPLOAD, CHECK }
 
-interface IImportModalProps{
+export interface IImportModalProps{
   title?: string;
   visible: boolean;
   confirmLoading: boolean;
@@ -13,7 +13,7 @@ interface IImportModalProps{
   onCancel: () => void;
 }
 
-const UploadContent = () => {
+export const UploadContent = () => {
   const props = {
     name: 'file',
     multiple: true,
@@ -53,7 +53,7 @@ const UploadContent = () => {
   )
 }
 
-const CheckTableContent = () =>{
+export const CheckTableContent = () =>{
   const columns = [
     {
       title: '序号',
@@ -134,7 +134,7 @@ const CheckTableContent = () =>{
   )
 }
 
-const ImportModal = (props: IImportModalProps) => {
+export const ImportModal = (props: IImportModalProps) => {
 
   const [step, setStep] = useState(0);
 
@@ -186,5 +186,3 @@ const ImportModal = (props: IImportModalProps) => {
     </Modal>
   )
 }
-
-export default ImportModal;

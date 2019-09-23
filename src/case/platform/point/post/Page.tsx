@@ -1,17 +1,16 @@
 import * as React from "react";
-import { RouteComponentProps } from "react-router-dom";
+import { Icon, Card } from "antd";
+import Framework from "src/framework/Framework";
 import * as GlobalRedux from "src/globalRedux/GlobalRedux";
 import CaseCommon, { OrgTree } from "src/caseCommon/CaseCommon";
 import { PageLayout, PageSide, PageContent } from "src/caseCommon/PageCommon";
-import { Const } from "./Const";
+import { Const, TabList } from "./Const";
 import { Service } from "./Service";
 import { IService, ServiceMock } from "./ServiceMock";
 import { initState, IState } from "./State";
-import Content from "./inner/Content";
+import AsyncContent from "./async/AsyncContent";
 
-import "./Style.less";
-
-interface IPageProps extends GlobalRedux.Actions.IGlobalActionDispatcher, RouteComponentProps { }
+interface IPageProps extends GlobalRedux.States.IGlobalStateProps { }
 
 class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
 
@@ -22,44 +21,75 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
   }
 
   public async init() {
-    const treeData = await this.service.getInit();
+    // const { isEnable, currOrgId, currOrgCode } = this.state;
 
-    const tableData = await this.service.getTableDate();
+    // const { treeData, tableData, total } = await this.service.getInit({ isEnable, pageSize, currentPage, orgParentId: currOrgId });
 
-    this.setState({ treeData, tableData });
+    // const currId = currOrgId || treeData.length ? treeData[0].orgId : undefined;
+
+    // const currCode = currOrgCode || treeData.length ? treeData[0].orgCode : undefined;
+
+    // const selKeys = currId ? [currId] : [];
+
+    // const orgFlowData = await this.service.getOrganizationGraphics();
+
+    // this.setState({ selectedKeys: selKeys, currOrgId: currId, currOrgCode: currCode, treeData, tableData, total, orgFlowData });
 
   }
 
+  private renderTab = () => {
+    return TabList.map(item => (
+      {
+        key: item.key,
+        tab: <span><Icon type={item.icon} />{item.tab}</span>
+      })
+    )
+  }
+
   public render() {
-    const { treeData } = this.state;
-    const isEnable = false;
-    const currOrgId = "";
+
+    const { treeData, selectedKeys, isEnable, tabKey } = this.state;
+
     return (
       <PageLayout>
         <PageSide>
-          <OrgTree showAll={isEnable} onShowChange={this.handleShowChange} treeData={treeData} selectedKeys={[currOrgId]} onSelect={this.handleSelectTreeNode} />
+          <OrgTree showAll={isEnable} onShowChange={this.handleShowChange} treeData={treeData} selectedKeys={selectedKeys} onSelect={this.handleSelectTreeNode} />
         </PageSide>
         <PageContent>
-          <Content dataSource={this.state.tableData} />
+          <Card
+            className="qj-card-async"
+            tabList={this.renderTab()}
+            activeTabKey={tabKey}
+            onTabChange={this.handleTabChange}
+            headStyle={{ paddingLeft: 0 }}
+            bodyStyle={{ height: "calc(100vh - 151px)", padding: 0 }}
+          >
+            <AsyncContent tabKey={tabKey} />
+          </Card>
         </PageContent>
       </PageLayout>
     );
   }
 
-
-
-  private handleShowChange = (checked: boolean) => {
-
+  //是否显示封存
+  private handleShowChange = async (checked: boolean) => {
+    const { currOrgId } = this.state;
+    const { tableData } = await this.service.getOrganizationList({
+      orgParentId: currOrgId,
+      isEnable: checked,
+      currentPage: 1,
+      pageSize
+    });
+    this.setState({ currentPage: 1, tableData, isEnable: checked })
   }
 
+  private handleTabChange = async (activeKey: string) => {
+    this.setState({ tabKey: activeKey })
+  }
 
   private handleSelectTreeNode = (selectedKeys: string[]) => {
-
+    this.setState({ selectedKeys })
   }
-
-  // private handleTabChange = (activeKey: string) => {
-
-  // }
 
 }
 

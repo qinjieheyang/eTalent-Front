@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Button, Layout, Menu, Icon, Card } from "antd";
+import { Button, Layout, Menu, Card, Tree } from "antd";
 import Framework from 'src/framework/Framework';
 import CaseCommon from "src/caseCommon/CaseCommon";
 import { Const, Columns } from "./Const";
@@ -11,7 +11,8 @@ import { AddModal } from "./AddModal";
 import { DeleteModal } from "./DeleteModal";
 import { MessageType, UtilMessage } from 'src/framework/utils/Index';
 
-const { SubMenu } = Menu;
+// const { SubMenu } = Menu;
+const { TreeNode } = Tree;
 
 const { DropdownMore } = Framework.Com.Dropdowns;
 const AdaptiveTable = Framework.Com.Tables.AdaptiveTable;
@@ -37,21 +38,20 @@ export default class Group extends CaseCommon.PageAsyncBase<IProps, IState, ISer
             total
         })
 
-        console.log(tableData)
     }
 
-    rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
+    // rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
 
-    onOpenChange = (openKeys: string[]) => {
-        const latestOpenKey = openKeys.find((key: string) => this.state.openKeys.indexOf(key) === -1);
-        if (latestOpenKey && this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-            this.setState({ openKeys });
-        } else {
-            this.setState({
-                openKeys: latestOpenKey ? [latestOpenKey] : [],
-            });
-        }
-    };
+    // onOpenChange = (openKeys: string[]) => {
+    //     const latestOpenKey = openKeys.find((key: string) => this.state.openKeys.indexOf(key) === -1);
+    //     if (latestOpenKey && this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+    //         this.setState({ openKeys });
+    //     } else {
+    //         this.setState({
+    //             openKeys: latestOpenKey ? [latestOpenKey] : [],
+    //         });
+    //     }
+    // };
 
     private renderMore = () => (
         <Menu style={{ textAlign: "center" }}>
@@ -63,53 +63,69 @@ export default class Group extends CaseCommon.PageAsyncBase<IProps, IState, ISer
     );
 
     private renderSide = () => (
-        <Menu
-            mode="inline"
-            // openKeys={this.state.openKeys}
-            // onOpenChange={this.onOpenChange}
-            style={{ border: "none" }}
-        >
-            <SubMenu
-                key="sub1"
-                title={
-                    <span>
-                        <Icon type="mail" />
-                        <span>研发族</span>
-                    </span>
-                }
-            >
-                <Menu.Item key="1">产品设计</Menu.Item>
-                <Menu.Item key="2">前端开发</Menu.Item>
-                <Menu.Item key="3">后端测试</Menu.Item>
-                <Menu.Item key="4">系统测试</Menu.Item>
-            </SubMenu>
-            <SubMenu
-                key="sub2"
-                title={
-                    <span>
-                        <Icon type="appstore" />
-                        <span>销售族</span>
-                    </span>
-                }
-            >
-                <Menu.Item key="5">Option 5</Menu.Item>
-                <Menu.Item key="6">Option 6</Menu.Item>
-            </SubMenu>
-            <SubMenu
-                key="sub4"
-                title={
-                    <span>
-                        <Icon type="setting" />
-                        <span>实施族</span>
-                    </span>
-                }
-            >
-                <Menu.Item key="9">Option 9</Menu.Item>
-                <Menu.Item key="10">Option 10</Menu.Item>
-                <Menu.Item key="11">Option 11</Menu.Item>
-                <Menu.Item key="12">Option 12</Menu.Item>
-            </SubMenu>
-        </Menu>
+        <Tree showLine defaultExpandedKeys={['0-0-0', '0-0-1', '0-0-2']} >
+            <TreeNode title="职位族" key="0-0">
+                <TreeNode title="研发族" key="0-0-0">
+                    <TreeNode title="leaf" key="0-0-0-0" />
+                    <TreeNode title="leaf" key="0-0-0-1" />
+                    <TreeNode title="leaf" key="0-0-0-2" />
+                </TreeNode>
+                <TreeNode title="销售族" key="0-0-1">
+                    <TreeNode title="leaf" key="0-0-1-0" />
+                </TreeNode>
+                <TreeNode title="实施族" key="0-0-2">
+                    <TreeNode title="leaf" key="0-0-2-0" />
+                    <TreeNode title="leaf" key="0-0-2-1" />
+                </TreeNode>
+            </TreeNode>
+        </Tree>
+        // <Menu
+        //     mode="inline"
+        //     // openKeys={this.state.openKeys}
+        //     // onOpenChange={this.onOpenChange}
+        //     style={{ border: "none" }}
+        // >
+        //     <SubMenu
+        //         key="sub1"
+        //         title={
+        //             <span>
+        //                 <Icon type="mail" />
+        //                 <span>研发族</span>
+        //             </span>
+        //         }
+        //     >
+        //         <Menu.Item key="1">产品设计</Menu.Item>
+        //         <Menu.Item key="2">前端开发</Menu.Item>
+        //         <Menu.Item key="3">后端测试</Menu.Item>
+        //         <Menu.Item key="4">系统测试</Menu.Item>
+        //     </SubMenu>
+        //     <SubMenu
+        //         key="sub2"
+        //         title={
+        //             <span>
+        //                 <Icon type="appstore" />
+        //                 <span>销售族</span>
+        //             </span>
+        //         }
+        //     >
+        //         <Menu.Item key="5">Option 5</Menu.Item>
+        //         <Menu.Item key="6">Option 6</Menu.Item>
+        //     </SubMenu>
+        //     <SubMenu
+        //         key="sub4"
+        //         title={
+        //             <span>
+        //                 <Icon type="setting" />
+        //                 <span>实施族</span>
+        //             </span>
+        //         }
+        //     >
+        //         <Menu.Item key="9">Option 9</Menu.Item>
+        //         <Menu.Item key="10">Option 10</Menu.Item>
+        //         <Menu.Item key="11">Option 11</Menu.Item>
+        //         <Menu.Item key="12">Option 12</Menu.Item>
+        //     </SubMenu>
+        // </Menu>
     );
 
     public render() {
@@ -119,7 +135,7 @@ export default class Group extends CaseCommon.PageAsyncBase<IProps, IState, ISer
         const delProps = { visible: visibleDelete, confirmLoading, onOk: this.handleDelete, onCancel: this.handleDelCancel, checkedList, onCheckedChange: this.handleCheckChange };
         return (
             <Layout style={{ height: "100%", margin: 1 }}>
-                <Layout.Sider style={{ background: "#fff", borderRight: "1px solid #e8e8e8" }}>
+                <Layout.Sider style={{ background: "#fff", borderRight: "1px solid #e8e8e8", padding: 8 }}>
                     {this.renderSide()}
                 </Layout.Sider>
                 <Layout.Content style={{ background: "#fff" }}>
@@ -214,7 +230,7 @@ export default class Group extends CaseCommon.PageAsyncBase<IProps, IState, ISer
     }
 
     private handleDelete = async () => {
-        
+
         this.setState({ visibleDelete: false });
     }
 

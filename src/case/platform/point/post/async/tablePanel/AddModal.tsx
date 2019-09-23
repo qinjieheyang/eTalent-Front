@@ -1,9 +1,9 @@
 import React from "react";
 import { Modal } from "antd";
 
-import TransferForm from "./TransferForm";
+import AddForm from "./AddForm";
 
-interface ITransferModalProps{
+export interface IAddModalProps{
   title?: string;
   visible: boolean;
   confirmLoading: boolean;
@@ -11,8 +11,8 @@ interface ITransferModalProps{
   onCancel: () => void;
 }
 
-const TransferModal = (props: ITransferModalProps) => {
-  const { title = "机构划转", visible, confirmLoading, onOk, onCancel} = props;
+export const AddModal = (props: IAddModalProps) => {
+  const { title = "新增机构", visible, confirmLoading, onOk, onCancel} = props;
 
   const modalProps = { title, visible, confirmLoading, onOk, onCancel }
 
@@ -20,9 +20,7 @@ const TransferModal = (props: ITransferModalProps) => {
 
   return (
     <Modal {...modalProps}>
-      <TransferForm {...formProps}/>
+      <AddForm {...formProps}/>
     </Modal>
   )
 }
-
-export default TransferModal;

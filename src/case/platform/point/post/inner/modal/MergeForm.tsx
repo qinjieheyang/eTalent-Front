@@ -4,7 +4,7 @@ import Framework from "src/framework/Framework";
 import { FormComponentProps } from 'antd/lib/form/Form';
 const { Inputs } = Framework.Com.Forms;
 
-const { TextInput, SelectInput, SelectTreeInput  } = Inputs;
+const { TextInput, CheckBoxListInput, SelectTreeInput  } = Inputs;
 
 const FormItemLayout = {
   labelCol: { span: 5 },
@@ -30,11 +30,22 @@ const selectTreeData = [
   }
 ]
 
-interface IAddFormProps extends FormComponentProps {
+const checkedList = [
+  {
+    value: 1,
+    name: "xxx"
+  },
+  {
+    value: 2,
+    name: "yyy"
+  },
+]
+
+interface IMergeFormProps extends FormComponentProps {
   
 }
 
-const AddForm = Form.create({ name: 'normal_login' })((props: IAddFormProps) => {
+const MergeForm = Form.create({ name: 'normal_login' })((props: IMergeFormProps) => {
   const { getFieldDecorator } = props.form;
   // const onChange = (fieldName:string, value: string) =>{
   //   console.log(fieldName, value)
@@ -44,37 +55,25 @@ const AddForm = Form.create({ name: 'normal_login' })((props: IAddFormProps) => 
   // const passwordError = isFieldTouched('password') && getFieldError('password');
 
   return (
-    <Form {...FormItemLayout} labelAlign="left">
-      <TextInput formItem ={{ label :"机构编码" }}
-        fieldName="departNo" 
-        getFD = {getFieldDecorator} 
-        isRequired = {true}
-        max = {100}
-      />
-      <TextInput formItem ={{ label :"机构名称" }}
+    <Form {...FormItemLayout}>
+      <TextInput formItem ={{ label :"新机构名称" }}
         fieldName="departName" 
         getFD = {getFieldDecorator} 
         isRequired = {true}
         max = {100}
       />
-      <SelectInput formItem ={{ label :"机构类型" }}
-        fieldName="departType"
-        getFD = {getFieldDecorator} 
-        isRequired = {true}
-        option = {[{title:"集团", value: 1},{title:"单位", value: 2},{title:"部门", value: 3}]}
-        value = {1}
-      />
-      <SelectTreeInput formItem ={{ label :"上级机构" }}
+      <SelectTreeInput formItem ={{ label :"归属机构" }}
         fieldName="parentId" 
         getFD = {getFieldDecorator} 
         isRequired = {true}
         selectItems={selectTreeData}
         value = {"1-1"}
       />
-      <TextInput formItem ={{ label :"机构负责人" }}
-        fieldName="departLeader" 
+      <CheckBoxListInput formItem ={{ label :"待合并机构" }}
+        fieldName="departList" 
         getFD = {getFieldDecorator} 
-        max = {100}
+        isRequired = {true}
+        items = {checkedList}
       />
     </Form>
   )
@@ -82,4 +81,4 @@ const AddForm = Form.create({ name: 'normal_login' })((props: IAddFormProps) => 
 
 
 
-export default  AddForm;
+export default  MergeForm;
