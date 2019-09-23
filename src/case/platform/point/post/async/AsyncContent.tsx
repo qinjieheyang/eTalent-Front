@@ -13,7 +13,7 @@ interface IProps {
 const AsyncContent = (porps: IProps) => {
   const tabKey = porps.tabKey;
   if (tabKey === "table") return <Table />
-  if (tabKey === "orgflow") return <Flow />
+  if (tabKey === "flow") return <Flow />
   return <div></div>
 }
 

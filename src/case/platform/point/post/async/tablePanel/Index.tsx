@@ -66,29 +66,25 @@ class Page extends CaseCommon.PageAsyncBase<IPageProps, IState, IService> {
     const { tableData, pageSize, currentPage, total, visibleAdd, visibleDelete, visibleSeal, visibleUnSeal, visibleMerge, confirmLoading, visibleImport } = this.state;
 
     return (
-      <div>
 
-        <Card bodyStyle={{ padding: 16, height: "calc(100vh - 151px)", minWidth: 1150 }} bordered={false}>
-          <Framework.Com.Buttons.Tool.LeftArea>
-            <Button type="primary" onClick={this.openAddModal}>新增</Button>
-            <Button onClick={this.openDelModal}>删除</Button>
-            <DropdownMore menu={this.renderMore()}></DropdownMore>
-          </Framework.Com.Buttons.Tool.LeftArea>
+      <Card style={{ height: "100%", margin: 1 }} bodyStyle={{ padding: 16, height: "100%", minWidth: 1150 }} bordered={false}>
+        <Framework.Com.Buttons.Tool.LeftArea>
+          <Button type="primary" onClick={this.openAddModal}>新增</Button>
+          <Button onClick={this.openDelModal}>删除</Button>
+          <DropdownMore menu={this.renderMore()}></DropdownMore>
+        </Framework.Com.Buttons.Tool.LeftArea>
 
-          <AdaptiveTable
-            columns={DepartTableColumns}
-            dataSource={tableData}
-            minusHeight={279}
-            pageSize={pageSize}
-            current={currentPage}
-            total={total}
-            onPageChange={this.handlePageChange}
-            onShowSizeChange={this.handleShowSizeChange}
-            onSelectRows={this.handleSelectRows}
-          />
-        </Card>
-
-
+        <AdaptiveTable
+          columns={DepartTableColumns}
+          dataSource={tableData}
+          minusHeight={279}
+          pageSize={pageSize}
+          current={currentPage}
+          total={total}
+          onPageChange={this.handlePageChange}
+          onShowSizeChange={this.handleShowSizeChange}
+          onSelectRows={this.handleSelectRows}
+        />
         <AddModal
           visible={visibleAdd}
           confirmLoading={confirmLoading}
@@ -125,7 +121,9 @@ class Page extends CaseCommon.PageAsyncBase<IPageProps, IState, IService> {
           onOk={this.handleImport}
           onCancel={this.handleImportCancel}
         />
-      </div>
+      </Card>
+
+
 
     );
   }

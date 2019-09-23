@@ -8,6 +8,8 @@ import { IService, ServiceMock } from "./ServiceMock";
 import { initState, IState } from "./State";
 import { OrgFlow } from "./OrgFlow";
 
+import "./Style.less";
+
 interface IPageProps extends GlobalRedux.States.IGlobalStateProps { }
 export default class Page extends CaseCommon.PageAsyncBase<IPageProps, IState, IService> {
   public state = initState;
@@ -27,7 +29,6 @@ export default class Page extends CaseCommon.PageAsyncBase<IPageProps, IState, I
   }
   public render() {
     const { orgFlowData, currOrgCode } = this.state;
-
     return (
       <Card bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
         <OrgFlow data={orgFlowData} parentCode={currOrgCode} />

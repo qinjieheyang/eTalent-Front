@@ -9,8 +9,8 @@ export const DepartTableColumns = [
   },
   {
     title: '历任',
-    key: 'orgName',
-    dataIndex: 'orgName',
+    key: 'history',
+    dataIndex: 'history',
     width: 150,
     dataType: "linkText",
     enableSearch: true,
@@ -31,43 +31,43 @@ export const DepartTableColumns = [
   },
   {
     title: '岗位名称',
-    dataIndex: 'orgCode',
-    key: 'orgCode',
+    dataIndex: 'postName',
+    key: 'postName',
     width: 150,
     enableSearch: true
   },
   {
     title: '所属部门',
-    dataIndex: 'orgCode',
-    key: 'orgCode',
+    dataIndex: 'orgName',
+    key: 'orgName',
     width: 150,
     enableSearch: true
   },
   {
     title: '职位名称',
-    dataIndex: 'orgCode',
-    key: 'orgCode',
+    dataIndex: 'positionName',
+    key: 'positionName',
     width: 150,
     enableSearch: true
   },
   {
     title: '职级',
-    dataIndex: 'orgCode',
-    key: 'orgCode',
+    dataIndex: 'positionLevel',
+    key: 'positionLevel',
     width: 150,
     enableSearch: true
   },
   {
     title: '职等',
-    dataIndex: 'orgCode',
-    key: 'orgCode',
+    dataIndex: 'positionGrade',
+    key: 'positionGrade',
     // width: 150,
     enableSearch: true
   },
   {
     title: '上级岗位',
-    dataIndex: 'orgCode',
-    key: 'orgCode',
+    dataIndex: 'parentPostName',
+    key: 'parentPostName',
     // width: 150,
     enableSearch: true
   }
