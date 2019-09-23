@@ -7,15 +7,17 @@ export class ServiceMock {
     //根据是否封存查询用户下所有的机构,图形化展示
     public getOrganizationGraphics = async (): Promise<any[]> => {
 
+
         const list = [
-            { orgId: 0, orgName: "人力资源部经理", online: 10, color: "#FF8C58" },
-            { orgId: 1, orgParentId: 0, orgName: "人事专员", online: 10, color: "#2FDD93" },
-            { orgId: 2, orgParentId: 1, orgName: "人事专员", online: 10, color: "#19ADE6" },
-            { orgId: 3, orgParentId: 1, orgName: "人事专员", online: 10, color: "#19ADE6" },
-            { orgId: 4, orgParentId: 1, orgName: "人事专员", online: 10, color: "#19ADE6" },
-            { orgId: 5, orgParentId: 1, orgName: "人事专员", online: 10, color: "#19ADE6" },
-            { orgId: 6, orgParentId: 1, orgName: "人事专员", online: 10, color: "#19ADE6" },
-            { orgId: 7, orgParentId: 1, orgName: "人事专员", online: 10, color: "#19ADE6" },
+
+            { isEnable: true, orgCode: "1", orgId: 0, orgName: "人力资源部经理", orgManagerName: "张三", total: 20, online: 10, color: "#FF8C58" },
+            { isEnable: true, orgCode: "1001", orgId: 1, orgParentId: 0, orgName: "人事专员", orgManagerName: "李四", total: 20, online: 10, color: "#2FDD93" },
+            { isEnable: true, orgCode: "1001001", orgId: 2, orgParentId: 1, orgName: "人事专员", orgManagerName: "王五", total: 20, online: 10, color: "#19ADE6" },
+            { isEnable: true, orgCode: "1001002", orgId: 3, orgParentId: 1, orgName: "人事专员", orgManagerName: "王五", total: 20, online: 10, color: "#19ADE6" },
+            { isEnable: true, orgCode: "1001002", orgId: 4, orgParentId: 1, orgName: "人事专员", orgManagerName: "王五", total: 20, online: 10, color: "#19ADE6" },
+            { isEnable: true, orgCode: "1001002", orgId: 5, orgParentId: 1, orgName: "人事专员", orgManagerName: "王五", total: 20, online: 10, color: "#19ADE6" },
+            { isEnable: true, orgCode: "1001002", orgId: 6, orgParentId: 1, orgName: "人事专员", orgManagerName: "王五", total: 20, online: 10, color: "#19ADE6" },
+            { isEnable: false, orgCode: "1001002", orgId: 7, orgParentId: 1, orgName: "人事专员", orgManagerName: "王五", total: 20, online: 10, color: "#19ADE6" },
         ]
         return list;
     }

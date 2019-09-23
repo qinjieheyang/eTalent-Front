@@ -25,6 +25,15 @@ export class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
     this.state = { ratio: "100%", myModel: null, myDiagram: null, angle: 90 }
   }
 
+  componentWillReceiveProps(nextProps: IOrgFlowProps) {
+    this.loadData();
+  }
+
+  componentDidMount() {
+    this.renderCanvas();
+    this.loadData();
+  }
+
   renderCanvas = () => {
     let diagram = $(go.Diagram, this.orgFlowEl,  // the DIV HTML element
       {
@@ -109,10 +118,7 @@ export class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
     ))
   }
 
-  componentDidMount() {
-    this.renderCanvas();
-    this.loadData();
-  }
+
 
   render() {
     return (
@@ -182,6 +188,8 @@ export class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
         nodeDataArray: data
       }
     );
+
+    console.log(dataSource)
   }
 
   private handleShowLevelChange = (value: string) => {

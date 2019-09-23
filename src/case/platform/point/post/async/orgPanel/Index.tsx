@@ -22,15 +22,13 @@ export default class Page extends CaseCommon.PageAsyncBase<IPageProps, IState, I
 
     const orgFlowData = await this.service.getOrganizationGraphics();
 
-    this.setState({ currOrgCode: "1", orgFlowData });
-
-    console.log(orgFlowData)
+    this.setState({ currOrgCode: "1", orgFlowData: orgFlowData });
 
   }
   public render() {
     const { orgFlowData, currOrgCode } = this.state;
     return (
-      <Card bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
+      <Card style={{ height: "100%", margin: 1 }} bodyStyle={{ padding: 16, height: "100%" }} bordered={false}>
         <OrgFlow data={orgFlowData} parentCode={currOrgCode} />
       </Card>
     )
