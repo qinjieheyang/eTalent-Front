@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Icon, Card } from "antd";
-import Framework from "src/framework/Framework";
 import * as GlobalRedux from "src/globalRedux/GlobalRedux";
 import CaseCommon, { OrgTree } from "src/caseCommon/CaseCommon";
 import { PageLayout, PageSide, PageContent } from "src/caseCommon/PageCommon";
