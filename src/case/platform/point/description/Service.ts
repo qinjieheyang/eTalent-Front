@@ -5,14 +5,11 @@ import { IService } from "./ServiceMock";
 import { ITreeBase } from "./State";
 
 export class Service extends Framework.Case.ServiceBase implements IService {
-    // 数据初始化
-    public getInit = async (): Promise<ITreeBase[]> => {
-        const data = await this.http.get("/api/org/departTree");
-        return data;
+
+    //根据是否封存查询用户下所有的机构,树形结构展示
+    public getOrganizationTree = async (): Promise<ITreeBase[]> => {
+        const data = await this.http.get("/organization/getOrganizationTree");
+        return data["result"]["list"] || [];
     };
 
-    public getTableDate = async (): Promise<any[]> => {
-        const data = await this.http.get("/api/org/departs");
-        return data;
-    };
 }

@@ -22,39 +22,33 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
   }
 
   public async init() {
-    const treeData = await this.service.getInit();
+    const treeData = await this.service.getOrganizationTree();
 
-    const tableData = await this.service.getTableDate();
-
-    this.setState({ treeData, tableData });
+    this.setState({ treeData });
 
   }
 
   public render() {
-    const { treeData } = this.state;
-    const isEnable = false;
-    const currOrgId = "";
+    const { treeData, selectedKeys, isEnable } = this.state;
     return (
       <PageLayout>
         <PageSide>
-        <OrgTree showAll={isEnable} onShowChange={this.handleShowChange} treeData={treeData} selectedKeys={[currOrgId]} onSelect={this.handleSelectTreeNode} />
+          <OrgTree showAll={isEnable} onShowChange={this.handleShowChange} treeData={treeData} selectedKeys={selectedKeys} onSelect={this.handleSelectTreeNode} />
         </PageSide>
         <PageContent>
-          <Content/>
+          <Content />
         </PageContent>
       </PageLayout>
     );
   }
 
-
-
-  private handleShowChange = (checked: boolean) => {
-
+  //是否显示封存
+  private handleShowChange = async (checked: boolean) => {
+    this.setState({ isEnable: checked })
   }
 
-
   private handleSelectTreeNode = (selectedKeys: string[]) => {
-
+    this.setState({ selectedKeys })
   }
 
 }

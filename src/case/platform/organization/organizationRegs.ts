@@ -2,8 +2,8 @@
 import * as Framework from "src/framework/Framework";
 
 import departReg  from "./depart/Reg";
-import historyReg  from "./history/Reg";
-import virtualReg  from "./virtual/Reg";
+// import historyReg  from "./history/Reg";
+// import virtualReg  from "./virtual/Reg";
 
 const organizationRegs = Framework.Case.Reg.CreatePathReg(
   "组织机构",
@@ -12,7 +12,7 @@ const organizationRegs = Framework.Case.Reg.CreatePathReg(
 );
 
 organizationRegs.addChild(departReg);
-organizationRegs.addChild(historyReg);
-organizationRegs.addChild(virtualReg);
+// organizationRegs.addChild(historyReg);
+// organizationRegs.addChild(virtualReg);
 
 export { organizationRegs };
