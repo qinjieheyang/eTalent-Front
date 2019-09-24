@@ -257,7 +257,7 @@ export class TableColumnBuilder {
 
                 return <span title={cellValue} className="qj-table-td-txt" style={formatTextWidth(width, enableSearch)}>{text}</span>
             },
-            ...ColumnSearch.getTextSearchProps({ title, enableSearch, checkNull, handler }),
+            ...ColumnSearch.getTextSearchProps({ key, title, enableSearch, checkNull, handler }),
 
         };
         this.columnDefines.push(col);
@@ -307,7 +307,7 @@ export class TableColumnBuilder {
 
                 return <a href="javascript:;" title={cellValue} className="qj-table-td-txt" style={formatTextWidth(width, enableSearch)} onClick={() => { handleLinkClick(row) }}>{text}</a>
             },
-            ...ColumnSearch.getTextSearchProps({ title, enableSearch, checkNull })
+            ...ColumnSearch.getTextSearchProps({ key, title, enableSearch, checkNull, handler })
         };
         this.columnDefines.push(col);
         return col;
@@ -346,7 +346,7 @@ export class TableColumnBuilder {
                 const text = col.prefixText ? col.prefixText + cellValue : cellValue;
                 return <span title={cellValue} className="qj-table-td-txt" style={{ width: width - 32 }}>{text}</span>
             },
-            ...ColumnSearch.getTreeSearchProps({ title, enableSearch, searchData })
+            ...ColumnSearch.getTreeSearchProps({ key, title, enableSearch, searchData })
         };
 
         this.columnDefines.push(col);
@@ -385,7 +385,7 @@ export class TableColumnBuilder {
 
                 return ":" + val;
             },
-            ...ColumnSearch.getBoolSearchProps({ title, enableSearch })
+            ...ColumnSearch.getBoolSearchProps({ key, title, enableSearch, searchData })
         };
         this.columnDefines.push(col);
         return col;
@@ -408,7 +408,7 @@ export class TableColumnBuilder {
             dataType,
             width,
             canAutoOrder,
-            ...ColumnSearch.getNumberSearchProps({ title, enableSearch, searchData })
+            ...ColumnSearch.getNumberSearchProps({ key, title, enableSearch, searchData })
         };
         this.columnDefines.push(col);
         return col;
@@ -512,7 +512,7 @@ export class TableColumnBuilder {
                 const localeString = `${date2.getFullYear()}-${date2.getMonth() + 1}-${date2.getDate()}`;
                 return localeString;
             },
-            ...ColumnSearch.getDateSearchProps({ title })
+            ...ColumnSearch.getDateSearchProps({ key, title, enableSearch })
         };
         this.columnDefines.push(col);
         return col;
@@ -576,7 +576,7 @@ export class TableColumnBuilder {
                 const codeRow: any = table.getById(cellValue);
                 return codeRow.name;
             },
-            ...ColumnSearch.getCheckboxSearchProps({ enableSearch, title, searchData })
+            ...ColumnSearch.getCheckboxSearchProps({ key, title, enableSearch, searchData })
         };
 
         this.columnDefines.push(col);

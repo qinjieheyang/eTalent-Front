@@ -61,6 +61,15 @@ class Page extends CaseCommon.PageAsyncBase<IPageProps, IState, IService> {
     </Menu>
   );
 
+  private renderTags = () => {
+    return this.state.filters.map(item => {
+      const value = item.isFilterNull ? "空值" : item.fieldValue;
+      return (
+        <Framework.Com.Tags.SearchTag key={item.fieldName} name={item.fieldName} label={item.fieldLabel} text={value} onClose={this.handleTagClose} />
+      )
+    })
+  }
+
   public render() {
 
     const { tableData, pageSize, currentPage, total, visibleAdd, visibleDelete, visibleSeal, visibleUnSeal, visibleMerge, confirmLoading, visibleImport } = this.state;
@@ -73,7 +82,9 @@ class Page extends CaseCommon.PageAsyncBase<IPageProps, IState, IService> {
           <Button onClick={this.openDelModal}>删除</Button>
           <DropdownMore menu={this.renderMore()}></DropdownMore>
         </Framework.Com.Buttons.Tool.LeftArea>
-
+        <div className="qj-tag-search-box" style={{ left: 248 }}>
+          {this.renderTags()}
+        </div>
         <AdaptiveTable
           columns={DepartTableColumns}
           dataSource={tableData}
@@ -84,6 +95,7 @@ class Page extends CaseCommon.PageAsyncBase<IPageProps, IState, IService> {
           onPageChange={this.handlePageChange}
           onShowSizeChange={this.handleShowSizeChange}
           onSelectRows={this.handleSelectRows}
+          onFilterChange={this.handleFilterChange}
         />
         <AddModal
           visible={visibleAdd}
@@ -236,6 +248,14 @@ class Page extends CaseCommon.PageAsyncBase<IPageProps, IState, IService> {
     })
   }
 
+  private handleFilterChange = (filters: any[]) => {
+    this.setState({ filters })
+  }
+
+  private handleTagClose = (fieldName: string) => {
+    const filters = this.state.filters;
+    this.setState({ filters: filters.filter(item => item.fieldName !== fieldName) })
+  }
 }
 
 export default GlobalRedux.ConnectPage.ConnectGlobal(Page)

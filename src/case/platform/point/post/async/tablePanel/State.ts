@@ -37,6 +37,7 @@ export interface IState {
     confirmLoading: boolean;
     orgAngle: number;
     checkedList: any[];
+    filters: any[];
 }
 
 export const initState: IState = {
@@ -58,7 +59,8 @@ export const initState: IState = {
     visibleImport: false,
     confirmLoading: false,
     orgAngle: 90,
-    checkedList: []
+    checkedList: [],
+    filters: []
 };
 
 export interface IFieldVos {

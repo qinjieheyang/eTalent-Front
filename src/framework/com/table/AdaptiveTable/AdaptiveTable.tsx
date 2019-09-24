@@ -46,7 +46,7 @@ interface IProps {
   columns: IColumnSortDefine[];
   minusHeight?: number;
   scrollX?: number | string;
-  onChange?: (pagination: any, filters: any, sorter: any) => void;
+  onFilterChange?: (filters: any) => void;
   pageSize?: number;
   current?: number;
   total?: number;
@@ -82,9 +82,31 @@ class AdaptiveTable extends React.Component<IProps, IState> {
     if (filters.__operationColumn) {
       this.setState({ columns: this.Factory.GetCheckedColumns() })
     }
-    const onChange = this.props.onChange;
-    if (onChange !== undefined) {
-      onChange(pagination, filters, sorter);
+
+    const onFilterChange = this.props.onFilterChange;
+
+    let filterArr = [];
+    // console.log(pagination, filters, sorter)
+    if (Object.getOwnPropertyNames(filters).length === 0 && sorter) {
+      filterArr.push({
+        fieldName: sorter.field,
+        isAscSort: sorter.order === "ascend" ? true : false
+      })
+    } else {
+      for (let key in filters) {
+        let obj: any = {};
+        if (filters[key].length > 0) {
+          obj = { ...filters[key][0] }
+        }
+        if (sorter && sorter.field === key) {
+          obj.isAscSort = sorter.order === "ascend" ? true : false
+        }
+        filterArr.push(obj);
+      }
+    }
+
+    if (onFilterChange !== undefined) {
+      onFilterChange(filterArr);
     }
   }
 
