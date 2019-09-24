@@ -62,24 +62,6 @@ export class ServiceMock {
         return list;
     };
 
-    //根据是否封存查询用户下所有的机构,图形化展示
-    public getOrganizationGraphics = async (): Promise<any[]> => {
-
-        const list = [
-            { key: 0, title: "人力资源部经理", online: 10, color: "#FF8C58" },
-            { key: 1, parent: 0, title: "人事专员", online: 10, color: "#2FDD93" },
-            { key: 2, parent: 1, title: "人事专员", online: 10, color: "#19ADE6" },
-            { key: 3, parent: 1, title: "人事专员", online: 10, color: "#19ADE6" },
-            { key: 4, parent: 1, title: "人事专员", online: 10, color: "#19ADE6" },
-            { key: 5, parent: 1, title: "人事专员", online: 10, color: "#19ADE6" },
-            { key: 6, parent: 1, title: "人事专员", online: 10, color: "#19ADE6" },
-            { key: 7, parent: 1, title: "人事专员", online: 10, color: "#19ADE6" },
-        ]
-
-        return list;
-    }
-
-
 }
 
 export interface IService extends ServiceMock { }

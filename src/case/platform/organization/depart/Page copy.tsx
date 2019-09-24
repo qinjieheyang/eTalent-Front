@@ -26,22 +26,6 @@
 
 //   constructor(props: IPageProps) {
 //     super(props, Const, ServiceMock, Service);
-//   }
-
-//   public async init() {
-//     const { isEnable, pageSize, currentPage, currOrgId, currOrgCode } = this.state;
-
-//     const { treeData, tableData, total } = await this.service.getInit({ isEnable, pageSize, currentPage, orgParentId: currOrgId });
-
-//     const currId = currOrgId || treeData.length ? treeData[0].orgId : undefined;
-
-//     const currCode = currOrgCode || treeData.length ? treeData[0].orgCode : undefined;
-
-//     const selKeys = currId ? [currId] : [];
-
-//     const orgFlowData = await this.service.getOrganizationGraphics();
-
-//     this.setState({ selectedKeys: selKeys, currOrgId: currId, currOrgCode: currCode, treeData, tableData, total, orgFlowData });
 
 //   }
 
@@ -62,6 +46,30 @@
 //     </Menu>
 //   );
 
+//   // private renderCard = (children: any) => (
+//   //   <Card bodyStyle={{ padding: 16, height: "calc(100vh - 151px)", minWidth: 1150 }} bordered={false}>
+//   //     {children}
+//   //   </Card>
+//   // )
+
+//   public async init() {
+
+//     const { isEnable, pageSize, currentPage, currOrgId, currOrgCode } = this.state;
+
+//     const { treeData, tableData, total } = await this.service.getInit({ isEnable, pageSize, currentPage, orgParentId: currOrgId });
+
+//     const currId = currOrgId || treeData.length ? treeData[0].orgId : undefined;
+
+//     const currCode = currOrgCode || treeData.length ? treeData[0].orgCode : undefined;
+
+//     const selKeys = currId ? [currId] : [];
+
+//     const orgFlowData = await this.service.getOrganizationGraphics();
+
+//     this.setState({ selectedKeys: selKeys, currOrgId: currId, currOrgCode: currCode, treeData, tableData, total, orgFlowData });
+
+//   }
+
 //   public render() {
 
 //     const { treeData, tableData, selectedKeys, isEnable, pageSize, currentPage, total, orgFlowData, currOrgCode, visibleAdd, visibleDelete, visibleSeal, visibleUnSeal, visibleMerge, confirmLoading, visibleImport } = this.state;
@@ -74,7 +82,7 @@
 //         <PageContent>
 //           <Tabs size="large" animated={false} tabBarStyle={{ marginBottom: 0, background: "#fff" }} onChange={this.handleTabChange}>
 //             <TabPane key="1" className="qj-depart-tab-pane"
-//               tab={<span><Icon type="table" />岗位表</span>}>
+//               tab={<span><Icon type="table" />机构表</span>}>
 //               {/* {this.renderCard()} */}
 //               <Card bodyStyle={{ padding: 16, height: "calc(100vh - 151px)", minWidth: 1150 }} bordered={false}>
 //                 <Framework.Com.Buttons.Tool.LeftArea>
@@ -82,7 +90,6 @@
 //                   <Button onClick={this.openDelModal}>删除</Button>
 //                   <DropdownMore menu={this.renderMore()}></DropdownMore>
 //                 </Framework.Com.Buttons.Tool.LeftArea>
-
 //                 <AdaptiveTable
 //                   columns={DepartTableColumns}
 //                   dataSource={tableData}
@@ -92,18 +99,16 @@
 //                   total={total}
 //                   onPageChange={this.handlePageChange}
 //                   onShowSizeChange={this.handleShowSizeChange}
-//                   onSelectRows={this.handleSelectRows}
 //                 />
 //               </Card>
 //             </TabPane>
 //             <TabPane key="2" className="qj-depart-tab-pane"
-//               tab={<span><Icon type="apartment" />岗位图</span>}>
+//               tab={<span><Icon type="apartment" />机构图</span>}>
 //               <Card bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
 //                 <OrgFlow data={orgFlowData} parentCode={currOrgCode} />
 //               </Card>
 //             </TabPane>
 //           </Tabs>
-
 //           <AddModal
 //             visible={visibleAdd}
 //             confirmLoading={confirmLoading}
@@ -271,19 +276,6 @@
 //   private handleImportCancel = () => {
 //     this.setState({ visibleImport: false });
 //   }
-
-//   //表格checkbox选中
-//   private handleSelectRows = (selectRows: any[]) => {
-//     this.setState({
-//       checkedList: selectRows.map(row => (
-//         {
-//           value: row.positionGroupId,
-//           name: row.positionGroupName
-//         })
-//       )
-//     })
-//   }
-
 // }
 
 // export default GlobalRedux.ConnectPage.ConnectGlobal(Page)

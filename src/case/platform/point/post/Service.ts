@@ -12,8 +12,4 @@ export class Service extends Framework.Case.ServiceBase implements IService {
         return data["result"]["list"] || [];
     };
 
-    public getOrganizationGraphics = async (): Promise<any[]> => {
-        const data = await this.http.get("/organization/getOrganizationGraphics");
-        return data["result"]["list"] || [];
-    }
 }

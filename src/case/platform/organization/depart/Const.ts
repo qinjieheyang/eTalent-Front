@@ -13,3 +13,16 @@ export enum TabKey {
   Table = "1",
   Flow = "2"
 }
+
+export const TabList = [
+  {
+    key: 'table',
+    tab: '机构表',
+    icon: 'table'
+  },
+  {
+    key: 'flow',
+    tab: '机构图',
+    icon: 'apartment'
+  }
+]

@@ -25,7 +25,19 @@ export interface IState {
     orgFlowData: any[];
     selectedKeys: string[];
     isEnable: boolean;
-    tabKey: string;
+    currentPage: number;
+    pageSize: number;
+    total: number;
+    visibleAdd: boolean;
+    visibleDelete: boolean;
+    visibleSeal: boolean; //封存
+    visibleUnSeal: boolean; //解封
+    visibleMerge: boolean;
+    visibleImport: boolean;
+    confirmLoading: boolean;
+    orgAngle: number;
+    checkedList: any[];
+    filters: any[];
 }
 
 export const initState: IState = {
@@ -36,5 +48,32 @@ export const initState: IState = {
     orgFlowData: [],
     selectedKeys: [],
     isEnable: false,
-    tabKey: "table"
+    currentPage: 1,
+    pageSize: 10,
+    total: 0,
+    visibleAdd: false,
+    visibleDelete: false,
+    visibleSeal: false,
+    visibleUnSeal: false,
+    visibleMerge: false,
+    visibleImport: false,
+    confirmLoading: false,
+    orgAngle: 90,
+    checkedList: [],
+    filters: []
 };
+
+export interface IFieldVos {
+    fieldName: string;
+    fieldValue?: string;
+    isAscSort?: boolean;
+    isFilterNull?: boolean;
+}
+
+export interface ITableParam {
+    orgParentId: string | undefined;
+    isEnable: boolean;
+    currentPage: number;
+    pageSize: number;
+    querFieldVos?: IFieldVos[];
+}
