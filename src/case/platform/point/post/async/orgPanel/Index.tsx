@@ -27,6 +27,7 @@ export default class Page extends CaseCommon.PageAsyncBase<IPageProps, IState, I
   }
   public render() {
     const { orgFlowData, currOrgCode } = this.state;
+
     return (
       <Card style={{ height: "100%", margin: 1 }} bodyStyle={{ padding: 16, height: "100%" }} bordered={false}>
         <OrgFlow data={orgFlowData} parentCode={currOrgCode} />

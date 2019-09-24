@@ -13,51 +13,42 @@ interface IOrgFlowState {
   ratio: string;
   myModel: any;
   myDiagram: any;
-  angle: number
 }
 export class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
-  public diagram: go.Diagram;
+  private diagram: go.Diagram;
+  private angle: number = 90;
 
   private orgFlowEl: React.RefObject<HTMLDivElement>;
 
   constructor(props: IOrgFlowProps) {
     super(props);
-    this.state = { ratio: "100%", myModel: null, myDiagram: null, angle: 90 }
+    this.state = { ratio: "100%", myModel: null, myDiagram: null }
   }
 
   componentWillReceiveProps(nextProps: IOrgFlowProps) {
-    this.loadData();
+    this.loadData(nextProps.data);
   }
 
   componentDidMount() {
     this.renderCanvas();
-    this.loadData();
+    // this.loadData(this.props.data);
   }
 
   renderCanvas = () => {
     let diagram = $(go.Diagram, this.orgFlowEl,  // the DIV HTML element
       {
-        // Put the diagram contents at the top center of the viewport
         initialDocumentSpot: go.Spot.TopCenter,
         initialViewportSpot: go.Spot.TopCenter,
-        // select: 1, // users can select only one part at a time
         isReadOnly: true,
         minScale: 0.2,
         maxScale: 1,
-        // autoScale: go.Diagram.UniformToFill,
+        allowZoom: false,
         layout:
-          $(go.TreeLayout,  // use a TreeLayout to position all of the nodes
+          $(go.TreeLayout,
             {
-              treeStyle: go.TreeLayout.StyleLastParents,
-              arrangement: go.TreeLayout.ArrangementHorizontal,
-              // properties for most of the tree:
               angle: 90,
+              arrangement: go.TreeLayout.ArrangementFixedRoots,
               layerSpacing: 48,
-              // properties for the "last parents":
-              alternateAngle: 90,
-              alternateLayerSpacing: 48,
-              alternateAlignment: go.TreeLayout.AlignmentCenterChildren,
-              alternateNodeSpacing: 56
             })
       });
 
@@ -67,41 +58,68 @@ export class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
           isShadowed: true,
           shadowColor: "#ccc",
           shadowOffset: new Point(0, 0),
-          shadowBlur: 8,
-          selectable: false
+          shadowBlur: 3,
+          doubleClick: function (e, node: any) {
+            var cmd = diagram.commandHandler;
+            e.handled = true;
+            if (node.isTreeExpanded) {
+              cmd.collapseTree(node);
+            } else {
+              cmd.expandTree(node);
+            }
+          },
+          selectionAdornmentTemplate:
+            $(go.Adornment, "Auto",
+              $(go.Shape, "RoundedRectangle",
+                { fill: null, strokeWidth: 1, strokeDashArray: [5, 2] },
+                new go.Binding("stroke", "color"),
+              ),
+              $(go.Placeholder)
+            )
         },
         // 长方形填充色
         $(go.Shape, "RoundedRectangle",
           { stroke: null, strokeWidth: 0 },
           new go.Binding("fill", "color"),
         ),
-        //垂直方向 panel
-        $(go.Panel, "Vertical",
+        $(go.Panel, "Horizontal",
           {
-            // width: 200,
-            // height: 90,
-            maxSize: new go.Size(200, 100)
+            maxSize: new go.Size(200, 100),
+            padding: 5
           },
           //title头部
           $(go.TextBlock,
             {
-              margin: 6,
               stroke: "white",
-              font: "500 14px Roboto, sans-serif",
-              alignment: go.Spot.Center,
               overflow: go.TextBlock.OverflowEllipsis,
               maxLines: 1,
+              margin: new go.Margin(0, 5, 0, 0)
             },
-            new go.Binding("text", "orgName"),
-          )
-        )  // end Table Panel
-      );  // end Node
-    // define the Link template, a simple orthogonal line
+            new go.Binding("text", "orgName")
+          ),
+          $(go.TextBlock,
+            {
+              stroke: "white",
+              graduatedStart: 2
+            },
+            new go.Binding("text", "online", function (v) { return "(" + (v || 0) + "/"; }),
+          ),
+          $(go.TextBlock,
+            {
+              stroke: "white",
+            },
+            new go.Binding("text", "total", function (v) { return (v || 0) + ")"; }),
+          ),
+        ),
+        // $(go.Panel,  // this is underneath the "BODY"
+        //   { height: 17 },  // always this height, even if the TreeExpanderButton is not visible
+        //   $("TreeExpanderButton")
+        // )
+      );
     diagram.linkTemplate =
       $(go.Link, go.Link.Orthogonal,
         { corner: 5, selectable: false },
-        $(go.Shape, { strokeWidth: 1, stroke: "#e0e0e0" }));  // dark gray, rounded corner links
-
+        $(go.Shape, { strokeWidth: 1, stroke: "#e0e0e0" }));
 
     this.diagram = diagram;
   }
@@ -160,27 +178,14 @@ export class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
   }
 
   handleOrgAngle = () => {
-    const angle = this.state.angle > 0 ? 0 : 90;
-    this.setState({ angle });
-    this.diagram.layout = $(go.TreeLayout,  // use a TreeLayout to position all of the nodes
-      {
-        treeStyle: go.TreeLayout.StyleLastParents,
-        arrangement: go.TreeLayout.ArrangementHorizontal,
-        // properties for most of the tree:
-        angle: angle,
-        layerSpacing: 48,
-        // properties for the "last parents":
-        alternateAngle: angle,
-        alternateLayerSpacing: 48,
-        alternateAlignment: go.TreeLayout.AlignmentCenterChildren,
-        alternateNodeSpacing: 56
-      })
+    this.angle = this.angle === 0 ? 90 : 0;
+    this.diagram.layout["angle"] = this.angle;
   }
 
-  private loadData = (maxOrgCodeLength?: number) => {
-    const dataSource = this.props.data;
+  private loadData = (dataSource: any[], maxOrgCodeLength?: number) => {
     const convertData = (maxOrgCodeLength: number) => dataSource.filter(item => item.orgCode.length <= maxOrgCodeLength);
     const data = maxOrgCodeLength ? convertData(maxOrgCodeLength) : dataSource;
+    console.log(this.diagram.model)
     this.diagram.model = $(go.TreeModel,
       {
         nodeParentKeyProperty: "orgParentId",
@@ -188,17 +193,15 @@ export class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
         nodeDataArray: data
       }
     );
-
-    console.log(dataSource)
   }
 
   private handleShowLevelChange = (value: string) => {
     if (this.props.parentCode === undefined) {
-      return this.loadData();
+      return this.loadData(this.props.data);
     }
     const parentIdLenght = this.props.parentCode.length;
     const numberVal = Number(value);
-    this.loadData(numberVal > 0 ? parentIdLenght + (numberVal - 1) * 3 : undefined);
+    this.loadData(this.props.data, numberVal > 0 ? parentIdLenght + (numberVal - 1) * 3 : undefined);
 
   }
 }
