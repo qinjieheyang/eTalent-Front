@@ -7896,6 +7896,11 @@ tinycolor2@^1.4.1:
   resolved "https://registry.npm.taobao.org/tinycolor2/download/tinycolor2-1.4.1.tgz#f4fad333447bc0b07d4dc8e9209d8f39a8ac77e8"
   integrity sha1-9PrTM0R7wLB9TcjpIJ2POaisd+g=
 
+tinymce@^5.0.16:
+  version "5.0.16"
+  resolved "https://registry.npm.taobao.org/tinymce/download/tinymce-5.0.16.tgz?cache=0&sync_timestamp=1569295331111&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftinymce%2Fdownload%2Ftinymce-5.0.16.tgz#7cd34f1016d86fa281652ba02ca5026621dd7590"
+  integrity sha1-fNNPEBbYb6KBZSugLKUCZiHddZA=
+
 tmpl@1.0.x:
   version "1.0.4"
   resolved "https://registry.npm.taobao.org/tmpl/download/tmpl-1.0.4.tgz#23640dd7b42d00433911140820e5cf440e521dd1"

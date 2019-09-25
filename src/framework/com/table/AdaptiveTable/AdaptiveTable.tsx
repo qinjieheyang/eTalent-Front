@@ -78,7 +78,9 @@ class AdaptiveTable extends React.Component<IProps, IState> {
     this.setState({ scroll: { x: scrollX, y: height } });
   }
 
-  private handleChange = (pagination: any, filters: any, sorter: any) => {
+  private handleChange = (pagination: any, filters: any, sorter: any, extra: any) => {
+
+    // console.log(extra, 1111)
     if (filters.__operationColumn) {
       this.setState({ columns: this.Factory.GetCheckedColumns() })
     }
@@ -86,7 +88,7 @@ class AdaptiveTable extends React.Component<IProps, IState> {
     const onFilterChange = this.props.onFilterChange;
 
     let filterArr = [];
-    // console.log(pagination, filters, sorter)
+    
     if (Object.getOwnPropertyNames(filters).length === 0 && sorter) {
       filterArr.push({
         fieldName: sorter.field,

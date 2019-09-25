@@ -24,12 +24,10 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
   }
 
   public async init() {
-    const treeData = await this.service.getInit();
+    
+    const treeData = await this.service.getOrganizationTree();
 
-    const tableData = await this.service.getTableDate();
-
-    this.setState({ treeData, tableData });
-    // console.log(treeData,333)
+    this.setState({ treeData });
   }
 
   public render() {

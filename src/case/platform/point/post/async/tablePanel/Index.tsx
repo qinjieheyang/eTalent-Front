@@ -250,6 +250,7 @@ class Page extends CaseCommon.PageAsyncBase<IPageProps, IState, IService> {
 
   private handleFilterChange = (filters: any[]) => {
     this.setState({ filters })
+    console.log(filters)
   }
 
   private handleTagClose = (fieldName: string) => {
