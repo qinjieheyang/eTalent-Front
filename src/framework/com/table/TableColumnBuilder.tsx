@@ -228,7 +228,7 @@ export class TableColumnBuilder {
         width,
         enableSearch = false,
         checkNull = false,
-        canAutoOrder = true,
+        canAutoOrder = false,
         fixed = false,
         handler
     }: IColumnDefine): IColumnSortDefine => {
@@ -248,7 +248,7 @@ export class TableColumnBuilder {
 
                 if (typeof cellValue !== "string") {
                     //强制转化为字符串
-                    UtilLog.warn("文本列包含非文本值", { dataIndex, cellValue });
+                    // UtilLog.warn("文本列包含非文本值", { dataIndex, cellValue });
                     cellValue = String(cellValue);
                     // throw new Error("列非文本类型, 在：" + dataIndex + "=" + cellValue);
                 }
@@ -272,7 +272,7 @@ export class TableColumnBuilder {
         width,
         enableSearch = false,
         checkNull = false,
-        canAutoOrder = true,
+        canAutoOrder = false,
         fixed = false,
         handler
     }: IColumnDefine): IColumnSortDefine => {
@@ -320,8 +320,8 @@ export class TableColumnBuilder {
         dataIndex,
         dataType,
         width = 100,
-        enableSearch = true,
-        canAutoOrder = true,
+        enableSearch = false,
+        canAutoOrder = false,
         searchData = []
     }: IColumnDefine): IColumnSortDefine => {
 
@@ -359,8 +359,8 @@ export class TableColumnBuilder {
         dataIndex,
         dataType,
         width = 100,
-        enableSearch = true,
-        canAutoOrder = true,
+        enableSearch = false,
+        canAutoOrder = false,
         // prefixText,
         searchData = ["是", "否"]
     }: IColumnDefine): IColumnSortDefine => {
@@ -397,8 +397,8 @@ export class TableColumnBuilder {
         dataIndex,
         dataType,
         width = 50,
-        enableSearch = true,
-        canAutoOrder = true,
+        enableSearch = false,
+        canAutoOrder = false,
         searchData = [0, 100]
     }: IColumnDefine): IColumnSortDefine => {
         const col: IColumnSortDefine = {
@@ -419,8 +419,8 @@ export class TableColumnBuilder {
         key,
         dataIndex,
         dataType,
-        enableSearch = true,
-        canAutoOrder = true,
+        enableSearch = false,
+        canAutoOrder = false,
         width = 50
     }: IColumnDefine): IColumnSortDefine => {
         const col: IColumnSortDefine = {
@@ -443,8 +443,8 @@ export class TableColumnBuilder {
         key,
         dataIndex,
         dataType,
-        enableSearch = true,
-        canAutoOrder = true,
+        enableSearch = false,
+        canAutoOrder = false,
         width = 50
     }: IColumnDefine): IColumnSortDefine => {
         const col: IColumnSortDefine = {
@@ -464,8 +464,8 @@ export class TableColumnBuilder {
         key,
         dataIndex,
         dataType,
-        enableSearch = true,
-        canAutoOrder = true,
+        enableSearch = false,
+        canAutoOrder = false,
         width = 100
     }: IColumnDefine): IColumnSortDefine => {
         const col: IColumnSortDefine = {
@@ -494,8 +494,8 @@ export class TableColumnBuilder {
         key,
         dataIndex,
         dataType,
-        enableSearch = true,
-        canAutoOrder = true,
+        enableSearch = false,
+        canAutoOrder = false,
         width = 100
     }: IColumnDefine): IColumnSortDefine => {
         const col: IColumnSortDefine = {
@@ -523,8 +523,8 @@ export class TableColumnBuilder {
         key,
         dataIndex,
         dataType,
-        enableSearch = true,
-        canAutoOrder = true,
+        enableSearch = false,
+        canAutoOrder = false,
         width = 100
     }: IColumnDefine): IColumnSortDefine => {
         const col: IColumnSortDefine = {
@@ -551,8 +551,8 @@ export class TableColumnBuilder {
         dataIndex,
         dataType,
         width = 100,
-        enableSearch = true,
-        canAutoOrder = true,
+        enableSearch = false,
+        canAutoOrder = false,
         searchData = []
     }: IColumnDefine): IColumnSortDefine => {
         const selectTable = new DataTable(searchData);
@@ -592,8 +592,8 @@ export class TableColumnBuilder {
         dataIndex,
         dataType,
         width = 100,
-        enableSearch = true,
-        canAutoOrder = true,
+        enableSearch = false,
+        canAutoOrder = false,
         searchData = [],
         textDisplayLength = 30
     }: IColumnDefine): IColumnSortDefine => {
@@ -652,8 +652,8 @@ export class TableColumnBuilder {
         key,
         dataIndex,
         dataType,
-        enableSearch = true,
-        canAutoOrder = true,
+        enableSearch = false,
+        canAutoOrder = false,
         width = 100,
         handler
     }: IColumnDefine): IColumnSortDefine => {

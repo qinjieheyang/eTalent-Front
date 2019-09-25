@@ -2,7 +2,7 @@
 
 import Framework from "src/framework/Framework";
 import { IService } from "./ServiceMock";
-import { ITreeBase } from "./State";
+import { ITreeBase, ITableParam } from "./State";
 
 export class Service extends Framework.Case.ServiceBase implements IService {
 
@@ -12,5 +12,18 @@ export class Service extends Framework.Case.ServiceBase implements IService {
         return data["result"]["list"] || [];
     };
 
-    
+    public getUserArchiveList = async (params: ITableParam) => {
+        const data = await this.http.get("/userArchive/getUserArchiveList", params);
+        let res = {
+            tableData: [],
+            total: 0
+        }
+        if (data && data.list) {
+            res.tableData = data.list;
+        }
+        if (data && data.total) {
+            res.total = data.total;
+        }
+        return res;
+    }
 }

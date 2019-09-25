@@ -1,7 +1,7 @@
 //  负责伪造后端 WebApi数据
 
 import Mock from 'mockjs';
-import { ITreeBase } from "./State";
+import { ITreeBase, ITableParam } from "./State";
 
 const generateOrgCode = () => {
     const { regexp } = Mock.mock({
@@ -60,24 +60,53 @@ export class ServiceMock {
         return list;
     };
 
-    public getUserArchiveList = async () => {
+    public getUserArchiveList = async (params: ITableParam) => {
         const { list, total } = Mock.mock({
             "list|10": [{
-                key: "@id",
-                companyId: "@id",
-                createTime: "@date",
-                isEnable: true, //是否启用
-                operatorId: "@id",
-                orgCode: generateOrgCode(), //机构编码
-                orgFullname: "机构全称-@integer(1, 100)", //机构全称
-                orgId: "@id", //机构ID
-                orgManagerId: "@id", //机构负责人
-                orgManagerName: "负责人-@integer(1, 100)", //机构负责人
-                orgName: "中国雄安投资集团", //机构名称
-                orgParentId: "@id", //父级机构ID
-                orgParentName: "父级-@integer(1, 100)", //父级机构ID
-                "orgType|1": ["集团", "单位", "部门"],  //机构类型 ["集团", "单位", "部门"]
-                sortId: "@increment", //序号
+                "address": "xxx",
+                "age": "@integer(1, 100)",
+                "archiveId": 0,
+                "attritionDate": "2019-09-25T06:16:47.011Z",
+                "attritionType": "string",
+                "birthdate": "2019-09-25T06:16:47.011Z",
+                "birthplace": "string",
+                "businessUnitId": 0,
+                "businessUnitName": 0,
+                "companyId": 0,
+                "converseDate": "2019-09-25T06:16:47.011Z",
+                "createTime": "2019-09-25T06:16:47.011Z",
+                "email": "string",
+                "employeeNumber": "string",
+                "firstDegree": "string",
+                "firstWorkDate": "2019-09-25T06:16:47.011Z",
+                "gender": "string",
+                "highestDegree": "string",
+                "hiredate": "2019-09-25T06:16:47.011Z",
+                "idNumber": "string",
+                "idType": "string",
+                "isDelete": 0,
+                "maritalStatus": "string",
+                "nationality": 0,
+                "operatorId": 0,
+                "orgId": 0,
+                "orgName": 0,
+                "politicalStatus": 0,
+                "postId": 0,
+                "postName": 0,
+                "probationDueDate": "2019-09-25T06:16:47.011Z",
+                "probationPeriod": 0,
+                "professionalCertification": "string",
+                "professionalLevel": "string",
+                "professionalTitle": "string",
+                "servingAge": 0,
+                "supervisorId": 0,
+                "supervisorUserName": 0,
+                "tel": "string",
+                "updateTime": "2019-09-25T06:16:47.011Z",
+                "userCategory": "string",
+                "userId": 0,
+                "userName": "string",
+                "workingPeriod": 0
             }],
             total: 100
         });

@@ -6,7 +6,7 @@ import * as GlobalRedux from "src/globalRedux/GlobalRedux";
 import CaseCommon, { OrgTree } from "src/caseCommon/CaseCommon";
 import Framework from "src/framework/Framework";
 
-import { Const } from "./Const";
+import { Const, Columns } from "./Const";
 import { Service } from "./Service";
 import { IService, ServiceMock } from "./ServiceMock";
 import { initState, IState } from "./State";
@@ -24,72 +24,23 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
   }
 
   public async init() {
-    
+    const { pageSize, currentPage } = this.state;
+
     const treeData = await this.service.getOrganizationTree();
 
-    this.setState({ treeData });
+    const { total, tableData } = await this.service.getUserArchiveList({ pageSize, currentPage });
+
+    this.setState({ treeData, total, tableData });
   }
 
   public render() {
 
-    const columns = [
-      {
-        title: '用户名',
-        key: 'name',
-        dataIndex: 'name',
-        width: 150,
-        enableSearch: false
-      },
-      {
-        title: '企业名称',
-        key: '1',
-        dataIndex: 'name',
-        width: 150,
-        enableSearch: false
-      },
-      {
-        title: '邮箱',
-        key: '2',
-        dataIndex: 'name',
-        width: 150,
-        enableSearch: false
-      },
-      {
-        title: '手机号',
-        key: '3',
-        dataIndex: 'name',
-        width: 150,
-        enableSearch: false
-      },
-      {
-        title: '注册日期',
-        key: '4',
-        dataIndex: 'name',
-        width: 150,
-        enableSearch: false
-      },
-    ]
-    const dataSource: any = [
-      {
-        name: "xxxx"
-      },
-      {
-        name: "xxxx"
-      },
-      {
-        name: "xxxx"
-      },
-      {
-        name: "xxxx"
-      },
-    ];
-    const { treeData } = this.state;
-    const isEnable = false;
-    const currOrgId = String(0);
+    const { tableData, pageSize, currentPage, total, treeData, selectedKeys, isEnable } = this.state;
+
     return (
       <PageLayout>
         <PageSide>
-          <OrgTree showAll={isEnable} onShowChange={this.handleShowChange} treeData={treeData} selectedKeys={[currOrgId]} onSelect={this.handleSelectTreeNode} />
+          <OrgTree showAll={isEnable} onShowChange={this.handleShowChange} treeData={treeData} selectedKeys={selectedKeys} onSelect={this.handleSelectTreeNode} />
         </PageSide>
         <PageContent>
           <Card bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
@@ -97,14 +48,59 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
               <Button type="primary">重置密码</Button>
             </Framework.Com.Buttons.Tool.LeftArea>
             <AdaptiveTable
-              columns={columns}
-              dataSource={dataSource}
+              columns={this.GetColumns()}
+              dataSource={tableData}
               minusHeight={224}
+              pageSize={pageSize}
+              current={currentPage}
+              total={total}
+              onPageChange={this.handlePageChange}
+              onShowSizeChange={this.handleShowSizeChange}
             />
           </Card>
         </PageContent>
       </PageLayout>
     );
+  }
+  private GetColumns = () => {
+    // let width = 0;
+    const getHandler = (dataType: string | undefined) => {
+      if (dataType === undefined) return {};
+      return {
+        handler: {
+          onLinkClick: (row: any) => {
+            // this.openAddModal("编辑信息");
+          }
+        }
+      }
+    }
+
+    return Columns.map(col => {
+      // width += col.width || 150;
+      return {
+        ...col,
+        dataIndex: col.key,
+        ...getHandler(col.dataType)
+      }
+    })
+  }
+
+  //翻页：pagesize 改变
+  private handleShowSizeChange = async (current: number, size: number) => {
+    const { tableData } = await this.service.getUserArchiveList({
+      currentPage: 1,
+      pageSize: size,
+    });
+    this.setState({ pageSize: size, currentPage: 1, tableData });
+  }
+
+  //翻页：页码改变
+  private handlePageChange = async (page: number, pageSize: number) => {
+    const { tableData } = await this.service.getUserArchiveList({
+      currentPage: page,
+      pageSize,
+    });
+    this.setState({ currentPage: page, tableData });
   }
 
   private handleShowChange = (checked: boolean) => {

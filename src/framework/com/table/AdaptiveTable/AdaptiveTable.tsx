@@ -45,7 +45,7 @@ interface IProps {
   dataSource: object[];
   columns: IColumnSortDefine[];
   minusHeight?: number;
-  scrollX?: number | string;
+  // scrollX?: number | string;
   onFilterChange?: (filters: any) => void;
   pageSize?: number;
   current?: number;
@@ -66,21 +66,27 @@ class AdaptiveTable extends React.Component<IProps, IState> {
 
   constructor(props: IProps) {
     super(props);
+    const columns = this.Factory.createColumns(props.columns);
+    let width = 0;
+    columns.forEach(item => {
+      width += item.width || 150;
+    });
+    const scrollX = width > 1100 ? width : undefined;
     this.state = {
-      scroll: { x: undefined, y: undefined },
-      columns: this.Factory.createColumns(props.columns)
+      scroll: { x: scrollX, y: undefined },
+      columns
     }
   }
 
   private reloadLayout = () => {
-    const { minusHeight = 0, dataSource, scrollX = undefined } = this.props;
+    const { minusHeight = 0, dataSource } = this.props;
+    const scrollX = this.state.scroll.x;
     const height: number | undefined = computerTableHeightByViewport(dataSource, minusHeight + 54);
     this.setState({ scroll: { x: scrollX, y: height } });
   }
 
   private handleChange = (pagination: any, filters: any, sorter: any, extra: any) => {
 
-    // console.log(extra, 1111)
     if (filters.__operationColumn) {
       this.setState({ columns: this.Factory.GetCheckedColumns() })
     }
@@ -88,7 +94,7 @@ class AdaptiveTable extends React.Component<IProps, IState> {
     const onFilterChange = this.props.onFilterChange;
 
     let filterArr = [];
-    
+
     if (Object.getOwnPropertyNames(filters).length === 0 && sorter) {
       filterArr.push({
         fieldName: sorter.field,
@@ -113,6 +119,7 @@ class AdaptiveTable extends React.Component<IProps, IState> {
   }
 
   componentDidMount() {
+
     window.addEventListener("resize", this.reloadLayout);
 
     //props数据加载后，重新布局

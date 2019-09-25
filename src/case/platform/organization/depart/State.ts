@@ -21,8 +21,6 @@ export interface IState {
     currOrgId: string | undefined;
     currOrgCode: string | undefined;
     treeData: ITreeBase[];
-    tableData: any[];
-    orgFlowData: any[];
     selectedKeys: string[];
     isEnable: boolean;
     tabKey: string;
@@ -32,8 +30,6 @@ export const initState: IState = {
     currOrgId: undefined,
     currOrgCode: undefined,
     treeData: [],
-    tableData: [],
-    orgFlowData: [],
     selectedKeys: [],
     isEnable: false,
     tabKey: "table"

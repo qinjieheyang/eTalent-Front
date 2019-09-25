@@ -78,8 +78,7 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
                 height: "calc(100% - 48px)",
                 setup: (ed: any) => {
                   this.editor = ed;
-                },
-                base_url: "https://cdn.bootcss.com/tinymce/5.0.15/"
+                }
               }}
             />
           </PageCard>
