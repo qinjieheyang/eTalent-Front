@@ -10,6 +10,9 @@ import { Const, Columns } from "./Const";
 import { Service } from "./Service";
 import { IService, ServiceMock } from "./ServiceMock";
 import { initState, IState } from "./State";
+import { AddModal } from './AddModal';
+import { DeleteModal } from './DeleteModal';
+import { ImportModal } from './ImportModal';
 const AdaptiveTable = Framework.Com.Tables.AdaptiveTable;
 
 
@@ -44,7 +47,7 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
 
   public render() {
 
-    const { tableData, pageSize, currentPage, total, treeData, selectedKeys, isEnable } = this.state;
+    const { tableData, pageSize, currentPage, total, treeData, selectedKeys, isEnable, visibleAdd, visibleDelete, confirmLoading, visibleImport } = this.state;
 
     return (
       <PageLayout>
@@ -54,12 +57,14 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
         <PageContent>
           <Card bodyStyle={{ padding: 16, height: "calc(100vh - 96px)" }} bordered={false}>
             <Framework.Com.Buttons.Tool.LeftArea>
-              <Button type="primary">重置密码</Button>
+              <Button type="primary" onClick={this.openAddModal}>新增</Button>
+              <Button onClick={this.openDelModal}>删除</Button>
+              <Button onClick={this.openImportModal}>导入</Button>
             </Framework.Com.Buttons.Tool.LeftArea>
             <div className="qj-tag-search-box" style={{ left: 248 }}>
               {this.renderTags()}
             </div>
-            <div style={{width:"100%", height: "calc(100% - 96px)"}}>
+            <div style={{ width: "100%", height: "calc(100% - 96px)" }}>
               <AdaptiveTable
                 columns={this.GetColumns()}
                 dataSource={tableData}
@@ -71,6 +76,24 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
                 onFilterChange={this.handleFilterChange}
               />
             </div>
+            <AddModal
+              visible={visibleAdd}
+              confirmLoading={confirmLoading}
+              onOk={this.handleAdd}
+              onCancel={this.handleAddCancel}
+            />
+            <DeleteModal
+              visible={visibleDelete}
+              confirmLoading={confirmLoading}
+              onOk={this.handleDelete}
+              onCancel={this.handleDelCancel}
+            />
+            <ImportModal
+              visible={visibleImport}
+              confirmLoading={confirmLoading}
+              onOk={this.handleImport}
+              onCancel={this.handleImportCancel}
+            />
           </Card>
         </PageContent>
       </PageLayout>
@@ -133,6 +156,43 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
     const filters = this.state.filters;
     this.setState({ filters: filters.filter((item: any) => item.fieldName !== fieldName) })
   }
+
+  private openAddModal = () => {
+    this.setState({ visibleAdd: true });
+  }
+
+  private handleAdd = () => {
+    this.setState({ visibleAdd: false });
+  }
+
+  private handleAddCancel = () => {
+    this.setState({ visibleAdd: false });
+  }
+
+  private openDelModal = () => {
+    this.setState({ visibleDelete: true });
+  }
+
+  private handleDelete = () => {
+    this.setState({ visibleDelete: false });
+  }
+
+  private handleDelCancel = () => {
+    this.setState({ visibleDelete: false });
+  }
+
+  private openImportModal = () => {
+    this.setState({ visibleImport: true });
+  }
+
+  private handleImport = () => {
+    this.setState({ visibleImport: false });
+  }
+
+  private handleImportCancel = () => {
+    this.setState({ visibleImport: false });
+  }
+
 }
 
 export default GlobalRedux.ConnectPage.ConnectGlobal(Page)

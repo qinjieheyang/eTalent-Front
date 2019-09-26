@@ -5,13 +5,13 @@ import { AInput, IAInputProp } from "./AInput";
 const { Option } = Select;
 
 interface IOption{
-  title: string;
+  label: string;
   value: string|number;
 }
 
 
 export interface ISelectProp extends IAInputProp {
-   option?: IOption[];
+  options?: IOption[];
 }
 export class SelectInput extends AInput<ISelectProp> {
     public render = (): React.ReactElement<any> => {
@@ -44,9 +44,9 @@ export class SelectInput extends AInput<ISelectProp> {
     };
 
     private getOptions = () => {
-      const option: IOption[] = this.props.option || [];
+      const option: IOption[] = this.props.options || [];
       return option.map((opt: IOption, index: number) => {
-        return <Option key={opt.value} value={opt.value}>{opt.title}</Option>
+        return <Option key={opt.value} value={opt.value}>{opt.label}</Option>
       })
     }
 

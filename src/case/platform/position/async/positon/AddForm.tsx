@@ -24,7 +24,7 @@ const AddForm = Form.create({ name: 'normal_login' })((props: IAddFormProps) => 
         fieldName="positionGroupName"
         getFD={getFieldDecorator}
         isRequired={true}
-        option={[{ title: "研发族", value: 1 }, { title: "销售族", value: 2 }, { title: "实施族", value: 3 }]}
+        options={[{ label: "研发族", value: 1 }, { label: "销售族", value: 2 }, { label: "实施族", value: 3 }]}
         value={1}
       />
       <TextInput formItem={{ label: "职位名称" }}

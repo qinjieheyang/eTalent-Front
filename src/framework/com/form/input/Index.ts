@@ -12,6 +12,7 @@ export * from "./TextAreaInput";
 export * from "./TextInput";
 export * from "./SelectInput";
 export * from "./SelectTreeInput";
+export * from "./RadioGroupInput";
 
 
 

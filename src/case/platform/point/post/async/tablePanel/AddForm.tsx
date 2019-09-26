@@ -61,7 +61,7 @@ const AddForm = Form.create({ name: 'normal_login' })((props: IAddFormProps) => 
         fieldName="departType"
         getFD={getFieldDecorator}
         isRequired={true}
-        option={[{ title: "集团", value: 1 }, { title: "单位", value: 2 }, { title: "部门", value: 3 }]}
+        options={[{ label: "集团", value: 1 }, { label: "单位", value: 2 }, { label: "部门", value: 3 }]}
         value={1}
       />
       <SelectTreeInput formItem={{ label: "上级机构" }}

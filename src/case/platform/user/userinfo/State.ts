@@ -26,6 +26,10 @@ export interface IState {
     selectedKeys: string[];
     isEnable: boolean;
     filters: any[];
+    visibleAdd: boolean;
+    visibleDelete: boolean;
+    visibleImport: boolean;
+    confirmLoading: boolean;
 }
 
 export const initState = {
@@ -38,7 +42,11 @@ export const initState = {
     treeData: [],
     selectedKeys: [],
     isEnable: false,
-    filters: []
+    filters: [],
+    visibleAdd: false,
+    visibleDelete: false,
+    visibleImport: false,
+    confirmLoading: false,
 };
 
 export interface ITableParam {
