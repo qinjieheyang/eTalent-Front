@@ -32,7 +32,7 @@ export const UploadContent = () => {
   };
   return (
     <div>
-        <p>
+        <p style={{marginTop:8}}>
           <span style={{fontWeight:"bold",marginRight: 8}}>温馨提示：</span>
           <span style={{marginRight: 16}}>推荐下载标准模版，填写信息后再上传</span>
           <Button type="primary">下载模版</Button>
@@ -180,7 +180,7 @@ export const ImportModal = (props: IImportModalProps) => {
         <Step title="上传文件" />
         <Step title="导入校验" />
         <Step title="导入完成" />
-      </Steps>,
+      </Steps>
       {step === StepType.UPLOAD ? UploadContent() : 
         step === StepType.CHECK ? CheckTableContent() : null }
     </Modal>

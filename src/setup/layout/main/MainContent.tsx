@@ -11,7 +11,7 @@ import Content from "./inner/Content";
 // import reg from 'src/case/report/viewReport/Reg';
 
 // import { mainRegs } from "../../../case/mainRegs";
-const topRegs = mainRegs.getTopRegs();
+// const topRegs = mainRegs.getTopRegs();
 
 interface IMainContentProps {
   topPath: string;
@@ -32,7 +32,7 @@ export default class MainContent extends React.Component<IMainContentProps> {
   public render() {
     //获取sideregs,将Reg封装到RegCollection中
     const sideRegs = mainRegs.getSideRegsByRoutePath(this.props.topPath);
-    const topReg = mainRegs.getTopRegByRoutePath(this.props.topPath);
+    // const topReg = mainRegs.getTopRegByRoutePath(this.props.topPath);
     return (
 
       <Layout>
@@ -44,7 +44,6 @@ export default class MainContent extends React.Component<IMainContentProps> {
                   <Switch>
                       {/* 路由 */}
                       {sideRegs.getRoutes()}
-                      {topReg ? topReg.getRoute() : this.getHomeRoute()}
                       <Route component={NoMatch} />
                   </Switch>
               </Content>
@@ -54,13 +53,13 @@ export default class MainContent extends React.Component<IMainContentProps> {
     );
   }
 
-  private getHomeRoute = ()=>{
-    let homeRoute;
-    topRegs.forEach(reg => {
-      if(reg.isHomePage()){
-        homeRoute = reg.getRoute();
-      }
-    })
-    return homeRoute;
-  }
+  // private getHomeRoute = ()=>{
+  //   let homeRoute;
+  //   topRegs.forEach(reg => {
+  //     if(reg.isHomePage()){
+  //       homeRoute = reg.getRoute();
+  //     }
+  //   })
+  //   return homeRoute;
+  // }
 }

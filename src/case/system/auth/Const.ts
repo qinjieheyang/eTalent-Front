@@ -2,12 +2,12 @@
 import * as Framework from "src/framework/Framework";
 
 const Const: Framework.Case.IConst = {
-    title: "组织中台",
+    title: "权限管理",
     icon: Framework.Com.Icons.emptyIcon,
-    routePath: "/platform",
+    routePath: "/auth",
     isTest: true,
-    case: "PlatformPage",
-    topPath: "/platform"
+    case: "auth",
+    topPath: "/auth"
 };
 
 export { Const };

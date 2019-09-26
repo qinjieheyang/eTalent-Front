@@ -5,9 +5,9 @@ import * as Framework from "src/framework/Framework";
 import { IMessageRow } from "../State";
 // import Logo from "./headerInner/Logo";
 import TopMenu from "./headerInner/TopMenu";
-import Help from "./headerInner/Help";
+// import Help from "./headerInner/Help";
 import LoginUser from "./headerInner/LoginUser";
-import Message from "./headerInner/Message";
+// import Message from "./headerInner/Message";
 import Setting from "./headerInner/Setting";
 import { Link, Redirect } from 'react-router-dom';
 
@@ -32,7 +32,7 @@ const Header = (props: IHeaderProps) => {
         setLogin(false);
     };
 
-    const {onMenuChange, topUrl, messages} = props;
+    const {onMenuChange, topUrl} = props;
 
 
     return (
@@ -47,8 +47,8 @@ const Header = (props: IHeaderProps) => {
                     <TopMenu topUrl={topUrl} onMenuChange={onMenuChange}/>
                 </div>
                 <div className="qj-header-right">
-                    <Message msgRows={messages} />
-                    <Help />
+                    {/* <Message msgRows={messages} />
+                    <Help /> */}
                     <Setting />
                     <LoginUser onLoginOff={handleLoginOff} />
                 </div>

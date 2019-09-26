@@ -28,6 +28,14 @@ export class Reg {
     return new Reg(title, routePath, icon);
   }
 
+  public static CreateTopReg(
+    title: string,
+    routePath: string,
+    // topPath: string
+  ): Reg {
+    return new Reg(title, routePath, Framework.Com.Icons.emptyIcon, routePath);
+  }
+
   /** 是否精准路由 */
   public isRouteExact: boolean;
   /** 路由路径 */
