@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Card, Button } from "antd";
 import { PageLayout, PageContent, PageSide } from "src/caseCommon/PageCommon";
-import { RouteComponentProps } from "react-router-dom";
+// import { RouteComponentProps } from "react-router-dom";
 import * as GlobalRedux from "src/globalRedux/GlobalRedux";
 import CaseCommon, { OrgTree } from "src/caseCommon/CaseCommon";
 import Framework from "src/framework/Framework";
@@ -13,7 +13,7 @@ import { initState, IState } from "./State";
 const AdaptiveTable = Framework.Com.Tables.AdaptiveTable;
 
 
-interface IPageProps extends GlobalRedux.Actions.IGlobalActionDispatcher, RouteComponentProps { }
+interface IPageProps extends GlobalRedux.Actions.IGlobalActionDispatcher { }
 
 class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
 
@@ -33,6 +33,15 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
     this.setState({ treeData, total, tableData });
   }
 
+  private renderTags = () => {
+    return this.state.filters.map((item: any) => {
+      const value = item.isFilterNull ? "空值" : item.fieldValue;
+      return (
+        <Framework.Com.Tags.SearchTag key={item.fieldName} name={item.fieldName} label={item.fieldLabel} text={value} onClose={this.handleTagClose} />
+      )
+    })
+  }
+
   public render() {
 
     const { tableData, pageSize, currentPage, total, treeData, selectedKeys, isEnable } = this.state;
@@ -47,16 +56,22 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
             <Framework.Com.Buttons.Tool.LeftArea>
               <Button type="primary">重置密码</Button>
             </Framework.Com.Buttons.Tool.LeftArea>
-            <AdaptiveTable
-              columns={this.GetColumns()}
-              dataSource={tableData}
-              minusHeight={224}
-              pageSize={pageSize}
-              current={currentPage}
-              total={total}
-              onPageChange={this.handlePageChange}
-              onShowSizeChange={this.handleShowSizeChange}
-            />
+            <div className="qj-tag-search-box" style={{ left: 248 }}>
+              {this.renderTags()}
+            </div>
+            <div style={{width:"100%", height: "calc(100% - 48px)"}}>
+              <AdaptiveTable
+                columns={this.GetColumns()}
+                dataSource={tableData}
+                minusHeight={224}
+                pageSize={pageSize}
+                current={currentPage}
+                total={total}
+                onPageChange={this.handlePageChange}
+                onShowSizeChange={this.handleShowSizeChange}
+                onFilterChange={this.handleFilterChange}
+              />
+            </div>
           </Card>
         </PageContent>
       </PageLayout>
@@ -107,9 +122,17 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
 
   }
 
-
   private handleSelectTreeNode = (selectedKeys: string[]) => {
 
+  }
+
+  private handleFilterChange = (filters: any[]) => {
+    this.setState({ filters })
+  }
+
+  private handleTagClose = (fieldName: string) => {
+    const filters = this.state.filters;
+    this.setState({ filters: filters.filter((item: any) => item.fieldName !== fieldName) })
   }
 }
 

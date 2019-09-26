@@ -25,7 +25,7 @@ export interface IState {
     treeData: ITreeBase[];
     selectedKeys: string[];
     isEnable: boolean;
-    
+    filters: any[];
 }
 
 export const initState = {
@@ -38,6 +38,7 @@ export const initState = {
     treeData: [],
     selectedKeys: [],
     isEnable: false,
+    filters: []
 };
 
 export interface ITableParam {
