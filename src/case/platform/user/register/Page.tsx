@@ -69,11 +69,12 @@ export default class Page extends React.Component<any, any> {
       <PageLayout>
         <PageContent>
           <PageCommon.PageCard title="用户注册">
-            <AdaptiveTable
-              columns={columns}
-              dataSource={dataSource}
-              minusHeight={215}
-            />
+            {/* <div style={{ width: "100%", height: "calc(100% - 48px)" }}> */}
+              <AdaptiveTable
+                columns={columns}
+                dataSource={dataSource}
+              />
+            {/* </div> */}
           </PageCommon.PageCard>
         </PageContent>
       </PageLayout>

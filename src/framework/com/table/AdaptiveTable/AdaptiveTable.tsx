@@ -90,24 +90,17 @@ class AdaptiveTable extends React.Component<IProps, IState> {
   private reloadLayout = () => {
 
     const [headHeight, rowHeight] = [54, 54];
-    const { columns, dataSource } = this.props;
+    const { dataSource } = this.props;
     const wrapperEl = this.tableWrapEl;
-    // const scrollX = this.state.scroll.x;
-    // this.tableWrapEl.clientWidth, this.tableWrapEl.clientHeight
-    const viewport = {
-      w: wrapperEl.clientWidth,
-      h: wrapperEl.clientHeight
-    }
 
-    const width = wrapperEl.clientWidth > this.columnWidth ? undefined : this.columnWidth;
+    let width = wrapperEl.clientWidth > this.columnWidth ? undefined : this.columnWidth;
 
-    const height = 
+    let height: number | undefined = wrapperEl.clientHeight - headHeight;
 
-    // const {height, width} = computerTableViewport(
-    //   dataSource, 
-    //   columns, 
-    //   wrapperEl
-    // );
+    if (height < 0 || height > dataSource.length * rowHeight) {
+      height = undefined;
+    };
+
     this.setState({ scroll: { x: width, y: height } });
   }
 

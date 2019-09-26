@@ -52,18 +52,17 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
           <OrgTree showAll={isEnable} onShowChange={this.handleShowChange} treeData={treeData} selectedKeys={selectedKeys} onSelect={this.handleSelectTreeNode} />
         </PageSide>
         <PageContent>
-          <Card bodyStyle={{ padding: 16, height: "calc(100vh - 151px)" }} bordered={false}>
+          <Card bodyStyle={{ padding: 16, height: "calc(100vh - 96px)" }} bordered={false}>
             <Framework.Com.Buttons.Tool.LeftArea>
               <Button type="primary">重置密码</Button>
             </Framework.Com.Buttons.Tool.LeftArea>
             <div className="qj-tag-search-box" style={{ left: 248 }}>
               {this.renderTags()}
             </div>
-            <div style={{width:"100%", height: "calc(100% - 48px)"}}>
+            <div style={{width:"100%", height: "calc(100% - 96px)"}}>
               <AdaptiveTable
                 columns={this.GetColumns()}
                 dataSource={tableData}
-                minusHeight={224}
                 pageSize={pageSize}
                 current={currentPage}
                 total={total}

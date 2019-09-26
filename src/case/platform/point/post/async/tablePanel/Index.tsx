@@ -85,18 +85,19 @@ class Page extends CaseCommon.PageAsyncBase<IPageProps, IState, IService> {
         <div className="qj-tag-search-box" style={{ left: 248 }}>
           {this.renderTags()}
         </div>
-        <AdaptiveTable
-          columns={DepartTableColumns}
-          dataSource={tableData}
-          minusHeight={279}
-          pageSize={pageSize}
-          current={currentPage}
-          total={total}
-          onPageChange={this.handlePageChange}
-          onShowSizeChange={this.handleShowSizeChange}
-          onSelectRows={this.handleSelectRows}
-          onFilterChange={this.handleFilterChange}
-        />
+        <div style={{ width: "100%", height: "calc(100% - 96px)" }}>
+          <AdaptiveTable
+            columns={DepartTableColumns}
+            dataSource={tableData}
+            pageSize={pageSize}
+            current={currentPage}
+            total={total}
+            onPageChange={this.handlePageChange}
+            onShowSizeChange={this.handleShowSizeChange}
+            onSelectRows={this.handleSelectRows}
+            onFilterChange={this.handleFilterChange}
+          />
+        </div>
         <AddModal
           visible={visibleAdd}
           confirmLoading={confirmLoading}

@@ -139,23 +139,24 @@ export default class Group extends CaseCommon.PageAsyncBase<IProps, IState, ISer
                     {this.renderSide()}
                 </Layout.Sider>
                 <Layout.Content style={{ background: "#fff" }}>
-                    <Card bodyStyle={{ padding: 16 }} bordered={false}>
+                    <Card bodyStyle={{ padding: 16, height: "100%" }} style={{height: "100%"}} bordered={false}>
                         <Framework.Com.Buttons.Tool.LeftArea>
                             <Button type="primary" onClick={() => { this.openAddModal() }}>新增</Button>
                             <Button onClick={this.openDelModal}>删除</Button>
                             <DropdownMore menu={this.renderMore()}></DropdownMore>
                         </Framework.Com.Buttons.Tool.LeftArea>
-                        <AdaptiveTable
-                            columns={this.GetColumns()}
-                            dataSource={tableData}
-                            minusHeight={311}
-                            pageSize={pageSize}
-                            current={currentPage}
-                            total={total}
-                            onPageChange={this.handlePageChange}
-                            onShowSizeChange={this.handleShowSizeChange}
-                            onSelectRows={this.handleSelectRows}
-                        />
+                        <div style={{ width: "100%", height: "calc(100% - 96px)" }}>
+                            <AdaptiveTable
+                                columns={this.GetColumns()}
+                                dataSource={tableData}
+                                pageSize={pageSize}
+                                current={currentPage}
+                                total={total}
+                                onPageChange={this.handlePageChange}
+                                onShowSizeChange={this.handleShowSizeChange}
+                                onSelectRows={this.handleSelectRows}
+                            />
+                        </div>
 
                         <AddModal {...addProps} />
                         <DeleteModal {...delProps} />
