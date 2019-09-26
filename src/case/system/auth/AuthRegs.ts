@@ -1,6 +1,6 @@
 // // 负责将模块注册到框架（包括路由、菜单）
-// import * as Framework from "src/framework/Framework";
-// import { Const } from "./Const";
+import * as Framework from "src/framework/Framework";
+import { Const } from "./Const";
 
 // import {userRegs} from "./user/userRegs";
 // import {organizationRegs} from "./organization/organizationRegs";
