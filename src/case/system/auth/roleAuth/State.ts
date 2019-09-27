@@ -32,5 +32,5 @@ export const initState: IState = {
     treeData: [],
     selectedKeys: [],
     isEnable: false,
-    tabKey: "tab1"
+    tabKey: "tab-1"
 };

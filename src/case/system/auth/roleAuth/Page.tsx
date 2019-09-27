@@ -36,9 +36,9 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
       <PageLayout>
         <PageSide>
           <RoleTree onShowChange={this.handleShowChange} treeData={treeData} selectedKeys={selectedKeys} onSelect={this.handleSelectTreeNode} >
-              <Button type="primary" ghost>新增</Button>
-              <Button type="primary" ghost>编辑</Button>
-              <Button type="primary" ghost>删除</Button>
+              <Button>新增</Button>
+              <Button>编辑</Button>
+              <Button>删除</Button>
           </RoleTree>
         </PageSide>
         <PageContent>
@@ -64,6 +64,7 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
 
   private handleTabChange = async (activeKey: string) => {
     this.setState({ tabKey: activeKey })
+    console.log(activeKey)
   }
 
   private handleSelectTreeNode = (selectedKeys: string[]) => {

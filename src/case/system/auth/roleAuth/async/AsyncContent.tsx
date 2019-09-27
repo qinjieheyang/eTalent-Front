@@ -15,11 +15,11 @@ interface IProps {
 }
 const AsyncContent = (porps: IProps) => {
   const tabKey = porps.tabKey;
-  if (tabKey === "tab1") return <Tab1 />
-  if (tabKey === "tab2") return <Tab2 />
-  if (tabKey === "tab3") return <Tab3 />
-  if (tabKey === "tab4") return <Tab4 />
-  if (tabKey === "tab5") return <Tab5 />
+  if (tabKey === "tab-1") return <Tab1 />
+  if (tabKey === "tab-2") return <Tab2 />
+  if (tabKey === "tab-3") return <Tab3 />
+  if (tabKey === "tab-4") return <Tab4 />
+  if (tabKey === "tab-5") return <Tab5 />
   return <div></div>
 }
 
