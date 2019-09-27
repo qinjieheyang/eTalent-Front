@@ -176,13 +176,13 @@ ServiceBase后端服务基类                   :      提供HTTP代理的对象
 #### 页面开发、页面结构
 
 ```
-|--home                         个人门户(待定)
+|--home                         个人门户
 |--platform                     组织中台
   |--organization               组织机构
     |--depart                   机构维护
       |--async..                机构表、机构图
-    |--history                  历史机构(待定)
-    |--virtual                  虚拟组织(待定)
+    |--history                  历史机构
+    |--virtual                  虚拟组织
   |--position                   职位管理
     |--system                   职位体系
     |--group                    职位族设置
@@ -195,7 +195,7 @@ ServiceBase后端服务基类                   :      提供HTTP代理的对象
   |--user                       用户管理
     |--register                 注册用户
     |--userinfo                 用户信息
-  |--establishment              编制管理(待定)
+  |--establishment              编制管理
 |--system                       系统管理
   |--auth                       权限管理
     |--roleAuth                 角色授权
