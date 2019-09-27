@@ -44,10 +44,7 @@ export class RoleTree extends React.Component<IProps> {
 
   private renderTreeNodes = (data: Array<any>) => {
 
-
     return data.map((item: any) => {
-
-
       if (item.childRoleGroupList) {
         return (
           <TreeNode title={item.roleGroupName} key={item.roleGroupId} dataRef={item} >

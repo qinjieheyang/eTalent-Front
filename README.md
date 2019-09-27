@@ -1,73 +1,97 @@
-# 进度
 ### 第三方框架和开发工具的下载、配置、集成
+
 ```
-阿里巴巴的antd前端框架      ：  完成100% ，包括LESS换肤
-jest单元测试工具            ：  完成100%
-react框架                   ：  完成100%
-redux状态管理                      ：  完成100%
-router路由                      ：  完成100%
-typescript支持                  ：  完成100%
-第三方库的DLL分离             ：  完成100%
+阿里巴巴的antd前端框架
+jest单元测试工具
+react框架
+redux状态管理
+router路由
+typescript支持
+第三方库的DLL分离
 开发调试环境WebPack配置
-发布幻觉Webpack配置
-less、css、style样式支持                   ：  完成100%
-CSS抽离到单独文件               ：  完成100%
-tslint源代码规范约束            ：  完成100% 
-recharts图表                    ：  完成100% 
- 
+less、css、style样式支持
+CSS抽离到单独文件
+tslint源代码规范约束
+recharts图表
+gojs 组织图
+tinymce富文本编辑器
+腾讯云COS对象存储
 ```
+
 ### 项目框架的设计与开发
-#####   |-- src               源代码目录 
+
+##### |-- src 源代码目录
+
 ```
-|--Index.tsx                系统入口(100%)
-|--index.less               全局antd主题色(未来扩展)
+|--Index.tsx                系统入口
+|--index.less               全局antd主题色
 ```
 
+##### |-- styles 主题切换
 
-##### |--  |--caseCommon项目公共
-```
-|--Case页面入口基类    ：  提供初始化事件、后端服务接口注入（100%）
-```
- 
+|--\_var.less antDesign 主题 less 变量、自定义 less 变量
+|--global.less 需要替换的公共部分的样式
 
-##### |--framework/case（100%）
+##### |--caseCommon 项目公共
+
+```
+|--PageBase页面入口基类    ：  提供初始化事件、后端服务接口注入、mock数据
+|--PageAsyncBase异步加载页面入口基类： 提供初始化事件、后端服务接口注入、mock数据
+|--AsyncComponent异步加载组件公共基类
+|--PageCommon           封装PageLayout, PageSide, PageContent, PageCard方便页面复用
+|--PageLoading          loading动画
+|--orgTree   组织机构树
+```
+
+##### |--fonts 自定义字体图标
+
+##### |--framework/case
+
 ```
 数据模型的标准接口定义      ：      Case数据模型定义标准，为模型修改工具类库提供服务
-用例常量定义接口定义        ：      统一Case常量定义
-模块异步加载等待组件定义    ：      异步加载功能模块的时候等待组件
-用例模块注册器              ：      注册一个用例模块
-用例模块注册器管理容器      :       管理系统全部注册器，提供路由地址查找、路由组件生成的服务
-后端服务基类                ：      提供HTTP代理的对象的注入
+IConst用例常量定义接口定义        ：      统一Case常量定义
+LoadingCompontent模块异步加载等待组件定义    ：      异步加载功能模块的时候等待组件
+Reg用例模块注册器              ：      注册一个用例模块
+RegCollection用例模块注册器管理容器      :       管理系统全部注册器，提供路由地址查找、路由组件生成的服务
+ServiceBase后端服务基类                ：      提供HTTP代理的对象的注入
 ```
 
-##### |--framework/codeMng  系统公共代码表统一管理（50%） ，剩余1天
+##### |--framework/codeMng 系统公共代码表统一管理
+
 ```
- 
+
 1）增量更新
 2）缓存到浏览器
 3）查询
 4）为UI组件提供统一代码数据源
 ```
 
-##### |--framework/com  公共UI组件  ( 30%) ，剩余3天 ，依据项目需要不断的扩展
-```
-|--btn      页面工具栏、按钮、按钮分组 (30%)
-|--charts    曲线图、柱状图、饼状图、雷达图 ，不带交互的图表(80%)
-|--form      各种输入框组件、输入项布局组件、分组布局组件（50%） 
-|--icon      iconfont阿里图标云服务的封装（100%） 
-|--table/baseTable  只读表格封装，支持常用显示风格、数据格式转换、代码转换、常用操作按钮（70%） 
+##### |--framework/com 公共 UI 组件 依据项目需要不断的扩展
 
-|--tree树       支持检索定位 （60%）
 ```
-##### |--framework/data   （100%）
+|--btn      页面工具栏、按钮、按钮分组、按钮区域
+|--charts    曲线图、柱状图、饼状图、雷达图 ，不带交互的图表
+|--checkbox  带全选的checkbox列表
+|--dropdown  下拉列表
+|--form      各种输入框组件BoolInput、CheckBoxListInput、ComboBoxInput、ComboBoxTreeInput、DateInput、NumberInput、PasswordInput、RadioGroupInput、SelectInput、SelectTreeInput、TextAreaInput、TextInput
+|--tag       表格搜索项的显示
+|--icon      自定义图标配置
+|--table/baseTable  只读表格封装，支持常用显示风格、数据格式转换、代码转换、常用操作按钮
+|--table/AdaptiveTable  自适应布局、数据格式转换、代码转换、常用操作按钮
+|--upload     通过获取服务端认证上传文件到腾讯云，拖拽上传、按钮上传
 ```
-|--buildtree        树建造器，支持将Join表、parentID表自由装置为树结构（100%）
+
+##### |--framework/data
+
+```
+|--buildtree      树建造器，支持将Join表、parentID表自由装置为树结构
 |--dataTable      内存表 ，支持新增、修改、删除、上移、下移、记录树遍历、模糊全文筛选。
-|--searchTable      内存表搜索器，支持Where <、>、!、=、like 分页筛选。
+|--searchTable    内存表搜索器，支持Where <、>、!、=、like 分页筛选。
 
 ```
 
-##### |--framework/http（90%） 剩余0.5天
+##### |--framework/http 请求模块
+
 ```
 1)支持get、post、delete、put
 2)后端异常统一处理、日志、提醒用户
@@ -75,27 +99,29 @@ recharts图表                    ：  完成100%
 4）为客户端调用，提供非数据部分的统一移除
 ```
 
-#### |--test/fake(100%)
+#### |--test/fake
+
 ```
 1) 伪造数据表Rows
 2）伪造Tree表Rows
 3）伪造代码表
- 
-```
 
+```
 
 ## |--utils
+
 ```
-|--UtilBrowserStorage.ts      浏览器缓存，长期和会话级(100%)                                           
-|--UtilLog.ts                 日志(100%)                                                          
-|--UtilMessage.ts             消息提醒(100%)                                           
-|--UtilNumber.ts              数值计算工具类,包括货币、计算、四舍五入(100%)                                
-|--UtilValueData.ts           基本值类型工具类，包括(100%)    
+|--UtilBrowserStorage.ts      浏览器缓存，长期和会话级
+|--UtilLog.ts                 日志
+|--UtilMessage.ts             消息提醒
+|--UtilNumber.ts              数值计算工具类,包括货币、计算、四舍五入
+|--UtilValue.ts               基本值类型工具类，包括
+|--UtilDownload.ts            下载文件、下载图片
+|--UtilUpload.ts              上传文件到腾讯云
 ```
 
+## globalRedux 全局数据模型 Redux
 
-
-## globalRedux              全局数据模型Redux（90%）
 ```
 |--actions                  动作
 |--connects                 redux链接
@@ -106,27 +132,35 @@ recharts图表                    ：  完成100%
 |--Store.ts                 存储
 ```
 
+## locales 国际化支持
 
-## setup                    前端系统启动配置
+en-US
+zh-CN
+
+## setup 前端系统启动配置
+
 ```
+|--App.tsx                  页面入口，集成Redux + Router + 日期格式转换 + Antd主题颜色
 |--layout/main              站内布局+路由
+    |-- MainLayout          页面布局入口
+        |-- Header          头部
+        |-- MainContent     内容
+            |-- Sider       侧边栏
+
 |--layout/out               站外布局+路由
-|--App.tsx                  集成Redux + Router + 日期格式转换 + Antd主题颜色
- ```
- 
 
-
-
-## src/case    ( 用例根目录)
-```
-|--mainRegs.ts              内部 Case注册器根
-|--outRegs.ts               外部 Case注册器根
- 
 ```
 
+## src/case ( 用例根目录)
 
+```
+|--mainRegs.ts              内部路由 Case注册器根
+|--outRegs.ts               内部路由 Case注册器根
 
-#### 每个Case目录
+```
+
+#### 每个 Case 目录
+
 ```
 |--Const.ts                 常量
 |--Page.tsx                 入口页面
@@ -134,4 +168,41 @@ recharts图表                    ：  完成100%
 |--Service.ts               后端服务调用
 |--ServiceMock.ts           后端服务调用伪造
 |--State.ts                 数据模型
+|--|--async                 需要异步加载的页面模块
+```
+
+#### src/case 页面开发、页面结构
+
+```
+|--home                         个人门户(待定)
+|--platform                     组织中台
+  |--organization               组织机构
+    |--depart                   机构维护
+      |--async..                机构表、机构图
+    |--history                  历史机构(待定)
+    |--virtual                  虚拟组织(待定)
+  |--position                   职位管理
+    |--system                   职位体系
+    |--group                    职位族设置
+    |--position                 职位设置
+    |--level                    职级设置
+    |--garde                    职等设置
+  |--point                      岗位管理
+    |--post                     岗位维护
+      |--async..                岗位表、岗位图
+  |--user                       用户管理
+    |--register                 注册用户
+    |--userinfo                 用户信息
+  |--establishment              编制管理(待定)
+|--system                       系统管理
+  |--auth                       权限管理
+    |--roleAuth                 角色授权
+      |--tab1                   功能权限
+      |--tab2                   管理范围权限
+      |--tab3                   字段权限
+      |--tab4                   数据级权限
+      |--tab5                   报表权限
+    |--userAuth                 用户授权
+    |--roleSearch               角色反查
+    |--transferAuth             权限管理
 ```
