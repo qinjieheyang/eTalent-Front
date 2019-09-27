@@ -29,18 +29,18 @@ tinymce富文本编辑器
 
 ##### |-- styles 主题切换
 
-|--\_var.less antDesign 主题 less 变量、自定义 less 变量
+|--var.less antDesign 主题 less 变量、自定义 less 变量
 |--global.less 需要替换的公共部分的样式
 
 ##### |--caseCommon 项目公共
 
 ```
-|--PageBase页面入口基类    ：  提供初始化事件、后端服务接口注入、mock数据
-|--PageAsyncBase异步加载页面入口基类： 提供初始化事件、后端服务接口注入、mock数据
+|--PageBase页面入口基类             :  提供初始化事件、后端服务接口注入、mock数据
+|--PageAsyncBase异步加载页面入口基类 :  提供初始化事件、后端服务接口注入、mock数据
 |--AsyncComponent异步加载组件公共基类
-|--PageCommon           封装PageLayout, PageSide, PageContent, PageCard方便页面复用
-|--PageLoading          loading动画
-|--orgTree   组织机构树
+|--PageCommon                      :  封装PageLayout, PageSide, PageContent, PageCard方便页面复用
+|--PageLoading                     :  loading动画
+|--orgTree组织机构树
 ```
 
 ##### |--fonts 自定义字体图标
@@ -48,12 +48,12 @@ tinymce富文本编辑器
 ##### |--framework/case
 
 ```
-数据模型的标准接口定义      ：      Case数据模型定义标准，为模型修改工具类库提供服务
-IConst用例常量定义接口定义        ：      统一Case常量定义
-LoadingCompontent模块异步加载等待组件定义    ：      异步加载功能模块的时候等待组件
-Reg用例模块注册器              ：      注册一个用例模块
-RegCollection用例模块注册器管理容器      :       管理系统全部注册器，提供路由地址查找、路由组件生成的服务
-ServiceBase后端服务基类                ：      提供HTTP代理的对象的注入
+数据模型的标准接口定义                     :      Case数据模型定义标准，为模型修改工具类库提供服务
+IConst用例常量定义接口定义                 :      统一Case常量定义
+LoadingCompontent模块异步加载等待组件定义  :      异步加载功能模块的时候等待组件
+Reg用例模块注册器                         :      注册一个用例模块
+RegCollection用例模块注册器管理容器        :      管理系统全部注册器，提供路由地址查找、路由组件生成的服务
+ServiceBase后端服务基类                   :      提供HTTP代理的对象的注入
 ```
 
 ##### |--framework/codeMng 系统公共代码表统一管理
@@ -69,16 +69,16 @@ ServiceBase后端服务基类                ：      提供HTTP代理的对象�
 ##### |--framework/com 公共 UI 组件 依据项目需要不断的扩展
 
 ```
-|--btn      页面工具栏、按钮、按钮分组、按钮区域
+|--btn       页面工具栏、按钮、按钮分组、按钮区域
 |--charts    曲线图、柱状图、饼状图、雷达图 ，不带交互的图表
 |--checkbox  带全选的checkbox列表
 |--dropdown  下拉列表
 |--form      各种输入框组件BoolInput、CheckBoxListInput、ComboBoxInput、ComboBoxTreeInput、DateInput、NumberInput、PasswordInput、RadioGroupInput、SelectInput、SelectTreeInput、TextAreaInput、TextInput
 |--tag       表格搜索项的显示
 |--icon      自定义图标配置
-|--table/baseTable  只读表格封装，支持常用显示风格、数据格式转换、代码转换、常用操作按钮
+|--table/baseTable      只读表格封装，支持常用显示风格、数据格式转换、代码转换、常用操作按钮
 |--table/AdaptiveTable  自适应布局、数据格式转换、代码转换、常用操作按钮
-|--upload     通过获取服务端认证上传文件到腾讯云，拖拽上传、按钮上传
+|--upload    通过获取服务端认证上传文件到腾讯云，拖拽上传、按钮上传
 ```
 
 ##### |--framework/data
