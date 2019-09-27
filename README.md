@@ -134,8 +134,10 @@ ServiceBase后端服务基类                ：      提供HTTP代理的对象�
 
 ## locales 国际化支持
 
-en-US
-zh-CN
+```
+|--en-US
+|--zh-CN
+```
 
 ## setup 前端系统启动配置
 
