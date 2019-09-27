@@ -1,22 +1,22 @@
-// // 负责将模块注册到框架（包括路由、菜单）
+// 负责将模块注册到框架（包括路由、菜单）
 import * as Framework from "src/framework/Framework";
-import { Const } from "./Const";
 
-// import {userRegs} from "./user/userRegs";
-// import {organizationRegs} from "./organization/organizationRegs";
-// import positionReg from "./position/Reg";
-// import {pointRegs} from "./point/pointRegs";
-// import {establishmentRegs} from "./establishment/establishmentRegs"
-// // import roleReg from "./role/Reg";
+import roleAuthReg  from "./roleAuth/Reg";
+import userAuthReg  from "./userAuth/Reg";
+import roleSearchReg  from "./roleSearch/Reg";
+import transferAuthReg  from "./transferAuth/Reg";
+// import historyReg  from "./history/Reg";
+// import virtualReg  from "./virtual/Reg";
 
-// const platRegs = Framework.Case.Reg.CreateCaseReg(Const, () => import("./Page"));
+const authRegs = Framework.Case.Reg.CreatePathReg(
+  "权限管理",
+  Framework.Com.Icons.App.org,
+  "/system/auth"
+);
 
-// platRegs.addChild(organizationRegs);
-// platRegs.addChild(positionReg);
-// platRegs.addChild(pointRegs);
-// platRegs.addChild(userRegs);
-// platRegs.addChild(establishmentRegs);
-// // platRegs.addChild(roleReg);
-// // platRegs.addChild(userReg);
+authRegs.addChild(roleAuthReg);
+authRegs.addChild(userAuthReg);
+authRegs.addChild(roleSearchReg);
+authRegs.addChild(transferAuthReg);
 
-// export { platRegs };
+export { authRegs };
