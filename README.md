@@ -20,19 +20,27 @@ tinymce富文本编辑器
 
 ### 项目框架的设计与开发
 
-##### |-- src 源代码目录
+```
+|-- config  项目开发环境、生产环境配置
+|-- public  公共静态文件目录
+|-- src     源代码目录
+```
+
+#### |-- src 源代码目录
 
 ```
 |--Index.tsx                系统入口
 |--index.less               全局antd主题色
 ```
 
-##### |-- styles 主题切换
+#### |-- styles 主题切换
 
+```
 |--var.less antDesign 主题 less 变量、自定义 less 变量
 |--global.less 需要替换的公共部分的样式
+```
 
-##### |--caseCommon 项目公共
+#### |--caseCommon 项目公共
 
 ```
 |--PageBase页面入口基类             :  提供初始化事件、后端服务接口注入、mock数据
@@ -43,9 +51,9 @@ tinymce富文本编辑器
 |--orgTree组织机构树
 ```
 
-##### |--fonts 自定义字体图标
+#### |--fonts 自定义字体图标
 
-##### |--framework/case
+#### |--framework/case
 
 ```
 数据模型的标准接口定义                     :      Case数据模型定义标准，为模型修改工具类库提供服务
@@ -56,7 +64,7 @@ RegCollection用例模块注册器管理容器        :      管理系统全部�
 ServiceBase后端服务基类                   :      提供HTTP代理的对象的注入
 ```
 
-##### |--framework/codeMng 系统公共代码表统一管理
+#### |--framework/codeMng 系统公共代码表统一管理
 
 ```
 
@@ -66,7 +74,7 @@ ServiceBase后端服务基类                   :      提供HTTP代理的对象
 4）为UI组件提供统一代码数据源
 ```
 
-##### |--framework/com 公共 UI 组件 依据项目需要不断的扩展
+#### |--framework/com 公共 UI 组件 依据项目需要不断的扩展
 
 ```
 |--btn       页面工具栏、按钮、按钮分组、按钮区域
@@ -81,7 +89,7 @@ ServiceBase后端服务基类                   :      提供HTTP代理的对象
 |--upload    通过获取服务端认证上传文件到腾讯云，拖拽上传、按钮上传
 ```
 
-##### |--framework/data
+#### |--framework/data
 
 ```
 |--buildtree      树建造器，支持将Join表、parentID表自由装置为树结构
@@ -90,7 +98,7 @@ ServiceBase后端服务基类                   :      提供HTTP代理的对象
 
 ```
 
-##### |--framework/http 请求模块
+#### |--framework/http 请求模块
 
 ```
 1)支持get、post、delete、put
@@ -108,7 +116,7 @@ ServiceBase后端服务基类                   :      提供HTTP代理的对象
 
 ```
 
-## |--utils
+#### |--utils
 
 ```
 |--UtilBrowserStorage.ts      浏览器缓存，长期和会话级
@@ -120,7 +128,7 @@ ServiceBase后端服务基类                   :      提供HTTP代理的对象
 |--UtilUpload.ts              上传文件到腾讯云
 ```
 
-## globalRedux 全局数据模型 Redux
+#### globalRedux 全局数据模型 Redux
 
 ```
 |--actions                  动作
@@ -132,14 +140,14 @@ ServiceBase后端服务基类                   :      提供HTTP代理的对象
 |--Store.ts                 存储
 ```
 
-## locales 国际化支持
+#### locales 国际化支持
 
 ```
 |--en-US
 |--zh-CN
 ```
 
-## setup 前端系统启动配置
+#### setup 页面架构设置
 
 ```
 |--App.tsx                  页面入口，集成Redux + Router + 日期格式转换 + Antd主题颜色
@@ -153,7 +161,7 @@ ServiceBase后端服务基类                   :      提供HTTP代理的对象
 
 ```
 
-## src/case ( 用例根目录)
+#### src/case ( 用例根目录)
 
 ```
 |--mainRegs.ts              内部路由 Case注册器根
