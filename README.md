@@ -53,7 +53,7 @@ tinymce富文本编辑器
 
 #### |--fonts 自定义字体图标
 
-#### |--framework/case
+#### |--framework/case  case公共服务
 
 ```
 数据模型的标准接口定义                     :      Case数据模型定义标准，为模型修改工具类库提供服务
@@ -128,7 +128,7 @@ ServiceBase后端服务基类                   :      提供HTTP代理的对象
 |--UtilUpload.ts              上传文件到腾讯云
 ```
 
-#### globalRedux 全局数据模型 Redux
+#### |-- globalRedux 全局数据模型 Redux
 
 ```
 |--actions                  动作
@@ -140,14 +140,14 @@ ServiceBase后端服务基类                   :      提供HTTP代理的对象
 |--Store.ts                 存储
 ```
 
-#### locales 国际化支持
+#### |-- locales 国际化支持
 
 ```
 |--en-US
 |--zh-CN
 ```
 
-#### setup 页面架构设置
+#### |-- setup 页面架构设置
 
 ```
 |--App.tsx                  页面入口，集成Redux + Router + 日期格式转换 + Antd主题颜色
@@ -161,7 +161,7 @@ ServiceBase后端服务基类                   :      提供HTTP代理的对象
 
 ```
 
-#### src/case ( 用例根目录)
+### src/case ( 用例根目录)
 
 ```
 |--mainRegs.ts              内部路由 Case注册器根
