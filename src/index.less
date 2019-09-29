@@ -196,11 +196,12 @@
     }
     &-prefix {
         display: inline-block;
-        width: 8px;
-        height: 8px;
+        width: 6px;
+        height: 6px;
         margin-right: 8px;
-        padding: 4px;
-        border-radius: 4px;
+        padding: 3px;
+        border-radius: 3px;
+        margin-bottom: 2px;
     }
     &-prefix-false {
         background: #f03838;
@@ -232,4 +233,15 @@
     max-width: 80px;
     text-overflow: ellipsis;
     overflow: hidden;
+}
+
+.qj-tree-table {
+    .ant-tree-node-content-wrapper {
+        width: 100%;
+        overflow: hidden;
+    }
+    .qj-tree-content-text {
+        width: 95%;
+        position: relative;
+    }
 }

@@ -4,14 +4,14 @@ export interface IState {
     
     treeData: any[];
     selectedKeys: string[];
-    expandedKeys: string[];
     tabKey: string;
+    isLoaded: boolean;
 }
 
 export const initState: IState = {
     
     treeData: [],
     selectedKeys: [],
-    expandedKeys: [],
-    tabKey: "tab-1"
+    tabKey: "tab-1",
+    isLoaded: false
 };

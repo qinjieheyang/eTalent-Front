@@ -64,7 +64,7 @@ class Page extends CaseCommon.PageBase<IPageProps, IState, IService> {
 
   private handleTabChange = async (activeKey: string) => {
     this.setState({ tabKey: activeKey })
-    console.log(activeKey)
+    // console.log(activeKey)
   }
 
   private handleSelectTreeNode = (selectedKeys: string[]) => {

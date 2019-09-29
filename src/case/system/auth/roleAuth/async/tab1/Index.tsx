@@ -26,37 +26,26 @@ export default class Group extends CaseCommon.PageAsyncBase<IProps, IState, ISer
 
     const treeData = await this.service.searchRoleAuthTree();
 
-    this.initExpandKeys(treeData);
+    this.setState({ treeData, isLoaded: true })
 
-    this.setState({ treeData, expandedKeys: this.expandedKeys })
-
-  }
-
-  private initExpandKeys(treeData: any[]) {
-    treeData.forEach(item => {
-      if (item.childMenuList && item.childMenuList.length) {
-        this.initExpandKeys(item.childMenuList)
-        if (item.menuId) {
-          this.expandedKeys.push(item.menuId);
-        }
-      }
-    });
   }
 
 
   public render() {
-    const { treeData, selectedKeys, expandedKeys } = this.state;
+    const { treeData, selectedKeys, isLoaded } = this.state;
 
     return (
-      <div style={{ height: "100%", padding: 16 }}>
-        <Tree
-          expandedKeys={expandedKeys}
-          checkable
-          onSelect={this.handleSelectTreeNode}
-          selectedKeys={selectedKeys}
-        >
-          {this.renderTreeNodes(treeData)}
-        </Tree>
+      <div style={{ height: "100%", padding: 16, overflowY: "auto" }}>
+        {
+          isLoaded ? <Tree
+            defaultExpandAll
+            checkable
+            onSelect={this.handleSelectTreeNode}
+            selectedKeys={selectedKeys}
+          >
+            {this.renderTreeNodes(treeData)}
+          </Tree> : null
+        }
       </div>
     )
   }
