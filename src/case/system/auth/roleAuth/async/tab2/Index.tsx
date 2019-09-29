@@ -36,7 +36,14 @@ export default class Group extends CaseCommon.PageAsyncBase<IProps, IState, ISer
 
     return (
       <div style={{ height: "100%", padding: 16, overflowY: "auto", overflowX: "hidden" }}>
-        <Checkbox onChange={this.onCheckChange}>授权角色用户关联的下级人员</Checkbox>
+        <div style={{ marginBottom: 8 }}>
+          <Checkbox onChange={this.onCheckChange}>授权角色用户关联的下级人员</Checkbox>
+          <Checkbox onChange={this.onCheckChange}>自动授权新增的子级机构</Checkbox>
+        </div>
+        <div style={{ width: "100%", background: "#F8F8F8" }}>
+          <span style={{ display: "inline-block", width: "calc(100% - 150px)", padding: 8, color: "#000" }}>机构范围</span>
+          <span style={{ display: "inline-block", width: 150, padding: "8px 0", color: "#000" }}>授权</span>
+        </div>
         {
           isLoaded ? <Tree
             className="qj-tree-table"
@@ -53,15 +60,19 @@ export default class Group extends CaseCommon.PageAsyncBase<IProps, IState, ISer
   }
 
   private renderTreeNodes = (data: Array<any>) => {
-    const onCheckChange = ((e: any) => {
-      console.log(222)
-    })
-    const formatTitle = (name: string) => {
+
+    const formatTitle = (item: any) => {
+
+      //使用onClick,直接绑定onChange方法，事件不触发
+      const onCheckChange = () => {
+        item.checked = !item.checked;
+        this.handleTreeCheckChange(item);
+      }
       return (
         <div className="qj-tree-content-text">
-          <span style={{ display: "inline-block" }}>{name}</span>
-          <span style={{ display: "inline-block", position: "absolute", right: 10 }}>
-            <Checkbox onChange={onCheckChange} />
+          <span style={{ display: "inline-block" }}>{item.menuName}</span>
+          <span style={{ display: "inline-block", position: "absolute", right: 150, width: 16, height: 16 }} >
+            <Checkbox onClick={onCheckChange} checked={item.checked} />
           </span>
         </div>
       )
@@ -70,12 +81,12 @@ export default class Group extends CaseCommon.PageAsyncBase<IProps, IState, ISer
     return data.map((item: any) => {
       if (item.childMenuList) {
         return (
-          <TreeNode title={formatTitle(item.menuName)} key={item.menuId} dataRef={item} >
+          <TreeNode title={formatTitle(item)} key={item.menuId} dataRef={item} >
             {this.renderTreeNodes(item.childMenuList)}
           </TreeNode>
         );
       }
-      return <TreeNode title={formatTitle(item.menuName)} key={item.menuId} dataRef={item} />;
+      return <TreeNode title={formatTitle(item)} key={item.menuId} dataRef={item} />;
     });
   }
 
@@ -84,7 +95,10 @@ export default class Group extends CaseCommon.PageAsyncBase<IProps, IState, ISer
   }
 
   private onCheckChange = (e: any) => {
-    // console.log(1111)
     console.log(`checked = ${e.target.checked}`);
+  }
+
+  private handleTreeCheckChange = (item: any) => {
+    // console.log(111)
   }
 }
