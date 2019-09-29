@@ -37,7 +37,7 @@ tinymce富文本编辑器
 |-- config  项目开发环境、生产环境配置
 |-- public  公共静态文件目录
 |-- src     源代码目录
-  |-- case           用例根目录
+  |-- case           case页面用例根目录
   |-- caseCommon     case页面公共入口基类
   |-- fonts          字体
   |-- framework      case公共服务
@@ -48,7 +48,7 @@ tinymce富文本编辑器
   |-- Index.html      主页面入口
   |-- Index.tsx       加载入口
   |-- Index.less      全局样式
-|-- dist    打包
+|-- dist    打包文件目录
 ```
 
 ### src 源代码目录
