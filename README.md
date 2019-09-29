@@ -38,7 +38,7 @@ tinymce富文本编辑器
 |-- public  公共静态文件目录
 |-- src     源代码目录
   |-- case           用例根目录
-  |-- caseCommon     公共类
+  |-- caseCommon     case页面公共入口基类
   |-- fonts          字体
   |-- framework      case公共服务
   |-- globalRedux    Redux全局数据模型
