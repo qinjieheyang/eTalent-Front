@@ -5,10 +5,10 @@
 npm install
 
 //开发环境运行
-npm start
+npm run start
 
-//生产环境
-npm build
+//生产环境构建
+npm run build
 ```
 
 ### 第三方框架和开发工具的下载、配置、集成
@@ -31,12 +31,24 @@ tinymce富文本编辑器
 腾讯云COS对象存储
 ```
 
-### 项目框架的设计与开发
+### 项目目录结构
 
 ```
 |-- config  项目开发环境、生产环境配置
 |-- public  公共静态文件目录
 |-- src     源代码目录
+  |-- case           用例根目录
+  |-- caseCommon     公共类
+  |-- fonts          字体
+  |-- framework      case公共服务
+  |-- globalRedux    Redux全局数据模型
+  |-- locals          国际化
+  |-- setups          页面框架设置
+  |-- styles          主题切换
+  |-- Index.html      主页面入口
+  |-- Index.tsx       加载入口
+  |-- Index.less      全局样式
+|-- dist    打包
 ```
 
 ### src 源代码目录
@@ -160,7 +172,7 @@ ServiceBase后端服务基类                   :      提供HTTP代理的对象
 |--zh-CN
 ```
 
-#### |-- setup 页面架构设置
+#### |-- setup 页面框架设置
 
 ```
 |--App.tsx                  页面入口，集成Redux + Router + 日期格式转换 + Antd主题颜色
