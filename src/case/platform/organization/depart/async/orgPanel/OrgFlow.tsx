@@ -27,6 +27,7 @@ export class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
 
   componentWillReceiveProps(nextProps: IOrgFlowProps) {
     this.loadData(nextProps.data);
+    // console.log(nextProps)
   }
 
   componentDidMount() {
@@ -248,7 +249,6 @@ export class OrgFlow extends Component<IOrgFlowProps, IOrgFlowState> {
   private loadData = (dataSource: any[], maxOrgCodeLength?: number) => {
     const convertData = (maxOrgCodeLength: number) => dataSource.filter(item => item.orgCode.length <= maxOrgCodeLength);
     const data = maxOrgCodeLength ? convertData(maxOrgCodeLength) : dataSource;
-    console.log(this.diagram.model)
     this.diagram.model = $(go.TreeModel,
       {
         nodeParentKeyProperty: "orgParentId",
