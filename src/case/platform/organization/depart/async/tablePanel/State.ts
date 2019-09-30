@@ -38,6 +38,7 @@ export interface IState {
     orgAngle: number;
     checkedList: any[];
     filters: any[];
+    addModalTitle?: string;
 }
 
 export const initState: IState = {
@@ -60,7 +61,8 @@ export const initState: IState = {
     confirmLoading: false,
     orgAngle: 90,
     checkedList: [],
-    filters: []
+    filters: [],
+    addModalTitle: undefined,
 };
 
 export interface IFieldVos {

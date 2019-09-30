@@ -72,22 +72,22 @@ class Page extends CaseCommon.PageAsyncBase<IPageProps, IState, IService> {
 
   public render() {
 
-    const { tableData, pageSize, currentPage, total, visibleAdd, visibleDelete, visibleSeal, visibleUnSeal, visibleMerge, confirmLoading, visibleImport } = this.state;
+    const { tableData, pageSize, currentPage, total, visibleAdd, visibleDelete, visibleSeal, visibleUnSeal, visibleMerge, confirmLoading, visibleImport, addModalTitle } = this.state;
 
     return (
 
       <Card style={{ height: "100%", margin: 1 }} bodyStyle={{ padding: 16, height: "100%" }} bordered={false}>
         <Framework.Com.Buttons.Tool.LeftArea>
-          <Button type="primary" onClick={this.openAddModal}>新增</Button>
+          <Button type="primary" onClick={()=> {this.openAddModal()}}>新增</Button>
           <Button onClick={this.openDelModal}>删除</Button>
           <DropdownMore menu={this.renderMore()}></DropdownMore>
         </Framework.Com.Buttons.Tool.LeftArea>
         <div className="qj-tag-search-box" style={{ left: 248 }}>
           {this.renderTags()}
         </div>
-        <div style={{width:"100%", height: "calc(100% - 96px)"}}>
+        <div style={{ width: "100%", height: "calc(100% - 96px)" }}>
           <AdaptiveTable
-            columns={DepartTableColumns}
+            columns={this.GetColumns()}
             dataSource={tableData}
             pageSize={pageSize}
             current={currentPage}
@@ -100,6 +100,7 @@ class Page extends CaseCommon.PageAsyncBase<IPageProps, IState, IService> {
         </div>
         <AddModal
           visible={visibleAdd}
+          title={addModalTitle}
           confirmLoading={confirmLoading}
           onOk={this.handleAdd}
           onCancel={this.handleAddCancel}
@@ -136,9 +137,31 @@ class Page extends CaseCommon.PageAsyncBase<IPageProps, IState, IService> {
         />
       </Card>
 
-
-
     );
+  }
+
+  private GetColumns = () => {
+
+    const getHandler = (dataType: string | undefined) => {
+      if (dataType === "linkText") {
+        return {
+          handler: {
+            onLinkClick: (row: any) => {
+              this.openAddModal("编辑信息");
+            }
+          }
+        }
+      }
+      return {};
+    }
+
+    return DepartTableColumns.map((col: any) => {
+
+      return {
+        ...col,
+        ...getHandler(col.dataType)
+      }
+    })
   }
 
   //翻页：pagesize 改变
@@ -165,8 +188,8 @@ class Page extends CaseCommon.PageAsyncBase<IPageProps, IState, IService> {
     this.setState({ currentPage: page, tableData });
   }
 
-  private openAddModal = () => {
-    this.setState({ visibleAdd: true });
+  private openAddModal = (title?: string) => {
+    this.setState({ visibleAdd: true, addModalTitle: title });
   }
 
   private handleAdd = () => {

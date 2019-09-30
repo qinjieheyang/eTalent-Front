@@ -8,18 +8,14 @@ export const DepartTableColumns = [
     enableSearch: true,
     canAutoOrder: true,
     checkNull: true,
-    fixed: true,
-    handler: {
-      onLinkClick: (row: any) => {
-        alert(JSON.stringify(row))
-      }
-    }
   },
   {
     title: '封存',
     dataIndex: 'isEnable',
     key: 'isEnable',
     width: 150,
+    enableSearch: true,
+    canAutoOrder: true,
     dataType: "boolean",
     searchData: ["否", "是"]
   },
@@ -28,7 +24,8 @@ export const DepartTableColumns = [
     dataIndex: 'orgCode',
     key: 'orgCode',
     width: 150,
-    enableSearch: true
+    enableSearch: true,
+    canAutoOrder: true,
   },
   {
     title: '机构类型',
@@ -37,6 +34,7 @@ export const DepartTableColumns = [
     width: 150,
     dataType: "checkbox",
     enableSearch: true,
+    canAutoOrder: true,
     searchData: [{ id: "GROUP", name: "集团" }, { id: "UNIT", name: "单位" }, { id: "DEPT", name: "部门" }]
   },
   {
@@ -44,20 +42,23 @@ export const DepartTableColumns = [
     dataIndex: 'orgParentName',
     key: 'orgParentName',
     width: 150,
-    enableSearch: true
+    enableSearch: true,
+    canAutoOrder: true,
   },
   {
     title: '部门负责人',
     dataIndex: 'orgManagerName',
     key: 'orgManagerName',
     width: 150,
-    enableSearch: true
+    enableSearch: true,
+    canAutoOrder: true,
   },
   {
     title: '机构全称',
     dataIndex: 'orgFullname',
     key: 'orgFullname',
     // width: 150,
-    enableSearch: true
+    enableSearch: true,
+    canAutoOrder: true,
   }
 ];
