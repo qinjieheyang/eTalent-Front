@@ -1,18 +1,7 @@
 import * as Framework from "src/framework/Framework";
 
 export const Const: Framework.Case.IAsyncConst = {
-  title: "职位族",
+  title: "数据级权限",
   isTest: true,
-  case: "Group"
+  case: "roleAuthTab4"
 };
-
-export const Columns = [
-  {
-    title: '职位族名称',
-    key: 'positionGroupName',
-    dataType: "linkText",
-    enableSearch: false,
-    canAutoOrder: false,
-    checkNull: false,
-  }
-]

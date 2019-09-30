@@ -1,35 +1,17 @@
-export interface IChecked {
-    value: string;
-    name: string;
-}
+// import * as Framework from 'src/framework/Framework';
 
 export interface IState {
-    currentPage: number;
-    pageSize: number;
-    total: number;
-    tableData: any[];
-    visibleAdd: boolean;
-    visibleDelete: boolean;
-    confirmLoading: boolean;
-    addModalTitle?: string;
-    checkedList: IChecked[];
-    checkedValues: any[];
+    
+    treeData: any[];
+    selectedKeys: string[];
+    tabKey: string;
+    isLoaded: boolean;
 }
 
-export const initState = {
-    currentPage: 1,
-    pageSize: 10,
-    total: 0,
-    tableData: [],
-    visibleAdd: false,
-    visibleDelete: false,
-    confirmLoading: false,
-    addModalTitle: undefined,
-    checkedList: [],
-    checkedValues: []
+export const initState: IState = {
+    
+    treeData: [],
+    selectedKeys: [],
+    tabKey: "tab-1",
+    isLoaded: false
 };
-
-export interface ITableParam {
-    currentPage: number;
-    pageSize: number;
-}

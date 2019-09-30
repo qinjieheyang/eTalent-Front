@@ -61,6 +61,8 @@ export default class Group extends CaseCommon.PageAsyncBase<IProps, IState, ISer
 
   private renderTreeNodes = (data: Array<any>) => {
 
+    if (!data) return null;
+
     const formatTitle = (item: any) => {
 
       //使用onClick,直接绑定onChange方法，事件不触发

@@ -1,170 +1,127 @@
 import * as React from "react";
-import { Button, Menu } from "antd";
-import Framework from 'src/framework/Framework';
+import { Tree, Checkbox, Select } from "antd";
+// import Framework from 'src/framework/Framework';
 import CaseCommon from "src/caseCommon/CaseCommon";
-import { Const, Columns } from "./Const";
+import { Const } from "./Const";
 import { Service } from "./Service";
 import { IService, ServiceMock } from "./ServiceMock";
 import { IState, initState } from "./State";
+const { TreeNode } = Tree;
+const { Option } = Select;
 
-import { AddModal } from "./AddModal";
-import { DeleteModal } from "./DeleteModal";
-import { UtilMessage, MessageType } from 'src/framework/utils/Index';
 
-const { DropdownMore } = Framework.Com.Dropdowns;
-const AdaptiveTable = Framework.Com.Tables.AdaptiveTable;
+// import { UtilMessage, MessageType } from 'src/framework/utils/Index';
+
 
 interface IProps { }
 export default class Group extends CaseCommon.PageAsyncBase<IProps, IState, IService> {
 
   public state: IState = initState;
 
-  public checkedValues: any[];
+  public expandedKeys: string[] = [];
 
   constructor(props: IProps) {
     super(props, Const, ServiceMock, Service);
   }
 
   public async init() {
-    const { pageSize, currentPage } = this.state;
 
-    const { total, tableData } = await this.service.getAllPositionGroup({ pageSize, currentPage });
+    const treeData = await this.service.searchRoleAuthTree();
 
-    this.setState({
-      tableData,
-      total
-    })
+    this.setState({ treeData, isLoaded: true })
+
   }
 
-  private renderMore = () => (
-    <Menu style={{ textAlign: "center" }}>
-      <Menu.Item>排序</Menu.Item>
-      <Menu.Item
-        onClick={this.handleExport}>导出
-      </Menu.Item>
-    </Menu>
-  );
 
   public render() {
-    const { tableData, pageSize, currentPage, total, confirmLoading, visibleAdd, visibleDelete, addModalTitle, checkedList } = this.state;
+    const { treeData, selectedKeys, isLoaded } = this.state;
 
-    const addProps = { visible: visibleAdd, confirmLoading, onOk: this.handleAdd, onCancel: this.handleAddCancel, title: addModalTitle };
-    const delProps = { visible: visibleDelete, confirmLoading, onOk: this.handleDelete, onCancel: this.handleDelCancel, checkedList, onCheckedChange: this.handleCheckChange };
     return (
-      <div style={{ height: "100%", padding: 16 }}>
-        <Framework.Com.Buttons.Tool.LeftArea>
-          <Button type="primary" onClick={() => { this.openAddModal() }}>新增</Button>
-          <Button onClick={this.openDelModal}>删除</Button>
-          <DropdownMore menu={this.renderMore()}></DropdownMore>
-        </Framework.Com.Buttons.Tool.LeftArea>
-        <div style={{ width: "100%", height: "calc(100% - 96px)" }}>
-          <AdaptiveTable
-            columns={this.GetColumns()}
-            dataSource={tableData}
-            pageSize={pageSize}
-            current={currentPage}
-            total={total}
-            onPageChange={this.handlePageChange}
-            onShowSizeChange={this.handleShowSizeChange}
-            onSelectRows={this.handleSelectRows}
-          />
+      <div style={{ height: "100%", padding: 16, overflowY: "auto", overflowX: "hidden" }}>
+        <div style={{ marginBottom: 8 }}>
+          <Select placeholder="请选择需要授权的表" style={{ width: 240 }} onChange={this.handleSelectChange}>
+            <Option value="1">表1</Option>
+            <Option value="2">表2</Option>
+            <Option value="3">表3</Option>
+          </Select>
         </div>
-
-        <AddModal {...addProps} />
-        <DeleteModal {...delProps} />
+        <div style={{ width: "100%", background: "#F8F8F8" }}>
+          <span style={{ display: "inline-block", width: "calc(100% - 450px)", padding: 8, color: "#000" }}>名称</span>
+          <span style={{ display: "inline-block", width: 150, padding: "8px 0", color: "#000" }}>可读</span>
+          <span style={{ display: "inline-block", width: 150, padding: "8px 0", color: "#000" }}>新增可写</span>
+          <span style={{ display: "inline-block", width: 150, padding: "8px 0", color: "#000" }}>可写</span>
+        </div>
+        {
+          isLoaded ? <Tree
+            className="qj-tree-table"
+            defaultExpandAll
+            // checkable
+            onSelect={this.handleSelectTreeNode}
+            selectedKeys={selectedKeys}
+          >
+            {this.renderTreeNodes(treeData)}
+          </Tree> : null
+        }
       </div>
     )
   }
 
-  private GetColumns = () => {
-    const getHandler = (dataType: string) => {
-      if (dataType === undefined) return {};
-      return {
-        handler: {
-          onLinkClick: (row: any) => {
-            this.openAddModal("编辑信息");
-          }
-        }
+  private renderTreeNodes = (data: Array<any>) => {
+
+    if (!data) return null;
+
+    const formatTitle = (item: any) => {
+
+      //使用onClick,直接绑定onChange方法，事件不触发
+      const onCheck1Change = () => {
+        item.checked1 = !item.checked1;
+        this.handleTreeCheckChange(item);
       }
-    }
-
-    return Columns.map(col => (
-      {
-        ...col,
-        dataIndex: col.key,
-        ...getHandler(col.dataType)
-      })
-    )
-  }
-
-  //翻页：pagesize 改变
-  private handleShowSizeChange = async (current: number, size: number) => {
-    const { tableData } = await this.service.getAllPositionGroup({
-      currentPage: 1,
-      pageSize: size,
-    });
-    this.setState({ pageSize: size, currentPage: 1, tableData });
-  }
-
-  //翻页：页码改变
-  private handlePageChange = async (page: number, pageSize: number) => {
-    const { tableData } = await this.service.getAllPositionGroup({
-      currentPage: page,
-      pageSize,
-    });
-    this.setState({ currentPage: page, tableData });
-  }
-
-  private openAddModal = (title?: string) => {
-    this.setState({ visibleAdd: true, addModalTitle: title });
-  }
-
-  private handleAdd = () => {
-    this.setState({ visibleAdd: false });
-  }
-
-  private handleAddCancel = () => {
-    this.setState({ visibleAdd: false });
-  }
-
-  private openDelModal = () => {
-    const { checkedList } = this.state;
-
-    if (checkedList.length <= 0) {
-      UtilMessage.showMessage("请勾选要删除的内容", MessageType.error);
-      return;
-    }
-
-    this.setState({ visibleDelete: true });
-  }
-
-  private handleDelete = async () => {
-    // const { checkedValues } = this.state;
-    this.setState({ visibleDelete: false });
-  }
-
-  private handleDelCancel = () => {
-    this.setState({ visibleDelete: false });
-  }
-
-  //表格checkbox选中
-  private handleSelectRows = (selectRows: any[]) => {
-    this.setState({
-      checkedList: selectRows.map(row => (
-        {
-          value: row.positionGroupId,
-          name: row.positionGroupName
-        })
+      const onCheck2Change = () => {
+        item.checked2 = !item.checked2;
+        this.handleTreeCheckChange(item);
+      }
+      const onCheck3Change = () => {
+        item.checked3 = !item.checked3;
+        this.handleTreeCheckChange(item);
+      }
+      return (
+        <div className="qj-tree-content-text">
+          <span style={{ display: "inline-block" }}>{item.fieldName}</span>
+          <span style={{ display: "inline-block", position: "absolute", right: 150, width: 16, height: 16 }} >
+            <Checkbox onClick={onCheck1Change} checked={item.checked1} />
+          </span>
+          <span style={{ display: "inline-block", position: "absolute", right: 300, width: 16, height: 16 }} >
+            <Checkbox onClick={onCheck2Change} checked={item.checked2} />
+          </span>
+          <span style={{ display: "inline-block", position: "absolute", right: 450, width: 16, height: 16 }} >
+            <Checkbox onClick={onCheck3Change} checked={item.checked3} />
+          </span>
+        </div>
       )
-    })
+    }
+
+    return data.map((item: any) => {
+      if (item.childMenuList) {
+        return (
+          <TreeNode title={formatTitle(item)} key={item.fieldId} dataRef={item} >
+            {this.renderTreeNodes(item.childMenuList)}
+          </TreeNode>
+        );
+      }
+      return <TreeNode title={formatTitle(item)} key={item.fieldId} dataRef={item} />;
+    });
   }
 
-  private handleCheckChange = (checkedValues: any[]) => {
-    this.checkedValues = checkedValues;
+  private handleSelectTreeNode = (selectedKeys: string[]) => {
+    this.setState({ selectedKeys })
   }
 
-  //导出
-  private handleExport = () => {
-    this.service.downloadPositionGroupExcel();
+  private handleSelectChange = (value: string) => {
+    console.log(`value = ${value}`);
+  }
+
+  private handleTreeCheckChange = (item: any) => {
+    // console.log(111)
   }
 }

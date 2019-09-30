@@ -51,6 +51,7 @@ export default class Group extends CaseCommon.PageAsyncBase<IProps, IState, ISer
   }
 
   private renderTreeNodes = (data: Array<any>) => {
+    if (!data) return null;
 
     return data.map((item: any) => {
       if (item.childMenuList) {

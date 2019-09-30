@@ -9,7 +9,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 console.log("------------------ dll/build:", path.resolve("dll/build"));
 module.exports = merge(common, {
     mode: "production",
-    // devtool: "source-map",
+    devtool: "source-map",
     output: {
         filename: "[name].[contenthash].js"
     },
