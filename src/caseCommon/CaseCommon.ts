@@ -1,7 +1,7 @@
 import { PageBase, PageAsyncBase } from "./PageBase";
 import PageLoading from './PageLoading';
 import AsyncComponent from './AsyncComponent';
-import { OrgTree } from './OrgTree';
+import { OrgTree } from './orgTree/index';
 
 export { PageBase, PageLoading, OrgTree };
 
